@@ -1,0 +1,9 @@
+C:\Users\user\Desktop\DataRead\DataG\DataG\bin\Debug\DataG.exe.config
+C:\Users\user\Desktop\DataRead\DataG\DataG\bin\Debug\DataG.exe
+C:\Users\user\Desktop\DataRead\DataG\DataG\bin\Debug\DataG.pdb
+C:\Users\user\Desktop\DataRead\DataG\DataG\obj\Debug\DataG.csprojResolveAssemblyReference.cache
+C:\Users\user\Desktop\DataRead\DataG\DataG\obj\Debug\DataG.Form1.resources
+C:\Users\user\Desktop\DataRead\DataG\DataG\obj\Debug\DataG.Properties.Resources.resources
+C:\Users\user\Desktop\DataRead\DataG\DataG\obj\Debug\DataG.csproj.GenerateResource.Cache
+C:\Users\user\Desktop\DataRead\DataG\DataG\obj\Debug\DataG.exe
+C:\Users\user\Desktop\DataRead\DataG\DataG\obj\Debug\DataG.pdb
