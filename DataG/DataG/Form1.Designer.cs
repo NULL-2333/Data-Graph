@@ -28,8 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.loadFileButton = new System.Windows.Forms.Button();
-            this.graphPanel = new System.Windows.Forms.Panel();
             this.displayPanel = new System.Windows.Forms.Panel();
             this.textBoxSensor = new System.Windows.Forms.TextBox();
             this.textBoxTime = new System.Windows.Forms.TextBox();
@@ -37,14 +40,18 @@
             this.label1 = new System.Windows.Forms.Label();
             this.activatePanel = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.checkedListBoxSensor = new System.Windows.Forms.CheckedListBox();
             this.label4 = new System.Windows.Forms.Label();
             this.trackBarX = new System.Windows.Forms.TrackBar();
             this.trackBarY = new System.Windows.Forms.TrackBar();
-            this.checkedListBoxSensor = new System.Windows.Forms.CheckedListBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.graphPanel = new System.Windows.Forms.Panel();
+            this.sensorChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.displayPanel.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sensorChart)).BeginInit();
             this.SuspendLayout();
             // 
             // loadFileButton
@@ -56,15 +63,6 @@
             this.loadFileButton.Text = "Load Files...";
             this.loadFileButton.UseVisualStyleBackColor = true;
             this.loadFileButton.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // graphPanel
-            // 
-            this.graphPanel.BackColor = System.Drawing.SystemColors.Info;
-            this.graphPanel.Location = new System.Drawing.Point(74, 12);
-            this.graphPanel.Name = "graphPanel";
-            this.graphPanel.Size = new System.Drawing.Size(864, 320);
-            this.graphPanel.TabIndex = 1;
-            this.graphPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.graphPanel_MouseClick);
             // 
             // displayPanel
             // 
@@ -130,6 +128,21 @@
             this.panel1.Size = new System.Drawing.Size(207, 225);
             this.panel1.TabIndex = 4;
             // 
+            // checkedListBoxSensor
+            // 
+            this.checkedListBoxSensor.CheckOnClick = true;
+            this.checkedListBoxSensor.FormattingEnabled = true;
+            this.checkedListBoxSensor.Items.AddRange(new object[] {
+            "All",
+            "SensorA",
+            "SensorB",
+            "SensorC",
+            "SensorD"});
+            this.checkedListBoxSensor.Location = new System.Drawing.Point(30, 74);
+            this.checkedListBoxSensor.Name = "checkedListBoxSensor";
+            this.checkedListBoxSensor.Size = new System.Drawing.Size(150, 124);
+            this.checkedListBoxSensor.TabIndex = 1;
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -161,31 +174,60 @@
             this.trackBarY.TabIndex = 5;
             this.trackBarY.ValueChanged += new System.EventHandler(this.trackBarY_ValueChanged);
             // 
-            // checkedListBoxSensor
+            // button1
             // 
-            this.checkedListBoxSensor.CheckOnClick = true;
-            this.checkedListBoxSensor.FormattingEnabled = true;
-            this.checkedListBoxSensor.Items.AddRange(new object[] {
-            "SensorA",
-            "SensorB",
-            "SensorC",
-            "SensorD"});
-            this.checkedListBoxSensor.Location = new System.Drawing.Point(30, 74);
-            this.checkedListBoxSensor.Name = "checkedListBoxSensor";
-            this.checkedListBoxSensor.Size = new System.Drawing.Size(150, 124);
-            this.checkedListBoxSensor.TabIndex = 1;
+            this.button1.Location = new System.Drawing.Point(962, 78);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(165, 37);
+            this.button1.TabIndex = 6;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            // 
+            // graphPanel
+            // 
+            this.graphPanel.BackColor = System.Drawing.SystemColors.Info;
+            this.graphPanel.Location = new System.Drawing.Point(76, 14);
+            this.graphPanel.Name = "graphPanel";
+            this.graphPanel.Size = new System.Drawing.Size(860, 317);
+            this.graphPanel.TabIndex = 7;
+            this.graphPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.graphPanel_MouseClick);
+            // 
+            // sensorChart
+            // 
+            chartArea1.Name = "ChartArea1";
+            this.sensorChart.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.sensorChart.Legends.Add(legend1);
+            this.sensorChart.Location = new System.Drawing.Point(972, 207);
+            this.sensorChart.Name = "sensorChart";
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.Legend = "Legend1";
+            series1.Name = "SensorA";
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series2.Legend = "Legend1";
+            series2.Name = "SensorB";
+            this.sensorChart.Series.Add(series1);
+            this.sensorChart.Series.Add(series2);
+            this.sensorChart.Size = new System.Drawing.Size(445, 277);
+            this.sensorChart.TabIndex = 8;
+            this.sensorChart.Text = "chart1";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1140, 637);
+            this.ClientSize = new System.Drawing.Size(1459, 637);
+            this.Controls.Add(this.sensorChart);
+            this.Controls.Add(this.graphPanel);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.trackBarY);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.trackBarX);
             this.Controls.Add(this.activatePanel);
             this.Controls.Add(this.displayPanel);
-            this.Controls.Add(this.graphPanel);
             this.Controls.Add(this.loadFileButton);
             this.MaximizeBox = false;
             this.Name = "Form1";
@@ -196,6 +238,7 @@
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarX)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sensorChart)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -204,7 +247,6 @@
         #endregion
 
         private System.Windows.Forms.Button loadFileButton;
-        private System.Windows.Forms.Panel graphPanel;
         private System.Windows.Forms.Panel displayPanel;
         private System.Windows.Forms.Panel activatePanel;
         private System.Windows.Forms.TextBox textBoxSensor;
@@ -216,6 +258,9 @@
         private System.Windows.Forms.TrackBar trackBarX;
         private System.Windows.Forms.TrackBar trackBarY;
         private System.Windows.Forms.CheckedListBox checkedListBoxSensor;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Panel graphPanel;
+        public System.Windows.Forms.DataVisualization.Charting.Chart sensorChart;
     }
 }
 
