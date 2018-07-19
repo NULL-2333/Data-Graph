@@ -19,115 +19,14 @@ namespace DataG
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            if (checkBoxAllSelection.Checked)
+            {
+                checkBoxSensorA.Checked = true;
+                checkBoxSensorB.Checked = true;
+            }
+            //sensorChart.ChartAreas[0].AxisX
         }
-        int minx, miny;
         string fName = "";
-        float move = 50f;
-        private void button1_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.InitialDirectory = "c://";
-            openFileDialog.Filter = "Data Files|*.csv";
-            openFileDialog.RestoreDirectory = true;
-            openFileDialog.FilterIndex = 1;
-            string fileName = "";
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                fileName = openFileDialog.FileName;
-            }
-            DataTable dt = new DataTable();
-            if (fileName=="")
-            {
-                MessageBox.Show("No file selected","Warning");
-                return;
-            }
-            Refresh();
-            dt = OpenCSV(fileName);
-            fName = fileName;
-            int dtrNum = dt.Rows.Count;
-            int dtcNum = dt.Columns.Count;
-            int[,] dat = new int[dtrNum, dtcNum];
-            for (int i = 0; i < dtrNum; i++)
-            {
-                for (int j = 0; j < dtcNum; j++)
-                {
-                    //Console.WriteLine(dt.Rows[i].ToString());
-                    //DialogResult dia;
-                    //dia = MessageBox.Show(dt.Rows[i][j].ToString());
-                    string s = dt.Rows[i][j].ToString();
-                    dat[i, j] = int.Parse(s);
-                }
-            }
-            //MessageBox.Show(dat[0, 0].ToString()+" "+dat[0,1].ToString());
-            //painting on the board
-            Graphics g = graphPanel.CreateGraphics();
-            float newX = graphPanel.Width - move;
-            float newY = graphPanel.Height - move;
-            float LenX = graphPanel.Width - 2 * move;
-            float LenY = graphPanel.Height - 2 * move;
-            int lenX = 5;
-            int lenY = 10;
-            int minX = minx;
-            int minY = miny;
-            int maxX = minx + lenX * 1;
-            int maxY = miny + lenY * 10;
-            
-            //MessageBox.Show(panel.Width.ToString());
-            //MessageBox.Show(panel.Height.ToString());
-            Pen nPen = new Pen(Brushes.Black, 1);
-            //draw x-axis
-            PointF px1 = new PointF(move, newY);
-            PointF px2 = new PointF(newX, newY);
-            g.DrawLine(nPen, px1, px2);
-            //complete x-axis
-            for (int i = 1; i <= lenX; i++)
-            {
-                PointF px3 = new PointF(LenX * i / lenX + move, newY - 4);
-                PointF px4 = new PointF(LenX * i / lenX + move, newY);
-                string sy = (((maxX - minX) * i / lenX) + minX).ToString();
-                g.DrawLine(new Pen(Brushes.Black, 2), px3, px4);
-                g.DrawString(sy, new Font("YaHei", 8f), Brushes.Black, new PointF(LenX * i / lenX + move, newY / 1.1f));
-            }
-            Pen pen = new Pen(Color.Black, 1);
-            g.DrawString("X", new Font("YaHei", 10f), Brushes.Black, new PointF(newX, newY / 1.2f));
-
-            //draw y-axis
-            PointF py1 = new PointF(move, move);
-            PointF py2 = new PointF(move, newY);
-
-            g.DrawLine(nPen, py1, py2);
-            //complete y-axis
-            
-            for (int i = 0; i <= lenY; i++)
-            {
-                PointF py3 = new PointF(move, LenY * i / lenY + move);
-                PointF py4 = new PointF(move + 4, LenY * i / lenY + move);
-                g.DrawLine(nPen, py3, py4);
-                string sx = (((maxY - minY) - (maxY - minY) * i / lenY) + minY).ToString();
-                StringFormat drawFormat = new StringFormat();
-                drawFormat.Alignment = StringAlignment.Far;
-                drawFormat.LineAlignment = StringAlignment.Center;
-                g.DrawString(sx, new Font("YaHei", 8f), Brushes.Black, new PointF(move / 1.2f, LenY * i / lenY + move * 1.1f), drawFormat);
-            }
-            g.DrawString("Y", new Font("YaHei", 10f), Brushes.Black, new PointF(move / 3, move / 2f));
-            
-            //draw the dataTable
-            //MessageBox.Show((move + (float)dat[0, 0] / (float)maxX * LenX).ToString());
-            PointF pf1 = new PointF(move + (float)(dat[0, 0] - minX) / (float)(maxX - minX) * LenX, newY - (float)(dat[0, 1] - minY) / (float)(maxY - minY) * LenY);
-            PointF pf2 = new PointF(move + (float)(dat[1, 0] - minX) / (float)(maxX - minX) * LenX, newY - (float)(dat[1, 1] - minY) / (float)(maxY - minY) * LenY);
-            Pen p = new Pen(Brushes.Red,1);
-            g.DrawLine(p, pf1, pf2);
-            //g.FillEllipse(Brushes.Red, pf1.X, pf1.Y, 10, 10);
-            for (int i = 2; i < dtrNum; i++)
-            {
-                pf1 = pf2;
-                pf2 = new PointF(move + (float)(dat[i, 0] - minX) / (float)(maxX - minX) * LenX, newY - (float)(dat[i, 1] - minY) / (float)(maxY - minY) * LenY);
-                g.DrawLine(p, pf1, pf2);
-            }
-            
-        }
-        
         public static DataTable OpenCSV(string filePath)//从csv读取数据返回table
         {
             System.Text.Encoding encoding = GetType(filePath); //Encoding.ASCII;//
@@ -267,324 +166,7 @@ namespace DataG
             return true;
         }
 
-        private void trackBarX_ValueChanged(object sender, EventArgs e)
-        {
-            minx = trackBarX.Value;
-            DataTable dt = new DataTable();
-            Refresh();
-            dt = OpenCSV(fName);
-            int dtrNum = dt.Rows.Count;
-            int dtcNum = dt.Columns.Count;
-            int[,] dat = new int[dtrNum, dtcNum];
-            for (int i = 0; i < dtrNum; i++)
-            {
-                for (int j = 0; j < dtcNum; j++)
-                {
-                    //Console.WriteLine(dt.Rows[i].ToString());
-                    //DialogResult dia;
-                    //dia = MessageBox.Show(dt.Rows[i][j].ToString());
-                    string s = dt.Rows[i][j].ToString();
-                    dat[i, j] = int.Parse(s);
-                }
-            }
-            //MessageBox.Show(dat[0, 0].ToString()+" "+dat[0,1].ToString());
-            //painting on the board
-            Graphics g = graphPanel.CreateGraphics();
-            float newX = graphPanel.Width - move;
-            float newY = graphPanel.Height - move;
-            float LenX = graphPanel.Width - 2 * move;
-            float LenY = graphPanel.Height - 2 * move;
-            int lenX = 5;
-            int lenY = 10;
-            int minX = minx;
-            int minY = miny;
-            int maxX = minx + lenX * 1;
-            int maxY = miny + lenY * 10;
-
-            //MessageBox.Show(panel.Width.ToString());
-            //MessageBox.Show(panel.Height.ToString());
-            Pen nPen = new Pen(Brushes.Black, 1);
-            //draw x-axis
-            PointF px1 = new PointF(move, newY);
-            PointF px2 = new PointF(newX, newY);
-            g.DrawLine(nPen, px1, px2);
-            //complete x-axis
-            for (int i = 1; i <= lenX; i++)
-            {
-                PointF px3 = new PointF(LenX * i / lenX + move, newY - 4);
-                PointF px4 = new PointF(LenX * i / lenX + move, newY);
-                string sy = (((maxX - minX) * i / lenX) + minX).ToString();
-                g.DrawLine(new Pen(Brushes.Black, 2), px3, px4);
-                g.DrawString(sy, new Font("YaHei", 8f), Brushes.Black, new PointF(LenX * i / lenX + move, newY / 1.1f));
-            }
-            Pen pen = new Pen(Color.Black, 1);
-            g.DrawString("X", new Font("YaHei", 10f), Brushes.Black, new PointF(newX, newY / 1.2f));
-
-            //draw y-axis
-            PointF py1 = new PointF(move, move);
-            PointF py2 = new PointF(move, newY);
-
-            g.DrawLine(nPen, py1, py2);
-            //complete y-axis
-
-            for (int i = 0; i <= lenY; i++)
-            {
-                PointF py3 = new PointF(move, LenY * i / lenY + move);
-                PointF py4 = new PointF(move + 4, LenY * i / lenY + move);
-                g.DrawLine(nPen, py3, py4);
-                string sx = (((maxY - minY) - (maxY - minY) * i / lenY) + minY).ToString();
-                StringFormat drawFormat = new StringFormat();
-                drawFormat.Alignment = StringAlignment.Far;
-                drawFormat.LineAlignment = StringAlignment.Center;
-                g.DrawString(sx, new Font("YaHei", 8f), Brushes.Black, new PointF(move / 1.2f, LenY * i / lenY + move * 1.1f), drawFormat);
-            }
-            g.DrawString("Y", new Font("YaHei", 10f), Brushes.Black, new PointF(move / 3, move / 2f));
-
-            //draw the dataTable
-            //MessageBox.Show((move + (float)dat[0, 0] / (float)maxX * LenX).ToString());
-            PointF pf1 = new PointF(move + (float)(dat[0, 0] - minX) / (float)(maxX - minX) * LenX, newY - (float)(dat[0, 1] - minY) / (float)(maxY - minY) * LenY);
-            PointF pf2 = new PointF(move + (float)(dat[1, 0] - minX) / (float)(maxX - minX) * LenX, newY - (float)(dat[1, 1] - minY) / (float)(maxY - minY) * LenY);
-            Pen p = new Pen(Brushes.Red, 1);
-            g.DrawLine(p, pf1, pf2);
-            //g.FillEllipse(Brushes.Red, pf1.X, pf1.Y, 10, 10);
-            for (int i = 2; i < dtrNum; i++)
-            {
-                pf1 = pf2;
-                pf2 = new PointF(move + (float)(dat[i, 0] - minX) / (float)(maxX - minX) * LenX, newY - (float)(dat[i, 1] - minY) / (float)(maxY - minY) * LenY);
-                g.DrawLine(p, pf1, pf2);
-            }
-        }
-        
-        private void trackBarY_ValueChanged(object sender, EventArgs e)
-        {
-            miny = trackBarY.Value * 10;
-            DataTable dt = new DataTable();
-            graphPanel.Refresh();
-            dt = OpenCSV(fName);
-            int dtrNum = dt.Rows.Count;
-            int dtcNum = dt.Columns.Count;
-            int[,] dat = new int[dtrNum, dtcNum];
-            for (int i = 0; i < dtrNum; i++)
-            {
-                for (int j = 0; j < dtcNum; j++)
-                {
-                    //Console.WriteLine(dt.Rows[i].ToString());
-                    //DialogResult dia;
-                    //dia = MessageBox.Show(dt.Rows[i][j].ToString());
-                    string s = dt.Rows[i][j].ToString();
-                    dat[i, j] = int.Parse(s);
-                }
-            }
-            //MessageBox.Show(dat[0, 0].ToString()+" "+dat[0,1].ToString());
-            //painting on the board
-            Graphics g = graphPanel.CreateGraphics();
-            float newX = graphPanel.Width - move;
-            float newY = graphPanel.Height - move;
-            float LenX = graphPanel.Width - 2 * move;
-            float LenY = graphPanel.Height - 2 * move;
-            int lenX = 5;
-            int lenY = 10;
-            int minX = minx;
-            int minY = miny;
-            int maxX = minx + lenX * 1;
-            int maxY = miny + lenY * 10;
-
-            //MessageBox.Show(panel.Width.ToString());
-            //MessageBox.Show(panel.Height.ToString());
-            Pen nPen = new Pen(Brushes.Black, 1);
-            //draw x-axis
-            PointF px1 = new PointF(move, newY);
-            PointF px2 = new PointF(newX, newY);
-            g.DrawLine(nPen, px1, px2);
-            //complete x-axis
-            for (int i = 1; i <= lenX; i++)
-            {
-                PointF px3 = new PointF(LenX * i / lenX + move, newY - 4);
-                PointF px4 = new PointF(LenX * i / lenX + move, newY);
-                string sy = (((maxX - minX) * i / lenX) + minX).ToString();
-                g.DrawLine(new Pen(Brushes.Black, 2), px3, px4);
-                g.DrawString(sy, new Font("YaHei", 8f), Brushes.Black, new PointF(LenX * i / lenX + move, newY / 1.1f));
-            }
-            Pen pen = new Pen(Color.Black, 1);
-            g.DrawString("X", new Font("YaHei", 10f), Brushes.Black, new PointF(newX, newY / 1.2f));
-
-            //draw y-axis
-            PointF py1 = new PointF(move, move);
-            PointF py2 = new PointF(move, newY);
-
-            g.DrawLine(nPen, py1, py2);
-            //complete y-axis
-
-            for (int i = 0; i <= lenY; i++)
-            {
-                PointF py3 = new PointF(move, LenY * i / lenY + move);
-                PointF py4 = new PointF(move + 4, LenY * i / lenY + move);
-                g.DrawLine(nPen, py3, py4);
-                string sx = (((maxY - minY) - (maxY - minY) * i / lenY) + minY).ToString();
-                StringFormat drawFormat = new StringFormat();
-                drawFormat.Alignment = StringAlignment.Far;
-                drawFormat.LineAlignment = StringAlignment.Center;
-                g.DrawString(sx, new Font("YaHei", 8f), Brushes.Black, new PointF(move / 1.2f, LenY * i / lenY + move * 1.1f), drawFormat);
-            }
-            g.DrawString("Y", new Font("YaHei", 10f), Brushes.Black, new PointF(move / 3, move / 2f));
-
-            //draw the dataTable
-            //MessageBox.Show((move + (float)dat[0, 0] / (float)maxX * LenX).ToString());
-            PointF pf1 = new PointF(move + (float)(dat[0, 0] - minX) / (float)(maxX - minX) * LenX, newY - (float)(dat[0, 1] - minY) / (float)(maxY - minY) * LenY);
-            PointF pf2 = new PointF(move + (float)(dat[1, 0] - minX) / (float)(maxX - minX) * LenX, newY - (float)(dat[1, 1] - minY) / (float)(maxY - minY) * LenY);
-            Pen p = new Pen(Brushes.Red, 1);
-            g.DrawLine(p, pf1, pf2);
-            //g.FillEllipse(Brushes.Red, pf1.X, pf1.Y, 10, 10);
-            for (int i = 2; i < dtrNum; i++)
-            {
-                pf1 = pf2;
-                pf2 = new PointF(move + (float)(dat[i, 0] - minX) / (float)(maxX - minX) * LenX, newY - (float)(dat[i, 1] - minY) / (float)(maxY - minY) * LenY);
-                g.DrawLine(p, pf1, pf2);
-            }
-        }
-
-        private void graphPanel_MouseClick(object sender, MouseEventArgs e)
-        {
-            
-            //get the position of mouse
-            int mouseX = e.X;
-            int mouseY = e.Y;
-            int m = (int)move;
-            Graphics g = graphPanel.CreateGraphics();
-            //if (mouseX < m || mouseX > graphPanel.Width - m)
-            //{
-                
-            //}
-            //else
-            //{
-                //Refresh();
-
-                graphPanel.Refresh();
-                Point p1 = new Point(mouseX, m);
-                Point p2 = new Point(mouseX, graphPanel.Height - m);
-                Pen np = new Pen(Brushes.Blue, 1);
-                g.DrawLine(np, p1, p2);
-           // }
-                DataTable dt = new DataTable();
-                if (fName == "")
-                {
-                    return;
-                }
-                dt = OpenCSV(fName);
-                int dtrNum = dt.Rows.Count;
-                int dtcNum = dt.Columns.Count;
-                int[,] dat = new int[dtrNum, dtcNum];
-                for (int i = 0; i < dtrNum; i++)
-                {
-                    for (int j = 0; j < dtcNum; j++)
-                    {
-                        //Console.WriteLine(dt.Rows[i].ToString());
-                        //DialogResult dia;
-                        //dia = MessageBox.Show(dt.Rows[i][j].ToString());
-                        string s = dt.Rows[i][j].ToString();
-                        dat[i, j] = int.Parse(s);
-                    }
-                }
-                //MessageBox.Show(dat[0, 0].ToString()+" "+dat[0,1].ToString());
-                //painting on the board
-                //Graphics g = graphPanel.CreateGraphics();
-                float newX = graphPanel.Width - move;
-                float newY = graphPanel.Height - move;
-                float LenX = graphPanel.Width - 2 * move;
-                float LenY = graphPanel.Height - 2 * move;
-                int lenX = 5;
-                int lenY = 10;
-                int minX = minx;
-                int minY = miny;
-                int maxX = minx + lenX * 1;
-                int maxY = miny + lenY * 10;
-
-                //MessageBox.Show(panel.Width.ToString());
-                //MessageBox.Show(panel.Height.ToString());
-                Pen nPen = new Pen(Brushes.Black, 1);
-                //draw x-axis
-                PointF px1 = new PointF(move, newY);
-                PointF px2 = new PointF(newX, newY);
-                g.DrawLine(nPen, px1, px2);
-                //complete x-axis
-                for (int i = 1; i <= lenX; i++)
-                {
-                    PointF px3 = new PointF(LenX * i / lenX + move, newY - 4);
-                    PointF px4 = new PointF(LenX * i / lenX + move, newY);
-                    string sy = (((maxX - minX) * i / lenX) + minX).ToString();
-                    g.DrawLine(new Pen(Brushes.Black, 2), px3, px4);
-                    g.DrawString(sy, new Font("YaHei", 8f), Brushes.Black, new PointF(LenX * i / lenX + move, newY / 1.1f));
-                }
-                Pen pen = new Pen(Color.Black, 1);
-                g.DrawString("X", new Font("YaHei", 10f), Brushes.Black, new PointF(newX, newY / 1.2f));
-
-                //draw y-axis
-                PointF py1 = new PointF(move, move);
-                PointF py2 = new PointF(move, newY);
-
-                g.DrawLine(nPen, py1, py2);
-                //complete y-axis
-
-                for (int i = 0; i <= lenY; i++)
-                {
-                    PointF py3 = new PointF(move, LenY * i / lenY + move);
-                    PointF py4 = new PointF(move + 4, LenY * i / lenY + move);
-                    g.DrawLine(nPen, py3, py4);
-                    string sx = (((maxY - minY) - (maxY - minY) * i / lenY) + minY).ToString();
-                    StringFormat drawFormat = new StringFormat();
-                    drawFormat.Alignment = StringAlignment.Far;
-                    drawFormat.LineAlignment = StringAlignment.Center;
-                    g.DrawString(sx, new Font("YaHei", 8f), Brushes.Black, new PointF(move / 1.2f, LenY * i / lenY + move * 1.1f), drawFormat);
-                }
-                g.DrawString("Y", new Font("YaHei", 10f), Brushes.Black, new PointF(move / 3, move / 2f));
-
-                //draw the dataTable
-                float y = 0;
-                float datX = 0, datY = 0;
-                //MessageBox.Show((move + (float)dat[0, 0] / (float)maxX * LenX).ToString());
-                PointF pf1 = new PointF(move + (float)(dat[0, 0] - minX) / (float)(maxX - minX) * LenX, newY - (float)(dat[0, 1] - minY) / (float)(maxY - minY) * LenY);
-                PointF pf2 = new PointF(move + (float)(dat[1, 0] - minX) / (float)(maxX - minX) * LenX, newY - (float)(dat[1, 1] - minY) / (float)(maxY - minY) * LenY);
-                Pen p = new Pen(Brushes.Red, 1);
-                g.DrawLine(p, pf1, pf2);
-                //calculate the Y of current mouseX
-                if (mouseX <= pf2.X && mouseX >= pf1.X)
-                {
-                    //two points to caculate the formula of the line
-                    float k = (pf2.Y - pf1.Y) / (pf2.X - pf1.X);
-                    float b = pf1.Y - k * pf1.X;
-                    y = k * mouseX + b;
-                    datX = (mouseX - move) / LenX * (float)(maxX - minX) + minX;
-                    datY = (newY - y) / LenY * (float)(maxY - minY) + minY;
-                    //MessageBox.Show(datX.ToString() + " " + datY.ToString());
-                    textBoxTime.Clear();
-                    textBoxSensor.Clear();
-                    textBoxTime.AppendText(datX.ToString());
-                    textBoxSensor.AppendText(datY.ToString());
-                }
-                //g.FillEllipse(Brushes.Red, pf1.X, pf1.Y, 10, 10);
-                for (int i = 2; i < dtrNum; i++)
-                {
-                    pf1 = pf2;
-                    pf2 = new PointF(move + (float)(dat[i, 0] - minX) / (float)(maxX - minX) * LenX, newY - (float)(dat[i, 1] - minY) / (float)(maxY - minY) * LenY);
-                    g.DrawLine(p, pf1, pf2);
-                    //calculate the Y of current mouseX
-                    if (mouseX <= pf2.X && mouseX >= pf1.X)
-                    {
-                        //two points to caculate the formula of the line
-                        float k = (pf2.Y - pf1.Y) / (pf2.X - pf1.X);
-                        float b = pf1.Y - k * pf1.X;
-                        y = k * mouseX + b;
-                        datX = (mouseX - move) / LenX * (float)(maxX - minX) + minX;
-                        datY = (newY - y) / LenY * (float)(maxY - minY) + minY;
-                        //MessageBox.Show(datX.ToString() + " " +datY.ToString());
-                        textBoxTime.Clear();
-                        textBoxSensor.Clear();
-                        textBoxTime.AppendText(datX.ToString());
-                        textBoxSensor.AppendText(datY.ToString());
-                    }
-                }
-        }
-        
+        DataTable dtSave = new DataTable();
         private void button1_Click_1(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -605,25 +187,104 @@ namespace DataG
             }
             //Refresh();
             dt = OpenCSV(fileName);
+            dtSave = dt;
             fName = fileName;
             int dtrNum = dt.Rows.Count;
             int dtcNum = dt.Columns.Count;
-            int[,] dat = new int[dtrNum, dtcNum];
             int[] datX = new int[dtrNum];
             int[] datYA = new int[dtrNum];
+            int[] datYB = new int[dtrNum];
             for (int i = 0; i < dtrNum; i++)
             {
 
                 datX[i] = int.Parse(dt.Rows[i][0].ToString());
                 datYA[i] = int.Parse(dt.Rows[i][1].ToString());
+                datYB[i] = int.Parse(dt.Rows[i][2].ToString());
             }
             
-            Series sensorASeries = new Series("SensorA");
+            //Series sensorASeries = new Series("SensorA");
             sensorChart.Series["SensorA"].Points.DataBindXY(datX,datYA);
-
-           
+            sensorChart.Series["SensorB"].Points.DataBindXY(datX, datYB);
+            sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
+            sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 5;
+            sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
+            sensorChart.ChartAreas[0].AxisY.ScaleView.Size = 50;
+            //Series series = sensorChart.Series["SensorB"];
+            //series.Points.Clear();
+            //sensorChart.Series["SensorB"].Points.DataBindXY(datX, datYB);
         }
 
+        private void checkBoxAllSelection_Click(object sender, EventArgs e)
+        {
+            if (checkBoxAllSelection.Checked)
+            {
+                checkBoxSensorA.Checked = true;
+                checkBoxSensorA_Click(sender, e);
+                checkBoxSensorB.Checked = true;
+                checkBoxSensorB_Click(sender, e);
+            }
+            else
+            {
+                checkBoxSensorA.Checked = false;
+                checkBoxSensorA_Click(sender, e);
+                checkBoxSensorB.Checked = false;
+                checkBoxSensorB_Click(sender, e);
+            }
+            
+        }
 
+        private void checkBoxSensorA_Click(object sender, EventArgs e)
+        {
+            if (!checkBoxSensorA.Checked)
+            {
+                Series series = sensorChart.Series["SensorA"];
+                series.Points.Clear();
+            }
+            else
+            {
+                int dtrNum = dtSave.Rows.Count;
+                int dtcNum = dtSave.Columns.Count;
+                int[] datX = new int[dtrNum];
+                int[] datYA = new int[dtrNum];
+                for (int i = 0; i < dtrNum; i++)
+                {
+                    datX[i] = int.Parse(dtSave.Rows[i][0].ToString());
+                    datYA[i] = int.Parse(dtSave.Rows[i][1].ToString());
+                }
+                sensorChart.Series["SensorA"].Points.DataBindXY(datX, datYA);
+                sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
+                sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 5;
+                sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
+                sensorChart.ChartAreas[0].AxisY.ScaleView.Size = 50;
+                
+            }
+        }
+
+        private void checkBoxSensorB_Click(object sender, EventArgs e)
+        {
+            if (!checkBoxSensorB.Checked)
+            {
+                Series series = sensorChart.Series["SensorB"];
+                series.Points.Clear();
+            }
+            else
+            {
+                int dtrNum = dtSave.Rows.Count;
+                int dtcNum = dtSave.Columns.Count;
+                int[] datX = new int[dtrNum];
+                int[] datYB = new int[dtrNum];
+                for (int i = 0; i < dtrNum; i++)
+                {
+                    datX[i] = int.Parse(dtSave.Rows[i][0].ToString());
+                    datYB[i] = int.Parse(dtSave.Rows[i][2].ToString());
+                }
+                sensorChart.Series["SensorB"].Points.DataBindXY(datX, datYB);
+                sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
+                sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 5;
+                sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
+                sensorChart.ChartAreas[0].AxisY.ScaleView.Size = 50;
+
+            }
+        }
     }
 }
