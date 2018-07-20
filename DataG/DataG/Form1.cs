@@ -292,7 +292,6 @@ namespace DataG
 
             }
         }
-<<<<<<< HEAD
         private delegate void drawGraph();
         private static int offset = 0;
         private List<int> valueListX;
@@ -303,40 +302,66 @@ namespace DataG
         private void AddData()
         {
             //Re-read all datas from datSave
-            dtrNum = dtSave.Rows.Count;
-            dtcNum = dtSave.Columns.Count;
-            datX = new int[dtrNum];
-            datYA = new int[dtrNum];
-            datYB = new int[dtrNum];
-            if (offset < dtrNum)
-            {
-                datX[offset] = int.Parse(dtSave.Rows[offset][0].ToString());
-                datYA[offset] = int.Parse(dtSave.Rows[offset][1].ToString());
-                datYB[offset] = int.Parse(dtSave.Rows[offset][2].ToString());
-                offset += 1;
-
-                //automatically move forward
-                if (sensorChart.Series[0].Points.Count > 0)
+                dtrNum = dtSave.Rows.Count;
+                dtcNum = dtSave.Columns.Count;
+                datX = new int[dtrNum];
+                if (checkBoxSensorA.Checked)
+                    datYA = new int[dtrNum];
+                if (checkBoxSensorB.Checked)
+                    datYB = new int[dtrNum];
+                if (offset < dtrNum)
                 {
-                    if (sensorChart.Series[0].Points[0].XValue < datX[offset - 1] - 5)
-                    {
-                        sensorChart.Series[0].Points.RemoveAt(0);
-                        sensorChart.Series[1].Points.RemoveAt(0);
+                    datX[offset] = int.Parse(dtSave.Rows[offset][0].ToString());
+                    if (checkBoxSensorA.Checked)
+                        datYA[offset] = int.Parse(dtSave.Rows[offset][1].ToString());
+                    if (checkBoxSensorB.Checked)
+                        datYB[offset] = int.Parse(dtSave.Rows[offset][2].ToString());
+                    offset += 1;
 
-                        sensorChart.ChartAreas[0].AxisX.Minimum = sensorChart.Series[0].Points[0].XValue;
-                        sensorChart.ChartAreas[0].AxisX.Maximum = sensorChart.ChartAreas[0].AxisX.Minimum + 10;
+                    //automatically move forward
+                    if (sensorChart.Series[0].Points.Count > 0)
+                    {
+                        if (sensorChart.Series[0].Points[0].XValue < datX[offset - 1] - 5)
+                        {
+                            if (checkBoxSensorA.Checked)
+                            {
+                                sensorChart.Series[0].Points.RemoveAt(0);
+                                sensorChart.ChartAreas[0].AxisX.Minimum = sensorChart.Series[0].Points[0].XValue;
+                                sensorChart.ChartAreas[0].AxisX.Maximum = sensorChart.ChartAreas[0].AxisX.Minimum + 10;
+                            }
+                        }
+                    }
+                if (sensorChart.Series[1].Points.Count > 0)
+                {
+                    if (sensorChart.Series[1].Points[0].XValue < datX[offset - 1] - 5)
+                    {
+                        if (checkBoxSensorB.Checked)
+                        {
+                            sensorChart.Series[1].Points.RemoveAt(0);
+                            sensorChart.ChartAreas[0].AxisX.Minimum = sensorChart.Series[1].Points[0].XValue;
+                            sensorChart.ChartAreas[0].AxisX.Maximum = sensorChart.ChartAreas[0].AxisX.Minimum + 10;
+                        }
                     }
                 }
                 //add data to chart
                 sensorChart.ResetAutoValues();
-                valueListX.Add(datX[offset - 1]);
-                valueListYA.Add(datYA[offset - 1]);
-                valueListYB.Add(datYB[offset - 1]);
-                sensorChart.Series[0].Points.AddXY(datX[offset - 1], datYA[offset - 1]);
-                sensorChart.Series[1].Points.AddXY(datX[offset - 1], datYB[offset - 1]);
-                
-                sensorChart.Invalidate();
-            }
+                    valueListX.Add(datX[offset - 1]);
+                    if (checkBoxSensorA.Checked)
+                    {
+                        valueListYA.Add(datYA[offset - 1]);
+                        sensorChart.Series[0].Points.AddXY(datX[offset - 1], datYA[offset - 1]);
+                    }
+
+                    if (checkBoxSensorB.Checked)
+                    {
+                        valueListYB.Add(datYB[offset - 1]);
+                        sensorChart.Series[1].Points.AddXY(datX[offset - 1], datYB[offset - 1]);
+                    }
+
+                    sensorChart.Invalidate();
+                }
+            
+           
             
         }
         private void runThread()
@@ -354,8 +379,10 @@ namespace DataG
                     {
 
                         datX[i] = int.Parse(dtSave.Rows[i][0].ToString());
-                        datYA[i] = int.Parse(dtSave.Rows[i][1].ToString());
-                        datYB[i] = int.Parse(dtSave.Rows[i][2].ToString());
+                        if (checkBoxSensorA.Checked)
+                            datYA[i] = int.Parse(dtSave.Rows[i][1].ToString());
+                        if (checkBoxSensorB.Checked)
+                            datYB[i] = int.Parse(dtSave.Rows[i][2].ToString());
                     }
                     sensorChart.Invoke(doIt);
                     Thread.Sleep(100);
@@ -368,9 +395,10 @@ namespace DataG
         }
         private void buttonPlay_Click(object sender, EventArgs e)
         {
-            
-            sensorChart.Series["SensorA"].Points.Clear();
-            sensorChart.Series["SensorB"].Points.Clear();
+            if (checkBoxSensorA.Checked)
+                sensorChart.Series["SensorA"].Points.Clear();
+            if (checkBoxSensorB.Checked)
+                sensorChart.Series["SensorB"].Points.Clear();
 
             dtrNum = dtSave.Rows.Count;
             dtcNum = dtSave.Columns.Count;
@@ -379,50 +407,54 @@ namespace DataG
             datYB = new int[dtrNum];
             for (int i = 0; i < dtrNum; i++)
             {
-
-                datX[i] = int.Parse(dtSave.Rows[i][0].ToString());
-                datYA[i] = int.Parse(dtSave.Rows[i][1].ToString());
-                datYB[i] = int.Parse(dtSave.Rows[i][2].ToString());
+                if (checkBoxSensorA.Checked)
+                {
+                    datX[i] = int.Parse(dtSave.Rows[i][0].ToString());
+                    datYA[i] = int.Parse(dtSave.Rows[i][1].ToString());
+                }
+                if (checkBoxSensorB.Checked)
+                {
+                    datX[i] = int.Parse(dtSave.Rows[i][0].ToString());
+                    datYB[i] = int.Parse(dtSave.Rows[i][2].ToString());
+                }
             }
-
             valueListX = new List<int>();
-            valueListYA = new List<int>();
-            valueListYB = new List<int>();
+            valueListYA = new List<int>();            
+            valueListYB = new List<int>();                
             doIt += new drawGraph(AddData);
 
             thread = new Thread(new ThreadStart(runThread));
             thread.Start();
             //MessageBox.Show("HHH");
-            thread.Abort();
+            //thread.Suspend();
         }
 
         private void buttonStop_Click(object sender, EventArgs e)
         {
             sensorChart.Series["SensorA"].Points.Clear();
-            sensorChart.Series["SensorB"].Points.Clear();
+             sensorChart.Series["SensorB"].Points.Clear();
 
-            dtrNum = dtSave.Rows.Count;
-            dtcNum = dtSave.Columns.Count;
-            datX = new int[dtrNum];
-            datYA = new int[dtrNum];
-            datYB = new int[dtrNum];
-            for (int i = 0; i < dtrNum; i++)
-            {
+             dtrNum = dtSave.Rows.Count;
+             dtcNum = dtSave.Columns.Count;
+             datX = new int[dtrNum];
+             datYA = new int[dtrNum];
+             datYB = new int[dtrNum];
+             for (int i = 0; i < dtrNum; i++)
+             {
 
-                datX[i] = int.Parse(dtSave.Rows[i][0].ToString());
-                datYA[i] = int.Parse(dtSave.Rows[i][1].ToString());
-                datYB[i] = int.Parse(dtSave.Rows[i][2].ToString());
-            }
+                 datX[i] = int.Parse(dtSave.Rows[i][0].ToString());
+                 datYA[i] = int.Parse(dtSave.Rows[i][1].ToString());
+                 datYB[i] = int.Parse(dtSave.Rows[i][2].ToString());
+             }
 
-            sensorChart.Series["SensorA"].Points.DataBindXY(datX, datYA);
-            sensorChart.Series["SensorB"].Points.DataBindXY(datX, datYB);
-            sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
-            sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 10;
-            sensorChart.ChartAreas[0].AxisX.Minimum = 0;
-            sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
-            sensorChart.ChartAreas[0].AxisY.ScaleView.Size = 100;
+             sensorChart.Series["SensorA"].Points.DataBindXY(datX, datYA);
+             sensorChart.Series["SensorB"].Points.DataBindXY(datX, datYB);
+             sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
+             sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 10;
+             sensorChart.ChartAreas[0].AxisX.Minimum = 0;
+             sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
+             sensorChart.ChartAreas[0].AxisY.ScaleView.Size = 100;
         }
-=======
 
         private void sensorChart_MouseClick(object sender, MouseEventArgs e)
         {
@@ -479,9 +511,7 @@ namespace DataG
             }       
 
         }
-
-
->>>>>>> c931df1b391e9312b77c59f30da76c0c7a8cb6d7
+        
     }
 }
 
