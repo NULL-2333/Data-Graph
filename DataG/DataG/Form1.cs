@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using System.Threading;
 
 namespace DataG
 {
@@ -166,7 +167,12 @@ namespace DataG
             return true;
         }
 
-        DataTable dtSave = new DataTable();
+        static DataTable dtSave = new DataTable();
+        static int dtrNum = dtSave.Rows.Count;
+        static int dtcNum = dtSave.Columns.Count;
+        static int[] datX = new int[dtrNum];
+        static int[] datYA = new int[dtrNum];
+        static int[] datYB = new int[dtrNum];
         private void button1_Click_1(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -189,11 +195,11 @@ namespace DataG
             dt = OpenCSV(fileName);
             dtSave = dt;
             fName = fileName;
-            int dtrNum = dt.Rows.Count;
-            int dtcNum = dt.Columns.Count;
-            int[] datX = new int[dtrNum];
-            int[] datYA = new int[dtrNum];
-            int[] datYB = new int[dtrNum];
+            dtrNum = dt.Rows.Count;
+            dtcNum = dt.Columns.Count;
+            datX = new int[dtrNum];
+            datYA = new int[dtrNum];
+            datYB = new int[dtrNum];
             for (int i = 0; i < dtrNum; i++)
             {
 
@@ -206,9 +212,9 @@ namespace DataG
             sensorChart.Series["SensorA"].Points.DataBindXY(datX,datYA);
             sensorChart.Series["SensorB"].Points.DataBindXY(datX, datYB);
             sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
-            sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 5;
+            sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 10;
             sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
-            sensorChart.ChartAreas[0].AxisY.ScaleView.Size = 50;
+            sensorChart.ChartAreas[0].AxisY.ScaleView.Size = 100;
             //Series series = sensorChart.Series["SensorB"];
             //series.Points.Clear();
             //sensorChart.Series["SensorB"].Points.DataBindXY(datX, datYB);
@@ -242,10 +248,10 @@ namespace DataG
             }
             else
             {
-                int dtrNum = dtSave.Rows.Count;
-                int dtcNum = dtSave.Columns.Count;
-                int[] datX = new int[dtrNum];
-                int[] datYA = new int[dtrNum];
+                dtrNum = dtSave.Rows.Count;
+                dtcNum = dtSave.Columns.Count;
+                datX = new int[dtrNum];
+                datYA = new int[dtrNum];
                 for (int i = 0; i < dtrNum; i++)
                 {
                     datX[i] = int.Parse(dtSave.Rows[i][0].ToString());
@@ -253,9 +259,9 @@ namespace DataG
                 }
                 sensorChart.Series["SensorA"].Points.DataBindXY(datX, datYA);
                 sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
-                sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 5;
+                sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 10;
                 sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
-                sensorChart.ChartAreas[0].AxisY.ScaleView.Size = 50;
+                sensorChart.ChartAreas[0].AxisY.ScaleView.Size = 100;
                 
             }
         }
@@ -269,10 +275,10 @@ namespace DataG
             }
             else
             {
-                int dtrNum = dtSave.Rows.Count;
-                int dtcNum = dtSave.Columns.Count;
-                int[] datX = new int[dtrNum];
-                int[] datYB = new int[dtrNum];
+                dtrNum = dtSave.Rows.Count;
+                dtcNum = dtSave.Columns.Count;
+                datX = new int[dtrNum];
+                datYB = new int[dtrNum];
                 for (int i = 0; i < dtrNum; i++)
                 {
                     datX[i] = int.Parse(dtSave.Rows[i][0].ToString());
@@ -280,11 +286,140 @@ namespace DataG
                 }
                 sensorChart.Series["SensorB"].Points.DataBindXY(datX, datYB);
                 sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
-                sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 5;
+                sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 10;
                 sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
-                sensorChart.ChartAreas[0].AxisY.ScaleView.Size = 50;
+                sensorChart.ChartAreas[0].AxisY.ScaleView.Size = 100;
 
             }
+        }
+        private delegate void drawGraph();
+        private static int offset = 0;
+        private List<int> valueListX;
+        private List<int> valueListYA;
+        private List<int> valueListYB;
+        private drawGraph doIt;
+        private Thread thread;
+        private void AddData()
+        {
+            //Re-read all datas from datSave
+            dtrNum = dtSave.Rows.Count;
+            dtcNum = dtSave.Columns.Count;
+            datX = new int[dtrNum];
+            datYA = new int[dtrNum];
+            datYB = new int[dtrNum];
+            if (offset < dtrNum)
+            {
+                datX[offset] = int.Parse(dtSave.Rows[offset][0].ToString());
+                datYA[offset] = int.Parse(dtSave.Rows[offset][1].ToString());
+                datYB[offset] = int.Parse(dtSave.Rows[offset][2].ToString());
+                offset += 1;
+
+                //automatically move forward
+                if (sensorChart.Series[0].Points.Count > 0)
+                {
+                    if (sensorChart.Series[0].Points[0].XValue < datX[offset - 1] - 5)
+                    {
+                        sensorChart.Series[0].Points.RemoveAt(0);
+                        sensorChart.Series[1].Points.RemoveAt(0);
+
+                        sensorChart.ChartAreas[0].AxisX.Minimum = sensorChart.Series[0].Points[0].XValue;
+                        sensorChart.ChartAreas[0].AxisX.Maximum = sensorChart.ChartAreas[0].AxisX.Minimum + 10;
+                    }
+                }
+                //add data to chart
+                sensorChart.ResetAutoValues();
+                valueListX.Add(datX[offset - 1]);
+                valueListYA.Add(datYA[offset - 1]);
+                valueListYB.Add(datYB[offset - 1]);
+                sensorChart.Series[0].Points.AddXY(datX[offset - 1], datYA[offset - 1]);
+                sensorChart.Series[1].Points.AddXY(datX[offset - 1], datYB[offset - 1]);
+                
+                sensorChart.Invalidate();
+            }
+            
+        }
+        private void runThread()
+        {
+            while (true)
+            {
+                try
+                {
+                    dtrNum = dtSave.Rows.Count;
+                    dtcNum = dtSave.Columns.Count;
+                    datX = new int[dtrNum];
+                    datYA = new int[dtrNum];
+                    datYB = new int[dtrNum];
+                    for (int i = 0; i < dtrNum; i++)
+                    {
+
+                        datX[i] = int.Parse(dtSave.Rows[i][0].ToString());
+                        datYA[i] = int.Parse(dtSave.Rows[i][1].ToString());
+                        datYB[i] = int.Parse(dtSave.Rows[i][2].ToString());
+                    }
+                    sensorChart.Invoke(doIt);
+                    Thread.Sleep(100);
+                }
+                catch (Exception e)
+                {
+                    System.Diagnostics.Debug.WriteLine("Exception : " + e.ToString());
+                }
+            }
+        }
+        private void buttonPlay_Click(object sender, EventArgs e)
+        {
+            
+            sensorChart.Series["SensorA"].Points.Clear();
+            sensorChart.Series["SensorB"].Points.Clear();
+
+            dtrNum = dtSave.Rows.Count;
+            dtcNum = dtSave.Columns.Count;
+            datX = new int[dtrNum];
+            datYA = new int[dtrNum];
+            datYB = new int[dtrNum];
+            for (int i = 0; i < dtrNum; i++)
+            {
+
+                datX[i] = int.Parse(dtSave.Rows[i][0].ToString());
+                datYA[i] = int.Parse(dtSave.Rows[i][1].ToString());
+                datYB[i] = int.Parse(dtSave.Rows[i][2].ToString());
+            }
+
+            valueListX = new List<int>();
+            valueListYA = new List<int>();
+            valueListYB = new List<int>();
+            doIt += new drawGraph(AddData);
+
+            thread = new Thread(new ThreadStart(runThread));
+            thread.Start();
+            //MessageBox.Show("HHH");
+            thread.Abort();
+        }
+
+        private void buttonStop_Click(object sender, EventArgs e)
+        {
+            sensorChart.Series["SensorA"].Points.Clear();
+            sensorChart.Series["SensorB"].Points.Clear();
+
+            dtrNum = dtSave.Rows.Count;
+            dtcNum = dtSave.Columns.Count;
+            datX = new int[dtrNum];
+            datYA = new int[dtrNum];
+            datYB = new int[dtrNum];
+            for (int i = 0; i < dtrNum; i++)
+            {
+
+                datX[i] = int.Parse(dtSave.Rows[i][0].ToString());
+                datYA[i] = int.Parse(dtSave.Rows[i][1].ToString());
+                datYB[i] = int.Parse(dtSave.Rows[i][2].ToString());
+            }
+
+            sensorChart.Series["SensorA"].Points.DataBindXY(datX, datYA);
+            sensorChart.Series["SensorB"].Points.DataBindXY(datX, datYB);
+            sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
+            sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 10;
+            sensorChart.ChartAreas[0].AxisX.Minimum = 0;
+            sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
+            sensorChart.ChartAreas[0].AxisY.ScaleView.Size = 100;
         }
     }
 }

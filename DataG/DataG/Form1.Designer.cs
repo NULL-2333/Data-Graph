@@ -38,6 +38,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.activatePanel = new System.Windows.Forms.Panel();
+            this.buttonStop = new System.Windows.Forms.Button();
+            this.buttonPlay = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.checkBoxSensorB = new System.Windows.Forms.CheckBox();
             this.checkBoxSensorA = new System.Windows.Forms.CheckBox();
@@ -45,8 +47,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.fileLoadingButton = new System.Windows.Forms.Button();
             this.sensorChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.buttonPlay = new System.Windows.Forms.Button();
-            this.buttonStop = new System.Windows.Forms.Button();
             this.displayPanel.SuspendLayout();
             this.activatePanel.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -108,6 +108,26 @@
             this.activatePanel.Name = "activatePanel";
             this.activatePanel.Size = new System.Drawing.Size(254, 224);
             this.activatePanel.TabIndex = 3;
+            // 
+            // buttonStop
+            // 
+            this.buttonStop.Location = new System.Drawing.Point(143, 96);
+            this.buttonStop.Name = "buttonStop";
+            this.buttonStop.Size = new System.Drawing.Size(91, 31);
+            this.buttonStop.TabIndex = 1;
+            this.buttonStop.Text = "Stop";
+            this.buttonStop.UseVisualStyleBackColor = true;
+            this.buttonStop.Click += new System.EventHandler(this.buttonStop_Click);
+            // 
+            // buttonPlay
+            // 
+            this.buttonPlay.Location = new System.Drawing.Point(22, 96);
+            this.buttonPlay.Name = "buttonPlay";
+            this.buttonPlay.Size = new System.Drawing.Size(91, 31);
+            this.buttonPlay.TabIndex = 0;
+            this.buttonPlay.Text = "Play";
+            this.buttonPlay.UseVisualStyleBackColor = true;
+            this.buttonPlay.Click += new System.EventHandler(this.buttonPlay_Click);
             // 
             // panel1
             // 
@@ -197,24 +217,6 @@
             this.sensorChart.Size = new System.Drawing.Size(925, 382);
             this.sensorChart.TabIndex = 8;
             this.sensorChart.Text = "chart1";
-            // 
-            // buttonPlay
-            // 
-            this.buttonPlay.Location = new System.Drawing.Point(22, 96);
-            this.buttonPlay.Name = "buttonPlay";
-            this.buttonPlay.Size = new System.Drawing.Size(91, 31);
-            this.buttonPlay.TabIndex = 0;
-            this.buttonPlay.Text = "Play";
-            this.buttonPlay.UseVisualStyleBackColor = true;
-            // 
-            // buttonStop
-            // 
-            this.buttonStop.Location = new System.Drawing.Point(143, 96);
-            this.buttonStop.Name = "buttonStop";
-            this.buttonStop.Size = new System.Drawing.Size(91, 31);
-            this.buttonStop.TabIndex = 1;
-            this.buttonStop.Text = "Stop";
-            this.buttonStop.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
