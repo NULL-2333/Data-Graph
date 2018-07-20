@@ -292,6 +292,7 @@ namespace DataG
 
             }
         }
+<<<<<<< HEAD
         private delegate void drawGraph();
         private static int offset = 0;
         private List<int> valueListX;
@@ -421,5 +422,66 @@ namespace DataG
             sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
             sensorChart.ChartAreas[0].AxisY.ScaleView.Size = 100;
         }
+=======
+
+        private void sensorChart_MouseClick(object sender, MouseEventArgs e)
+        {
+             
+            int mouseX = e.X;
+            int mouseY = e.Y;
+            DataTable dt = new DataTable();
+            if (fName == "")
+            {
+                return;
+            }
+            dt = OpenCSV(fName);
+            int dtrNum = dt.Rows.Count;
+            int dtcNum = dt.Columns.Count;
+            int[,] dat = new int[dtrNum, dtcNum];
+            for (int i = 0; i < dtrNum; i++)
+            {
+                for (int j = 0; j < dtcNum; j++)
+                {
+                    string s = dt.Rows[i][j].ToString();
+                    dat[i, j] = int.Parse(s);
+                }
+            }
+
+            textBoxSensorA.Clear();
+            textBoxSensorB.Clear();
+            textBoxTime.Clear();
+            HitTestResult result = sensorChart.HitTest(e.X, e.Y);
+            if (result.ChartElementType == ChartElementType.DataPoint)
+            {
+                this.Refresh();
+                Cursor = Cursors.Hand;
+                if (checkBoxSensorA.Checked)
+                {
+
+                    textBoxTime.Text = sensorChart.Series[0].Points[result.PointIndex].XValue.ToString();
+                    textBoxSensorA.Text = sensorChart.Series[0].Points[result.PointIndex].YValues[0].ToString();
+                }
+                if (checkBoxSensorB.Checked)
+                {
+                    textBoxTime.Text = sensorChart.Series[1].Points[result.PointIndex].XValue.ToString();
+                    textBoxSensorB.Text = sensorChart.Series[1].Points[result.PointIndex].YValues[0].ToString();
+                }
+                
+                Graphics g = sensorChart.CreateGraphics();
+                Point p1 = new Point(e.X, 0);
+                Point p2 = new Point(e.X, sensorChart.Height);
+                Pen np = new Pen(Brushes.Blue, 1);
+                g.DrawLine(np, p1, p2);
+            }
+            else if (result.ChartElementType != ChartElementType.Nothing)
+            {
+                Cursor = Cursors.Default;
+            }       
+
+        }
+
+
+>>>>>>> c931df1b391e9312b77c59f30da76c0c7a8cb6d7
     }
 }
+
