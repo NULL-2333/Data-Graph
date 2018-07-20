@@ -292,7 +292,6 @@ namespace DataG
 
             }
         }
-<<<<<<< HEAD
         private delegate void drawGraph();
         private static int offset = 0;
         private List<int> valueListX;
@@ -422,7 +421,6 @@ namespace DataG
             sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
             sensorChart.ChartAreas[0].AxisY.ScaleView.Size = 100;
         }
-=======
 
         private void sensorChart_MouseClick(object sender, MouseEventArgs e)
         {
@@ -479,9 +477,6 @@ namespace DataG
             }       
 
         }
-
-
->>>>>>> c931df1b391e9312b77c59f30da76c0c7a8cb6d7
     }
 }
 
