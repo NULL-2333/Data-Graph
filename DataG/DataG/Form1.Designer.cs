@@ -47,10 +47,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.fileLoadingButton = new System.Windows.Forms.Button();
             this.sensorChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-<<<<<<< HEAD
-
-=======
->>>>>>> 779f909dee5f90ab15f4bd054c6233713f62cfad
             this.label3 = new System.Windows.Forms.Label();
             this.textBoxSensorB = new System.Windows.Forms.TextBox();
             this.displayPanel.SuspendLayout();

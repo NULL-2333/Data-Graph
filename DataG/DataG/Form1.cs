@@ -302,35 +302,35 @@ namespace DataG
         private void AddData()
         {
             //Re-read all datas from datSave
-                dtrNum = dtSave.Rows.Count;
-                dtcNum = dtSave.Columns.Count;
-                datX = new int[dtrNum];
+            dtrNum = dtSave.Rows.Count;
+            dtcNum = dtSave.Columns.Count;
+            datX = new int[dtrNum];
+            if (checkBoxSensorA.Checked)
+                datYA = new int[dtrNum];
+            if (checkBoxSensorB.Checked)
+                datYB = new int[dtrNum];
+            if (offset < dtrNum)
+            {
+                datX[offset] = int.Parse(dtSave.Rows[offset][0].ToString());
                 if (checkBoxSensorA.Checked)
-                    datYA = new int[dtrNum];
+                    datYA[offset] = int.Parse(dtSave.Rows[offset][1].ToString());
                 if (checkBoxSensorB.Checked)
-                    datYB = new int[dtrNum];
-                if (offset < dtrNum)
-                {
-                    datX[offset] = int.Parse(dtSave.Rows[offset][0].ToString());
-                    if (checkBoxSensorA.Checked)
-                        datYA[offset] = int.Parse(dtSave.Rows[offset][1].ToString());
-                    if (checkBoxSensorB.Checked)
-                        datYB[offset] = int.Parse(dtSave.Rows[offset][2].ToString());
-                    offset += 1;
+                    datYB[offset] = int.Parse(dtSave.Rows[offset][2].ToString());
+                offset += 1;
 
-                    //automatically move forward
-                    if (sensorChart.Series[0].Points.Count > 0)
+                //automatically move forward
+                if (sensorChart.Series[0].Points.Count > 0)
+                {
+                    if (sensorChart.Series[0].Points[0].XValue < datX[offset - 1] - 5)
                     {
-                        if (sensorChart.Series[0].Points[0].XValue < datX[offset - 1] - 5)
+                        if (checkBoxSensorA.Checked)
                         {
-                            if (checkBoxSensorA.Checked)
-                            {
-                                sensorChart.Series[0].Points.RemoveAt(0);
-                                sensorChart.ChartAreas[0].AxisX.Minimum = sensorChart.Series[0].Points[0].XValue;
-                                sensorChart.ChartAreas[0].AxisX.Maximum = sensorChart.ChartAreas[0].AxisX.Minimum + 10;
-                            }
+                            sensorChart.Series[0].Points.RemoveAt(0);
+                            sensorChart.ChartAreas[0].AxisX.Minimum = sensorChart.Series[0].Points[0].XValue;
+                            sensorChart.ChartAreas[0].AxisX.Maximum = sensorChart.ChartAreas[0].AxisX.Minimum + 10;
                         }
                     }
+                }
                 if (sensorChart.Series[1].Points.Count > 0)
                 {
                     if (sensorChart.Series[1].Points[0].XValue < datX[offset - 1] - 5)
@@ -345,21 +345,24 @@ namespace DataG
                 }
                 //add data to chart
                 sensorChart.ResetAutoValues();
-                    valueListX.Add(datX[offset - 1]);
-                    if (checkBoxSensorA.Checked)
-                    {
-                        valueListYA.Add(datYA[offset - 1]);
-                        sensorChart.Series[0].Points.AddXY(datX[offset - 1], datYA[offset - 1]);
-                    }
-
-                    if (checkBoxSensorB.Checked)
-                    {
-                        valueListYB.Add(datYB[offset - 1]);
-                        sensorChart.Series[1].Points.AddXY(datX[offset - 1], datYB[offset - 1]);
-                    }
-
-                    sensorChart.Invalidate();
+                valueListX.Add(datX[offset - 1]);
+                textBoxTime.Text = datX[offset - 1].ToString();
+                if (checkBoxSensorA.Checked)
+                {
+                    valueListYA.Add(datYA[offset - 1]);
+                    textBoxSensorA.Text = datYA[offset - 1].ToString();
+                    sensorChart.Series[0].Points.AddXY(datX[offset - 1], datYA[offset - 1]);
                 }
+
+                if (checkBoxSensorB.Checked)
+                {
+                    valueListYB.Add(datYB[offset - 1]);
+                    textBoxSensorB.Text = datYB[offset - 1].ToString();
+                    sensorChart.Series[1].Points.AddXY(datX[offset - 1], datYB[offset - 1]);
+                }
+
+                sensorChart.Invalidate();
+            }
             
            
             
@@ -459,62 +462,61 @@ namespace DataG
         private void sensorChart_MouseClick(object sender, MouseEventArgs e)
         {
              
+            //int mouseX = e.X;
+            //int mouseY = e.Y;
+            //DataTable dt = new DataTable();
+            //if (fName == "")
+            //{
+            //    return;
+            //}
+            //dt = OpenCSV(fName);
+            //int dtrNum = dt.Rows.Count;
+            //int dtcNum = dt.Columns.Count;
+            //int[,] dat = new int[dtrNum, dtcNum];
+            //for (int i = 0; i < dtrNum; i++)
+            //{
+            //    for (int j = 0; j < dtcNum; j++)
+            //    {
+            //        string s = dt.Rows[i][j].ToString();
+            //        dat[i, j] = int.Parse(s);
+            //    }
+            //}
+
+            //textBoxSensorA.Clear();
+            //textBoxSensorB.Clear();
+            //textBoxTime.Clear();
+            //HitTestResult result = sensorChart.HitTest(e.X, e.Y);
+            //if (result.ChartElementType == ChartElementType.DataPoint)
+            //{
+            //    this.Refresh();
+            //    Cursor = Cursors.Hand;
+            //    if (checkBoxSensorA.Checked)
+            //    {
+
+            //        textBoxTime.Text = sensorChart.Series[0].Points[result.PointIndex].XValue.ToString();
+            //        textBoxSensorA.Text = sensorChart.Series[0].Points[result.PointIndex].YValues[0].ToString();
+            //    }
+            //    if (checkBoxSensorB.Checked)
+            //    {
+            //        textBoxTime.Text = sensorChart.Series[1].Points[result.PointIndex].XValue.ToString();
+            //        textBoxSensorB.Text = sensorChart.Series[1].Points[result.PointIndex].YValues[0].ToString();
+            //    }
+                
+            //    Graphics g = sensorChart.CreateGraphics();
+            //    Point p1 = new Point(e.X, 0);
+            //    Point p2 = new Point(e.X, sensorChart.Height);
+            //    Pen np = new Pen(Brushes.Blue, 1);
+            //    g.DrawLine(np, p1, p2);
+            //}
+            //else if (result.ChartElementType != ChartElementType.Nothing)
+            //{
+            //    Cursor = Cursors.Default;
+            //}       
             int mouseX = e.X;
             int mouseY = e.Y;
-            DataTable dt = new DataTable();
-            if (fName == "")
-            {
-                return;
-            }
-            dt = OpenCSV(fName);
-            int dtrNum = dt.Rows.Count;
-            int dtcNum = dt.Columns.Count;
-            int[,] dat = new int[dtrNum, dtcNum];
-            for (int i = 0; i < dtrNum; i++)
-            {
-                for (int j = 0; j < dtcNum; j++)
-                {
-                    string s = dt.Rows[i][j].ToString();
-                    dat[i, j] = int.Parse(s);
-                }
-            }
-
-            textBoxSensorA.Clear();
-            textBoxSensorB.Clear();
-            textBoxTime.Clear();
-            HitTestResult result = sensorChart.HitTest(e.X, e.Y);
-            if (result.ChartElementType == ChartElementType.DataPoint)
-            {
-                this.Refresh();
-                Cursor = Cursors.Hand;
-                if (checkBoxSensorA.Checked)
-                {
-
-                    textBoxTime.Text = sensorChart.Series[0].Points[result.PointIndex].XValue.ToString();
-                    textBoxSensorA.Text = sensorChart.Series[0].Points[result.PointIndex].YValues[0].ToString();
-                }
-                if (checkBoxSensorB.Checked)
-                {
-                    textBoxTime.Text = sensorChart.Series[1].Points[result.PointIndex].XValue.ToString();
-                    textBoxSensorB.Text = sensorChart.Series[1].Points[result.PointIndex].YValues[0].ToString();
-                }
-                
-                Graphics g = sensorChart.CreateGraphics();
-                Point p1 = new Point(e.X, 0);
-                Point p2 = new Point(e.X, sensorChart.Height);
-                Pen np = new Pen(Brushes.Blue, 1);
-                g.DrawLine(np, p1, p2);
-            }
-            else if (result.ChartElementType != ChartElementType.Nothing)
-            {
-                Cursor = Cursors.Default;
-            }       
-
+            double x = sensorChart.ChartAreas[0].AxisX.PixelPositionToValue(mouseX);
+            MessageBox.Show(x.ToString());
         }
-<<<<<<< HEAD
-        
-=======
->>>>>>> 779f909dee5f90ab15f4bd054c6233713f62cfad
     }
 }
 
