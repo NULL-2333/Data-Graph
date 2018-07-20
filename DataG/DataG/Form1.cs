@@ -28,6 +28,7 @@ namespace DataG
             //sensorChart.ChartAreas[0].AxisX
         }
         string fName = "";
+        bool flag = false;
         public static DataTable OpenCSV(string filePath)//从csv读取数据返回table
         {
             System.Text.Encoding encoding = GetType(filePath); //Encoding.ASCII;//
@@ -302,6 +303,12 @@ namespace DataG
         private void AddData()
         {
             //Re-read all datas from datSave
+            if(flag){
+                sensorChart.ChartAreas[0].AxisX.Minimum = sensorChart.Series[0].Points[0].XValue;
+                sensorChart.ChartAreas[0].AxisX.Maximum = sensorChart.ChartAreas[0].AxisX.Minimum + 10;
+                return;
+
+            }
             dtrNum = dtSave.Rows.Count;
             dtcNum = dtSave.Columns.Count;
             datX = new int[dtrNum];
@@ -434,7 +441,8 @@ namespace DataG
 
         private void buttonStop_Click(object sender, EventArgs e)
         {
-            sensorChart.Series["SensorA"].Points.Clear();
+            flag = true;
+            /*sensorChart.Series["SensorA"].Points.Clear();
             sensorChart.Series["SensorB"].Points.Clear();
 
             dtrNum = dtSave.Rows.Count;
@@ -456,7 +464,7 @@ namespace DataG
             sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 10;
             sensorChart.ChartAreas[0].AxisX.Minimum = 0;
             sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
-            sensorChart.ChartAreas[0].AxisY.ScaleView.Size = 100;
+            sensorChart.ChartAreas[0].AxisY.ScaleView.Size = 100;*/
         }
 
         private void sensorChart_MouseClick(object sender, MouseEventArgs e)
