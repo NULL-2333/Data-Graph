@@ -47,11 +47,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.fileLoadingButton = new System.Windows.Forms.Button();
             this.sensorChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-<<<<<<< HEAD
-=======
             this.label3 = new System.Windows.Forms.Label();
             this.textBoxSensorB = new System.Windows.Forms.TextBox();
->>>>>>> c931df1b391e9312b77c59f30da76c0c7a8cb6d7
             this.displayPanel.SuspendLayout();
             this.activatePanel.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -124,7 +121,6 @@
             // 
             // buttonStop
             // 
-<<<<<<< HEAD
             this.buttonStop.Location = new System.Drawing.Point(143, 96);
             this.buttonStop.Name = "buttonStop";
             this.buttonStop.Size = new System.Drawing.Size(91, 31);
@@ -142,7 +138,6 @@
             this.buttonPlay.Text = "Play";
             this.buttonPlay.UseVisualStyleBackColor = true;
             this.buttonPlay.Click += new System.EventHandler(this.buttonPlay_Click);
-=======
             this.buttonStop.Font = new System.Drawing.Font("monofur", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.buttonStop.Location = new System.Drawing.Point(107, 77);
             this.buttonStop.Margin = new System.Windows.Forms.Padding(2);
@@ -162,7 +157,6 @@
             this.buttonPlay.TabIndex = 0;
             this.buttonPlay.Text = "Play";
             this.buttonPlay.UseVisualStyleBackColor = true;
->>>>>>> c931df1b391e9312b77c59f30da76c0c7a8cb6d7
             // 
             // panel1
             // 
@@ -265,8 +259,6 @@
             this.sensorChart.Text = "chart1";
             this.sensorChart.MouseClick += new System.Windows.Forms.MouseEventHandler(this.sensorChart_MouseClick);
             // 
-<<<<<<< HEAD
-=======
             // label3
             // 
             this.label3.AutoSize = true;
@@ -285,7 +277,6 @@
             this.textBoxSensorB.Size = new System.Drawing.Size(90, 21);
             this.textBoxSensorB.TabIndex = 6;
             // 
->>>>>>> c931df1b391e9312b77c59f30da76c0c7a8cb6d7
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
