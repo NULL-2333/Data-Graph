@@ -37,7 +37,7 @@ namespace DataG
                 checkBoxSensorA.Checked = true;
                 checkBoxSensorB.Checked = true;
             }
-            
+            sensorChart.ChartAreas[0].AxisX.MajorGrid.LineColor = System.Drawing.Color.Transparent;
         }
 
         public static DataTable OpenCSV(string filePath)//从csv读取数据返回table
@@ -175,6 +175,8 @@ namespace DataG
 
         private void button1_Click_1(object sender, EventArgs e)
         {
+            
+
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.InitialDirectory = "c://";
             openFileDialog.Filter = "Data Files|*.csv";
@@ -292,12 +294,6 @@ namespace DataG
 
         private void buttonPlay_Click(object sender, EventArgs e)
         {
-            Graphics g = sensorChart.CreateGraphics();
-            Point p1 = new Point(100, 0);
-            Point p2 = new Point(100, sensorChart.Height);
-            Pen np = new Pen(Brushes.Blue, 1);
-            g.DrawLine(np, p1, p2);
-
             dtrNum = dtSave.Rows.Count;
             dtcNum = dtSave.Columns.Count;
             datX = new int[dtrNum];
@@ -380,10 +376,12 @@ namespace DataG
         
         private void chartTimer_Tick(object sender, EventArgs e)
         {
-            Graphics g = sensorChart.CreateGraphics();
-            Point p1 = new Point(0,0);
-            Point p2 = new Point(100,100);
-            g.DrawLine(new Pen(Brushes.Blue), p1, p2);
+            if (nowScrollValue >= 1 && nowScrollValue <= dtrNum)
+            {
+                textBoxSensorB.Text = datYB[nowScrollValue - 1].ToString();
+                textBoxSensorA.Text = datYA[nowScrollValue - 1].ToString();
+                textBoxTime.Text = nowScrollValue.ToString();
+            }
 
             sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
             sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 10;
@@ -393,7 +391,7 @@ namespace DataG
             if (nowScrollValue <= dtrNum)
                 nowScrollValue++;
             sensorChart.Invalidate();
-
+            
             
         }
 
