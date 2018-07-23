@@ -14,10 +14,22 @@ namespace DataG
 {
     public partial class Form1 : Form
     {
+        string fName = "";
+
+        static DataTable dtSave = new DataTable();
+        static int dtrNum = dtSave.Rows.Count;
+        static int dtcNum = dtSave.Columns.Count;
+        static int[] datX = new int[dtrNum];
+        static int[] datYA = new int[dtrNum];
+        static int[] datYB = new int[dtrNum];
+
+        static int nowScrollValue = 0;
+        bool fileOpen = false;
         public Form1()
         {
             InitializeComponent();
         }
+
         private void Form1_Load(object sender, EventArgs e)
         {
             if (checkBoxAllSelection.Checked)
@@ -25,9 +37,9 @@ namespace DataG
                 checkBoxSensorA.Checked = true;
                 checkBoxSensorB.Checked = true;
             }
-            //sensorChart.ChartAreas[0].AxisX
+            
         }
-        string fName = "";
+        
         public static DataTable OpenCSV(string filePath)//从csv读取数据返回table
         {
             System.Text.Encoding encoding = GetType(filePath); //Encoding.ASCII;//
@@ -81,10 +93,8 @@ namespace DataG
             fs.Close();
             return dt;
         }
-        /// 给定文件的路径，读取文件的二进制数据，判断文件的编码类型
-        /// <param name="FILE_NAME">文件路径</param>
-        /// <returns>文件的编码类型</returns>
 
+        //给定文件的路径，读取文件的二进制数据，判断文件的编码类型
         public static System.Text.Encoding GetType(string FILE_NAME)
         {
             System.IO.FileStream fs = new System.IO.FileStream(FILE_NAME, System.IO.FileMode.Open,
@@ -94,9 +104,7 @@ namespace DataG
             return r;
         }
 
-        /// 通过给定的文件流，判断文件的编码类型
-        /// <param name="fs">文件流</param>
-        /// <returns>文件的编码类型</returns>
+        //通过给定的文件流，判断文件的编码类型
         public static System.Text.Encoding GetType(System.IO.FileStream fs)
         {
             byte[] Unicode = new byte[] { 0xFF, 0xFE, 0x41 };
@@ -124,9 +132,7 @@ namespace DataG
             return reVal;
         }
 
-        /// 判断是否是不带 BOM 的 UTF8 格式
-        /// <param name="data"></param>
-        /// <returns></returns>
+        //判断是否是不带 BOM 的 UTF8 格式
         private static bool IsUTF8Bytes(byte[] data)
         {
             int charByteCounter = 1;　 //计算当前正分析的字符应还有的字节数
@@ -167,12 +173,6 @@ namespace DataG
             return true;
         }
 
-        static DataTable dtSave = new DataTable();
-        static int dtrNum = dtSave.Rows.Count;
-        static int dtcNum = dtSave.Columns.Count;
-        static int[] datX = new int[dtrNum];
-        static int[] datYA = new int[dtrNum];
-        static int[] datYB = new int[dtrNum];
         private void button1_Click_1(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -191,8 +191,8 @@ namespace DataG
                 MessageBox.Show("No file selected", "Warning");
                 return;
             }
-            //Refresh();
             dt = OpenCSV(fileName);
+            fileOpen = true;
             dtSave = dt;
             fName = fileName;
             dtrNum = dt.Rows.Count;
@@ -208,16 +208,13 @@ namespace DataG
                 datYB[i] = int.Parse(dt.Rows[i][2].ToString());
             }
             
-            //Series sensorASeries = new Series("SensorA");
             sensorChart.Series["SensorA"].Points.DataBindXY(datX,datYA);
             sensorChart.Series["SensorB"].Points.DataBindXY(datX, datYB);
             sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
             sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 10;
             sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
             sensorChart.ChartAreas[0].AxisY.ScaleView.Size = 100;
-            //Series series = sensorChart.Series["SensorB"];
-            //series.Points.Clear();
-            //sensorChart.Series["SensorB"].Points.DataBindXY(datX, datYB);
+            //sensorChart.ChartAreas[0].AxisX.ScaleView.Position = dtrNum - sensorChart.ChartAreas[0].AxisX.ScaleView.Size;
         }
 
         private void checkBoxAllSelection_Click(object sender, EventArgs e)
@@ -292,117 +289,9 @@ namespace DataG
 
             }
         }
-        private delegate void drawGraph();
-        private static int offset = 0;
-        private List<int> valueListX;
-        private List<int> valueListYA;
-        private List<int> valueListYB;
-        private drawGraph doIt;
-        private Thread thread;
-        private void AddData()
-        {
-            //Re-read all datas from datSave
-            dtrNum = dtSave.Rows.Count;
-            dtcNum = dtSave.Columns.Count;
-            datX = new int[dtrNum];
-            if (checkBoxSensorA.Checked)
-                datYA = new int[dtrNum];
-            if (checkBoxSensorB.Checked)
-                datYB = new int[dtrNum];
-            if (offset < dtrNum)
-            {
-                datX[offset] = int.Parse(dtSave.Rows[offset][0].ToString());
-                if (checkBoxSensorA.Checked)
-                    datYA[offset] = int.Parse(dtSave.Rows[offset][1].ToString());
-                if (checkBoxSensorB.Checked)
-                    datYB[offset] = int.Parse(dtSave.Rows[offset][2].ToString());
-                offset += 1;
-
-                //automatically move forward
-                if (sensorChart.Series[0].Points.Count > 0)
-                {
-                    if (sensorChart.Series[0].Points[0].XValue < datX[offset - 1] - 5)
-                    {
-                        if (checkBoxSensorA.Checked)
-                        {
-                            sensorChart.Series[0].Points.RemoveAt(0);
-                            sensorChart.ChartAreas[0].AxisX.Minimum = sensorChart.Series[0].Points[0].XValue;
-                            sensorChart.ChartAreas[0].AxisX.Maximum = sensorChart.ChartAreas[0].AxisX.Minimum + 10;
-                        }
-                    }
-                }
-                if (sensorChart.Series[1].Points.Count > 0)
-                {
-                    if (sensorChart.Series[1].Points[0].XValue < datX[offset - 1] - 5)
-                    {
-                        if (checkBoxSensorB.Checked)
-                        {
-                            sensorChart.Series[1].Points.RemoveAt(0);
-                            sensorChart.ChartAreas[0].AxisX.Minimum = sensorChart.Series[1].Points[0].XValue;
-                            sensorChart.ChartAreas[0].AxisX.Maximum = sensorChart.ChartAreas[0].AxisX.Minimum + 10;
-                        }
-                    }
-                }
-                //add data to chart
-                sensorChart.ResetAutoValues();
-                valueListX.Add(datX[offset - 1]);
-                textBoxTime.Text = datX[offset - 1].ToString();
-                if (checkBoxSensorA.Checked)
-                {
-                    valueListYA.Add(datYA[offset - 1]);
-                    textBoxSensorA.Text = datYA[offset - 1].ToString();
-                    sensorChart.Series[0].Points.AddXY(datX[offset - 1], datYA[offset - 1]);
-                }
-
-                if (checkBoxSensorB.Checked)
-                {
-                    valueListYB.Add(datYB[offset - 1]);
-                    textBoxSensorB.Text = datYB[offset - 1].ToString();
-                    sensorChart.Series[1].Points.AddXY(datX[offset - 1], datYB[offset - 1]);
-                }
-
-                sensorChart.Invalidate();
-            }
-            
-           
-            
-        }
-        private void runThread()
-        {
-            while (true)
-            {
-                try
-                {
-                    dtrNum = dtSave.Rows.Count;
-                    dtcNum = dtSave.Columns.Count;
-                    datX = new int[dtrNum];
-                    datYA = new int[dtrNum];
-                    datYB = new int[dtrNum];
-                    for (int i = 0; i < dtrNum; i++)
-                    {
-
-                        datX[i] = int.Parse(dtSave.Rows[i][0].ToString());
-                        if (checkBoxSensorA.Checked)
-                            datYA[i] = int.Parse(dtSave.Rows[i][1].ToString());
-                        if (checkBoxSensorB.Checked)
-                            datYB[i] = int.Parse(dtSave.Rows[i][2].ToString());
-                    }
-                    sensorChart.Invoke(doIt);
-                    Thread.Sleep(100);
-                }
-                catch (Exception e)
-                {
-                    System.Diagnostics.Debug.WriteLine("Exception : " + e.ToString());
-                }
-            }
-        }
+        
         private void buttonPlay_Click(object sender, EventArgs e)
         {
-            if (checkBoxSensorA.Checked)
-                sensorChart.Series["SensorA"].Points.Clear();
-            if (checkBoxSensorB.Checked)
-                sensorChart.Series["SensorB"].Points.Clear();
-
             dtrNum = dtSave.Rows.Count;
             dtcNum = dtSave.Columns.Count;
             datX = new int[dtrNum];
@@ -421,97 +310,25 @@ namespace DataG
                     datYB[i] = int.Parse(dtSave.Rows[i][2].ToString());
                 }
             }
-            valueListX = new List<int>();
-            valueListYA = new List<int>();            
-            valueListYB = new List<int>();                
-            doIt += new drawGraph(AddData);
+            if(fileOpen == true)
+                chartTimer.Enabled = true;
+            nowScrollValue = 0;
 
-            thread = new Thread(new ThreadStart(runThread));
-            thread.Start();
-            //MessageBox.Show("HHH");
-            //thread.Suspend();
         }
 
         private void buttonStop_Click(object sender, EventArgs e)
         {
-            sensorChart.Series["SensorA"].Points.Clear();
-            sensorChart.Series["SensorB"].Points.Clear();
-
-            dtrNum = dtSave.Rows.Count;
-            dtcNum = dtSave.Columns.Count;
-            datX = new int[dtrNum];
-            datYA = new int[dtrNum];
-            datYB = new int[dtrNum];
-            for (int i = 0; i < dtrNum; i++)
-            {
-
-                datX[i] = int.Parse(dtSave.Rows[i][0].ToString());
-                datYA[i] = int.Parse(dtSave.Rows[i][1].ToString());
-                datYB[i] = int.Parse(dtSave.Rows[i][2].ToString());
-            }
-
-            sensorChart.Series["SensorA"].Points.DataBindXY(datX, datYA);
-            sensorChart.Series["SensorB"].Points.DataBindXY(datX, datYB);
             sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
             sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 10;
-            sensorChart.ChartAreas[0].AxisX.Minimum = 0;
             sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
             sensorChart.ChartAreas[0].AxisY.ScaleView.Size = 100;
+            sensorChart.ChartAreas[0].AxisX.ScaleView.Position = nowScrollValue;
+            sensorChart.Invalidate();
+            chartTimer.Enabled = false;
         }
-
+        
         private void sensorChart_MouseClick(object sender, MouseEventArgs e)
-        {
-             
-            //int mouseX = e.X;
-            //int mouseY = e.Y;
-            //DataTable dt = new DataTable();
-            //if (fName == "")
-            //{
-            //    return;
-            //}
-            //dt = OpenCSV(fName);
-            //int dtrNum = dt.Rows.Count;
-            //int dtcNum = dt.Columns.Count;
-            //int[,] dat = new int[dtrNum, dtcNum];
-            //for (int i = 0; i < dtrNum; i++)
-            //{
-            //    for (int j = 0; j < dtcNum; j++)
-            //    {
-            //        string s = dt.Rows[i][j].ToString();
-            //        dat[i, j] = int.Parse(s);
-            //    }
-            //}
-
-            //textBoxSensorA.Clear();
-            //textBoxSensorB.Clear();
-            //textBoxTime.Clear();
-            //HitTestResult result = sensorChart.HitTest(e.X, e.Y);
-            //if (result.ChartElementType == ChartElementType.DataPoint)
-            //{
-            //    this.Refresh();
-            //    Cursor = Cursors.Hand;
-            //    if (checkBoxSensorA.Checked)
-            //    {
-
-            //        textBoxTime.Text = sensorChart.Series[0].Points[result.PointIndex].XValue.ToString();
-            //        textBoxSensorA.Text = sensorChart.Series[0].Points[result.PointIndex].YValues[0].ToString();
-            //    }
-            //    if (checkBoxSensorB.Checked)
-            //    {
-            //        textBoxTime.Text = sensorChart.Series[1].Points[result.PointIndex].XValue.ToString();
-            //        textBoxSensorB.Text = sensorChart.Series[1].Points[result.PointIndex].YValues[0].ToString();
-            //    }
-                
-            //    Graphics g = sensorChart.CreateGraphics();
-            //    Point p1 = new Point(e.X, 0);
-            //    Point p2 = new Point(e.X, sensorChart.Height);
-            //    Pen np = new Pen(Brushes.Blue, 1);
-            //    g.DrawLine(np, p1, p2);
-            //}
-            //else if (result.ChartElementType != ChartElementType.Nothing)
-            //{
-            //    Cursor = Cursors.Default;
-            //}   
+        { 
             dtrNum = dtSave.Rows.Count;
             dtcNum = dtSave.Columns.Count;
             datX = new int[dtrNum];
@@ -538,7 +355,7 @@ namespace DataG
             int xLeft = (int)x;
             int xRight = xLeft + 1;
             //two points:A(xLeft,datY[xLeft-1]),B(xRight,datY[xRight-1])
-            if (xRight < dtrNum)
+            if (xRight < dtrNum && xLeft > 0)
             {
                 double kA = ((double)(datYA[xLeft - 1] - datYA[xRight - 1])) / ((double)(xLeft - xRight));
                 double bA = (double)datYA[xLeft - 1] - (double)kA * (double)xLeft;
@@ -547,6 +364,31 @@ namespace DataG
                 double bB = (double)datYB[xLeft - 1] - (double)kB * (double)xLeft;
                 textBoxSensorB.Text = (kB * x + bB).ToString();
             }
+        }
+
+        
+        private void chartTimer_Tick(object sender, EventArgs e)
+        {
+            sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
+            sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 10;
+            sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
+            sensorChart.ChartAreas[0].AxisY.ScaleView.Size = 100;
+            sensorChart.ChartAreas[0].AxisX.ScaleView.Position = nowScrollValue;
+            if (nowScrollValue <= dtrNum)
+                nowScrollValue++;
+            sensorChart.Invalidate();
+            
+        }
+
+        private void resetButton_Click(object sender, EventArgs e)
+        {
+            sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
+            sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 10;
+            sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
+            sensorChart.ChartAreas[0].AxisY.ScaleView.Size = 100;
+            sensorChart.ChartAreas[0].AxisX.ScaleView.Position = 0;
+            sensorChart.Invalidate();
+            chartTimer.Enabled = false;
         }
     }
 }
