@@ -28,11 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.displayPanel = new System.Windows.Forms.Panel();
+            this.textBoxSensorB = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.textBoxSensorA = new System.Windows.Forms.TextBox();
             this.textBoxTime = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -47,8 +49,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.fileLoadingButton = new System.Windows.Forms.Button();
             this.sensorChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.label3 = new System.Windows.Forms.Label();
-            this.textBoxSensorB = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.displayPanel.SuspendLayout();
             this.activatePanel.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -69,6 +70,24 @@
             this.displayPanel.Name = "displayPanel";
             this.displayPanel.Size = new System.Drawing.Size(339, 180);
             this.displayPanel.TabIndex = 2;
+            // 
+            // textBoxSensorB
+            // 
+            this.textBoxSensorB.Location = new System.Drawing.Point(136, 109);
+            this.textBoxSensorB.Margin = new System.Windows.Forms.Padding(2);
+            this.textBoxSensorB.Name = "textBoxSensorB";
+            this.textBoxSensorB.Size = new System.Drawing.Size(90, 21);
+            this.textBoxSensorB.TabIndex = 6;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("monofur", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label3.Location = new System.Drawing.Point(43, 111);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(89, 19);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "SensorB:";
             // 
             // textBoxSensorA
             // 
@@ -111,6 +130,7 @@
             // activatePanel
             // 
             this.activatePanel.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.activatePanel.Controls.Add(this.button1);
             this.activatePanel.Controls.Add(this.buttonStop);
             this.activatePanel.Controls.Add(this.buttonPlay);
             this.activatePanel.Location = new System.Drawing.Point(512, 320);
@@ -121,9 +141,11 @@
             // 
             // buttonStop
             // 
-            this.buttonStop.Location = new System.Drawing.Point(143, 96);
+            this.buttonStop.Font = new System.Drawing.Font("monofur", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.buttonStop.Location = new System.Drawing.Point(107, 53);
+            this.buttonStop.Margin = new System.Windows.Forms.Padding(2);
             this.buttonStop.Name = "buttonStop";
-            this.buttonStop.Size = new System.Drawing.Size(91, 31);
+            this.buttonStop.Size = new System.Drawing.Size(68, 25);
             this.buttonStop.TabIndex = 1;
             this.buttonStop.Text = "Stop";
             this.buttonStop.UseVisualStyleBackColor = true;
@@ -131,32 +153,15 @@
             // 
             // buttonPlay
             // 
-            this.buttonPlay.Location = new System.Drawing.Point(22, 96);
-            this.buttonPlay.Name = "buttonPlay";
-            this.buttonPlay.Size = new System.Drawing.Size(91, 31);
-            this.buttonPlay.TabIndex = 0;
-            this.buttonPlay.Text = "Play";
-            this.buttonPlay.UseVisualStyleBackColor = true;
-            this.buttonPlay.Click += new System.EventHandler(this.buttonPlay_Click);
-            this.buttonStop.Font = new System.Drawing.Font("monofur", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonStop.Location = new System.Drawing.Point(107, 77);
-            this.buttonStop.Margin = new System.Windows.Forms.Padding(2);
-            this.buttonStop.Name = "buttonStop";
-            this.buttonStop.Size = new System.Drawing.Size(68, 25);
-            this.buttonStop.TabIndex = 1;
-            this.buttonStop.Text = "Stop";
-            this.buttonStop.UseVisualStyleBackColor = true;
-            // 
-            // buttonPlay
-            // 
             this.buttonPlay.Font = new System.Drawing.Font("monofur", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonPlay.Location = new System.Drawing.Point(16, 77);
+            this.buttonPlay.Location = new System.Drawing.Point(16, 53);
             this.buttonPlay.Margin = new System.Windows.Forms.Padding(2);
             this.buttonPlay.Name = "buttonPlay";
             this.buttonPlay.Size = new System.Drawing.Size(68, 25);
             this.buttonPlay.TabIndex = 0;
             this.buttonPlay.Text = "Play";
             this.buttonPlay.UseVisualStyleBackColor = true;
+            this.buttonPlay.Click += new System.EventHandler(this.buttonPlay_Click);
             // 
             // panel1
             // 
@@ -237,45 +242,38 @@
             // 
             // sensorChart
             // 
-            chartArea2.Name = "ChartArea1";
-            this.sensorChart.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.sensorChart.Legends.Add(legend2);
+            chartArea3.Name = "ChartArea1";
+            this.sensorChart.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.sensorChart.Legends.Add(legend3);
             this.sensorChart.Location = new System.Drawing.Point(9, 10);
             this.sensorChart.Margin = new System.Windows.Forms.Padding(2);
             this.sensorChart.Name = "sensorChart";
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series3.Legend = "Legend1";
-            series3.Name = "SensorA";
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series4.Legend = "Legend1";
-            series4.Name = "SensorB";
-            this.sensorChart.Series.Add(series3);
-            this.sensorChart.Series.Add(series4);
+            series5.ChartArea = "ChartArea1";
+            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series5.Legend = "Legend1";
+            series5.Name = "SensorA";
+            series6.ChartArea = "ChartArea1";
+            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series6.Legend = "Legend1";
+            series6.Name = "SensorB";
+            this.sensorChart.Series.Add(series5);
+            this.sensorChart.Series.Add(series6);
             this.sensorChart.Size = new System.Drawing.Size(694, 306);
             this.sensorChart.TabIndex = 8;
             this.sensorChart.Text = "chart1";
             this.sensorChart.MouseClick += new System.Windows.Forms.MouseEventHandler(this.sensorChart_MouseClick);
             // 
-            // label3
+            // button1
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("monofur", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label3.Location = new System.Drawing.Point(43, 111);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(89, 19);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "SensorB:";
-            // 
-            // textBoxSensorB
-            // 
-            this.textBoxSensorB.Location = new System.Drawing.Point(136, 109);
-            this.textBoxSensorB.Margin = new System.Windows.Forms.Padding(2);
-            this.textBoxSensorB.Name = "textBoxSensorB";
-            this.textBoxSensorB.Size = new System.Drawing.Size(90, 21);
-            this.textBoxSensorB.TabIndex = 6;
+            this.button1.Font = new System.Drawing.Font("monofur", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.button1.Location = new System.Drawing.Point(62, 98);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(66, 23);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "Reset";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Form1
             // 
@@ -321,6 +319,7 @@
         private System.Windows.Forms.Button buttonPlay;
         private System.Windows.Forms.TextBox textBoxSensorB;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button button1;
     }
 }
 

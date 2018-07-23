@@ -430,8 +430,39 @@ namespace DataG
             }
             valueListX = new List<int>();
             valueListYA = new List<int>();            
-            valueListYB = new List<int>();                
-            doIt += new drawGraph(AddData);
+            valueListYB = new List<int>();
+            if (!flag)
+            {
+                doIt += new drawGraph(AddData);
+            }
+            else
+            {
+                thread.Abort();
+                sensorChart.Series["SensorA"].Points.Clear();
+                sensorChart.Series["SensorB"].Points.Clear();
+
+                dtrNum = dtSave.Rows.Count;
+                dtcNum = dtSave.Columns.Count;
+                datX = new int[dtrNum];
+                datYA = new int[dtrNum];
+                datYB = new int[dtrNum];
+                for (int i = 0; i < dtrNum; i++)
+                {
+
+                    datX[i] = int.Parse(dtSave.Rows[i][0].ToString());
+                    datYA[i] = int.Parse(dtSave.Rows[i][1].ToString());
+                    datYB[i] = int.Parse(dtSave.Rows[i][2].ToString());
+                }
+
+                sensorChart.Series["SensorA"].Points.DataBindXY(datX, datYA);
+                sensorChart.Series["SensorB"].Points.DataBindXY(datX, datYB);
+                sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
+                sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 10;
+                sensorChart.ChartAreas[0].AxisX.Minimum = 0;
+                sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
+                sensorChart.ChartAreas[0].AxisY.ScaleView.Size = 100;
+            }               
+            
 
             thread = new Thread(new ThreadStart(runThread));
             thread.Start();
@@ -442,29 +473,7 @@ namespace DataG
         private void buttonStop_Click(object sender, EventArgs e)
         {
             flag = true;
-            /*sensorChart.Series["SensorA"].Points.Clear();
-            sensorChart.Series["SensorB"].Points.Clear();
-
-            dtrNum = dtSave.Rows.Count;
-            dtcNum = dtSave.Columns.Count;
-            datX = new int[dtrNum];
-            datYA = new int[dtrNum];
-            datYB = new int[dtrNum];
-            for (int i = 0; i < dtrNum; i++)
-            {
-
-                datX[i] = int.Parse(dtSave.Rows[i][0].ToString());
-                datYA[i] = int.Parse(dtSave.Rows[i][1].ToString());
-                datYB[i] = int.Parse(dtSave.Rows[i][2].ToString());
-            }
-
-            sensorChart.Series["SensorA"].Points.DataBindXY(datX, datYA);
-            sensorChart.Series["SensorB"].Points.DataBindXY(datX, datYB);
-            sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
-            sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 10;
-            sensorChart.ChartAreas[0].AxisX.Minimum = 0;
-            sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
-            sensorChart.ChartAreas[0].AxisY.ScaleView.Size = 100;*/
+            thread.Abort();
         }
 
         private void sensorChart_MouseClick(object sender, MouseEventArgs e)
@@ -541,21 +550,107 @@ namespace DataG
             Pen np = new Pen(Brushes.Blue, 1);
             g.DrawLine(np, p1, p2);
             double x = sensorChart.ChartAreas[0].AxisX.PixelPositionToValue(mouseX);
-            textBoxTime.Text = x.ToString();
+            textBoxTime.Text = Math.Round(x, 2).ToString();
             //MessageBox.Show(x.ToString());
             int xLeft = (int)x;
             int xRight = xLeft + 1;
             //two points:A(xLeft,datY[xLeft-1]),B(xRight,datY[xRight-1])
-            if (xRight < dtrNum)
+            if (xRight < dtrNum )
             {
                 double kA = ((double)(datYA[xLeft - 1] - datYA[xRight - 1])) / ((double)(xLeft - xRight));
                 double bA = (double)datYA[xLeft - 1] - (double)kA * (double)xLeft;
-                textBoxSensorA.Text = (kA * x + bA).ToString();
+                textBoxSensorA.Text = Math.Round(kA * x + bA, 2).ToString();
                 double kB = ((double)(datYB[xLeft - 1] - datYB[xRight - 1])) / ((double)(xLeft - xRight));
                 double bB = (double)datYB[xLeft - 1] - (double)kB * (double)xLeft;
-                textBoxSensorB.Text = (kB * x + bB).ToString();
+                textBoxSensorB.Text = Math.Round(kB * x + bB, 2).ToString();                
+            }
+            
+        }
+
+        private void button1_Click(object sender, EventArgs e)//Reset!
+        {
+            sensorChart.Series["SensorA"].Points.Clear();
+            sensorChart.Series["SensorB"].Points.Clear();
+
+            dtrNum = dtSave.Rows.Count;
+            dtcNum = dtSave.Columns.Count;
+            datX = new int[dtrNum];
+            datYA = new int[dtrNum];
+            datYB = new int[dtrNum];
+            for (int i = 0; i < dtrNum; i++)
+            {
+
+                datX[i] = int.Parse(dtSave.Rows[i][0].ToString());
+                datYA[i] = int.Parse(dtSave.Rows[i][1].ToString());
+                datYB[i] = int.Parse(dtSave.Rows[i][2].ToString());
+            }
+
+            sensorChart.Series["SensorA"].Points.DataBindXY(datX, datYA);
+            sensorChart.Series["SensorB"].Points.DataBindXY(datX, datYB);
+            sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
+            sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 10;
+            sensorChart.ChartAreas[0].AxisX.Minimum = 0;
+            sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
+            sensorChart.ChartAreas[0].AxisY.ScaleView.Size = 100;
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
+            double step = 10;
+            double start = 100;
+            Graphics g = sensorChart.CreateGraphics();
+            g.DrawLine(Pens.Blue, new Point((int)start, 0), new Point((int)start, sensorChart.Height));//assume lenth = 100
+            for (int n = 0; n < 60; n++)
+            {
+                start += step;
+                this.Refresh();
+                g.DrawLine(Pens.Blue, new Point((int)start, 0), new Point((int)start, 500));
+                var t = Task.Delay(50); //1 second/1000 ms
+                t.Wait();
+
+                double x = sensorChart.ChartAreas[0].AxisX.PixelPositionToValue(start);
+                textBoxTime.Text = Math.Round(x, 2).ToString();
+                int xLeft = (int)x;
+                int xRight = xLeft + 1;
+               
+                //if (sensorChart.Series[0].Points.Count > 0)
+               // {
+               //     if (sensorChart.Series[0].Points[0].XValue < datX[offset] - 5)
+               //     {
+                        if (checkBoxSensorA.Checked)
+                        {
+                            //sensorChart.Series[0].Points.RemoveAt(0);
+                            sensorChart.ChartAreas[0].AxisX.Minimum = sensorChart.Series[0].Points[0].XValue;
+                            sensorChart.ChartAreas[0].AxisX.Maximum = sensorChart.ChartAreas[0].AxisX.Minimum + 10;
+                            double kA = ((double)(datYA[xLeft - 1] - datYA[xRight - 1])) / ((double)(xLeft - xRight));
+                            double bA = (double)datYA[xLeft - 1] - (double)kA * (double)xLeft;
+                            textBoxSensorA.Text = Math.Round(kA * x + bA, 2).ToString();
+                        }
+                   // }
+              //  }
+               // if (sensorChart.Series[1].Points.Count > 0)
+               // {
+                //    if (sensorChart.Series[1].Points[0].XValue < datX[offset] - 5)
+//{
+                        if (checkBoxSensorB.Checked)
+                        {
+                            //sensorChart.Series[1].Points.RemoveAt(0);
+                            sensorChart.ChartAreas[0].AxisX.Minimum = sensorChart.Series[1].Points[0].XValue;
+                            sensorChart.ChartAreas[0].AxisX.Maximum = sensorChart.ChartAreas[0].AxisX.Minimum + 10;
+                            double kB = ((double)(datYB[xLeft - 1] - datYB[xRight - 1])) / ((double)(xLeft - xRight));
+                            double bB = (double)datYB[xLeft - 1] - (double)kB * (double)xLeft;
+                            textBoxSensorB.Text = Math.Round(kB * x + bB, 2).ToString();
+                        }
+                  //  }
+              //  }
+
+
             }
         }
+
+
     }
 }
 
