@@ -292,6 +292,12 @@ namespace DataG
 
         private void buttonPlay_Click(object sender, EventArgs e)
         {
+            Graphics g = sensorChart.CreateGraphics();
+            Point p1 = new Point(100, 0);
+            Point p2 = new Point(100, sensorChart.Height);
+            Pen np = new Pen(Brushes.Blue, 1);
+            g.DrawLine(np, p1, p2);
+
             dtrNum = dtSave.Rows.Count;
             dtcNum = dtSave.Columns.Count;
             datX = new int[dtrNum];
@@ -303,12 +309,17 @@ namespace DataG
                 {
                     datX[i] = int.Parse(dtSave.Rows[i][0].ToString());
                     datYA[i] = int.Parse(dtSave.Rows[i][1].ToString());
+                    textBoxTime.Text = datX[i].ToString();
+                    textBoxSensorA.Text = datYA[i].ToString();
                 }
                 if (checkBoxSensorB.Checked)
                 {
                     datX[i] = int.Parse(dtSave.Rows[i][0].ToString());
                     datYB[i] = int.Parse(dtSave.Rows[i][2].ToString());
+                    textBoxTime.Text = datX[i].ToString();
+                    textBoxSensorB.Text = datYA[i].ToString();
                 }
+                
             }
             if(fileOpen == true)
                 chartTimer.Enabled = true;
@@ -369,6 +380,21 @@ namespace DataG
         
         private void chartTimer_Tick(object sender, EventArgs e)
         {
+            int x = nowScrollValue;
+            int r = x + 1;
+            if(nowScrollValue > 1 && r < dtrNum) {
+                double kA = ((double)(datYA[x-1 ] - datYA[r - 1])) / ((double)(x - r));
+                double bA = (double)datYA[x - 1] - (double)kA * (double)x;
+                double kB = ((double)(datYB[x - 1] - datYB[r - 1])) / ((double)(x - r));
+                double bB = (double)datYB[x - 1] - (double)kB * (double)x;
+                textBoxSensorB.Text = Math.Round(kB * x + bB, 2).ToString();
+                textBoxSensorA.Text = Math.Round(kA * x + bA, 2).ToString();
+                textBoxTime.Text = nowScrollValue.ToString();
+
+            }
+            
+            //textBoxSensorA.Text = datYA[i].ToString();
+            //textBoxSensorB.Text = datYA[i].ToString();
             sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
             sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 10;
             sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
@@ -377,6 +403,7 @@ namespace DataG
             if (nowScrollValue <= dtrNum)
                 nowScrollValue++;
             sensorChart.Invalidate();
+
             
         }
 

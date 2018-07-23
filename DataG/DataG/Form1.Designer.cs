@@ -41,6 +41,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.activatePanel = new System.Windows.Forms.Panel();
+            this.resetButton = new System.Windows.Forms.Button();
             this.buttonStop = new System.Windows.Forms.Button();
             this.buttonPlay = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -51,7 +52,6 @@
             this.fileLoadingButton = new System.Windows.Forms.Button();
             this.sensorChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.chartTimer = new System.Windows.Forms.Timer(this.components);
-            this.resetButton = new System.Windows.Forms.Button();
             this.displayPanel.SuspendLayout();
             this.activatePanel.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -67,54 +67,54 @@
             this.displayPanel.Controls.Add(this.textBoxTime);
             this.displayPanel.Controls.Add(this.label2);
             this.displayPanel.Controls.Add(this.label1);
-            this.displayPanel.Location = new System.Drawing.Point(12, 400);
-            this.displayPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.displayPanel.Location = new System.Drawing.Point(9, 320);
+            this.displayPanel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.displayPanel.Name = "displayPanel";
-            this.displayPanel.Size = new System.Drawing.Size(452, 225);
+            this.displayPanel.Size = new System.Drawing.Size(339, 180);
             this.displayPanel.TabIndex = 2;
             // 
             // textBoxSensorB
             // 
-            this.textBoxSensorB.Location = new System.Drawing.Point(181, 136);
-            this.textBoxSensorB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.textBoxSensorB.Location = new System.Drawing.Point(136, 109);
+            this.textBoxSensorB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textBoxSensorB.Name = "textBoxSensorB";
-            this.textBoxSensorB.Size = new System.Drawing.Size(119, 25);
+            this.textBoxSensorB.Size = new System.Drawing.Size(90, 21);
             this.textBoxSensorB.TabIndex = 6;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label3.Location = new System.Drawing.Point(57, 139);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Location = new System.Drawing.Point(43, 111);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(112, 29);
+            this.label3.Size = new System.Drawing.Size(87, 24);
             this.label3.TabIndex = 5;
             this.label3.Text = "SensorB:";
             // 
             // textBoxSensorA
             // 
-            this.textBoxSensorA.Location = new System.Drawing.Point(181, 90);
-            this.textBoxSensorA.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.textBoxSensorA.Location = new System.Drawing.Point(136, 72);
+            this.textBoxSensorA.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textBoxSensorA.Name = "textBoxSensorA";
-            this.textBoxSensorA.Size = new System.Drawing.Size(119, 25);
+            this.textBoxSensorA.Size = new System.Drawing.Size(90, 21);
             this.textBoxSensorA.TabIndex = 4;
             // 
             // textBoxTime
             // 
-            this.textBoxTime.Location = new System.Drawing.Point(181, 45);
-            this.textBoxTime.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.textBoxTime.Location = new System.Drawing.Point(136, 36);
+            this.textBoxTime.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textBoxTime.Name = "textBoxTime";
-            this.textBoxTime.Size = new System.Drawing.Size(119, 25);
+            this.textBoxTime.Size = new System.Drawing.Size(90, 21);
             this.textBoxTime.TabIndex = 3;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.Location = new System.Drawing.Point(57, 90);
+            this.label2.Location = new System.Drawing.Point(43, 72);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(111, 29);
+            this.label2.Size = new System.Drawing.Size(88, 24);
             this.label2.TabIndex = 1;
             this.label2.Text = "SensorA:";
             // 
@@ -122,9 +122,10 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(57, 45);
+            this.label1.Location = new System.Drawing.Point(43, 36);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(75, 29);
+            this.label1.Size = new System.Drawing.Size(58, 24);
             this.label1.TabIndex = 0;
             this.label1.Text = "Time:";
             // 
@@ -134,19 +135,30 @@
             this.activatePanel.Controls.Add(this.resetButton);
             this.activatePanel.Controls.Add(this.buttonStop);
             this.activatePanel.Controls.Add(this.buttonPlay);
-            this.activatePanel.Location = new System.Drawing.Point(683, 400);
-            this.activatePanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.activatePanel.Location = new System.Drawing.Point(512, 320);
+            this.activatePanel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.activatePanel.Name = "activatePanel";
-            this.activatePanel.Size = new System.Drawing.Size(253, 224);
+            this.activatePanel.Size = new System.Drawing.Size(190, 179);
             this.activatePanel.TabIndex = 3;
+            // 
+            // resetButton
+            // 
+            this.resetButton.Location = new System.Drawing.Point(16, 120);
+            this.resetButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.resetButton.Name = "resetButton";
+            this.resetButton.Size = new System.Drawing.Size(159, 26);
+            this.resetButton.TabIndex = 2;
+            this.resetButton.Text = "Reset";
+            this.resetButton.UseVisualStyleBackColor = true;
+            this.resetButton.Click += new System.EventHandler(this.resetButton_Click);
             // 
             // buttonStop
             // 
             this.buttonStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonStop.Location = new System.Drawing.Point(143, 96);
-            this.buttonStop.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonStop.Location = new System.Drawing.Point(107, 77);
+            this.buttonStop.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonStop.Name = "buttonStop";
-            this.buttonStop.Size = new System.Drawing.Size(91, 31);
+            this.buttonStop.Size = new System.Drawing.Size(68, 25);
             this.buttonStop.TabIndex = 1;
             this.buttonStop.Text = "Stop";
             this.buttonStop.UseVisualStyleBackColor = true;
@@ -155,10 +167,10 @@
             // buttonPlay
             // 
             this.buttonPlay.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonPlay.Location = new System.Drawing.Point(21, 96);
-            this.buttonPlay.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonPlay.Location = new System.Drawing.Point(16, 77);
+            this.buttonPlay.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonPlay.Name = "buttonPlay";
-            this.buttonPlay.Size = new System.Drawing.Size(91, 31);
+            this.buttonPlay.Size = new System.Drawing.Size(68, 25);
             this.buttonPlay.TabIndex = 0;
             this.buttonPlay.Text = "Play";
             this.buttonPlay.UseVisualStyleBackColor = true;
@@ -171,20 +183,20 @@
             this.panel1.Controls.Add(this.checkBoxSensorA);
             this.panel1.Controls.Add(this.checkBoxAllSelection);
             this.panel1.Controls.Add(this.label4);
-            this.panel1.Location = new System.Drawing.Point(469, 400);
-            this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panel1.Location = new System.Drawing.Point(352, 320);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(207, 225);
+            this.panel1.Size = new System.Drawing.Size(155, 180);
             this.panel1.TabIndex = 4;
             // 
             // checkBoxSensorB
             // 
             this.checkBoxSensorB.AutoSize = true;
             this.checkBoxSensorB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.checkBoxSensorB.Location = new System.Drawing.Point(33, 121);
-            this.checkBoxSensorB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.checkBoxSensorB.Location = new System.Drawing.Point(25, 97);
+            this.checkBoxSensorB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.checkBoxSensorB.Name = "checkBoxSensorB";
-            this.checkBoxSensorB.Size = new System.Drawing.Size(88, 22);
+            this.checkBoxSensorB.Size = new System.Drawing.Size(73, 19);
             this.checkBoxSensorB.TabIndex = 4;
             this.checkBoxSensorB.Text = "SensorB";
             this.checkBoxSensorB.UseVisualStyleBackColor = true;
@@ -194,10 +206,10 @@
             // 
             this.checkBoxSensorA.AutoSize = true;
             this.checkBoxSensorA.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.checkBoxSensorA.Location = new System.Drawing.Point(33, 96);
-            this.checkBoxSensorA.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.checkBoxSensorA.Location = new System.Drawing.Point(25, 77);
+            this.checkBoxSensorA.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.checkBoxSensorA.Name = "checkBoxSensorA";
-            this.checkBoxSensorA.Size = new System.Drawing.Size(87, 22);
+            this.checkBoxSensorA.Size = new System.Drawing.Size(72, 19);
             this.checkBoxSensorA.TabIndex = 3;
             this.checkBoxSensorA.Text = "SensorA";
             this.checkBoxSensorA.UseVisualStyleBackColor = true;
@@ -209,10 +221,10 @@
             this.checkBoxAllSelection.Checked = true;
             this.checkBoxAllSelection.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxAllSelection.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.checkBoxAllSelection.Location = new System.Drawing.Point(33, 71);
-            this.checkBoxAllSelection.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.checkBoxAllSelection.Location = new System.Drawing.Point(25, 57);
+            this.checkBoxAllSelection.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.checkBoxAllSelection.Name = "checkBoxAllSelection";
-            this.checkBoxAllSelection.Size = new System.Drawing.Size(45, 22);
+            this.checkBoxAllSelection.Size = new System.Drawing.Size(39, 19);
             this.checkBoxAllSelection.TabIndex = 2;
             this.checkBoxAllSelection.Text = "All";
             this.checkBoxAllSelection.UseVisualStyleBackColor = true;
@@ -222,19 +234,20 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label4.Location = new System.Drawing.Point(56, 28);
+            this.label4.Location = new System.Drawing.Point(42, 22);
+            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(92, 29);
+            this.label4.Size = new System.Drawing.Size(70, 24);
             this.label4.TabIndex = 0;
             this.label4.Text = "Display";
             // 
             // fileLoadingButton
             // 
             this.fileLoadingButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.fileLoadingButton.Location = new System.Drawing.Point(943, 12);
-            this.fileLoadingButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.fileLoadingButton.Location = new System.Drawing.Point(707, 10);
+            this.fileLoadingButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.fileLoadingButton.Name = "fileLoadingButton";
-            this.fileLoadingButton.Size = new System.Drawing.Size(165, 38);
+            this.fileLoadingButton.Size = new System.Drawing.Size(124, 30);
             this.fileLoadingButton.TabIndex = 6;
             this.fileLoadingButton.Text = "Load File...";
             this.fileLoadingButton.UseVisualStyleBackColor = true;
@@ -247,8 +260,8 @@
             this.sensorChart.Cursor = System.Windows.Forms.Cursors.Hand;
             legend1.Name = "Legend1";
             this.sensorChart.Legends.Add(legend1);
-            this.sensorChart.Location = new System.Drawing.Point(12, 12);
-            this.sensorChart.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.sensorChart.Location = new System.Drawing.Point(9, 10);
+            this.sensorChart.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.sensorChart.Name = "sensorChart";
             this.sensorChart.RightToLeft = System.Windows.Forms.RightToLeft.No;
             series1.ChartArea = "ChartArea1";
@@ -261,7 +274,7 @@
             series2.Name = "SensorB";
             this.sensorChart.Series.Add(series1);
             this.sensorChart.Series.Add(series2);
-            this.sensorChart.Size = new System.Drawing.Size(925, 382);
+            this.sensorChart.Size = new System.Drawing.Size(694, 306);
             this.sensorChart.TabIndex = 8;
             this.sensorChart.TabStop = false;
             this.sensorChart.Text = "chart1";
@@ -269,30 +282,19 @@
             // 
             // chartTimer
             // 
-            this.chartTimer.Interval = 50;
             this.chartTimer.Tick += new System.EventHandler(this.chartTimer_Tick);
-            // 
-            // resetButton
-            // 
-            this.resetButton.Location = new System.Drawing.Point(21, 150);
-            this.resetButton.Name = "resetButton";
-            this.resetButton.Size = new System.Drawing.Size(212, 33);
-            this.resetButton.TabIndex = 2;
-            this.resetButton.Text = "Reset";
-            this.resetButton.UseVisualStyleBackColor = true;
-            this.resetButton.Click += new System.EventHandler(this.resetButton_Click);
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1123, 638);
+            this.ClientSize = new System.Drawing.Size(842, 510);
             this.Controls.Add(this.sensorChart);
             this.Controls.Add(this.fileLoadingButton);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.activatePanel);
             this.Controls.Add(this.displayPanel);
-            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "Form1";
