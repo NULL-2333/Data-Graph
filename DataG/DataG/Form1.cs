@@ -369,6 +369,11 @@ namespace DataG
         
         private void chartTimer_Tick(object sender, EventArgs e)
         {
+            Graphics g = sensorChart.CreateGraphics();
+            Point p1 = new Point(0,0);
+            Point p2 = new Point(100,100);
+            g.DrawLine(new Pen(Brushes.Blue), p1, p2);
+
             sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
             sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 10;
             sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
