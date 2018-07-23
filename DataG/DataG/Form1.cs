@@ -292,6 +292,12 @@ namespace DataG
 
         private void buttonPlay_Click(object sender, EventArgs e)
         {
+            Graphics g = sensorChart.CreateGraphics();
+            Point p1 = new Point(100, 0);
+            Point p2 = new Point(100, sensorChart.Height);
+            Pen np = new Pen(Brushes.Blue, 1);
+            g.DrawLine(np, p1, p2);
+
             dtrNum = dtSave.Rows.Count;
             dtcNum = dtSave.Columns.Count;
             datX = new int[dtrNum];
@@ -303,12 +309,17 @@ namespace DataG
                 {
                     datX[i] = int.Parse(dtSave.Rows[i][0].ToString());
                     datYA[i] = int.Parse(dtSave.Rows[i][1].ToString());
+                    textBoxTime.Text = datX[i].ToString();
+                    textBoxSensorA.Text = datYA[i].ToString();
                 }
                 if (checkBoxSensorB.Checked)
                 {
                     datX[i] = int.Parse(dtSave.Rows[i][0].ToString());
                     datYB[i] = int.Parse(dtSave.Rows[i][2].ToString());
+                    textBoxTime.Text = datX[i].ToString();
+                    textBoxSensorB.Text = datYA[i].ToString();
                 }
+                
             }
             if(fileOpen == true)
                 chartTimer.Enabled = true;
@@ -382,6 +393,7 @@ namespace DataG
             if (nowScrollValue <= dtrNum)
                 nowScrollValue++;
             sensorChart.Invalidate();
+
             
         }
 
