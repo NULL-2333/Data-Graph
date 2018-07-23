@@ -39,7 +39,7 @@ namespace DataG
             }
             
         }
-        
+
         public static DataTable OpenCSV(string filePath)//从csv读取数据返回table
         {
             System.Text.Encoding encoding = GetType(filePath); //Encoding.ASCII;//
@@ -289,7 +289,7 @@ namespace DataG
 
             }
         }
-        
+
         private void buttonPlay_Click(object sender, EventArgs e)
         {
             dtrNum = dtSave.Rows.Count;
@@ -350,7 +350,7 @@ namespace DataG
             Pen np = new Pen(Brushes.Blue, 1);
             g.DrawLine(np, p1, p2);
             double x = sensorChart.ChartAreas[0].AxisX.PixelPositionToValue(mouseX);
-            textBoxTime.Text = x.ToString();
+            textBoxTime.Text = Math.Round(x, 2).ToString();
             //MessageBox.Show(x.ToString());
             int xLeft = (int)x;
             int xRight = xLeft + 1;
@@ -359,13 +359,13 @@ namespace DataG
             {
                 double kA = ((double)(datYA[xLeft - 1] - datYA[xRight - 1])) / ((double)(xLeft - xRight));
                 double bA = (double)datYA[xLeft - 1] - (double)kA * (double)xLeft;
-                textBoxSensorA.Text = (kA * x + bA).ToString();
+                textBoxSensorA.Text = Math.Round(kA * x + bA, 2).ToString();
                 double kB = ((double)(datYB[xLeft - 1] - datYB[xRight - 1])) / ((double)(xLeft - xRight));
                 double bB = (double)datYB[xLeft - 1] - (double)kB * (double)xLeft;
-                textBoxSensorB.Text = (kB * x + bB).ToString();
+                textBoxSensorB.Text = Math.Round(kB * x + bB, 2).ToString();                
             }
+            
         }
-
         
         private void chartTimer_Tick(object sender, EventArgs e)
         {
