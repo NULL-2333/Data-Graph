@@ -405,6 +405,12 @@ namespace DataG
             sensorChart.Invalidate();
             chartTimer.Enabled = false;
         }
+
+        private void GPSFilesLoadingButton_Click(object sender, EventArgs e)
+        {
+            string filename = "C:\\Users\\user\\Desktop\\GPS_Code\\test.rgp";
+            FileIO.readFile(filename.ToCharArray());
+        }
     }
 }
 

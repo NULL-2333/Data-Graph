@@ -54,6 +54,7 @@
             this.chartTimer = new System.Windows.Forms.Timer(this.components);
             this.GPSPanel = new System.Windows.Forms.Panel();
             this.GPSFilesLoadingButton = new System.Windows.Forms.Button();
+            this.displayPanel.SuspendLayout();
             this.activatePanel.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sensorChart)).BeginInit();
@@ -304,6 +305,7 @@
             this.GPSFilesLoadingButton.TabIndex = 10;
             this.GPSFilesLoadingButton.Text = "Load GPS File...";
             this.GPSFilesLoadingButton.UseVisualStyleBackColor = true;
+            this.GPSFilesLoadingButton.Click += new System.EventHandler(this.GPSFilesLoadingButton_Click);
             // 
             // Form1
             // 
