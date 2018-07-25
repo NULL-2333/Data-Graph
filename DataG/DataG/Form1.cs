@@ -20,8 +20,11 @@ namespace DataG
         static int dtrNum = dtSave.Rows.Count;
         static int dtcNum = dtSave.Columns.Count;
         static int[] datX = new int[dtrNum];
-        static int[] datYA = new int[dtrNum];
-        static int[] datYB = new int[dtrNum];
+        static double[] datYA = new double[dtrNum];
+        static double[] datS = new double[dtrNum];
+        static double[] datA = new double[dtrNum];
+        static double[] datO = new double[dtrNum];
+
 
         static int nowScrollValue = 0;
         bool fileOpen = false;
@@ -93,8 +96,7 @@ namespace DataG
             fs.Close();
             return dt;
         }
-
-        //给定文件的路径，读取文件的二进制数据，判断文件的编码类型
+        
         public static System.Text.Encoding GetType(string FILE_NAME)
         {
             System.IO.FileStream fs = new System.IO.FileStream(FILE_NAME, System.IO.FileMode.Open,
@@ -199,19 +201,22 @@ namespace DataG
             fName = fileName;
             dtrNum = dt.Rows.Count;
             dtcNum = dt.Columns.Count;
+            datA = new double[dtrNum];//GPS
+            datO = new double[dtrNum];
+            datS = new double[dtrNum];
+
             datX = new int[dtrNum];
-            datYA = new int[dtrNum];
-            datYB = new int[dtrNum];
+            datYA = new double[dtrNum];//sensor
             for (int i = 0; i < dtrNum; i++)
             {
 
                 datX[i] = int.Parse(dt.Rows[i][0].ToString());
                 datYA[i] = int.Parse(dt.Rows[i][1].ToString());
-                datYB[i] = int.Parse(dt.Rows[i][2].ToString());
+                datS[i] = int.Parse(dt.Rows[i][2].ToString());
             }
             
             sensorChart.Series["SensorA"].Points.DataBindXY(datX,datYA);
-            sensorChart.Series["SensorB"].Points.DataBindXY(datX, datYB);
+            sensorChart.Series["SensorB"].Points.DataBindXY(datX, datS);
             sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
             sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 10;
             sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
@@ -250,7 +255,7 @@ namespace DataG
                 dtrNum = dtSave.Rows.Count;
                 dtcNum = dtSave.Columns.Count;
                 datX = new int[dtrNum];
-                datYA = new int[dtrNum];
+                datYA = new double[dtrNum];
                 for (int i = 0; i < dtrNum; i++)
                 {
                     datX[i] = int.Parse(dtSave.Rows[i][0].ToString());
@@ -277,13 +282,13 @@ namespace DataG
                 dtrNum = dtSave.Rows.Count;
                 dtcNum = dtSave.Columns.Count;
                 datX = new int[dtrNum];
-                datYB = new int[dtrNum];
+                datS = new double[dtrNum];
                 for (int i = 0; i < dtrNum; i++)
                 {
                     datX[i] = int.Parse(dtSave.Rows[i][0].ToString());
-                    datYB[i] = int.Parse(dtSave.Rows[i][2].ToString());
+                    datS[i] = int.Parse(dtSave.Rows[i][2].ToString());
                 }
-                sensorChart.Series["SensorB"].Points.DataBindXY(datX, datYB);
+                sensorChart.Series["SensorB"].Points.DataBindXY(datX, datS);
                 sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
                 sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 10;
                 sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
@@ -297,8 +302,8 @@ namespace DataG
             dtrNum = dtSave.Rows.Count;
             dtcNum = dtSave.Columns.Count;
             datX = new int[dtrNum];
-            datYA = new int[dtrNum];
-            datYB = new int[dtrNum];
+            datYA = new double[dtrNum];
+            datS = new double[dtrNum];
             for (int i = 0; i < dtrNum; i++)
             {
                 if (checkBoxSensorA.Checked)
@@ -311,7 +316,7 @@ namespace DataG
                 if (checkBoxSensorB.Checked)
                 {
                     datX[i] = int.Parse(dtSave.Rows[i][0].ToString());
-                    datYB[i] = int.Parse(dtSave.Rows[i][2].ToString());
+                    datS[i] = int.Parse(dtSave.Rows[i][2].ToString());
                     textBoxTime.Text = datX[i].ToString();
                     textBoxSensorB.Text = datYA[i].ToString();
                 }
@@ -339,14 +344,14 @@ namespace DataG
             dtrNum = dtSave.Rows.Count;
             dtcNum = dtSave.Columns.Count;
             datX = new int[dtrNum];
-            datYA = new int[dtrNum];
-            datYB = new int[dtrNum];
+            datYA = new double[dtrNum];
+            datS = new double[dtrNum];
             for (int i = 0; i < dtrNum; i++)
             {
 
                 datX[i] = int.Parse(dtSave.Rows[i][0].ToString());
                 datYA[i] = int.Parse(dtSave.Rows[i][1].ToString());
-                datYB[i] = int.Parse(dtSave.Rows[i][2].ToString());
+                datS[i] = int.Parse(dtSave.Rows[i][2].ToString());
             }
             int mouseX = e.X;
             int mouseY = e.Y;
@@ -367,8 +372,8 @@ namespace DataG
                 double kA = ((double)(datYA[xLeft - 1] - datYA[xRight - 1])) / ((double)(xLeft - xRight));
                 double bA = (double)datYA[xLeft - 1] - (double)kA * (double)xLeft;
                 textBoxSensorA.Text = Math.Round(kA * x + bA, 2).ToString();
-                double kB = ((double)(datYB[xLeft - 1] - datYB[xRight - 1])) / ((double)(xLeft - xRight));
-                double bB = (double)datYB[xLeft - 1] - (double)kB * (double)xLeft;
+                double kB = ((double)(datS[xLeft - 1] - datS[xRight - 1])) / ((double)(xLeft - xRight));
+                double bB = (double)datS[xLeft - 1] - (double)kB * (double)xLeft;
                 textBoxSensorB.Text = Math.Round(kB * x + bB, 2).ToString();                
             }
             
@@ -378,7 +383,7 @@ namespace DataG
         {
             if (nowScrollValue >= 1 && nowScrollValue <= dtrNum)
             {
-                textBoxSensorB.Text = datYB[nowScrollValue - 1].ToString();
+                textBoxSensorB.Text = datS[nowScrollValue - 1].ToString();
                 textBoxSensorA.Text = datYA[nowScrollValue - 1].ToString();
                 textBoxTime.Text = nowScrollValue.ToString();
             }
@@ -411,6 +416,8 @@ namespace DataG
             string filename = "C:\\Users\\user\\Desktop\\GPS_Code\\test.rgp";
             FileIO.readFile(filename.ToCharArray());
         }
+
+     
     }
 }
 
