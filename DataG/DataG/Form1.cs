@@ -24,6 +24,7 @@ namespace DataG
         static double[] datS = new double[dtrNum];
         static double[] datA = new double[dtrNum];
         static double[] datO = new double[dtrNum];
+        static double EARTH_RAD_M = 6378100.00;
 
 
         static int nowScrollValue = 0;
@@ -175,6 +176,7 @@ namespace DataG
             return true;
         }
 
+
         private void button1_Click_1(object sender, EventArgs e)
         {
             
@@ -221,8 +223,66 @@ namespace DataG
             sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 10;
             sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
             sensorChart.ChartAreas[0].AxisY.ScaleView.Size = 100;
-            //sensorChart.ChartAreas[0].AxisX.ScaleView.Position = dtrNum - sensorChart.ChartAreas[0].AxisX.ScaleView.Size;
+
+            for (int i = 0; i < dtrNum; i++)
+            {
+                
+                datA[i] = double.Parse(dt.Rows[i][2].ToString());
+                datA[i] *= 0.017453293;
+                datO[i] = double.Parse(dt.Rows[i][3].ToString());
+                datO[i] *= 0.017453293;
+                //datS[i] = double.Parse(dt.Rows[i][3].ToString());
+            }
+            //convert from lat and lon to x,y
+
+            double[] glpx = new double[dtrNum];
+            double[] glpy = new double[dtrNum];
+            for (int i = 0; i < dtrNum; i++)
+            {
+                glpx[i] = (datO[i] - datO[0]) * EARTH_RAD_M;
+                glpy[i] = (datA[i] - datA[0]) * EARTH_RAD_M * Math.Sin(datO[i]);
+            }
+            //the (x,y) coordinate is in the glp.array.pt , speed is in the glp.array.speed
+            //change the original (x,y) to the position of panel
+            double maxAbsX = maxAbsValue(glpx, dtrNum);
+            double maxAbsY = maxAbsValue(glpy, dtrNum);
+            double[] x = new double[dtrNum];
+            double[] y = new double[dtrNum];
+            for (int i = 0; i < dtrNum; i++)
+            {
+                x[i] = (maxAbsX + glpx[i]) * 0.5 * (GPSPanel.Width - 50) / maxAbsX;
+                y[i] = (maxAbsY - glpy[i]) * 0.5 * (GPSPanel.Height - 50) / maxAbsY;
+            }
+            Graphics g = GPSPanel.CreateGraphics();
+            PointF p1 = new PointF();
+            PointF p2 = new PointF();
+            Pen nPen = new Pen(Brushes.Red, 1);
+            for (int i = 0; i < dtrNum - 1; i++)
+            {
+                p1 = new PointF((float)x[i], (float)y[i]);
+                p2 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                g.DrawLine(nPen, p1, p2);
+            }
+
+
         }
+
+        double maxAbsValue(double[] num, int length)
+        {
+            double[] numNew = new double[length];
+            for (int i = 0; i < length; i++)
+            {
+                numNew[i] = Math.Abs(num[i]);
+            }
+            double re = 0;
+            for (int i = 0; i < length; i++)
+            {
+                if (numNew[i] > re)
+                    re = numNew[i];
+            }
+            return re;
+        }
+
 
         private void checkBoxAllSelection_Click(object sender, EventArgs e)
         {
