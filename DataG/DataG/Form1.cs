@@ -19,15 +19,15 @@ namespace DataG
         static DataTable dtSave = new DataTable();
         static int dtrNum = dtSave.Rows.Count;
         static int dtcNum = dtSave.Columns.Count;
-        static int[] datX = new int[dtrNum];
-        static double[] datYA = new double[dtrNum];
-        static double[] datS = new double[dtrNum];
-        static double[] datA = new double[dtrNum];
-        static double[] datO = new double[dtrNum];
+        static int[] datTime = new int[dtrNum];
+        static double[] datSensorA = new double[dtrNum];
+        static double[] datS = new double[dtrNum];//speed
+        static double[] datA = new double[dtrNum];//latitude
+        static double[] datO = new double[dtrNum];//longtitude
         static double EARTH_RAD_M = 6378100.00;
-        double[] glpx ;
-        double[] glpy ;
-        double maxAbsX;
+        static double[] glpx = new double[dtrNum];
+        static double[] glpy = new double[dtrNum];
+        static double maxAbsX;
         double maxAbsY;
         static double[] x = new double[dtrNum];
         static double[] y = new double[dtrNum];
@@ -184,8 +184,6 @@ namespace DataG
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            
-
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.InitialDirectory = "c://";
             openFileDialog.Filter = "Data Files|*.csv";
@@ -208,22 +206,22 @@ namespace DataG
             fName = fileName;
             dtrNum = dt.Rows.Count;
             dtcNum = dt.Columns.Count;
-            datA = new double[dtrNum];//GPS
-            datO = new double[dtrNum];
+            datTime = new int[dtrNum];
+            datSensorA = new double[dtrNum];//sensor
             datS = new double[dtrNum];
-
-            datX = new int[dtrNum];
-            datYA = new double[dtrNum];//sensor
+            datA = new double[dtrNum];
+            datO = new double[dtrNum];
+            
             for (int i = 0; i < dtrNum; i++)
             {
 
-                datX[i] = int.Parse(dt.Rows[i][0].ToString());
-                datYA[i] = int.Parse(dt.Rows[i][1].ToString());
+                datTime[i] = int.Parse(dt.Rows[i][0].ToString());
+                datSensorA[i] = int.Parse(dt.Rows[i][1].ToString());
                 datS[i] = int.Parse(dt.Rows[i][2].ToString());
             }
             
-            sensorChart.Series["SensorA"].Points.DataBindXY(datX,datYA);
-            sensorChart.Series["SensorB"].Points.DataBindXY(datX, datS);
+            sensorChart.Series["SensorA"].Points.DataBindXY(datTime,datSensorA);
+            sensorChart.Series["Speed"].Points.DataBindXY(datTime, datS);
             sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
             sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 10;
             sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
@@ -236,7 +234,6 @@ namespace DataG
                 datA[i] *= 0.017453293;
                 datO[i] = double.Parse(dt.Rows[i][3].ToString());
                 datO[i] *= 0.017453293;
-                //datS[i] = double.Parse(dt.Rows[i][3].ToString());
             }
             //convert from lat and lon to x,y
             glpx = new double[dtrNum];
@@ -247,7 +244,6 @@ namespace DataG
                 glpx[i] = (datO[i] - datO[0]) * EARTH_RAD_M;
                 glpy[i] = (datA[i] - datA[0]) * EARTH_RAD_M * Math.Sin(datO[i]);
             }
-            //the (x,y) coordinate is in the glp.array.pt , speed is in the glp.array.speed
             //change the original (x,y) to the position of panel
             maxAbsX = maxAbsValue(glpx, dtrNum);
             maxAbsY = maxAbsValue(glpy, dtrNum);
@@ -268,10 +264,9 @@ namespace DataG
                 p2 = new PointF((float)x[i + 1], (float)y[i + 1]);
                 g.DrawLine(nPen, p1, p2);
             }
-
-
         }
 
+        //calculate the max value of abs(num[])
         double maxAbsValue(double[] num, int length)
         {
             double[] numNew = new double[length];
@@ -287,7 +282,6 @@ namespace DataG
             }
             return re;
         }
-
 
         private void checkBoxAllSelection_Click(object sender, EventArgs e)
         {
@@ -305,7 +299,6 @@ namespace DataG
                 checkBoxSensorB.Checked = false;
                 checkBoxSensorB_Click(sender, e);
             }
-            
         }
 
         private void checkBoxSensorA_Click(object sender, EventArgs e)
@@ -319,14 +312,14 @@ namespace DataG
             {
                 dtrNum = dtSave.Rows.Count;
                 dtcNum = dtSave.Columns.Count;
-                datX = new int[dtrNum];
-                datYA = new double[dtrNum];
+                datTime = new int[dtrNum];
+                datSensorA = new double[dtrNum];
                 for (int i = 0; i < dtrNum; i++)
                 {
-                    datX[i] = int.Parse(dtSave.Rows[i][0].ToString());
-                    datYA[i] = int.Parse(dtSave.Rows[i][1].ToString());
+                    datTime[i] = int.Parse(dtSave.Rows[i][0].ToString());
+                    datSensorA[i] = int.Parse(dtSave.Rows[i][1].ToString());
                 }
-                sensorChart.Series["SensorA"].Points.DataBindXY(datX, datYA);
+                sensorChart.Series["SensorA"].Points.DataBindXY(datTime, datSensorA);
                 sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
                 sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 10;
                 sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
@@ -339,21 +332,21 @@ namespace DataG
         {
             if (!checkBoxSensorB.Checked)
             {
-                Series series = sensorChart.Series["SensorB"];
+                Series series = sensorChart.Series["Speed"];
                 series.Points.Clear();
             }
             else
             {
                 dtrNum = dtSave.Rows.Count;
                 dtcNum = dtSave.Columns.Count;
-                datX = new int[dtrNum];
+                datTime = new int[dtrNum];
                 datS = new double[dtrNum];
                 for (int i = 0; i < dtrNum; i++)
                 {
-                    datX[i] = int.Parse(dtSave.Rows[i][0].ToString());
+                    datTime[i] = int.Parse(dtSave.Rows[i][0].ToString());
                     datS[i] = int.Parse(dtSave.Rows[i][2].ToString());
                 }
-                sensorChart.Series["SensorB"].Points.DataBindXY(datX, datS);
+                sensorChart.Series["Speed"].Points.DataBindXY(datTime, datS);
                 sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
                 sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 10;
                 sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
@@ -366,24 +359,24 @@ namespace DataG
         {
             dtrNum = dtSave.Rows.Count;
             dtcNum = dtSave.Columns.Count;
-            datX = new int[dtrNum];
-            datYA = new double[dtrNum];
+            datTime = new int[dtrNum];
+            datSensorA = new double[dtrNum];
             datS = new double[dtrNum];
             for (int i = 0; i < dtrNum; i++)
             {
                 if (checkBoxSensorA.Checked)
                 {
-                    datX[i] = int.Parse(dtSave.Rows[i][0].ToString());
-                    datYA[i] = int.Parse(dtSave.Rows[i][1].ToString());
-                    textBoxTime.Text = datX[i].ToString();
-                    textBoxSensorA.Text = datYA[i].ToString();
+                    datTime[i] = int.Parse(dtSave.Rows[i][0].ToString());
+                    datSensorA[i] = int.Parse(dtSave.Rows[i][1].ToString());
+                    textBoxTime.Text = datTime[i].ToString();
+                    textBoxSensorA.Text = datSensorA[i].ToString();
                 }
                 if (checkBoxSensorB.Checked)
                 {
-                    datX[i] = int.Parse(dtSave.Rows[i][0].ToString());
+                    datTime[i] = int.Parse(dtSave.Rows[i][0].ToString());
                     datS[i] = int.Parse(dtSave.Rows[i][2].ToString());
-                    textBoxTime.Text = datX[i].ToString();
-                    textBoxSensorB.Text = datYA[i].ToString();
+                    textBoxTime.Text = datTime[i].ToString();
+                    textBoxSensorB.Text = datSensorA[i].ToString();
                 }
                 
             }
@@ -408,77 +401,103 @@ namespace DataG
         { 
             dtrNum = dtSave.Rows.Count;
             dtcNum = dtSave.Columns.Count;
-            datX = new int[dtrNum];
-            datYA = new double[dtrNum];
+            datTime = new int[dtrNum];
+            datSensorA = new double[dtrNum];
             datS = new double[dtrNum];
             for (int i = 0; i < dtrNum; i++)
             {
 
-                datX[i] = int.Parse(dtSave.Rows[i][0].ToString());
-                datYA[i] = int.Parse(dtSave.Rows[i][1].ToString());
+                datTime[i] = int.Parse(dtSave.Rows[i][0].ToString());
+                datSensorA[i] = int.Parse(dtSave.Rows[i][1].ToString());
                 datS[i] = int.Parse(dtSave.Rows[i][2].ToString());
             }
 
-            
             int mouseX = e.X;
             int mouseY = e.Y;
             this.Refresh();
+            //draw the line with mouse click
             Graphics g = sensorChart.CreateGraphics();
             Point p1 = new Point(mouseX, 0);
             Point p2 = new Point(mouseX, sensorChart.Height);
             Pen np = new Pen(Brushes.Blue, 1);
             g.DrawLine(np, p1, p2);
-           
-            double xx = sensorChart.ChartAreas[0].AxisX.PixelPositionToValue(mouseX);//4.5
+
+            textBoxTime.Clear();
+            textBoxSensorA.Clear();
+            textBoxSensorB.Clear();
+            //calculate the place of mouse
+            double xx = sensorChart.ChartAreas[0].AxisX.PixelPositionToValue(mouseX);
             textBoxTime.Text = Math.Round(xx, 2).ToString();
-            //MessageBox.Show(x.ToString());
-            int xLeft = (int)xx;//4
-            int xRight = xLeft + 1;//5
-            //two points:A(xLeft,datY[xLeft-1]),B(xRight,datY[xRight-1])
-            if (xRight < dtrNum && xLeft > 0) // for the chart
+            int xLeft = (int)xx;
+            //find the Subscript with the xLeft
+            int xLeftSub = findSub(xLeft, datTime, datTime.Length);
+            int xRightSub = xLeftSub + 1;
+            int xRight = 0; 
+            //two points:A(xLeft,datY[xLeftSub]),B(xRight,datY[xRightSub])
+            if (xRightSub < dtrNum && xLeftSub >= 0) // for the chart
             {
-                double kA = ((double)(datYA[xLeft - 1] - datYA[xRight - 1])) / ((double)(xLeft - xRight));
-                double bA = (double)datYA[xLeft - 1] - (double)kA * (double)xLeft;
+                xRight = datTime[xRightSub];
+                double kA = ((double)(datSensorA[xLeftSub] - datSensorA[xRightSub])) / ((double)(xLeft - xRight));
+                double bA = (double)datSensorA[xLeftSub] - (double)kA * (double)xLeft;
                 textBoxSensorA.Text = Math.Round(kA * xx + bA, 2).ToString();
-                double kB = ((double)(datS[xLeft - 1] - datS[xRight - 1])) / ((double)(xLeft - xRight));
-                double bB = (double)datS[xLeft - 1] - (double)kB * (double)xLeft;
+                double kB = ((double)(datS[xLeftSub] - datS[xRightSub])) / ((double)(xLeft - xRight));
+                double bB = (double)datS[xLeftSub] - (double)kB * (double)xLeft;
                 textBoxSensorB.Text = Math.Round(kB * xx + bB, 2).ToString();                
             }
-            double k = ((y[xLeft - 1] - y[xRight - 1]) / ((double)(x[xLeft] - x[xRight])));
-            double b = y[xLeft - 1] - (double)k * x[xLeft];
 
-            double m;
-            double n; //make a point
 
-            //m = (maxAbsX + xx) * 0.5 * (GPSPanel.Width - 50) / maxAbsX;
-            m = (xx - xLeft) * (x[xRight] - x[xLeft]) + x[xLeft];
-            n = k*m+b;
 
-            Graphics g2 = GPSPanel.CreateGraphics();
-            PointF p11 = new PointF();
-            PointF p22 = new PointF();
-            Pen nPen = new Pen(Brushes.Red, 1);
-            for (int i = 0; i < dtrNum - 1; i++)
+            if (xRightSub < dtrNum && xLeftSub >= 0) // for the panel
             {
-                p11 = new PointF((float)x[i], (float)y[i]);
-                p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
-                g2.DrawLine(nPen, p11, p22);
-            }
+                double k = ((y[xLeftSub] - y[xRightSub]) / ((double)(x[xLeftSub] - x[xRightSub])));
+                double b = y[xLeftSub] - (double)k * x[xLeftSub];
 
-            //Graphics g1 = GPSPanel.CreateGraphics(); 
-            PointF pp = new PointF();
-            pp = new PointF((float)m, (float)n);
-            g2.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
+                double m;
+                double n; //make a point
+
+                //m = (maxAbsX + xx) * 0.5 * (GPSPanel.Width - 50) / maxAbsX;
+                m = (xx - xLeft) / (xRight - xLeft) * (x[xRightSub] - x[xLeftSub]) + x[xLeftSub];
+                n = k * m + b;
+
+                Graphics g2 = GPSPanel.CreateGraphics();
+                PointF p11 = new PointF();
+                PointF p22 = new PointF();
+                Pen nPen = new Pen(Brushes.Red, 1);
+                for (int i = 0; i < dtrNum - 1; i++)
+                {
+                    p11 = new PointF((float)x[i], (float)y[i]);
+                    p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                    g2.DrawLine(nPen, p11, p22);
+                }
+
+                PointF pp = new PointF();
+                pp = new PointF((float)m, (float)n);
+                g2.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
+            }
 
 
         }
-        
+
+        //find the subscript with given value and array
+        int findSub(int value, int[] array, int length)
+        {
+            int res = 0;
+            for (res = 0; res < length; res++)
+            {
+                if (array[res] == value)
+                {
+                    break;
+                }
+            }
+            return res;
+        }
+
         private void chartTimer_Tick(object sender, EventArgs e)
         {
             if (nowScrollValue >= 1 && nowScrollValue <= dtrNum)
             {
                 textBoxSensorB.Text = datS[nowScrollValue - 1].ToString();
-                textBoxSensorA.Text = datYA[nowScrollValue - 1].ToString();
+                textBoxSensorA.Text = datSensorA[nowScrollValue - 1].ToString();
                 textBoxTime.Text = nowScrollValue.ToString();
             }
 
