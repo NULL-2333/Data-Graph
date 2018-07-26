@@ -414,68 +414,73 @@ namespace DataG
 
             int mouseX = e.X;
             int mouseY = e.Y;
-            this.Refresh();
-            //draw the line with mouse click
-            Graphics g = sensorChart.CreateGraphics();
-            Point p1 = new Point(mouseX, 0);
-            Point p2 = new Point(mouseX, sensorChart.Height);
-            Pen np = new Pen(Brushes.Blue, 1);
-            g.DrawLine(np, p1, p2);
-
-            textBoxTime.Clear();
-            textBoxSensorA.Clear();
-            textBoxSensorB.Clear();
-            //calculate the place of mouse
             double xx = sensorChart.ChartAreas[0].AxisX.PixelPositionToValue(mouseX);
-            textBoxTime.Text = Math.Round(xx, 2).ToString();
-            int xLeft = (int)xx;
-            //find the Subscript with the xLeft
-            int xLeftSub = findSub(xLeft, datTime, datTime.Length);
-            int xRightSub = xLeftSub + 1;
-            int xRight = 0; 
-            //two points:A(xLeft,datY[xLeftSub]),B(xRight,datY[xRightSub])
-            if (xRightSub < dtrNum && xLeftSub >= 0) // for the chart
+            if (fileOpen == true)
             {
-                xRight = datTime[xRightSub];
-                double kA = ((double)(datSensorA[xLeftSub] - datSensorA[xRightSub])) / ((double)(xLeft - xRight));
-                double bA = (double)datSensorA[xLeftSub] - (double)kA * (double)xLeft;
-                textBoxSensorA.Text = Math.Round(kA * xx + bA, 2).ToString();
-                double kB = ((double)(datS[xLeftSub] - datS[xRightSub])) / ((double)(xLeft - xRight));
-                double bB = (double)datS[xLeftSub] - (double)kB * (double)xLeft;
-                textBoxSensorB.Text = Math.Round(kB * xx + bB, 2).ToString();                
-            }
-
-
-
-            if (xRightSub < dtrNum && xLeftSub >= 0) // for the panel
-            {
-                double k = ((y[xLeftSub] - y[xRightSub]) / ((double)(x[xLeftSub] - x[xRightSub])));
-                double b = y[xLeftSub] - (double)k * x[xLeftSub];
-
-                double m;
-                double n; //make a point
-
-                //m = (maxAbsX + xx) * 0.5 * (GPSPanel.Width - 50) / maxAbsX;
-                m = (xx - xLeft) / (xRight - xLeft) * (x[xRightSub] - x[xLeftSub]) + x[xLeftSub];
-                n = k * m + b;
-
-                Graphics g2 = GPSPanel.CreateGraphics();
-                PointF p11 = new PointF();
-                PointF p22 = new PointF();
-                Pen nPen = new Pen(Brushes.Red, 1);
-                for (int i = 0; i < dtrNum - 1; i++)
+                if (xx >= datTime[0] && xx <= datTime[dtrNum - 1])
                 {
-                    p11 = new PointF((float)x[i], (float)y[i]);
-                    p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
-                    g2.DrawLine(nPen, p11, p22);
+                    this.Refresh();
+                    //draw the line with mouse click
+                    Graphics g = sensorChart.CreateGraphics();
+                    Point p1 = new Point(mouseX, 0);
+                    Point p2 = new Point(mouseX, sensorChart.Height);
+                    Pen np = new Pen(Brushes.Blue, 1);
+                    g.DrawLine(np, p1, p2);
+
+                    textBoxTime.Clear();
+                    textBoxSensorA.Clear();
+                    textBoxSensorB.Clear();
+                    //calculate the place of mouse
+
+                    textBoxTime.Text = Math.Round(xx, 2).ToString();
+                    int xLeft = (int)xx;
+                    //find the Subscript with the xLeft
+                    int xLeftSub = findSub(xLeft, datTime, datTime.Length);
+                    int xRightSub = xLeftSub + 1;
+                    int xRight = 0;
+                    //two points:A(xLeft,datY[xLeftSub]),B(xRight,datY[xRightSub])
+                    if (xRightSub < dtrNum && xLeftSub >= 0) // for the chart
+                    {
+                        xRight = datTime[xRightSub];
+                        double kA = ((double)(datSensorA[xLeftSub] - datSensorA[xRightSub])) / ((double)(xLeft - xRight));
+                        double bA = (double)datSensorA[xLeftSub] - (double)kA * (double)xLeft;
+                        textBoxSensorA.Text = Math.Round(kA * xx + bA, 2).ToString();
+                        double kB = ((double)(datS[xLeftSub] - datS[xRightSub])) / ((double)(xLeft - xRight));
+                        double bB = (double)datS[xLeftSub] - (double)kB * (double)xLeft;
+                        textBoxSensorB.Text = Math.Round(kB * xx + bB, 2).ToString();
+                    }
+
+
+
+                    if (xRightSub < dtrNum && xLeftSub >= 0) // for the panel
+                    {
+                        double k = ((y[xLeftSub] - y[xRightSub]) / ((double)(x[xLeftSub] - x[xRightSub])));
+                        double b = y[xLeftSub] - (double)k * x[xLeftSub];
+
+                        double m;
+                        double n; //make a point
+
+                        //m = (maxAbsX + xx) * 0.5 * (GPSPanel.Width - 50) / maxAbsX;
+                        m = (xx - xLeft) / (xRight - xLeft) * (x[xRightSub] - x[xLeftSub]) + x[xLeftSub];
+                        n = k * m + b;
+
+                        Graphics g2 = GPSPanel.CreateGraphics();
+                        PointF p11 = new PointF();
+                        PointF p22 = new PointF();
+                        Pen nPen = new Pen(Brushes.Red, 1);
+                        for (int i = 0; i < dtrNum - 1; i++)
+                        {
+                            p11 = new PointF((float)x[i], (float)y[i]);
+                            p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                            g2.DrawLine(nPen, p11, p22);
+                        }
+
+                        PointF pp = new PointF();
+                        pp = new PointF((float)m, (float)n);
+                        g2.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
+                    }
                 }
-
-                PointF pp = new PointF();
-                pp = new PointF((float)m, (float)n);
-                g2.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
             }
-
-
         }
 
         //find the subscript with given value and array
