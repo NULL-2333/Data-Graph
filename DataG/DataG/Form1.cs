@@ -496,7 +496,7 @@ namespace DataG
             }
             return res;
         }
-
+        static int i = 1;
         private void chartTimer_Tick(object sender, EventArgs e)
         {
             if (nowScrollValue >= 1 && nowScrollValue <= dtrNum)
@@ -514,8 +514,44 @@ namespace DataG
             if (nowScrollValue <= dtrNum)
                 nowScrollValue++;
             sensorChart.Invalidate();
+            Graphics g2 = GPSPanel.CreateGraphics();
+            PointF p11 = new PointF();
+            PointF p22 = new PointF();
+            Pen nPen = new Pen(Brushes.Red, 1);
+            for (int j = 0; j < dtrNum - 1; j++)
+            {
+                p11 = new PointF((float)x[j], (float)y[j]);
+                p22 = new PointF((float)x[j + 1], (float)y[j + 1]);
+                g2.DrawLine(nPen, p11, p22);
+            }
+            int xLeft = (int)i;
+            //find the Subscript with the xLeft
+            int xLeftSub = findSub(xLeft, datTime, datTime.Length);
+            int xRightSub = xLeftSub + 1;
+            int xRight = 0;
+            if (xRightSub < dtrNum && xLeftSub >= 0) // for the panel
+            {
+            this.Refresh();
             
-            
+            double k = ((y[xLeftSub] - y[xRightSub]) / ((double)(x[xLeftSub] - x[xRightSub])));
+            double b = y[xLeftSub] - (double)k * x[xLeftSub];
+
+            double m;
+            double n; //make a point
+
+           // m = (i - xLeft) * (x[xRight] - x[xLeft]) + x[xLeft];
+
+            m = (i - xLeft) / (xRight - xLeft) * (x[xRightSub] - x[xLeftSub]) + x[xLeftSub];
+            n = k * m + b;
+            PointF pp = new PointF();
+            pp = new PointF((float)m, (float)n);
+            g2.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
+            i++;
+
+            }
+               
+
+
         }
 
         private void resetButton_Click(object sender, EventArgs e)
