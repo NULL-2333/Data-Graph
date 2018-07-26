@@ -25,7 +25,12 @@ namespace DataG
         static double[] datA = new double[dtrNum];
         static double[] datO = new double[dtrNum];
         static double EARTH_RAD_M = 6378100.00;
-
+        double[] glpx ;
+        double[] glpy ;
+        double maxAbsX;
+        double maxAbsY;
+        static double[] x = new double[dtrNum];
+        static double[] y = new double[dtrNum];
 
         static int nowScrollValue = 0;
         bool fileOpen = false;
@@ -234,9 +239,9 @@ namespace DataG
                 //datS[i] = double.Parse(dt.Rows[i][3].ToString());
             }
             //convert from lat and lon to x,y
+            glpx = new double[dtrNum];
+            glpy = new double[dtrNum];
 
-            double[] glpx = new double[dtrNum];
-            double[] glpy = new double[dtrNum];
             for (int i = 0; i < dtrNum; i++)
             {
                 glpx[i] = (datO[i] - datO[0]) * EARTH_RAD_M;
@@ -244,14 +249,14 @@ namespace DataG
             }
             //the (x,y) coordinate is in the glp.array.pt , speed is in the glp.array.speed
             //change the original (x,y) to the position of panel
-            double maxAbsX = maxAbsValue(glpx, dtrNum);
-            double maxAbsY = maxAbsValue(glpy, dtrNum);
-            double[] x = new double[dtrNum];
-            double[] y = new double[dtrNum];
+            maxAbsX = maxAbsValue(glpx, dtrNum);
+            maxAbsY = maxAbsValue(glpy, dtrNum);
+            x = new double[dtrNum];
+            y = new double[dtrNum];
             for (int i = 0; i < dtrNum; i++)
             {
-                x[i] = (maxAbsX + glpx[i]) * 0.5 * (GPSPanel.Width - 50) / maxAbsX;
-                y[i] = (maxAbsY - glpy[i]) * 0.5 * (GPSPanel.Height - 50) / maxAbsY;
+                x[i] = (maxAbsX + glpx[i]) * 0.5 * (GPSPanel.Width) / maxAbsX;
+                y[i] = (maxAbsY - glpy[i]) * 0.5 * (GPSPanel.Height) / maxAbsY;
             }
             Graphics g = GPSPanel.CreateGraphics();
             PointF p1 = new PointF();
@@ -413,6 +418,8 @@ namespace DataG
                 datYA[i] = int.Parse(dtSave.Rows[i][1].ToString());
                 datS[i] = int.Parse(dtSave.Rows[i][2].ToString());
             }
+
+            
             int mouseX = e.X;
             int mouseY = e.Y;
             this.Refresh();
@@ -421,22 +428,49 @@ namespace DataG
             Point p2 = new Point(mouseX, sensorChart.Height);
             Pen np = new Pen(Brushes.Blue, 1);
             g.DrawLine(np, p1, p2);
-            double x = sensorChart.ChartAreas[0].AxisX.PixelPositionToValue(mouseX);
-            textBoxTime.Text = Math.Round(x, 2).ToString();
+           
+            double xx = sensorChart.ChartAreas[0].AxisX.PixelPositionToValue(mouseX);//4.5
+            textBoxTime.Text = Math.Round(xx, 2).ToString();
             //MessageBox.Show(x.ToString());
-            int xLeft = (int)x;
-            int xRight = xLeft + 1;
+            int xLeft = (int)xx;//4
+            int xRight = xLeft + 1;//5
             //two points:A(xLeft,datY[xLeft-1]),B(xRight,datY[xRight-1])
-            if (xRight < dtrNum && xLeft > 0)
+            if (xRight < dtrNum && xLeft > 0) // for the chart
             {
                 double kA = ((double)(datYA[xLeft - 1] - datYA[xRight - 1])) / ((double)(xLeft - xRight));
                 double bA = (double)datYA[xLeft - 1] - (double)kA * (double)xLeft;
-                textBoxSensorA.Text = Math.Round(kA * x + bA, 2).ToString();
+                textBoxSensorA.Text = Math.Round(kA * xx + bA, 2).ToString();
                 double kB = ((double)(datS[xLeft - 1] - datS[xRight - 1])) / ((double)(xLeft - xRight));
                 double bB = (double)datS[xLeft - 1] - (double)kB * (double)xLeft;
-                textBoxSensorB.Text = Math.Round(kB * x + bB, 2).ToString();                
+                textBoxSensorB.Text = Math.Round(kB * xx + bB, 2).ToString();                
             }
-            
+            double k = ((y[xLeft - 1] - y[xRight - 1]) / ((double)(x[xLeft] - x[xRight])));
+            double b = y[xLeft - 1] - (double)k * x[xLeft];
+
+            double m;
+            double n; //make a point
+
+            //m = (maxAbsX + xx) * 0.5 * (GPSPanel.Width - 50) / maxAbsX;
+            m = (xx - xLeft) * (x[xRight] - x[xLeft]) + x[xLeft];
+            n = k*m+b;
+
+            Graphics g2 = GPSPanel.CreateGraphics();
+            PointF p11 = new PointF();
+            PointF p22 = new PointF();
+            Pen nPen = new Pen(Brushes.Red, 1);
+            for (int i = 0; i < dtrNum - 1; i++)
+            {
+                p11 = new PointF((float)x[i], (float)y[i]);
+                p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                g2.DrawLine(nPen, p11, p22);
+            }
+
+            //Graphics g1 = GPSPanel.CreateGraphics(); 
+            PointF pp = new PointF();
+            pp = new PointF((float)m, (float)n);
+            g2.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
+
+
         }
         
         private void chartTimer_Tick(object sender, EventArgs e)
@@ -470,13 +504,6 @@ namespace DataG
             sensorChart.Invalidate();
             chartTimer.Enabled = false;
         }
-
-        private void GPSFilesLoadingButton_Click(object sender, EventArgs e)
-        {
-            string filename = "C:\\Users\\user\\Desktop\\GPS_Code\\test.rgp";
-            FileIO.readFile(filename.ToCharArray());
-        }
-
      
     }
 }
