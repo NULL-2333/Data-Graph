@@ -447,7 +447,7 @@ namespace DataG
                         double k = (data[xLeftSub, i] - data[xRightSub, i]) / (xLeft - xRight);
                         double b = data[xLeftSub, i] - k * xLeft;
                         txtBox = (TextBox)this.Controls.Find("textBox" + i.ToString(), true)[0];
-                        if (txtBox != null)
+                        if (txtBox != null && sensorCheckedListBox.GetItemChecked(i))
                         {
                             txtBox.Text = Math.Round(k * xx + b, 8).ToString();
                         }
@@ -614,7 +614,7 @@ namespace DataG
                         for (int i = 0; i < dtcNum - 1; i++)
                         {
                             txtBox = (TextBox)this.Controls.Find("textBox" + i.ToString(), true)[0];
-                            if (txtBox != null)
+                            if (txtBox != null && sensorCheckedListBox.GetItemChecked(i))
                             {
                                 txtBox.Text = "";
                             }
@@ -632,7 +632,7 @@ namespace DataG
                             double k = (data[xLeftSub, i] - data[xRightSub, i]) / (xLeft - xRight);
                             double b = data[xLeftSub, i] - k * xLeft;
                             txtBox = (TextBox)this.Controls.Find("textBox" + i.ToString(), true)[0];
-                            if (txtBox != null)
+                            if (txtBox != null && sensorCheckedListBox.GetItemChecked(i))
                             {
                                 txtBox.Text = Math.Round(k * xx + b, 8).ToString();
                             }
@@ -666,21 +666,6 @@ namespace DataG
         private void sensorChart_MouseDown(object sender, MouseEventArgs e)
         {
             flag = true;
-            /*Graphics g2 = GPSPanel.CreateGraphics();
-            int mouseX = e.X;
-            double xx = sensorChart.ChartAreas[0].AxisX.PixelPositionToValue(mouseX);
-            double m, n;
-            int xLeftSub = findLeftNear(xx, dataTime, dataTime.Length);
-            double xLeft = dataTime[xLeftSub], xRight = dataTime[xLeftSub];
-            int xRightSub = xLeftSub + 1;
-            xRight = dataTime[xRightSub];
-            m = (xx - xLeft) / (xRight - xLeft) * (x[xRightSub] - x[xLeftSub]) + x[xLeftSub];
-            n = (xx - xLeft) / (xRight - xLeft) * (y[xRightSub] - y[xLeftSub]) + y[xLeftSub];
-
-            PointF pp = new PointF();
-            pp = new PointF((float)m, (float)n);
-            g2.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);*/
-
         }
 
         private void sensorChart_MouseUp(object sender, MouseEventArgs e)
