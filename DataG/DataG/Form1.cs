@@ -40,6 +40,7 @@ namespace DataG
         int newPlace = 1;                                //the position of moving dot
         bool fileOpen = false;                                  //determine whether the file has been opened
         bool flag = false; //drag line
+        bool flagPlace = true;
 
         public Form1()
         {
@@ -560,6 +561,8 @@ namespace DataG
                 nowScrollValue += 1000;
             sensorChart.Invalidate();
 
+            if (flagPlace == true)
+            {
             Graphics g2 = GPSPanel.CreateGraphics();
             PointF p11 = new PointF();
             PointF p22 = new PointF();
@@ -581,11 +584,18 @@ namespace DataG
             this.Refresh();
             m = (newPlace - xLeft) / (xRight - xLeft) * (x[xRightSub] - x[xLeftSub]) + x[xLeftSub];
             n = (newPlace - xLeft) / (xRight - xLeft) * (y[xRightSub] - y[xLeftSub]) + y[xLeftSub];
-
-            PointF pp = new PointF();
+            
+                PointF pp = new PointF();
             pp = new PointF((float)m, (float)n);
             g2.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
             newPlace += 1000;
+            if(newPlace > maxValue(dataTime,dataTime.Length))
+            {
+                flagPlace = false;
+                this.GPSPanel.Refresh();
+            }
+            }
+           
         }
 
         private void sensorChart_MouseMove(object sender, MouseEventArgs e)
