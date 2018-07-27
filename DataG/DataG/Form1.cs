@@ -201,7 +201,7 @@ namespace DataG
         }
 
         //find the subscript with given value and array
-        int findSub(int value, int[] array, int length)
+        int findSub(double value, double[] array, int length)
         {
             int res = 0;
             for (res = 0; res < length; res++)
@@ -222,6 +222,20 @@ namespace DataG
             {
                 if (array[res].Equals(value))
                 {
+                    break;
+                }
+            }
+            return res;
+        }
+
+        //find nearest left neighbour
+        int findLeftNear(double value, double[] array, int length)
+        {
+            int res = 0;
+            for (int i = 0; i < length - 1; i++)
+            {
+                if (array[i] <= value && array[i + 1] >= value) {
+                    res = i;
                     break;
                 }
             }
@@ -295,7 +309,6 @@ namespace DataG
                 datO[i] = data[i, findStrSub("LONG (deg)", seriesName, dtcNum - 1)];
                 datO[i] *= 0.017453293;
             }
-            //MessageBox.Show(data[0, findStrSub("LAT (deg)", seriesName, dtcNum - 1)].ToString() + " " + data[0, findStrSub("LONG (deg)", seriesName, dtcNum - 1)].ToString());
             //convert from lat and lon to x,y
             glpx = new double[dtrNum];
             glpy = new double[dtrNum];
@@ -342,6 +355,7 @@ namespace DataG
                 textbox.Location = new Point(textBoxTime.Location.X, locY);
                 textbox.Height = textBoxTime.Height;
                 textbox.Width = textBoxTime.Width;
+                textbox.Name = "textBox" + i.ToString();
                 dataPanel.Controls.Add(textbox);
 
                 locY += label.Height + 5;
@@ -363,6 +377,75 @@ namespace DataG
             for (int i = 0; i < dtcNum - 1; i++)
             {
                 sensorCheckedListBox.SetItemChecked(i, allSelectedCheckBox.Checked);
+            }
+        }
+
+        private void sensorChart_MouseClick(object sender, MouseEventArgs e)
+        {
+            int mouseX = e.X;
+            int mouseY = e.Y;
+            double xx = sensorChart.ChartAreas[0].AxisX.PixelPositionToValue(mouseX);
+            if (fileOpen == true)
+            {
+                if (xx >= dataTime[0] && xx <= dataTime[dtrNum - 1])
+                {
+                    this.Refresh();
+                    //draw the line with mouse click
+                    Graphics g = sensorChart.CreateGraphics();
+                    Point p1 = new Point(mouseX, 0);
+                    Point p2 = new Point(mouseX, sensorChart.Height);
+                    Pen np = new Pen(Brushes.Blue, 1);
+                    g.DrawLine(np, p1, p2);
+
+                    textBoxTime.Clear();
+                    TextBox txtBox = new TextBox();
+                    for (int i = 0; i < dtcNum - 1; i++)
+                    {
+                        txtBox = (TextBox)this.Controls.Find("textBox" + i.ToString(),true)[0];
+                        if (txtBox != null)
+                        {
+                            txtBox.Text = "";
+                        }
+                    }
+                    //calculate the place of mouse
+                    textBoxTime.Text = Math.Round(xx, 2).ToString();
+                    //find the Subscript with the xLeft
+                    int xLeftSub = findLeftNear(xx, dataTime, dataTime.Length);
+                    int xRightSub = xLeftSub + 1;
+                    double xLeft = dataTime[xLeftSub], xRight = dataTime[xLeftSub];
+                    //two points:A(xLeft,datY[xLeftSub]),B(xRight,datY[xRightSub])
+                    xRight = dataTime[xRightSub];
+                    for (int i = 0; i < dtcNum - 1; i++)
+                    {
+                        double k = (data[xLeftSub, i] - data[xRightSub, i]) / (xLeft - xRight);
+                        double b = data[xLeftSub, i] - k * xLeft;
+                        txtBox = (TextBox)this.Controls.Find("textBox" + i.ToString(), true)[0];
+                        if (txtBox != null)
+                        {
+                            txtBox.Text = Math.Round(k * xx + b, 8).ToString();
+                        }
+                    }
+
+                    Graphics g2 = GPSPanel.CreateGraphics();
+                    PointF p11 = new PointF();
+                    PointF p22 = new PointF();
+                    Pen nPen = new Pen(Brushes.Red, 1);
+                    for (int i = 0; i < dtrNum - 1; i++)
+                    {
+                        p11 = new PointF((float)x[i], (float)y[i]);
+                        p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                        g2.DrawLine(nPen, p11, p22);
+                    }
+
+                    double m, n;
+                    m = (xx - xLeft) / (xRight - xLeft) * (x[xRightSub] - x[xLeftSub]) + x[xLeftSub];
+                    n = (xx - xLeft) / (xRight - xLeft) * (y[xRightSub] - y[xLeftSub]) + y[xLeftSub];
+                    
+                    PointF pp = new PointF();
+                    pp = new PointF((float)m, (float)n);
+                    g2.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
+                    
+                }
             }
         }
         
@@ -443,92 +526,6 @@ namespace DataG
             //newPlace = 1;
         }
 
-        private void sensorChart_MouseClick(object sender, MouseEventArgs e)
-        { 
-            //dtrNum = dtSave.Rows.Count;
-            //dtcNum = dtSave.Columns.Count;
-            //datTime = new int[dtrNum];
-            //datSensorA = new double[dtrNum];
-            //datS = new double[dtrNum];
-            //for (int i = 0; i < dtrNum; i++)
-            //{
-
-            //    datTime[i] = int.Parse(dtSave.Rows[i][0].ToString());
-            //    datSensorA[i] = int.Parse(dtSave.Rows[i][1].ToString());
-            //    datS[i] = int.Parse(dtSave.Rows[i][2].ToString());
-            //}
-
-            //int mouseX = e.X;
-            //int mouseY = e.Y;
-            //double xx = sensorChart.ChartAreas[0].AxisX.PixelPositionToValue(mouseX);
-            //if (fileOpen == true)
-            //{
-            //    if (xx >= datTime[0] && xx <= datTime[dtrNum - 1])
-            //    {
-            //        this.Refresh();
-            //        //draw the line with mouse click
-            //        Graphics g = sensorChart.CreateGraphics();
-            //        Point p1 = new Point(mouseX, 0);
-            //        Point p2 = new Point(mouseX, sensorChart.Height);
-            //        Pen np = new Pen(Brushes.Blue, 1);
-            //        g.DrawLine(np, p1, p2);
-
-            //        textBoxTime.Clear();
-            //        textBoxSensorA.Clear();
-            //        textBoxSensorB.Clear();
-            //        //calculate the place of mouse
-
-            //        textBoxTime.Text = Math.Round(xx, 2).ToString();
-            //        int xLeft = (int)xx;
-            //        //find the Subscript with the xLeft
-            //        int xLeftSub = findSub(xLeft, datTime, datTime.Length);
-            //        int xRightSub = xLeftSub + 1;
-            //        int xRight = 0;
-            //        //two points:A(xLeft,datY[xLeftSub]),B(xRight,datY[xRightSub])
-            //        if (xRightSub < dtrNum && xLeftSub >= 0) // for the chart
-            //        {
-            //            xRight = datTime[xRightSub];
-            //            double kA = ((double)(datSensorA[xLeftSub] - datSensorA[xRightSub])) / ((double)(xLeft - xRight));
-            //            double bA = (double)datSensorA[xLeftSub] - (double)kA * (double)xLeft;
-            //            textBoxSensorA.Text = Math.Round(kA * xx + bA, 2).ToString();
-            //            double kB = ((double)(datS[xLeftSub] - datS[xRightSub])) / ((double)(xLeft - xRight));
-            //            double bB = (double)datS[xLeftSub] - (double)kB * (double)xLeft;
-            //            textBoxSensorB.Text = Math.Round(kB * xx + bB, 2).ToString();
-            //        }
-
-
-
-            //        if (xRightSub < dtrNum && xLeftSub >= 0) // for the panel
-            //        {
-            //            double k = ((y[xLeftSub] - y[xRightSub]) / ((double)(x[xLeftSub] - x[xRightSub])));
-            //            double b = y[xLeftSub] - (double)k * x[xLeftSub];
-
-            //            double m;
-            //            double n; //make a point
-
-            //            //m = (maxAbsX + xx) * 0.5 * (GPSPanel.Width - 50) / maxAbsX;
-            //            m = (xx - xLeft) / (xRight - xLeft) * (x[xRightSub] - x[xLeftSub]) + x[xLeftSub];
-            //            n = k * m + b;
-
-            //            Graphics g2 = GPSPanel.CreateGraphics();
-            //            PointF p11 = new PointF();
-            //            PointF p22 = new PointF();
-            //            Pen nPen = new Pen(Brushes.Red, 1);
-            //            for (int i = 0; i < dtrNum - 1; i++)
-            //            {
-            //                p11 = new PointF((float)x[i], (float)y[i]);
-            //                p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
-            //                g2.DrawLine(nPen, p11, p22);
-            //            }
-
-            //            PointF pp = new PointF();
-            //            pp = new PointF((float)m, (float)n);
-            //            g2.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
-            //        }
-            //    }
-            //}
-        }
-        
         private void chartTimer_Tick(object sender, EventArgs e)
         {
             //if (nowScrollValue >= 1 && nowScrollValue <= dtrNum)
