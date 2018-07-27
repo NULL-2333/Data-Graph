@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.dataPanel = new System.Windows.Forms.Panel();
             this.textBoxTime = new System.Windows.Forms.TextBox();
             this.timeLabel = new System.Windows.Forms.Label();
@@ -97,10 +97,11 @@
             // 
             // resetButton
             // 
-            this.resetButton.Location = new System.Drawing.Point(27, 101);
+            this.resetButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.resetButton.Location = new System.Drawing.Point(50, 105);
             this.resetButton.Margin = new System.Windows.Forms.Padding(4);
             this.resetButton.Name = "resetButton";
-            this.resetButton.Size = new System.Drawing.Size(252, 41);
+            this.resetButton.Size = new System.Drawing.Size(346, 41);
             this.resetButton.TabIndex = 2;
             this.resetButton.Text = "Reset";
             this.resetButton.UseVisualStyleBackColor = true;
@@ -109,10 +110,10 @@
             // buttonStop
             // 
             this.buttonStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonStop.Location = new System.Drawing.Point(169, 41);
+            this.buttonStop.Location = new System.Drawing.Point(235, 41);
             this.buttonStop.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.buttonStop.Name = "buttonStop";
-            this.buttonStop.Size = new System.Drawing.Size(109, 39);
+            this.buttonStop.Size = new System.Drawing.Size(161, 39);
             this.buttonStop.TabIndex = 1;
             this.buttonStop.Text = "Stop";
             this.buttonStop.UseVisualStyleBackColor = true;
@@ -121,10 +122,10 @@
             // buttonPlay
             // 
             this.buttonPlay.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonPlay.Location = new System.Drawing.Point(27, 41);
+            this.buttonPlay.Location = new System.Drawing.Point(50, 41);
             this.buttonPlay.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonPlay.Name = "buttonPlay";
-            this.buttonPlay.Size = new System.Drawing.Size(109, 39);
+            this.buttonPlay.Size = new System.Drawing.Size(155, 39);
             this.buttonPlay.TabIndex = 0;
             this.buttonPlay.Text = "Play";
             this.buttonPlay.UseVisualStyleBackColor = true;
@@ -176,11 +177,11 @@
             // 
             // sensorChart
             // 
-            chartArea2.Name = "ChartArea1";
-            this.sensorChart.ChartAreas.Add(chartArea2);
+            chartArea4.Name = "ChartArea1";
+            this.sensorChart.ChartAreas.Add(chartArea4);
             this.sensorChart.Cursor = System.Windows.Forms.Cursors.Hand;
-            legend2.Name = "Legend1";
-            this.sensorChart.Legends.Add(legend2);
+            legend4.Name = "Legend1";
+            this.sensorChart.Legends.Add(legend4);
             this.sensorChart.Location = new System.Drawing.Point(16, 15);
             this.sensorChart.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.sensorChart.Name = "sensorChart";
@@ -234,6 +235,7 @@
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.dataPanel.ResumeLayout(false);
             this.dataPanel.PerformLayout();
             this.activatePanel.ResumeLayout(false);

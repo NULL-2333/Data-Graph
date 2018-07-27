@@ -47,7 +47,7 @@ namespace DataG
 
         private void Form1_Load(object sender, EventArgs e)
         {
-           // sensorChart.ChartAreas[0].AxisX.MajorGrid.LineColor = System.Drawing.Color.Transparent;
+           sensorChart.ChartAreas[0].AxisX.MajorGrid.LineColor = System.Drawing.Color.Transparent;
         }
 
         //read data from .csv file and return to datatable
@@ -242,6 +242,30 @@ namespace DataG
             return res;
         }
 
+        //calculate the min value of (num[])
+        double minValue(double[] num, int length)
+        {
+            double re = num[0];
+            for (int i = 0; i < length; i++)
+            {
+                if (num[i] < re)
+                    re = num[i];
+            }
+            return re;
+        }
+
+        //calculate the max value of (num[])
+        double maxValue(double[] num, int length)
+        {
+            double re = num[0];
+            for (int i = 0; i < length; i++)
+            {
+                if (num[i] > re)
+                    re = num[i];
+            }
+            return re;
+        }
+
         private void button1_Click_1(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -363,6 +387,8 @@ namespace DataG
                 //add checkbox to checklist box
                 sensorCheckedListBox.Items.Add(seriesName[i], true);
             }
+            nowScrollValue = (int)minValue(dataTime, dataTime.Length);
+            newPlace = (int)minValue(dataTime, dataTime.Length);
         }
 
         private void sensorCheckedListBox_ItemCheck(object sender, ItemCheckEventArgs e)
@@ -451,137 +477,115 @@ namespace DataG
         
         private void buttonPlay_Click(object sender, EventArgs e)
         {
-            //dtrNum = dtSave.Rows.Count;
-            //dtcNum = dtSave.Columns.Count;
-            //datTime = new int[dtrNum];
-            //datSensorA = new double[dtrNum];
-            //datS = new double[dtrNum];
-            //for (int i = 0; i < dtrNum; i++)
-            //{
-            //    if (checkBoxSensorA.Checked)
-            //    {
-            //        datTime[i] = int.Parse(dtSave.Rows[i][0].ToString());
-            //        datSensorA[i] = int.Parse(dtSave.Rows[i][1].ToString());
-            //        textBoxTime.Text = datTime[i].ToString();
-            //        textBoxSensorA.Text = datSensorA[i].ToString();
-            //    }
-            //    if (checkBoxSensorB.Checked)
-            //    {
-            //        datTime[i] = int.Parse(dtSave.Rows[i][0].ToString());
-            //        datS[i] = int.Parse(dtSave.Rows[i][2].ToString());
-            //        textBoxTime.Text = datTime[i].ToString();
-            //        textBoxSensorB.Text = datSensorA[i].ToString();
-            //    }
-                
-            //}
-            //if(fileOpen == true)
-            //    chartTimer.Enabled = true;
-
+            if (fileOpen == true)
+                chartTimer.Enabled = true;
         }
 
         private void buttonStop_Click(object sender, EventArgs e)
         {
-            //sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
-            //sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 10;
-            //sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
-            //sensorChart.ChartAreas[0].AxisY.ScaleView.Size = 100;
-            //sensorChart.ChartAreas[0].AxisX.ScaleView.Position = nowScrollValue;
-            //sensorChart.Invalidate();
-            //chartTimer.Enabled = false;
+            sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
+            sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 10000;
+            sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
+            sensorChart.ChartAreas[0].AxisY.ScaleView.Size = 100;
+            sensorChart.ChartAreas[0].AxisY.Maximum = 200;
+            sensorChart.ChartAreas[0].AxisY.Minimum = -200;
+            sensorChart.ChartAreas[0].AxisX.ScaleView.Position = nowScrollValue;
+            sensorChart.Invalidate();
+            chartTimer.Enabled = false;
 
-            //Graphics g2 = GPSPanel.CreateGraphics();
-            //PointF p11 = new PointF();
-            //PointF p22 = new PointF();
-            //Pen nPen = new Pen(Brushes.Red, 1);
-            //for (int j = 0; j < dtrNum - 1; j++)
-            //{
-            //    p11 = new PointF((float)x[j], (float)y[j]);
-            //    p22 = new PointF((float)x[j + 1], (float)y[j + 1]);
-            //    g2.DrawLine(nPen, p11, p22);
-            //}
+            Graphics g2 = GPSPanel.CreateGraphics();
+            PointF p11 = new PointF();
+            PointF p22 = new PointF();
+            Pen nPen = new Pen(Brushes.Red, 1);
+            for (int j = 0; j < dtrNum - 1; j++)
+            {
+                p11 = new PointF((float)x[j], (float)y[j]);
+                p22 = new PointF((float)x[j + 1], (float)y[j + 1]);
+                g2.DrawLine(nPen, p11, p22);
+            }
         }
 
         private void resetButton_Click(object sender, EventArgs e)
         {
-            //sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
-            //sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 10;
-            //sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
-            //sensorChart.ChartAreas[0].AxisY.ScaleView.Size = 100;
-            //sensorChart.ChartAreas[0].AxisX.ScaleView.Position = 0;
-            //sensorChart.Invalidate();
-            //chartTimer.Enabled = false;
-            //nowScrollValue = 0;
+            sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
+            sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 10000;
+            sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
+            sensorChart.ChartAreas[0].AxisY.ScaleView.Size = 100;
+            sensorChart.ChartAreas[0].AxisY.Maximum = 200;
+            sensorChart.ChartAreas[0].AxisY.Minimum = -200;
+            nowScrollValue = (int)minValue(dataTime, dataTime.Length);
+            newPlace = (int)minValue(dataTime, dataTime.Length);
+            sensorChart.ChartAreas[0].AxisX.ScaleView.Position = nowScrollValue;
+            sensorChart.Invalidate();
+            chartTimer.Enabled = false;
 
-            //GPSPanel.Refresh();
-            //Graphics g2 = GPSPanel.CreateGraphics();
-            //PointF p11 = new PointF();
-            //PointF p22 = new PointF();
-            //Pen nPen = new Pen(Brushes.Red, 1);
-            //for (int j = 0; j < dtrNum - 1; j++)
-            //{
-            //    p11 = new PointF((float)x[j], (float)y[j]);
-            //    p22 = new PointF((float)x[j + 1], (float)y[j + 1]);
-            //    g2.DrawLine(nPen, p11, p22);
-            //}
-            //newPlace = 1;
+            GPSPanel.Refresh();
+            Graphics g2 = GPSPanel.CreateGraphics();
+            PointF p11 = new PointF();
+            PointF p22 = new PointF();
+            Pen nPen = new Pen(Brushes.Red, 1);
+            for (int j = 0; j < dtrNum - 1; j++)
+            {
+                p11 = new PointF((float)x[j], (float)y[j]);
+                p22 = new PointF((float)x[j + 1], (float)y[j + 1]);
+                g2.DrawLine(nPen, p11, p22);
+            }
         }
 
         private void chartTimer_Tick(object sender, EventArgs e)
         {
-            //if (nowScrollValue >= 1 && nowScrollValue <= dtrNum)
-            //{
-            //    textBoxSensorB.Text = datS[nowScrollValue - 1].ToString();
-            //    textBoxSensorA.Text = datSensorA[nowScrollValue - 1].ToString();
-            //    textBoxTime.Text = nowScrollValue.ToString();
-            //}
+            if (nowScrollValue >= minValue(dataTime, dataTime.Length) && nowScrollValue <= maxValue(dataTime, dataTime.Length))
+            {
+                textBoxTime.Text = nowScrollValue.ToString();
+                TextBox txtBox = new TextBox();
+                for (int i = 0; i < dtcNum - 1; i++)
+                {
+                    txtBox = (TextBox)this.Controls.Find("textBox" + i.ToString(), true)[0];
+                    if (txtBox != null)
+                    {
+                        txtBox.Text = data[findSub(nowScrollValue,dataTime,dataTime.Length), i].ToString();
+                    }
+                }
+            }
 
-            //sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
-            //sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 10;
-            //sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
-            //sensorChart.ChartAreas[0].AxisY.ScaleView.Size = 100;
-            //sensorChart.ChartAreas[0].AxisX.ScaleView.Position = nowScrollValue;
-            //if (nowScrollValue <= dtrNum)
-            //    nowScrollValue++;
-            //sensorChart.Invalidate();
+            sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
+            sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 10000;
+            sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
+            sensorChart.ChartAreas[0].AxisY.ScaleView.Size = 100;
+            sensorChart.ChartAreas[0].AxisY.Maximum = 200;
+            sensorChart.ChartAreas[0].AxisY.Minimum = -200;
+            sensorChart.ChartAreas[0].AxisX.ScaleView.Position = nowScrollValue;
+            if (nowScrollValue <= maxValue(dataTime, dataTime.Length))
+                nowScrollValue += 1000;
+            sensorChart.Invalidate();
 
-            //Graphics g2 = GPSPanel.CreateGraphics();
-            //PointF p11 = new PointF();
-            //PointF p22 = new PointF();
-            //Pen nPen = new Pen(Brushes.Red, 1);
-            //for (int j = 0; j < dtrNum - 1; j++)
-            //{
-            //    p11 = new PointF((float)x[j], (float)y[j]);
-            //    p22 = new PointF((float)x[j + 1], (float)y[j + 1]);
-            //    g2.DrawLine(nPen, p11, p22);
-            //}
-            //int xLeft = (int)newPlace;
-            ////find the Subscript with the xLeft
-            //int xLeftSub = findSub(xLeft, datTime, datTime.Length);
-            //int xRightSub = xLeftSub + 1;
-            //int xRight = 0;
-            //if (xRightSub < dtrNum && xLeftSub >= 0) // for the panel
-            //{
-            //    this.Refresh();
-            //    double k = ((y[xLeftSub] - y[xRightSub]) / ((double)(x[xLeftSub] - x[xRightSub])));
-            //    double b = y[xLeftSub] - (double)k * x[xLeftSub];
+            Graphics g2 = GPSPanel.CreateGraphics();
+            PointF p11 = new PointF();
+            PointF p22 = new PointF();
+            Pen nPen = new Pen(Brushes.Red, 1);
+            for (int j = 0; j < dtrNum - 1; j++)
+            {
+                p11 = new PointF((float)x[j], (float)y[j]);
+                p22 = new PointF((float)x[j + 1], (float)y[j + 1]);
+                g2.DrawLine(nPen, p11, p22);
+            }
+            //find the Subscript with the xLeft
+            int xLeftSub = findLeftNear(newPlace, dataTime, dataTime.Length);
+            int xRightSub = xLeftSub + 1;
+            double xLeft = dataTime[xLeftSub], xRight = dataTime[xLeftSub];
+            //two points:A(xLeft,datY[xLeftSub]),B(xRight,datY[xRightSub])
+            xRight = dataTime[xRightSub];
 
-            //    double m;
-            //    double n; //make a point
+            double m, n;
+            this.Refresh();
+            m = (newPlace - xLeft) / (xRight - xLeft) * (x[xRightSub] - x[xLeftSub]) + x[xLeftSub];
+            n = (newPlace - xLeft) / (xRight - xLeft) * (y[xRightSub] - y[xLeftSub]) + y[xLeftSub];
 
-            //    m = (newPlace - xLeft) / (xRight - xLeft) * (x[xRightSub] - x[xLeftSub]) + x[xLeftSub];
-            //    n = k * m + b;
-            //    PointF pp = new PointF();
-            //    pp = new PointF((float)m, (float)n);
-            //    g2.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
-            //    newPlace++;
-            //}
-            
-
-
+            PointF pp = new PointF();
+            pp = new PointF((float)m, (float)n);
+            g2.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
+            newPlace += 1000;
         }
-
-        
-
     }
 }
 
