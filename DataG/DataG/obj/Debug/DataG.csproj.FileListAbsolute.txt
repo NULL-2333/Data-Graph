@@ -25,3 +25,12 @@ D:\RacingSoftware\Data2\Data-Graph\DataG\DataG\obj\Debug\DataG.csproj.GenerateRe
 D:\RacingSoftware\Data2\Data-Graph\DataG\DataG\obj\Debug\DataG.exe
 D:\RacingSoftware\Data2\Data-Graph\DataG\DataG\obj\Debug\DataG.pdb
 D:\RacingSoftware\Data2\Data-Graph\DataG\DataG\obj\Debug\DataG.csprojResolveAssemblyReference.cache
+D:\RacingSoftware\4\Data-Graph\DataG\DataG\bin\Debug\DataG.exe.config
+D:\RacingSoftware\4\Data-Graph\DataG\DataG\obj\Debug\DataG.exe
+D:\RacingSoftware\4\Data-Graph\DataG\DataG\obj\Debug\DataG.pdb
+D:\RacingSoftware\4\Data-Graph\DataG\DataG\bin\Debug\DataG.exe
+D:\RacingSoftware\4\Data-Graph\DataG\DataG\bin\Debug\DataG.pdb
+D:\RacingSoftware\4\Data-Graph\DataG\DataG\obj\Debug\DataG.csprojResolveAssemblyReference.cache
+D:\RacingSoftware\4\Data-Graph\DataG\DataG\obj\Debug\DataG.Form1.resources
+D:\RacingSoftware\4\Data-Graph\DataG\DataG\obj\Debug\DataG.Properties.Resources.resources
+D:\RacingSoftware\4\Data-Graph\DataG\DataG\obj\Debug\DataG.csproj.GenerateResource.Cache
