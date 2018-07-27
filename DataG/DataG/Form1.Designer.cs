@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.dataPanel = new System.Windows.Forms.Panel();
             this.textBoxTime = new System.Windows.Forms.TextBox();
             this.timeLabel = new System.Windows.Forms.Label();
@@ -39,13 +39,13 @@
             this.buttonStop = new System.Windows.Forms.Button();
             this.buttonPlay = new System.Windows.Forms.Button();
             this.displayPanel = new System.Windows.Forms.Panel();
+            this.allSelectedCheckBox = new System.Windows.Forms.CheckBox();
             this.sensorCheckedListBox = new System.Windows.Forms.CheckedListBox();
             this.label4 = new System.Windows.Forms.Label();
             this.fileLoadingButton = new System.Windows.Forms.Button();
             this.sensorChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.chartTimer = new System.Windows.Forms.Timer(this.components);
             this.GPSPanel = new System.Windows.Forms.Panel();
-            this.allSelectedCheckBox = new System.Windows.Forms.CheckBox();
             this.dataPanel.SuspendLayout();
             this.activatePanel.SuspendLayout();
             this.displayPanel.SuspendLayout();
@@ -58,28 +58,27 @@
             this.dataPanel.BackColor = System.Drawing.SystemColors.Info;
             this.dataPanel.Controls.Add(this.textBoxTime);
             this.dataPanel.Controls.Add(this.timeLabel);
-            this.dataPanel.Location = new System.Drawing.Point(16, 744);
-            this.dataPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.dataPanel.Location = new System.Drawing.Point(12, 595);
+            this.dataPanel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.dataPanel.Name = "dataPanel";
-            this.dataPanel.Size = new System.Drawing.Size(589, 199);
+            this.dataPanel.Size = new System.Drawing.Size(442, 159);
             this.dataPanel.TabIndex = 2;
             // 
             // textBoxTime
             // 
-            this.textBoxTime.Location = new System.Drawing.Point(432, 11);
-            this.textBoxTime.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            this.textBoxTime.Location = new System.Drawing.Point(324, 9);
+            this.textBoxTime.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBoxTime.Name = "textBoxTime";
-            this.textBoxTime.Size = new System.Drawing.Size(119, 25);
+            this.textBoxTime.Size = new System.Drawing.Size(90, 21);
             this.textBoxTime.TabIndex = 3;
             // 
             // timeLabel
             // 
             this.timeLabel.AutoSize = true;
             this.timeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.timeLabel.Location = new System.Drawing.Point(20, 11);
-            this.timeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.timeLabel.Location = new System.Drawing.Point(15, 9);
             this.timeLabel.Name = "timeLabel";
-            this.timeLabel.Size = new System.Drawing.Size(303, 29);
+            this.timeLabel.Size = new System.Drawing.Size(248, 24);
             this.timeLabel.TabIndex = 0;
             this.timeLabel.Text = "Time:                                      ";
             // 
@@ -89,18 +88,17 @@
             this.activatePanel.Controls.Add(this.resetButton);
             this.activatePanel.Controls.Add(this.buttonStop);
             this.activatePanel.Controls.Add(this.buttonPlay);
-            this.activatePanel.Location = new System.Drawing.Point(1466, 744);
-            this.activatePanel.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            this.activatePanel.Location = new System.Drawing.Point(1100, 595);
+            this.activatePanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.activatePanel.Name = "activatePanel";
-            this.activatePanel.Size = new System.Drawing.Size(427, 199);
+            this.activatePanel.Size = new System.Drawing.Size(320, 159);
             this.activatePanel.TabIndex = 3;
             // 
             // resetButton
             // 
-            this.resetButton.Location = new System.Drawing.Point(27, 101);
-            this.resetButton.Margin = new System.Windows.Forms.Padding(4);
+            this.resetButton.Location = new System.Drawing.Point(20, 81);
             this.resetButton.Name = "resetButton";
-            this.resetButton.Size = new System.Drawing.Size(252, 41);
+            this.resetButton.Size = new System.Drawing.Size(189, 33);
             this.resetButton.TabIndex = 2;
             this.resetButton.Text = "Reset";
             this.resetButton.UseVisualStyleBackColor = true;
@@ -109,10 +107,10 @@
             // buttonStop
             // 
             this.buttonStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonStop.Location = new System.Drawing.Point(169, 41);
-            this.buttonStop.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            this.buttonStop.Location = new System.Drawing.Point(127, 33);
+            this.buttonStop.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonStop.Name = "buttonStop";
-            this.buttonStop.Size = new System.Drawing.Size(109, 39);
+            this.buttonStop.Size = new System.Drawing.Size(82, 31);
             this.buttonStop.TabIndex = 1;
             this.buttonStop.Text = "Stop";
             this.buttonStop.UseVisualStyleBackColor = true;
@@ -121,10 +119,10 @@
             // buttonPlay
             // 
             this.buttonPlay.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonPlay.Location = new System.Drawing.Point(27, 41);
-            this.buttonPlay.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonPlay.Location = new System.Drawing.Point(20, 33);
+            this.buttonPlay.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonPlay.Name = "buttonPlay";
-            this.buttonPlay.Size = new System.Drawing.Size(109, 39);
+            this.buttonPlay.Size = new System.Drawing.Size(82, 31);
             this.buttonPlay.TabIndex = 0;
             this.buttonPlay.Text = "Play";
             this.buttonPlay.UseVisualStyleBackColor = true;
@@ -136,19 +134,34 @@
             this.displayPanel.Controls.Add(this.allSelectedCheckBox);
             this.displayPanel.Controls.Add(this.sensorCheckedListBox);
             this.displayPanel.Controls.Add(this.label4);
-            this.displayPanel.Location = new System.Drawing.Point(612, 744);
-            this.displayPanel.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            this.displayPanel.Location = new System.Drawing.Point(459, 595);
+            this.displayPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.displayPanel.Name = "displayPanel";
-            this.displayPanel.Size = new System.Drawing.Size(452, 199);
+            this.displayPanel.Size = new System.Drawing.Size(339, 159);
             this.displayPanel.TabIndex = 4;
+            // 
+            // allSelectedCheckBox
+            // 
+            this.allSelectedCheckBox.AutoSize = true;
+            this.allSelectedCheckBox.Checked = true;
+            this.allSelectedCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.allSelectedCheckBox.Location = new System.Drawing.Point(16, 44);
+            this.allSelectedCheckBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.allSelectedCheckBox.Name = "allSelectedCheckBox";
+            this.allSelectedCheckBox.Size = new System.Drawing.Size(42, 16);
+            this.allSelectedCheckBox.TabIndex = 2;
+            this.allSelectedCheckBox.Text = "All";
+            this.allSelectedCheckBox.UseVisualStyleBackColor = true;
+            this.allSelectedCheckBox.CheckedChanged += new System.EventHandler(this.allSelectedCheckBox_CheckedChanged);
             // 
             // sensorCheckedListBox
             // 
             this.sensorCheckedListBox.CheckOnClick = true;
             this.sensorCheckedListBox.FormattingEnabled = true;
-            this.sensorCheckedListBox.Location = new System.Drawing.Point(18, 87);
+            this.sensorCheckedListBox.Location = new System.Drawing.Point(14, 70);
+            this.sensorCheckedListBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.sensorCheckedListBox.Name = "sensorCheckedListBox";
-            this.sensorCheckedListBox.Size = new System.Drawing.Size(418, 104);
+            this.sensorCheckedListBox.Size = new System.Drawing.Size(314, 84);
             this.sensorCheckedListBox.TabIndex = 1;
             this.sensorCheckedListBox.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.sensorCheckedListBox_ItemCheck);
             // 
@@ -156,19 +169,20 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label4.Location = new System.Drawing.Point(174, 14);
+            this.label4.Location = new System.Drawing.Point(130, 11);
+            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(92, 29);
+            this.label4.Size = new System.Drawing.Size(70, 24);
             this.label4.TabIndex = 0;
             this.label4.Text = "Display";
             // 
             // fileLoadingButton
             // 
             this.fileLoadingButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.fileLoadingButton.Location = new System.Drawing.Point(1072, 746);
-            this.fileLoadingButton.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            this.fileLoadingButton.Location = new System.Drawing.Point(804, 597);
+            this.fileLoadingButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.fileLoadingButton.Name = "fileLoadingButton";
-            this.fileLoadingButton.Size = new System.Drawing.Size(381, 197);
+            this.fileLoadingButton.Size = new System.Drawing.Size(286, 158);
             this.fileLoadingButton.TabIndex = 6;
             this.fileLoadingButton.Text = "Load File...";
             this.fileLoadingButton.UseVisualStyleBackColor = true;
@@ -176,20 +190,23 @@
             // 
             // sensorChart
             // 
-            chartArea2.Name = "ChartArea1";
-            this.sensorChart.ChartAreas.Add(chartArea2);
+            chartArea1.Name = "ChartArea1";
+            this.sensorChart.ChartAreas.Add(chartArea1);
             this.sensorChart.Cursor = System.Windows.Forms.Cursors.Hand;
-            legend2.Name = "Legend1";
-            this.sensorChart.Legends.Add(legend2);
-            this.sensorChart.Location = new System.Drawing.Point(16, 15);
-            this.sensorChart.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            legend1.Name = "Legend1";
+            this.sensorChart.Legends.Add(legend1);
+            this.sensorChart.Location = new System.Drawing.Point(12, 12);
+            this.sensorChart.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.sensorChart.Name = "sensorChart";
             this.sensorChart.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.sensorChart.Size = new System.Drawing.Size(1437, 721);
+            this.sensorChart.Size = new System.Drawing.Size(1078, 577);
             this.sensorChart.TabIndex = 8;
             this.sensorChart.TabStop = false;
             this.sensorChart.Text = "chart1";
             this.sensorChart.MouseClick += new System.Windows.Forms.MouseEventHandler(this.sensorChart_MouseClick);
+            this.sensorChart.MouseDown += new System.Windows.Forms.MouseEventHandler(this.sensorChart_MouseDown);
+            this.sensorChart.MouseMove += new System.Windows.Forms.MouseEventHandler(this.sensorChart_MouseMove);
+            this.sensorChart.MouseUp += new System.Windows.Forms.MouseEventHandler(this.sensorChart_MouseUp);
             // 
             // chartTimer
             // 
@@ -199,38 +216,24 @@
             // GPSPanel
             // 
             this.GPSPanel.BackColor = System.Drawing.SystemColors.Info;
-            this.GPSPanel.Location = new System.Drawing.Point(1466, 15);
-            this.GPSPanel.Margin = new System.Windows.Forms.Padding(4);
+            this.GPSPanel.Location = new System.Drawing.Point(1100, 12);
             this.GPSPanel.Name = "GPSPanel";
-            this.GPSPanel.Size = new System.Drawing.Size(427, 721);
+            this.GPSPanel.Size = new System.Drawing.Size(320, 577);
             this.GPSPanel.TabIndex = 9;
-            // 
-            // allSelectedCheckBox
-            // 
-            this.allSelectedCheckBox.AutoSize = true;
-            this.allSelectedCheckBox.Checked = true;
-            this.allSelectedCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.allSelectedCheckBox.Location = new System.Drawing.Point(21, 55);
-            this.allSelectedCheckBox.Name = "allSelectedCheckBox";
-            this.allSelectedCheckBox.Size = new System.Drawing.Size(53, 19);
-            this.allSelectedCheckBox.TabIndex = 2;
-            this.allSelectedCheckBox.Text = "All";
-            this.allSelectedCheckBox.UseVisualStyleBackColor = true;
-            this.allSelectedCheckBox.CheckedChanged += new System.EventHandler(this.allSelectedCheckBox_CheckedChanged);
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(1906, 954);
+            this.ClientSize = new System.Drawing.Size(1028, 599);
             this.Controls.Add(this.GPSPanel);
             this.Controls.Add(this.sensorChart);
             this.Controls.Add(this.fileLoadingButton);
             this.Controls.Add(this.displayPanel);
             this.Controls.Add(this.activatePanel);
             this.Controls.Add(this.dataPanel);
-            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Form1";
