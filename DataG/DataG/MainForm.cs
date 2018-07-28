@@ -12,7 +12,7 @@ using System.Threading;
 
 namespace DataG
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         //constant variable
         const double EARTH_RAD_M = 6378100.00;                 //the radius of the earth (in meter)
@@ -40,9 +40,8 @@ namespace DataG
         int newPlace = 1;                                //the position of moving dot
         bool fileOpen = false;                                  //determine whether the file has been opened
         bool flag = false; //drag line
-        bool flagPlace = true;
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
         }
@@ -307,6 +306,23 @@ namespace DataG
             {
                 seriesName[i] = dt.Columns[i + 1].ColumnName;
             }
+
+            InputForm a = new InputForm();
+            a.Names = new string[dtcNum - 1];
+            for (int i = 0; i < dtcNum - 1; i++)
+            {
+                a.Names[i] = seriesName[i];
+            }
+            a.ShowDialog();
+            string latName = a.latName;
+            string lonName = a.lonName;
+
+            if (latName.Equals("") || lonName.Equals(""))
+            {
+                MessageBox.Show("No column selected for latitude and lontitude!");
+                return;
+            }
+
             for (int i = 0; i < dtcNum - 1; i++)
             {
                 Series s = new Series(seriesName[i]);
@@ -328,11 +344,12 @@ namespace DataG
 
             double[] datA = new double[dtrNum];     //the latitude
             double[] datO = new double[dtrNum];     //the longtitude
+            
             for (int i = 0; i < dtrNum; i++)
             {
-                datA[i] = data[i, findStrSub("LAT (deg)", seriesName, dtcNum - 1)];
+                datA[i] = data[i, findStrSub(latName, seriesName, dtcNum - 1)];
                 datA[i] *= 0.017453293;
-                datO[i] = data[i, findStrSub("LONG (deg)", seriesName, dtcNum - 1)];
+                datO[i] = data[i, findStrSub(lonName, seriesName, dtcNum - 1)];
                 datO[i] *= 0.017453293;
             }
             //convert from lat and lon to x,y
@@ -418,6 +435,7 @@ namespace DataG
                 if (xx >= dataTime[0] && xx <= dataTime[dtrNum - 1])
                 {
                     this.Refresh();
+                    
                     //draw the line with mouse click
                     Graphics g = sensorChart.CreateGraphics();
                     Point p1 = new Point(mouseX, 0);
@@ -448,7 +466,7 @@ namespace DataG
                         double k = (data[xLeftSub, i] - data[xRightSub, i]) / (xLeft - xRight);
                         double b = data[xLeftSub, i] - k * xLeft;
                         txtBox = (TextBox)this.Controls.Find("textBox" + i.ToString(), true)[0];
-                        if (txtBox != null && sensorCheckedListBox.GetItemChecked(i))
+                        if (txtBox != null)
                         {
                             txtBox.Text = Math.Round(k * xx + b, 8).ToString();
                         }
@@ -561,8 +579,6 @@ namespace DataG
                 nowScrollValue += 1000;
             sensorChart.Invalidate();
 
-            if (flagPlace == true)
-            {
             Graphics g2 = GPSPanel.CreateGraphics();
             PointF p11 = new PointF();
             PointF p22 = new PointF();
@@ -584,18 +600,12 @@ namespace DataG
             this.Refresh();
             m = (newPlace - xLeft) / (xRight - xLeft) * (x[xRightSub] - x[xLeftSub]) + x[xLeftSub];
             n = (newPlace - xLeft) / (xRight - xLeft) * (y[xRightSub] - y[xLeftSub]) + y[xLeftSub];
-            
-                PointF pp = new PointF();
+
+            PointF pp = new PointF();
             pp = new PointF((float)m, (float)n);
             g2.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
-            newPlace += 1000;
-            if(newPlace > maxValue(dataTime,dataTime.Length))
-            {
-                flagPlace = false;
-                this.GPSPanel.Refresh();
-            }
-            }
-           
+            if (newPlace <= maxValue(dataTime, dataTime.Length))
+                newPlace += 1000;
         }
 
         private void sensorChart_MouseMove(object sender, MouseEventArgs e)
@@ -624,7 +634,7 @@ namespace DataG
                         for (int i = 0; i < dtcNum - 1; i++)
                         {
                             txtBox = (TextBox)this.Controls.Find("textBox" + i.ToString(), true)[0];
-                            if (txtBox != null && sensorCheckedListBox.GetItemChecked(i))
+                            if (txtBox != null)
                             {
                                 txtBox.Text = "";
                             }
@@ -642,7 +652,7 @@ namespace DataG
                             double k = (data[xLeftSub, i] - data[xRightSub, i]) / (xLeft - xRight);
                             double b = data[xLeftSub, i] - k * xLeft;
                             txtBox = (TextBox)this.Controls.Find("textBox" + i.ToString(), true)[0];
-                            if (txtBox != null && sensorCheckedListBox.GetItemChecked(i))
+                            if (txtBox != null)
                             {
                                 txtBox.Text = Math.Round(k * xx + b, 8).ToString();
                             }
@@ -676,12 +686,59 @@ namespace DataG
         private void sensorChart_MouseDown(object sender, MouseEventArgs e)
         {
             flag = true;
+            /*Graphics g2 = GPSPanel.CreateGraphics();
+            int mouseX = e.X;
+            double xx = sensorChart.ChartAreas[0].AxisX.PixelPositionToValue(mouseX);
+            double m, n;
+            int xLeftSub = findLeftNear(xx, dataTime, dataTime.Length);
+            double xLeft = dataTime[xLeftSub], xRight = dataTime[xLeftSub];
+            int xRightSub = xLeftSub + 1;
+            xRight = dataTime[xRightSub];
+            m = (xx - xLeft) / (xRight - xLeft) * (x[xRightSub] - x[xLeftSub]) + x[xLeftSub];
+            n = (xx - xLeft) / (xRight - xLeft) * (y[xRightSub] - y[xLeftSub]) + y[xLeftSub];
+
+            PointF pp = new PointF();
+            pp = new PointF((float)m, (float)n);
+            g2.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);*/
+
         }
 
         private void sensorChart_MouseUp(object sender, MouseEventArgs e)
         {
             flag = false;
         }
+
+        //private void button1_Click(object sender, EventArgs e)
+        //{
+        //    panel1 = new TransparentPanel();
+        //    panel1.Location = new System.Drawing.Point(220, 25);
+        //    panel1.Size = new System.Drawing.Size(204, 140);
+        //    GPSPanel.Controls.Add(panel1);
+        //    panel1.BringToFront();
+
+        //    Graphics g = panel1.CreateGraphics();
+        //    Pen np = new Pen(Brushes.Blue, 2);
+        //    Point p1 = new Point(0, 0);
+        //    Point p2 = new Point(20, 20);
+        //    g.DrawLine(np, p1, p2);
+            
+        //}
+
+        //private void button2_Click(object sender, EventArgs e)
+        //{
+            
+        //    panel1 = new TransparentPanel();
+        //    panel1.Location = new System.Drawing.Point(220, 25);
+        //    panel1.Size = new System.Drawing.Size(204, 140);
+        //    GPSPanel.Controls.Add(panel1);
+        //    panel1.BringToFront();
+
+        //    Graphics g = panel1.CreateGraphics();
+        //    Pen np = new Pen(Brushes.Red, 2);
+        //    Point p1 = new Point(20, 20);
+        //    Point p2 = new Point(40, 40);
+        //    g.DrawLine(np, p1, p2);
+        //}
     }
 }
 
