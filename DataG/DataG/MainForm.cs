@@ -40,6 +40,7 @@ namespace DataG
         int newPlace = 1;                                //the position of moving dot
         bool fileOpen = false;                                  //determine whether the file has been opened
         bool flag = false; //drag line
+        bool flagPlace = true;
 
         public MainForm()
         {
@@ -448,7 +449,7 @@ namespace DataG
                     for (int i = 0; i < dtcNum - 1; i++)
                     {
                         txtBox = (TextBox)this.Controls.Find("textBox" + i.ToString(),true)[0];
-                        if (txtBox != null)
+                        if (txtBox != null && sensorCheckedListBox.GetItemChecked(i))
                         {
                             txtBox.Text = "";
                         }
@@ -466,7 +467,7 @@ namespace DataG
                         double k = (data[xLeftSub, i] - data[xRightSub, i]) / (xLeft - xRight);
                         double b = data[xLeftSub, i] - k * xLeft;
                         txtBox = (TextBox)this.Controls.Find("textBox" + i.ToString(), true)[0];
-                        if (txtBox != null)
+                        if (txtBox != null && sensorCheckedListBox.GetItemChecked(i))
                         {
                             txtBox.Text = Math.Round(k * xx + b, 8).ToString();
                         }
@@ -561,7 +562,7 @@ namespace DataG
                 for (int i = 0; i < dtcNum - 1; i++)
                 {
                     txtBox = (TextBox)this.Controls.Find("textBox" + i.ToString(), true)[0];
-                    if (txtBox != null)
+                    if (txtBox != null && sensorCheckedListBox.GetItemChecked(i))
                     {
                         txtBox.Text = data[findSub(nowScrollValue,dataTime,dataTime.Length), i].ToString();
                     }
@@ -579,7 +580,9 @@ namespace DataG
                 nowScrollValue += 1000;
             sensorChart.Invalidate();
 
-            Graphics g2 = GPSPanel.CreateGraphics();
+            if (flagPlace == true)
+            {
+                Graphics g2 = GPSPanel.CreateGraphics();
             PointF p11 = new PointF();
             PointF p22 = new PointF();
             Pen nPen = new Pen(Brushes.Red, 1);
@@ -606,6 +609,12 @@ namespace DataG
             g2.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
             if (newPlace <= maxValue(dataTime, dataTime.Length))
                 newPlace += 1000;
+                if (newPlace > maxValue(dataTime, dataTime.Length))
+                {
+                    flagPlace = false;
+                    this.GPSPanel.Refresh();
+                }
+            }
         }
 
         private void sensorChart_MouseMove(object sender, MouseEventArgs e)
@@ -652,7 +661,7 @@ namespace DataG
                             double k = (data[xLeftSub, i] - data[xRightSub, i]) / (xLeft - xRight);
                             double b = data[xLeftSub, i] - k * xLeft;
                             txtBox = (TextBox)this.Controls.Find("textBox" + i.ToString(), true)[0];
-                            if (txtBox != null)
+                            if (txtBox != null && sensorCheckedListBox.GetItemChecked(i))
                             {
                                 txtBox.Text = Math.Round(k * xx + b, 8).ToString();
                             }
