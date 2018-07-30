@@ -46,6 +46,8 @@
             this.sensorChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.chartTimer = new System.Windows.Forms.Timer(this.components);
             this.GPSPanel = new System.Windows.Forms.Panel();
+            this.YRangeButton = new System.Windows.Forms.Button();
+            this.XRangeButton = new System.Windows.Forms.Button();
             this.dataPanel.SuspendLayout();
             this.activatePanel.SuspendLayout();
             this.displayPanel.SuspendLayout();
@@ -98,7 +100,7 @@
             // resetButton
             // 
             this.resetButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.resetButton.Location = new System.Drawing.Point(67, 127);
+            this.resetButton.Location = new System.Drawing.Point(67, 128);
             this.resetButton.Margin = new System.Windows.Forms.Padding(5);
             this.resetButton.Name = "resetButton";
             this.resetButton.Size = new System.Drawing.Size(340, 51);
@@ -184,7 +186,7 @@
             this.fileLoadingButton.Location = new System.Drawing.Point(1072, 746);
             this.fileLoadingButton.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.fileLoadingButton.Name = "fileLoadingButton";
-            this.fileLoadingButton.Size = new System.Drawing.Size(386, 198);
+            this.fileLoadingButton.Size = new System.Drawing.Size(387, 60);
             this.fileLoadingButton.TabIndex = 6;
             this.fileLoadingButton.Text = "Load File...";
             this.fileLoadingButton.UseVisualStyleBackColor = true;
@@ -221,15 +223,41 @@
             this.GPSPanel.Location = new System.Drawing.Point(1467, 19);
             this.GPSPanel.Margin = new System.Windows.Forms.Padding(4);
             this.GPSPanel.Name = "GPSPanel";
-            this.GPSPanel.Size = new System.Drawing.Size(427, 717);
+            this.GPSPanel.Size = new System.Drawing.Size(427, 718);
             this.GPSPanel.TabIndex = 9;
+            // 
+            // YRangeButton
+            // 
+            this.YRangeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.YRangeButton.Location = new System.Drawing.Point(1072, 883);
+            this.YRangeButton.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            this.YRangeButton.Name = "YRangeButton";
+            this.YRangeButton.Size = new System.Drawing.Size(387, 60);
+            this.YRangeButton.TabIndex = 10;
+            this.YRangeButton.Text = "Y-Range";
+            this.YRangeButton.UseVisualStyleBackColor = true;
+            this.YRangeButton.Click += new System.EventHandler(this.YRangeButton_Click);
+            // 
+            // XRangeButton
+            // 
+            this.XRangeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.XRangeButton.Location = new System.Drawing.Point(1072, 814);
+            this.XRangeButton.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            this.XRangeButton.Name = "XRangeButton";
+            this.XRangeButton.Size = new System.Drawing.Size(387, 60);
+            this.XRangeButton.TabIndex = 11;
+            this.XRangeButton.Text = "X-Range";
+            this.XRangeButton.UseVisualStyleBackColor = true;
+            this.XRangeButton.Click += new System.EventHandler(this.XRangeButton_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(1903, 964);
+            this.ClientSize = new System.Drawing.Size(1827, 950);
+            this.Controls.Add(this.XRangeButton);
+            this.Controls.Add(this.YRangeButton);
             this.Controls.Add(this.GPSPanel);
             this.Controls.Add(this.sensorChart);
             this.Controls.Add(this.fileLoadingButton);
@@ -268,6 +296,8 @@
         private System.Windows.Forms.Panel GPSPanel;
         private System.Windows.Forms.CheckedListBox sensorCheckedListBox;
         private System.Windows.Forms.CheckBox allSelectedCheckBox;
+        private System.Windows.Forms.Button YRangeButton;
+        private System.Windows.Forms.Button XRangeButton;
     }
 }
 
