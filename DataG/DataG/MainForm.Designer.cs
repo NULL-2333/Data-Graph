@@ -142,7 +142,7 @@
             this.displayPanel.Location = new System.Drawing.Point(612, 744);
             this.displayPanel.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.displayPanel.Name = "displayPanel";
-            this.displayPanel.Size = new System.Drawing.Size(452, 199);
+            this.displayPanel.Size = new System.Drawing.Size(367, 199);
             this.displayPanel.TabIndex = 4;
             // 
             // allSelectedCheckBox
@@ -166,7 +166,7 @@
             this.sensorCheckedListBox.Location = new System.Drawing.Point(19, 88);
             this.sensorCheckedListBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.sensorCheckedListBox.Name = "sensorCheckedListBox";
-            this.sensorCheckedListBox.Size = new System.Drawing.Size(417, 104);
+            this.sensorCheckedListBox.Size = new System.Drawing.Size(329, 104);
             this.sensorCheckedListBox.TabIndex = 1;
             this.sensorCheckedListBox.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.sensorCheckedListBox_ItemCheck);
             // 
@@ -174,7 +174,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label4.Location = new System.Drawing.Point(173, 14);
+            this.label4.Location = new System.Drawing.Point(136, 15);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(92, 29);
             this.label4.TabIndex = 0;
@@ -183,10 +183,10 @@
             // fileLoadingButton
             // 
             this.fileLoadingButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.fileLoadingButton.Location = new System.Drawing.Point(1072, 746);
+            this.fileLoadingButton.Location = new System.Drawing.Point(987, 746);
             this.fileLoadingButton.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.fileLoadingButton.Name = "fileLoadingButton";
-            this.fileLoadingButton.Size = new System.Drawing.Size(387, 60);
+            this.fileLoadingButton.Size = new System.Drawing.Size(138, 60);
             this.fileLoadingButton.TabIndex = 6;
             this.fileLoadingButton.Text = "Load File...";
             this.fileLoadingButton.UseVisualStyleBackColor = true;
@@ -229,10 +229,10 @@
             // YRangeButton
             // 
             this.YRangeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.YRangeButton.Location = new System.Drawing.Point(1072, 883);
+            this.YRangeButton.Location = new System.Drawing.Point(987, 883);
             this.YRangeButton.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.YRangeButton.Name = "YRangeButton";
-            this.YRangeButton.Size = new System.Drawing.Size(387, 60);
+            this.YRangeButton.Size = new System.Drawing.Size(138, 60);
             this.YRangeButton.TabIndex = 10;
             this.YRangeButton.Text = "Y-Range";
             this.YRangeButton.UseVisualStyleBackColor = true;
@@ -241,10 +241,10 @@
             // XRangeButton
             // 
             this.XRangeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.XRangeButton.Location = new System.Drawing.Point(1072, 814);
+            this.XRangeButton.Location = new System.Drawing.Point(987, 814);
             this.XRangeButton.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.XRangeButton.Name = "XRangeButton";
-            this.XRangeButton.Size = new System.Drawing.Size(387, 60);
+            this.XRangeButton.Size = new System.Drawing.Size(138, 60);
             this.XRangeButton.TabIndex = 11;
             this.XRangeButton.Text = "X-Range";
             this.XRangeButton.UseVisualStyleBackColor = true;
