@@ -497,17 +497,7 @@ namespace DataG
                         }
                     }
 
-                    Graphics g2 = GPSPanel.CreateGraphics();
-                    PointF p11 = new PointF();
-                    PointF p22 = new PointF();
-                    Pen nPen = new Pen(Brushes.Red, 1);
-                    for (int i = 0; i < dtrNum - 1; i++)
-                    {
-                        p11 = new PointF((float)x[i], (float)y[i]);
-                        p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
-                        g2.DrawLine(nPen, p11, p22);
-                    }
-
+                   Graphics g2 = GPSPanel.CreateGraphics();
                     double m, n;
                     m = (xx - xLeft) / (xRight - xLeft) * (x[xRightSub] - x[xLeftSub]) + x[xLeftSub];
                     n = (xx - xLeft) / (xRight - xLeft) * (y[xRightSub] - y[xLeftSub]) + y[xLeftSub];
@@ -537,18 +527,6 @@ namespace DataG
             sensorChart.ChartAreas[0].AxisX.ScaleView.Position = nowScrollValue;
             sensorChart.Invalidate();
             chartTimer.Enabled = false;
-            /*
-            Graphics g2 = GPSPanel.CreateGraphics();
-            PointF p11 = new PointF();
-            PointF p22 = new PointF();
-            Pen nPen = new Pen(Brushes.Red, 1);
-            for (int j = 0; j < dtrNum - 1; j++)
-            {
-                p11 = new PointF((float)x[j], (float)y[j]);
-                p22 = new PointF((float)x[j + 1], (float)y[j + 1]);
-                g2.DrawLine(nPen, p11, p22);
-            }*/
-
             flagPlace = true;
         }
 
@@ -567,16 +545,6 @@ namespace DataG
             chartTimer.Enabled = false;
 
             GPSPanel.Refresh();
-            /*Graphics g2 = GPSPanel.CreateGraphics();
-            PointF p11 = new PointF();
-            PointF p22 = new PointF();
-            Pen nPen = new Pen(Brushes.Red, 1);
-            for (int j = 0; j < dtrNum - 1; j++)
-            {
-                p11 = new PointF((float)x[j], (float)y[j]);
-                p22 = new PointF((float)x[j + 1], (float)y[j + 1]);
-                g2.DrawLine(nPen, p11, p22);
-            }*/
             flagPlace = true;
         }
 
@@ -611,17 +579,6 @@ namespace DataG
             {
                 Bitmap bitmap = new Bitmap(GPSPanel.Width, GPSPanel.Height);
                 Graphics g2 = Graphics.FromImage(bitmap);
-                /*
-                //Graphics g2 = GPSPanel.CreateGraphics();
-                PointF p11 = new PointF();
-                PointF p22 = new PointF();
-                Pen nPen = new Pen(Brushes.Red, 1);
-                for (int j = 0; j < dtrNum - 1; j++)
-                {
-                    p11 = new PointF((float)x[j], (float)y[j]);
-                    p22 = new PointF((float)x[j + 1], (float)y[j + 1]);
-                    g2.DrawLine(nPen, p11, p22);
-                }*/
                 //find the Subscript with the xLeft
                 int xLeftSub = findLeftNear(newPlace, dataTime, dataTime.Length);
                 int xRightSub = xLeftSub + 1;
@@ -699,17 +656,6 @@ namespace DataG
                             }
                         }
                         Graphics g2 = GPSPanel.CreateGraphics();
-
-                        /*
-                        PointF p11 = new PointF();
-                        PointF p22 = new PointF();
-                        Pen nPen = new Pen(Brushes.Red, 1);
-                        for (int i = 0; i < dtrNum - 1; i++)
-                        {
-                            p11 = new PointF((float)x[i], (float)y[i]);
-                            p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
-                            g2.DrawLine(nPen, p11, p22);
-                        }*/
 
                         double m, n;
                         m = (xx - xLeft) / (xRight - xLeft) * (x[xRightSub] - x[xLeftSub]) + x[xLeftSub];
@@ -831,7 +777,6 @@ namespace DataG
                     else
                         g2.DrawLine(p1, p11, p22);
                 }
-
             }
             else
             {
