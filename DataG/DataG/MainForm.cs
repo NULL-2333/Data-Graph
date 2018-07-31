@@ -43,6 +43,8 @@ namespace DataG
         int yRangeMin = 0;                                      //the min value of y coordinate
         int xScale = 10000;                                     //the size of x view
         int yScale = 100;                                       //the size of y view
+        double[] speed = new double[dtrNum];             //the speed in the csv file
+        int speedRow = 0;
 
         public MainForm()
         {
@@ -299,6 +301,7 @@ namespace DataG
             dtrNum = dt.Rows.Count;
             dtcNum = dt.Columns.Count;
             data = new double[dtrNum, dtcNum - 1];
+            speed = new double[dtrNum];
             dataTime = new double[dtrNum];
             seriesName = new string[dtcNum - 1];
             for (int i = 0; i < dtrNum; i++)
@@ -317,6 +320,14 @@ namespace DataG
             for (int i = 0; i < dtcNum - 1; i++)
             {
                 seriesName[i] = dt.Columns[i + 1].ColumnName;
+                if (seriesName[i].Contains("SPEED"))
+                {
+                    speedRow = i;
+                }
+            }
+            for (int i = 0; i < dtrNum; i++)
+            {
+                speed[i] = double.Parse(dt.Rows[i][speedRow + 1].ToString());
             }
 
             InputForm a = new InputForm();
@@ -526,7 +537,7 @@ namespace DataG
             sensorChart.ChartAreas[0].AxisX.ScaleView.Position = nowScrollValue;
             sensorChart.Invalidate();
             chartTimer.Enabled = false;
-
+            /*
             Graphics g2 = GPSPanel.CreateGraphics();
             PointF p11 = new PointF();
             PointF p22 = new PointF();
@@ -536,7 +547,7 @@ namespace DataG
                 p11 = new PointF((float)x[j], (float)y[j]);
                 p22 = new PointF((float)x[j + 1], (float)y[j + 1]);
                 g2.DrawLine(nPen, p11, p22);
-            }
+            }*/
 
             flagPlace = true;
         }
@@ -556,7 +567,7 @@ namespace DataG
             chartTimer.Enabled = false;
 
             GPSPanel.Refresh();
-            Graphics g2 = GPSPanel.CreateGraphics();
+            /*Graphics g2 = GPSPanel.CreateGraphics();
             PointF p11 = new PointF();
             PointF p22 = new PointF();
             Pen nPen = new Pen(Brushes.Red, 1);
@@ -565,7 +576,7 @@ namespace DataG
                 p11 = new PointF((float)x[j], (float)y[j]);
                 p22 = new PointF((float)x[j + 1], (float)y[j + 1]);
                 g2.DrawLine(nPen, p11, p22);
-            }
+            }*/
             flagPlace = true;
         }
 
@@ -600,6 +611,7 @@ namespace DataG
             {
                 Bitmap bitmap = new Bitmap(GPSPanel.Width, GPSPanel.Height);
                 Graphics g2 = Graphics.FromImage(bitmap);
+                /*
                 //Graphics g2 = GPSPanel.CreateGraphics();
                 PointF p11 = new PointF();
                 PointF p22 = new PointF();
@@ -609,7 +621,7 @@ namespace DataG
                     p11 = new PointF((float)x[j], (float)y[j]);
                     p22 = new PointF((float)x[j + 1], (float)y[j + 1]);
                     g2.DrawLine(nPen, p11, p22);
-                }
+                }*/
                 //find the Subscript with the xLeft
                 int xLeftSub = findLeftNear(newPlace, dataTime, dataTime.Length);
                 int xRightSub = xLeftSub + 1;
@@ -625,6 +637,7 @@ namespace DataG
                 PointF pp = new PointF();
                 pp = new PointF((float)m, (float)n);
                 g2.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
+                this.Update();
                 if (newPlace <= maxValue(dataTime, dataTime.Length))
                     newPlace += 1000;
                 if (newPlace > maxValue(dataTime, dataTime.Length))
@@ -685,8 +698,9 @@ namespace DataG
                                 txtBox.Text = Math.Round(k * xx + b, 8).ToString();
                             }
                         }
-
                         Graphics g2 = GPSPanel.CreateGraphics();
+
+                        /*
                         PointF p11 = new PointF();
                         PointF p22 = new PointF();
                         Pen nPen = new Pen(Brushes.Red, 1);
@@ -695,7 +709,7 @@ namespace DataG
                             p11 = new PointF((float)x[i], (float)y[i]);
                             p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
                             g2.DrawLine(nPen, p11, p22);
-                        }
+                        }*/
 
                         double m, n;
                         m = (xx - xLeft) / (xRight - xLeft) * (x[xRightSub] - x[xLeftSub]) + x[xLeftSub];
@@ -721,6 +735,7 @@ namespace DataG
 
         private void XRangeButton_Click(object sender, EventArgs e)
         {
+
             XRangeForm a = new XRangeForm();
             a.ShowDialog();
             xRangeMax = a.xRangeMax;
@@ -749,6 +764,82 @@ namespace DataG
             sensorChart.Invalidate();
         }
 
+        private void radioButton_Normal_CheckedChanged(object sender, EventArgs e)
+        {
+            Bitmap bitmap = new Bitmap(GPSPanel.Width, GPSPanel.Height);
+            Graphics g2 = Graphics.FromImage(bitmap);
+            PointF p11 = new PointF();
+            PointF p22 = new PointF();
+            Pen nPen = new Pen(Brushes.Red, 1);
+            for (int i = 0; i < dtrNum - 1; i++)
+            {
+                p11 = new PointF((float)x[i], (float)y[i]);
+                p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                g2.DrawLine(nPen, p11, p22);
+            }
+        }
+
+        private void radioButton_Speed_CheckedChanged(object sender, EventArgs e)
+        {
+            Refresh();
+        }
+
+        private void radioButton_Accelerate_CheckedChanged(object sender, EventArgs e)
+        {
+            Refresh();
+        }
+
+        private void GPSPanel_Paint(object sender, PaintEventArgs e)
+        {
+            Bitmap bitmap = new Bitmap(GPSPanel.Width, GPSPanel.Height);
+            Graphics g2 = Graphics.FromImage(bitmap);
+            if (radioButton_Normal.Checked) //normal
+            {
+                PointF p11 = new PointF();
+                PointF p22 = new PointF();
+                Pen nPen = new Pen(Brushes.Red, 1);
+                for (int i = 0; i < dtrNum -1 ; i++)
+                {
+                    p11 = new PointF((float)x[i], (float)y[i]);
+                    p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                    g2.DrawLine(nPen, p11, p22);
+                }
+            }
+            else if (radioButton_Speed.Checked) //speed
+            {
+                PointF p11 = new PointF();
+                PointF p22 = new PointF();
+                Pen p1 = new Pen(Brushes.Red, 1); //1
+                Pen p2 = new Pen(Brushes.Green, 1);//5
+                Pen p3 = new Pen(Brushes.Yellow, 1);//4
+                Pen p4 = new Pen(Brushes.OrangeRed, 1);//2
+                Pen p5 = new Pen(Brushes.Orange, 1);//3
+
+
+                for (int i = 0; i < dtrNum - 1; i++)
+                {
+                    p11 = new PointF((float)x[i], (float)y[i]);
+                    p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                    if (speed[i] < 2)
+                        g2.DrawLine(p2, p11, p22);
+                    else if (speed[i] > 2 && speed[i] < 10)
+                        g2.DrawLine(p3, p11, p22);
+                    else if (speed[i] > 10 && speed[i] < 15)
+                        g2.DrawLine(p5, p11, p22);
+                    else if (speed[i] > 15 && speed[i] < 20)
+                        g2.DrawLine(p4, p11, p22);
+                    else
+                        g2.DrawLine(p1, p11, p22);
+                }
+
+            }
+            else
+            {
+
+            }
+            Graphics gg = GPSPanel.CreateGraphics();
+            gg.DrawImage(bitmap, new PointF(0.0f, 0.0f));
+        }
     }
 }
 
