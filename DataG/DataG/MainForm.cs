@@ -31,8 +31,8 @@ namespace DataG
         double[] x = new double[dtrNum];                        //the x coordinate in GPSPannel
         double[] y = new double[dtrNum];                        //the x coordinate in GPSPannel
 
-        int nowScrollValue = 0;                                 //the position of scrollbar
-        int newPlace = 1;                                       //the position of moving dot
+        double nowScrollValue = 0;                                 //the position of scrollbar
+        double newPlace = 1;                                       //the position of moving dot
         bool fileOpen = false;                                  //determine whether the file has been opened
         bool flag = false;                                      //drag line
         bool flagPlace = true;
@@ -559,16 +559,19 @@ namespace DataG
             flagPlace = true;
         }
 
+        private void sensorChart_PostPaint(object sender, ChartPaintEventArgs e)
+        {
+            double x0 = sensorChart.ChartAreas[0].AxisX.ValueToPixelPosition(nowScrollValue);
+            double y0 = sensorChart.ChartAreas[0].AxisY.ValueToPixelPosition(sensorChart.ChartAreas[0].AxisY.Minimum);
+            double y1 = sensorChart.ChartAreas[0].AxisY.ValueToPixelPosition(sensorChart.ChartAreas[0].AxisY.Maximum);
+            e.ChartGraphics.Graphics.DrawLine(new Pen(Color.Red, 1), (float)x0, (float)y0, (float)x0, (float)y1);
+        }
+
         private void chartTimer_Tick(object sender, EventArgs e)
         {
-            //Bitmap bitmap1 = new Bitmap(sensorChart.Width, sensorChart.Height);
-            //Graphics g1 = Graphics.FromImage(bitmap1);
-            //PointF p1 = new PointF((float)sensorChart.ChartAreas[0].AxisX.PixelPositionToValue(nowScrollValue), 50);
-            //PointF p2 = new PointF(0, 0);
-            //Pen np = new Pen(Brushes.Beige, 2);
-            //g1.DrawLine(np, p1, p2);
-            //Graphics gg1 = sensorChart.CreateGraphics();
-            //gg1.DrawImage(bitmap1, new PointF(0.0f, 0.0f));
+            
+            //sensorChart.PostPaint += new EventHandler<ChartPaintEventArgs>(sensorChart_PostPaint);
+            //MessageBox.Show(sensorChart.ChartAreas[0].AxisX.Minimum.ToString());
 
             if (nowScrollValue >= minValue(dataTime, dataTime.Length) && nowScrollValue <= maxValue(dataTime, dataTime.Length))
             {
@@ -579,7 +582,7 @@ namespace DataG
                     txtBox = (TextBox)this.Controls.Find("textBox" + i.ToString(), true)[0];
                     if (txtBox != null && sensorCheckedListBox.GetItemChecked(i))
                     {
-                        txtBox.Text = data[findSub(nowScrollValue,dataTime,dataTime.Length), i].ToString();
+                        txtBox.Text = data[findSub(Math.Round(nowScrollValue, 1), dataTime, dataTime.Length), i].ToString();
                     }
                 }
             }
@@ -596,7 +599,7 @@ namespace DataG
 
             sensorChart.ChartAreas[0].AxisX.ScaleView.Position = nowScrollValue;
             if (nowScrollValue <= maxValue(dataTime, dataTime.Length))
-                nowScrollValue += 1;
+                nowScrollValue += .1;
             sensorChart.Invalidate();
 
             if (flagPlace == true)
@@ -620,7 +623,7 @@ namespace DataG
                 g2.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
                 this.Update();
                 if (newPlace <= maxValue(dataTime, dataTime.Length))
-                    newPlace += 1;
+                    newPlace += .1;
                 if (newPlace > maxValue(dataTime, dataTime.Length))
                 {
                     flagPlace = false;
@@ -809,6 +812,8 @@ namespace DataG
             Graphics gg = GPSPanel.CreateGraphics();
             gg.DrawImage(bitmap, new PointF(0.0f, 0.0f));
         }
+
+        
     }
 }
 
