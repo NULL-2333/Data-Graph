@@ -37,13 +37,13 @@ namespace DataG
         bool flag = false;                                      //drag line
         bool flagPlace = true;
 
-        int xRangeMax = 70000;                                  //the max value of x coordinate
+        int xRangeMax = 70;                                  //the max value of x coordinate
         int xRangeMin = 0;                                      //the min value of x coordinate
         int yRangeMax = 200;                                    //the max value of y coordinate
         int yRangeMin = 0;                                      //the min value of y coordinate
-        int xScale = 10000;                                     //the size of x view
+        int xScale = 1;                                        //the size of x view
         int yScale = 100;                                       //the size of y view
-        double[] speed = new double[dtrNum];             //the speed in the csv file
+        double[] speed = new double[dtrNum];                    //the speed in the csv file
         int speedRow = 0;
 
         public MainForm()
@@ -316,6 +316,7 @@ namespace DataG
             for (int i = 0; i < dtrNum; i++)
             {
                 dataTime[i] = dataTime[i] - k;
+                dataTime[i] /= 1000;
             }
             for (int i = 0; i < dtcNum - 1; i++)
             {
@@ -364,11 +365,12 @@ namespace DataG
                 sensorChart.Series.Add(s);
             }
             sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
-            sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 10000;
+            sensorChart.ChartAreas[0].AxisX.ScaleView.Size = xScale;
             sensorChart.ChartAreas[0].AxisX.Maximum = xRangeMax;
             sensorChart.ChartAreas[0].AxisX.Minimum = xRangeMin;
+            sensorChart.ChartAreas[0].AxisX.Interval = 0.1;
             sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
-            sensorChart.ChartAreas[0].AxisY.ScaleView.Size = 100;
+            sensorChart.ChartAreas[0].AxisY.ScaleView.Size = yScale;
             sensorChart.ChartAreas[0].AxisY.Maximum = yRangeMax;
             sensorChart.ChartAreas[0].AxisY.Minimum = yRangeMin;
 
@@ -517,6 +519,7 @@ namespace DataG
         
         private void buttonPlay_Click(object sender, EventArgs e)
         {
+            
             if (fileOpen == true)
                 chartTimer.Enabled = true;
         }
@@ -524,11 +527,15 @@ namespace DataG
         private void buttonStop_Click(object sender, EventArgs e)
         {
             sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
-            sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 10000;
+            sensorChart.ChartAreas[0].AxisX.ScaleView.Size = xScale;
+            sensorChart.ChartAreas[0].AxisX.Maximum = xRangeMax;
+            sensorChart.ChartAreas[0].AxisX.Minimum = xRangeMin;
+            sensorChart.ChartAreas[0].AxisX.Interval = 0.1;
             sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
-            sensorChart.ChartAreas[0].AxisY.ScaleView.Size = 100;
-            sensorChart.ChartAreas[0].AxisY.Maximum = 200;
-            sensorChart.ChartAreas[0].AxisY.Minimum = -200;
+            sensorChart.ChartAreas[0].AxisY.ScaleView.Size = yScale;
+            sensorChart.ChartAreas[0].AxisY.Maximum = yRangeMax;
+            sensorChart.ChartAreas[0].AxisY.Minimum = yRangeMin;
+
             sensorChart.ChartAreas[0].AxisX.ScaleView.Position = nowScrollValue;
             sensorChart.Invalidate();
             chartTimer.Enabled = false;
@@ -538,11 +545,15 @@ namespace DataG
         private void resetButton_Click(object sender, EventArgs e)
         {
             sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
-            sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 10000;
+            sensorChart.ChartAreas[0].AxisX.ScaleView.Size = xScale;
+            sensorChart.ChartAreas[0].AxisX.Maximum = xRangeMax;
+            sensorChart.ChartAreas[0].AxisX.Minimum = xRangeMin;
+            sensorChart.ChartAreas[0].AxisX.Interval = 0.1;
             sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
-            sensorChart.ChartAreas[0].AxisY.ScaleView.Size = 100;
-            sensorChart.ChartAreas[0].AxisY.Maximum = 200;
-            sensorChart.ChartAreas[0].AxisY.Minimum = -200;
+            sensorChart.ChartAreas[0].AxisY.ScaleView.Size = yScale;
+            sensorChart.ChartAreas[0].AxisY.Maximum = yRangeMax;
+            sensorChart.ChartAreas[0].AxisY.Minimum = yRangeMin;
+
             nowScrollValue = (int)minValue(dataTime, dataTime.Length);
             newPlace = (int)minValue(dataTime, dataTime.Length);
             sensorChart.ChartAreas[0].AxisX.ScaleView.Position = nowScrollValue;
@@ -555,6 +566,15 @@ namespace DataG
 
         private void chartTimer_Tick(object sender, EventArgs e)
         {
+            //Bitmap bitmap1 = new Bitmap(sensorChart.Width, sensorChart.Height);
+            //Graphics g1 = Graphics.FromImage(bitmap1);
+            //PointF p1 = new PointF((float)sensorChart.ChartAreas[0].AxisX.PixelPositionToValue(nowScrollValue), 50);
+            //PointF p2 = new PointF(0, 0);
+            //Pen np = new Pen(Brushes.Beige, 2);
+            //g1.DrawLine(np, p1, p2);
+            //Graphics gg1 = sensorChart.CreateGraphics();
+            //gg1.DrawImage(bitmap1, new PointF(0.0f, 0.0f));
+
             if (nowScrollValue >= minValue(dataTime, dataTime.Length) && nowScrollValue <= maxValue(dataTime, dataTime.Length))
             {
                 textBoxTime.Text = nowScrollValue.ToString();
@@ -569,15 +589,9 @@ namespace DataG
                 }
             }
 
-            //sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
-            //sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 10000;
-            //sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
-            //sensorChart.ChartAreas[0].AxisY.ScaleView.Size = 100;
-            //sensorChart.ChartAreas[0].AxisY.Maximum = 200;
-            //sensorChart.ChartAreas[0].AxisY.Minimum = -200;
             sensorChart.ChartAreas[0].AxisX.ScaleView.Position = nowScrollValue;
             if (nowScrollValue <= maxValue(dataTime, dataTime.Length))
-                nowScrollValue += 1000;
+                nowScrollValue += 1;
             sensorChart.Invalidate();
 
             if (flagPlace == true)
@@ -601,7 +615,7 @@ namespace DataG
                 g2.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
                 this.Update();
                 if (newPlace <= maxValue(dataTime, dataTime.Length))
-                    newPlace += 1000;
+                    newPlace += 1;
                 if (newPlace > maxValue(dataTime, dataTime.Length))
                 {
                     flagPlace = false;
