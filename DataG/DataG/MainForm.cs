@@ -598,7 +598,9 @@ namespace DataG
 
             if (flagPlace == true)
             {
-                Graphics g2 = GPSPanel.CreateGraphics();
+                Bitmap bitmap = new Bitmap(GPSPanel.Width, GPSPanel.Height);
+                Graphics g2 = Graphics.FromImage(bitmap);
+                //Graphics g2 = GPSPanel.CreateGraphics();
                 PointF p11 = new PointF();
                 PointF p22 = new PointF();
                 Pen nPen = new Pen(Brushes.Red, 1);
@@ -630,6 +632,8 @@ namespace DataG
                     flagPlace = false;
                     //this.GPSPanel.Refresh();
                 }
+                Graphics gg = GPSPanel.CreateGraphics();
+                gg.DrawImage(bitmap, new PointF(0.0f, 0.0f));
             }
         }
 
