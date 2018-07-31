@@ -320,11 +320,16 @@ namespace DataG
             for (int i = 0; i < dtcNum - 1; i++)
             {
                 seriesName[i] = dt.Columns[i + 1].ColumnName;
+            }
+            for (int i = 0; i < dtcNum - 1; i++)
+            {
                 if (seriesName[i].Contains("SPEED"))
                 {
                     speedRow = i;
+                    break;
                 }
             }
+
             for (int i = 0; i < dtrNum; i++)
             {
                 speed[i] = double.Parse(dt.Rows[i][speedRow + 1].ToString());
@@ -564,12 +569,12 @@ namespace DataG
                 }
             }
 
-            sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
-            sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 10000;
-            sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
-            sensorChart.ChartAreas[0].AxisY.ScaleView.Size = 100;
-            sensorChart.ChartAreas[0].AxisY.Maximum = 200;
-            sensorChart.ChartAreas[0].AxisY.Minimum = -200;
+            //sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
+            //sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 10000;
+            //sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
+            //sensorChart.ChartAreas[0].AxisY.ScaleView.Size = 100;
+            //sensorChart.ChartAreas[0].AxisY.Maximum = 200;
+            //sensorChart.ChartAreas[0].AxisY.Minimum = -200;
             sensorChart.ChartAreas[0].AxisX.ScaleView.Position = nowScrollValue;
             if (nowScrollValue <= maxValue(dataTime, dataTime.Length))
                 nowScrollValue += 1000;
@@ -760,13 +765,15 @@ namespace DataG
                 Pen p3 = new Pen(Brushes.Yellow, 1);//4
                 Pen p4 = new Pen(Brushes.OrangeRed, 1);//2
                 Pen p5 = new Pen(Brushes.Orange, 1);//3
-
-
+                Pen p6;
+                
                 for (int i = 0; i < dtrNum - 1; i++)
                 {
                     p11 = new PointF((float)x[i], (float)y[i]);
                     p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
-                    if (speed[i] < 2)
+                    p6 = new Pen(Color.FromArgb(colorRed(speed[i]), colorGreen(speed[i]), 0), 2);
+                    g2.DrawLine(p6, p11, p22);
+                    /*if (speed[i] < 2)
                         g2.DrawLine(p2, p11, p22);
                     else if (speed[i] > 2 && speed[i] < 10)
                         g2.DrawLine(p3, p11, p22);
@@ -775,7 +782,7 @@ namespace DataG
                     else if (speed[i] > 15 && speed[i] < 20)
                         g2.DrawLine(p4, p11, p22);
                     else
-                        g2.DrawLine(p1, p11, p22);
+                        g2.DrawLine(p1, p11, p22);*/
                 }
             }
             else
@@ -785,6 +792,39 @@ namespace DataG
             Graphics gg = GPSPanel.CreateGraphics();
             gg.DrawImage(bitmap, new PointF(0.0f, 0.0f));
         }
+
+        public int colorRed(double x)//xx,,
+        {
+            if (x > 15)
+            {
+                double y = 255 - 10 * (x-15);
+                if (y > 0)
+                return Convert.ToInt32(Math.Floor(y));
+            else
+                return 255;
+            }
+            else
+            {
+                return 255;
+            }
+        }
+        public int colorGreen(double x)//,xx,
+        {
+            if (x < 15)
+            {
+                double y = 255 - 10 * x;
+            if (y > 0)
+                return Convert.ToInt32(Math.Floor(y));
+            else
+                return 0;
+            }
+            else
+            {
+                return 0;
+            }
+                
+        }
+
     }
 }
 
