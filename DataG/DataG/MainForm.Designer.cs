@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.dataPanel = new System.Windows.Forms.Panel();
             this.textBoxTime = new System.Windows.Forms.TextBox();
             this.timeLabel = new System.Windows.Forms.Label();
@@ -46,16 +46,19 @@
             this.sensorChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.chartTimer = new System.Windows.Forms.Timer(this.components);
             this.GPSPanel = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
             this.YRangeButton = new System.Windows.Forms.Button();
             this.XRangeButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.radioButton_Accelerate = new System.Windows.Forms.RadioButton();
             this.radioButton_Speed = new System.Windows.Forms.RadioButton();
             this.radioButton_Normal = new System.Windows.Forms.RadioButton();
+            this.YPanel = new System.Windows.Forms.Panel();
             this.dataPanel.SuspendLayout();
             this.activatePanel.SuspendLayout();
             this.displayPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sensorChart)).BeginInit();
+            this.GPSPanel.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -68,12 +71,12 @@
             this.dataPanel.Location = new System.Drawing.Point(16, 744);
             this.dataPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dataPanel.Name = "dataPanel";
-            this.dataPanel.Size = new System.Drawing.Size(589, 199);
+            this.dataPanel.Size = new System.Drawing.Size(400, 199);
             this.dataPanel.TabIndex = 2;
             // 
             // textBoxTime
             // 
-            this.textBoxTime.Location = new System.Drawing.Point(432, 11);
+            this.textBoxTime.Location = new System.Drawing.Point(241, 11);
             this.textBoxTime.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.textBoxTime.Name = "textBoxTime";
             this.textBoxTime.Size = new System.Drawing.Size(119, 25);
@@ -86,9 +89,9 @@
             this.timeLabel.Location = new System.Drawing.Point(20, 11);
             this.timeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.timeLabel.Name = "timeLabel";
-            this.timeLabel.Size = new System.Drawing.Size(303, 29);
+            this.timeLabel.Size = new System.Drawing.Size(189, 29);
             this.timeLabel.TabIndex = 0;
-            this.timeLabel.Text = "Time:                                      ";
+            this.timeLabel.Text = "Time:                   ";
             // 
             // activatePanel
             // 
@@ -144,10 +147,10 @@
             this.displayPanel.Controls.Add(this.allSelectedCheckBox);
             this.displayPanel.Controls.Add(this.sensorCheckedListBox);
             this.displayPanel.Controls.Add(this.label4);
-            this.displayPanel.Location = new System.Drawing.Point(612, 744);
+            this.displayPanel.Location = new System.Drawing.Point(423, 744);
             this.displayPanel.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.displayPanel.Name = "displayPanel";
-            this.displayPanel.Size = new System.Drawing.Size(367, 199);
+            this.displayPanel.Size = new System.Drawing.Size(307, 199);
             this.displayPanel.TabIndex = 4;
             // 
             // allSelectedCheckBox
@@ -171,7 +174,7 @@
             this.sensorCheckedListBox.Location = new System.Drawing.Point(19, 88);
             this.sensorCheckedListBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.sensorCheckedListBox.Name = "sensorCheckedListBox";
-            this.sensorCheckedListBox.Size = new System.Drawing.Size(329, 104);
+            this.sensorCheckedListBox.Size = new System.Drawing.Size(275, 104);
             this.sensorCheckedListBox.TabIndex = 1;
             this.sensorCheckedListBox.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.sensorCheckedListBox_ItemCheck);
             // 
@@ -179,7 +182,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label4.Location = new System.Drawing.Point(136, 15);
+            this.label4.Location = new System.Drawing.Point(115, 11);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(92, 29);
             this.label4.TabIndex = 0;
@@ -188,7 +191,7 @@
             // fileLoadingButton
             // 
             this.fileLoadingButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.fileLoadingButton.Location = new System.Drawing.Point(987, 746);
+            this.fileLoadingButton.Location = new System.Drawing.Point(1176, 742);
             this.fileLoadingButton.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.fileLoadingButton.Name = "fileLoadingButton";
             this.fileLoadingButton.Size = new System.Drawing.Size(139, 60);
@@ -199,21 +202,25 @@
             // 
             // sensorChart
             // 
-            chartArea1.AxisX.LabelStyle.Format = "N2";
-            chartArea1.Name = "ChartArea1";
-            this.sensorChart.ChartAreas.Add(chartArea1);
+            chartArea3.AxisX.LabelStyle.Format = "N2";
+            chartArea3.Name = "ChartArea1";
+            chartArea3.Position.Auto = false;
+            chartArea3.Position.Height = 94F;
+            chartArea3.Position.Width = 81.35392F;
+            chartArea3.Position.X = 3F;
+            chartArea3.Position.Y = 3F;
+            this.sensorChart.ChartAreas.Add(chartArea3);
             this.sensorChart.Cursor = System.Windows.Forms.Cursors.Hand;
-            legend1.Name = "Legend1";
-            this.sensorChart.Legends.Add(legend1);
-            this.sensorChart.Location = new System.Drawing.Point(21, 19);
+            legend3.Name = "Legend1";
+            this.sensorChart.Legends.Add(legend3);
+            this.sensorChart.Location = new System.Drawing.Point(16, 19);
             this.sensorChart.Margin = new System.Windows.Forms.Padding(5, 2, 5, 2);
             this.sensorChart.Name = "sensorChart";
             this.sensorChart.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.sensorChart.Size = new System.Drawing.Size(1437, 720);
+            this.sensorChart.Size = new System.Drawing.Size(1442, 716);
             this.sensorChart.TabIndex = 8;
             this.sensorChart.TabStop = false;
             this.sensorChart.Text = "chart1";
-            this.sensorChart.PostPaint += new System.EventHandler<System.Windows.Forms.DataVisualization.Charting.ChartPaintEventArgs>(this.sensorChart_PostPaint);
             this.sensorChart.MouseClick += new System.Windows.Forms.MouseEventHandler(this.sensorChart_MouseClick);
             this.sensorChart.MouseDown += new System.Windows.Forms.MouseEventHandler(this.sensorChart_MouseDown);
             this.sensorChart.MouseMove += new System.Windows.Forms.MouseEventHandler(this.sensorChart_MouseMove);
@@ -221,12 +228,12 @@
             // 
             // chartTimer
             // 
-            this.chartTimer.Interval = 200;
             this.chartTimer.Tick += new System.EventHandler(this.chartTimer_Tick);
             // 
             // GPSPanel
             // 
             this.GPSPanel.BackColor = System.Drawing.SystemColors.Info;
+            this.GPSPanel.Controls.Add(this.button1);
             this.GPSPanel.Location = new System.Drawing.Point(1467, 19);
             this.GPSPanel.Margin = new System.Windows.Forms.Padding(4);
             this.GPSPanel.Name = "GPSPanel";
@@ -234,10 +241,20 @@
             this.GPSPanel.TabIndex = 9;
             this.GPSPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.GPSPanel_Paint);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(67, 636);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(138, 59);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // YRangeButton
             // 
             this.YRangeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.YRangeButton.Location = new System.Drawing.Point(987, 882);
+            this.YRangeButton.Location = new System.Drawing.Point(1176, 878);
             this.YRangeButton.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.YRangeButton.Name = "YRangeButton";
             this.YRangeButton.Size = new System.Drawing.Size(139, 60);
@@ -249,7 +266,7 @@
             // XRangeButton
             // 
             this.XRangeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.XRangeButton.Location = new System.Drawing.Point(987, 814);
+            this.XRangeButton.Location = new System.Drawing.Point(1176, 810);
             this.XRangeButton.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.XRangeButton.Name = "XRangeButton";
             this.XRangeButton.Size = new System.Drawing.Size(139, 60);
@@ -263,11 +280,11 @@
             this.groupBox1.Controls.Add(this.radioButton_Accelerate);
             this.groupBox1.Controls.Add(this.radioButton_Speed);
             this.groupBox1.Controls.Add(this.radioButton_Normal);
-            this.groupBox1.Location = new System.Drawing.Point(1149, 746);
+            this.groupBox1.Location = new System.Drawing.Point(1321, 746);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Size = new System.Drawing.Size(289, 176);
+            this.groupBox1.Size = new System.Drawing.Size(137, 176);
             this.groupBox1.TabIndex = 12;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "GPS";
@@ -312,12 +329,22 @@
             this.radioButton_Normal.UseVisualStyleBackColor = true;
             this.radioButton_Normal.CheckedChanged += new System.EventHandler(this.radioButton_Normal_CheckedChanged);
             // 
+            // YPanel
+            // 
+            this.YPanel.AutoScroll = true;
+            this.YPanel.BackColor = System.Drawing.SystemColors.Info;
+            this.YPanel.Location = new System.Drawing.Point(737, 744);
+            this.YPanel.Name = "YPanel";
+            this.YPanel.Size = new System.Drawing.Size(432, 199);
+            this.YPanel.TabIndex = 13;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(1827, 936);
+            this.ClientSize = new System.Drawing.Size(1827, 950);
+            this.Controls.Add(this.YPanel);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.XRangeButton);
             this.Controls.Add(this.YRangeButton);
@@ -338,6 +365,7 @@
             this.displayPanel.ResumeLayout(false);
             this.displayPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sensorChart)).EndInit();
+            this.GPSPanel.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -367,6 +395,8 @@
         private System.Windows.Forms.RadioButton radioButton_Accelerate;
         private System.Windows.Forms.RadioButton radioButton_Speed;
         private System.Windows.Forms.RadioButton radioButton_Normal;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Panel YPanel;
     }
 }
 

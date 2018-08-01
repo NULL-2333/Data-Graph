@@ -31,7 +31,7 @@ namespace DataG
         double[] x = new double[dtrNum];                        //the x coordinate in GPSPannel
         double[] y = new double[dtrNum];                        //the x coordinate in GPSPannel
 
-        double nowScrollValue = 0;                                 //the position of scrollbar
+        double nowScrollValue = -0.5;                                 //the position of scrollbar
         double newPlace = 1;                                       //the position of moving dot
         bool fileOpen = false;                                  //determine whether the file has been opened
         bool flag = false;                                      //drag line
@@ -58,6 +58,55 @@ namespace DataG
             sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 10000;
             sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
             sensorChart.ChartAreas[0].AxisY.ScaleView.Size = 100;
+
+            //YPanel.Invalidate();
+            
+        }
+
+        private void YPanel_Paint(object sender, PaintEventArgs e)
+        {
+            ////initialize the YPanel
+            //double yLength = sensorChart.ChartAreas[0].AxisY.ValueToPixelPosition(sensorChart.ChartAreas[0].AxisY.ScaleView.Position);
+            //int margin = 20;
+            //int size = 10;
+            //YPanel.Height = (int)yLength + margin * 2;
+            //int width = YPanel.Width;
+            //int height = YPanel.Height;
+            
+            //double interval = (double)(height - 5 * margin) / size;
+            //double lineWidth = (double)(width - 2 * margin) / 4 - 2 * margin;
+            //Graphics gs = YPanel.CreateGraphics();
+            //PointF ps1 = new PointF(0, 0);
+            //PointF p2 = new PointF(50, 50);
+            //Pen ps = new Pen(Brushes.Blue, 1);
+            //for (int i = 0; i < size; i++)
+            //{
+            //    ps1 = new PointF(margin * 2, (float)(margin * 2 + i * interval));
+            //    p2 = new PointF((float)(margin * 2 + lineWidth), (float)(margin * 2 + i * interval));
+            //    gs.DrawLine(ps, ps1, p2);
+
+            //    ps1 = new PointF((float)(margin * 4 + lineWidth), (float)(margin * 2 + i * interval));
+            //    p2 = new PointF((float)(ps1.X + lineWidth), (float)(margin * 2 + i * interval));
+            //    gs.DrawLine(ps, ps1, p2);
+
+            //    ps1 = new PointF((float)(margin * 6 + lineWidth * 2), (float)(margin * 2 + i * interval));
+            //    p2 = new PointF((float)(ps1.X + lineWidth), (float)(margin * 2 + i * interval));
+            //    gs.DrawLine(ps, ps1, p2);
+
+            //    ps1 = new PointF((float)(margin * 8 + lineWidth * 3), (float)(margin * 2 + i * interval));
+            //    p2 = new PointF((float)(ps1.X + lineWidth), (float)(margin * 2 + i * interval));
+            //    gs.DrawLine(ps, ps1, p2);
+            //}
+            //for (int i = 0; i < 4; i++)
+            //{
+            //    Label lab = new Label();
+            //    lab.SetBounds((int)(margin * 2 * (i + 1) + lineWidth * i), (int)(margin * 3 + 9 * interval), (width - 2 * margin) / 4, margin);
+            //    lab.Text = "R" + (i + 1).ToString();
+            //    YPanel.Controls.Add(lab);
+            //    ps1 = new PointF((float)(margin * 2 * (i + 1) + lineWidth * i), margin * 2);
+            //    p2 = new PointF((float)(margin * 2 * (i + 1) + lineWidth * i), (float)(margin * 2 + 9 * interval));
+            //    gs.DrawLine(ps, ps1, p2);
+            //}
         }
 
         //read data from .csv file and return to datatable
@@ -276,6 +325,74 @@ namespace DataG
             return re;
         }
 
+        public void CreateYAxis(Chart chart, ChartArea area, Series series,float axisX, float axisWidth, float labelsSize, bool alignLeft)
+        {
+
+            chart.ApplyPaletteColors();  // (*)
+
+            // Create new chart area for original series
+            ChartArea areaSeries = chart.ChartAreas.Add("CAs_" + series.Name);
+            areaSeries.BackColor = Color.Transparent;
+            areaSeries.BorderColor = Color.Transparent;
+            areaSeries.Position.FromRectangleF(area.Position.ToRectangleF());
+            areaSeries.InnerPlotPosition.FromRectangleF(area.InnerPlotPosition.ToRectangleF());
+            areaSeries.AxisX.MajorGrid.Enabled = false;
+            areaSeries.AxisX.MajorTickMark.Enabled = false;
+            areaSeries.AxisX.LabelStyle.Enabled = false;
+            areaSeries.AxisY.MajorGrid.Enabled = false;
+            areaSeries.AxisY.MajorTickMark.Enabled = false;
+            areaSeries.AxisY.LabelStyle.Enabled = false;
+            areaSeries.AxisY.IsStartedFromZero = area.AxisY.IsStartedFromZero;
+            // associate series with new ca
+            series.ChartArea = areaSeries.Name;
+
+            // Create new chart area for axis
+            ChartArea areaAxis = chart.ChartAreas.Add("CA_AxY_" + series.ChartArea);
+
+            areaAxis.BackColor = Color.Transparent;
+            areaAxis.BorderColor = Color.Transparent;
+            RectangleF oRect = area.Position.ToRectangleF();
+            areaAxis.Position = new ElementPosition(oRect.X, oRect.Y, axisWidth, oRect.Height);
+            areaAxis.InnerPlotPosition
+                    .FromRectangleF(areaSeries.InnerPlotPosition.ToRectangleF());
+            
+            // Create a copy of specified series
+            Series seriesCopy = chart.Series.Add(series.Name + "_Copy");
+            seriesCopy.ChartType = series.ChartType;
+            seriesCopy.YAxisType = alignLeft ? AxisType.Primary : AxisType.Secondary;  // (**)
+
+            foreach (DataPoint point in series.Points)
+            {
+                seriesCopy.Points.AddXY(point.XValue, point.YValues[0]);
+            }
+            // Hide copied series
+            seriesCopy.IsVisibleInLegend = false;
+            seriesCopy.Color = Color.Transparent;
+            seriesCopy.BorderColor = Color.Transparent;
+            seriesCopy.ChartArea = areaAxis.Name;
+
+            // Disable grid lines & tickmarks
+            areaAxis.AxisX.LineWidth = 0;
+            areaAxis.AxisX.MajorGrid.Enabled = false;
+            areaAxis.AxisX.MajorTickMark.Enabled = false;
+            areaAxis.AxisX.LabelStyle.Enabled = false;
+
+            Axis areaAxisAxisY = alignLeft ? areaAxis.AxisY : areaAxis.AxisY2;   // (**)
+            areaAxisAxisY.MajorGrid.Enabled = false;
+            areaAxisAxisY.IsStartedFromZero = area.AxisY.IsStartedFromZero;
+            areaAxisAxisY.LabelStyle.Font = area.AxisY.LabelStyle.Font;
+
+            areaAxisAxisY.Title = series.Name;
+            areaAxisAxisY.LineColor = series.Color;    // (*)
+            areaAxisAxisY.TitleForeColor = Color.DarkCyan;  // (*)
+
+            areaAxisAxisY.ScrollBar.Enabled = true;
+            areaAxisAxisY.ScaleView.Size = 1;
+            // Adjust area position
+            areaAxis.Position.X = axisX;
+            areaAxis.InnerPlotPosition.X += labelsSize;
+        }
+
         private void button1_Click_1(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -352,6 +469,16 @@ namespace DataG
                 return;
             }
 
+            sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
+            sensorChart.ChartAreas[0].AxisX.ScaleView.Size = xScale;
+            sensorChart.ChartAreas[0].AxisX.Maximum = xRangeMax;
+            sensorChart.ChartAreas[0].AxisX.Minimum = xRangeMin;
+            sensorChart.ChartAreas[0].AxisX.Interval = 0.1;
+            sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
+            sensorChart.ChartAreas[0].AxisY.ScaleView.Size = yScale;
+            sensorChart.ChartAreas[0].AxisY.Maximum = yRangeMax;
+            sensorChart.ChartAreas[0].AxisY.Minimum = yRangeMin;
+
             for (int i = 0; i < dtcNum - 1; i++)
             {
                 Series s = new Series(seriesName[i]);
@@ -363,16 +490,9 @@ namespace DataG
                 s.Points.DataBindXY(dataTime, dataSensor);
                 s.ChartType = SeriesChartType.Line;
                 sensorChart.Series.Add(s);
+
+
             }
-            sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
-            sensorChart.ChartAreas[0].AxisX.ScaleView.Size = xScale;
-            sensorChart.ChartAreas[0].AxisX.Maximum = xRangeMax;
-            sensorChart.ChartAreas[0].AxisX.Minimum = xRangeMin;
-            sensorChart.ChartAreas[0].AxisX.Interval = 0.1;
-            sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
-            sensorChart.ChartAreas[0].AxisY.ScaleView.Size = yScale;
-            sensorChart.ChartAreas[0].AxisY.Maximum = yRangeMax;
-            sensorChart.ChartAreas[0].AxisY.Minimum = yRangeMin;
 
             double[] datA = new double[dtrNum];     //the latitude
             double[] datO = new double[dtrNum];     //the longtitude
@@ -437,9 +557,171 @@ namespace DataG
 
                 //add checkbox to checklist box
                 sensorCheckedListBox.Items.Add(seriesName[i], true);
+                //add panels to YPanel
+                Panel pan = new Panel();
+                Point pl = new Point(0, 0);
+                pan.Height = 30;
+                pl.Y += i * pan.Height;
+                pan.Location = pl;
+                pan.Width = YPanel.Width - 20;
+                //pan.BorderStyle = BorderStyle.FixedSingle;
+                YPanel.Controls.Add(pan);
+                //add label to pan
+                Label la = new Label();
+                la.Text = seriesName[i];
+                la.Location = new Point(0, 8);
+                la.Height = pan.Height;
+                la.Width = pan.Width / 2;
+                pan.Controls.Add(la);
+                //add radiobutton to pan
+                RadioButton rb1 = new RadioButton();
+                rb1.Text = "R1";
+                rb1.Location = new Point(pan.Width / 2, 0);
+                rb1.Width = pan.Width / 8;
+                rb1.Height = pan.Height;
+                rb1.Checked = true;
+                pan.Controls.Add(rb1);
+                RadioButton rb2 = new RadioButton();
+                rb2.Text = "R2";
+                rb2.Location = new Point(pan.Width * 5 / 8, 0);
+                rb2.Width = pan.Width / 8;
+                rb2.Height = pan.Height;
+                pan.Controls.Add(rb2);
+                RadioButton rb3 = new RadioButton();
+                rb3.Text = "R3";
+                rb3.Location = new Point(pan.Width * 6 / 8, 0);
+                rb3.Width = pan.Width / 8;
+                rb3.Height = pan.Height;
+                pan.Controls.Add(rb3);
+                RadioButton rb4 = new RadioButton();
+                rb4.Text = "R4";
+                rb4.Location = new Point(pan.Width * 7 / 8, 0);
+                rb4.Width = pan.Width / 8;
+                rb4.Height = pan.Height;
+                pan.Controls.Add(rb4);
+                rb1.Click += rb1_Click;
+                rb2.Click += rb2_Click;
+                rb3.Click += rb3_Click;
+                rb4.Click += rb4_Click;
+
             }
             nowScrollValue = (int)minValue(dataTime, dataTime.Length);
             newPlace = (int)minValue(dataTime, dataTime.Length);
+
+            sensorChart.ChartAreas[0].InnerPlotPosition.X = (float)35;
+            sensorChart.ChartAreas[0].InnerPlotPosition.Height = (float)90;
+            //sensorChart.Series[0].Points.Clear();
+            //for (int i = 0; i < dtrNum; i++)
+            //{
+            //    data[i, 0] = 100;
+            //}
+            //double[] dataSensors = new double[dtrNum];
+            //for (int j = 0; j < dtrNum; j++)
+            //{
+            //    dataSensors[j] = data[j, 0];
+            //}
+            //sensorChart.Series[0].Points.DataBindXY(dataTime, dataSensors);  
+            //sensorChart.Invalidate();
+            //create 3 other chartareas for R2, R3, R4 Axises
+            sensorChart.ChartAreas[0].AxisY.Title = "R1";
+            Series sCopy2 = sensorChart.Series.Add("R2Copy");
+            sCopy2.ChartType = sensorChart.Series[0].ChartType;
+            foreach (DataPoint point in sensorChart.Series[0].Points)
+            {
+                sCopy2.Points.AddXY(point.XValue, point.YValues[0]);
+            }
+            sCopy2.IsVisibleInLegend = false;
+            sCopy2.Color = Color.Transparent;
+            sCopy2.BorderColor = Color.Transparent;
+
+            this.Refresh();
+            ChartArea caR2 = sensorChart.ChartAreas.Add("R2");
+            caR2.BackColor = Color.Transparent;
+            caR2.BorderColor = Color.Transparent;
+            caR2.Position.FromRectangleF(sensorChart.ChartAreas[0].Position.ToRectangleF());
+            caR2.InnerPlotPosition.FromRectangleF(sensorChart.ChartAreas[0].InnerPlotPosition.ToRectangleF());
+            caR2.InnerPlotPosition.X -= (float)10;
+            caR2.AxisX.MajorGrid.Enabled = false;
+            caR2.AxisX.MajorTickMark.Enabled = false;
+            caR2.AxisX.LabelStyle.Enabled = false;
+            caR2.AxisY.MajorGrid.Enabled = false;
+            caR2.AxisY.Title = "R2";
+            caR2.AxisY.Maximum = 2;
+            caR2.AxisY.Minimum = -2;
+            caR2.AxisY.IsStartedFromZero = sensorChart.ChartAreas[0].AxisY.IsStartedFromZero; 
+            sCopy2.ChartArea = caR2.Name;
+
+            Series sCopy3 = sensorChart.Series.Add("R3Copy");
+            sCopy3.ChartType = sensorChart.Series[0].ChartType;
+            foreach (DataPoint point in sensorChart.Series[0].Points)
+            {
+                sCopy3.Points.AddXY(point.XValue, point.YValues[0]);
+            }
+            sCopy3.IsVisibleInLegend = false;
+            sCopy3.Color = Color.Transparent;
+            sCopy3.BorderColor = Color.Transparent;
+
+            ChartArea caR3 = sensorChart.ChartAreas.Add("R3");
+            caR3.BackColor = Color.Transparent;
+            caR3.BorderColor = Color.Transparent;
+            caR3.Position.FromRectangleF(caR2.Position.ToRectangleF());
+            caR3.InnerPlotPosition.FromRectangleF(caR2.InnerPlotPosition.ToRectangleF());
+            caR3.InnerPlotPosition.X -= (float)10;
+            caR3.AxisX.MajorGrid.Enabled = false;
+            caR3.AxisX.MajorTickMark.Enabled = false;
+            caR3.AxisX.LabelStyle.Enabled = false;
+            caR3.AxisY.MajorGrid.Enabled = false;
+            caR3.AxisY.Title = "R3";
+            caR3.AxisY.Maximum = 30;
+            caR3.AxisY.Minimum = 0;
+            caR3.AxisY.IsStartedFromZero = sensorChart.ChartAreas[0].AxisY.IsStartedFromZero;
+            sCopy3.ChartArea = caR3.Name;
+
+            Series sCopy4 = sensorChart.Series.Add("R4Copy");
+            sCopy4.ChartType = sensorChart.Series[0].ChartType;
+            foreach (DataPoint point in sensorChart.Series[0].Points)
+            {
+                sCopy4.Points.AddXY(point.XValue, point.YValues[0]);
+            }
+            sCopy4.IsVisibleInLegend = false;
+            sCopy4.Color = Color.Transparent;
+            sCopy4.BorderColor = Color.Transparent;
+
+            ChartArea caR4 = sensorChart.ChartAreas.Add("R4");
+            caR4.BackColor = Color.Transparent;
+            caR4.BorderColor = Color.Transparent;
+            caR4.Position.FromRectangleF(caR3.Position.ToRectangleF());
+            caR4.InnerPlotPosition.FromRectangleF(caR3.InnerPlotPosition.ToRectangleF());
+            caR4.InnerPlotPosition.X -= (float)10;
+            caR4.AxisX.MajorGrid.Enabled = false;
+            caR4.AxisX.MajorTickMark.Enabled = false;
+            caR4.AxisX.LabelStyle.Enabled = false;
+            caR4.AxisY.MajorGrid.Enabled = false;
+            caR4.AxisY.Title = "R4";
+            caR4.AxisY.Maximum = 8000;
+            caR4.AxisY.Minimum = 0;
+            caR4.AxisY.IsStartedFromZero = sensorChart.ChartAreas[0].AxisY.IsStartedFromZero;
+            sCopy4.ChartArea = caR4.Name;
+        }
+
+        void rb1_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(sender.ToString());
+        }
+
+        void rb2_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(sender.ToString());
+        }
+
+        void rb3_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(sender.ToString());
+        }
+
+        void rb4_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(sender.ToString());
         }
 
         private void sensorCheckedListBox_ItemCheck(object sender, ItemCheckEventArgs e)
@@ -566,34 +848,41 @@ namespace DataG
 
         private void sensorChart_PostPaint(object sender, ChartPaintEventArgs e)
         {
-            double x0 = sensorChart.ChartAreas[0].AxisX.ValueToPixelPosition(nowScrollValue);
+            //double x0 = sensorChart.ChartAreas[0].AxisX.ValueToPixelPosition(nowScrollValue);
+            //double y0 = sensorChart.ChartAreas[0].AxisY.ValueToPixelPosition(sensorCfbvhart.ChartAreas[0].AxisY.Minimum);
+            //double y1 = sensorChart.ChartAreas[0].AxisY.ValueToPixelPosition(sensorChart.ChartAreas[0].AxisY.Maximum);
+            double x = sensorChart.ChartAreas[0].AxisX.ScaleView.Position + 0.4;
+            double x0 = sensorChart.ChartAreas[0].AxisX.ValueToPixelPosition(x);
             double y0 = sensorChart.ChartAreas[0].AxisY.ValueToPixelPosition(sensorChart.ChartAreas[0].AxisY.Minimum);
             double y1 = sensorChart.ChartAreas[0].AxisY.ValueToPixelPosition(sensorChart.ChartAreas[0].AxisY.Maximum);
+            //if (x < sensorChart.ChartAreas[0].AxisX.ScaleView.Position + sensorChart.ChartAreas[0].AxisX.ScaleView.Size)
             e.ChartGraphics.Graphics.DrawLine(new Pen(Color.Red, 1), (float)x0, (float)y0, (float)x0, (float)y1);
         }
 
         private void chartTimer_Tick(object sender, EventArgs e)
         {
             
-            //sensorChart.PostPaint += new EventHandler<ChartPaintEventArgs>(sensorChart_PostPaint);
-            //MessageBox.Show(sensorChart.ChartAreas[0].AxisX.Minimum.ToString());
+            sensorChart.PostPaint += new EventHandler<ChartPaintEventArgs>(sensorChart_PostPaint);
 
             if (nowScrollValue >= minValue(dataTime, dataTime.Length) && nowScrollValue <= maxValue(dataTime, dataTime.Length))
             {
-                textBoxTime.Text = nowScrollValue.ToString();
+                textBoxTime.Text = Math.Round(nowScrollValue + 0.5, 2).ToString();
                 TextBox txtBox = new TextBox();
                 for (int i = 0; i < dtcNum - 1; i++)
                 {
                     txtBox = (TextBox)this.Controls.Find("textBox" + i.ToString(), true)[0];
                     if (txtBox != null && sensorCheckedListBox.GetItemChecked(i))
                     {
-                        txtBox.Text = data[findSub(Math.Round(nowScrollValue, 1), dataTime, dataTime.Length), i].ToString();
+                        txtBox.Text = data[findSub(Math.Round(nowScrollValue + 0.5, 2), dataTime, dataTime.Length), i].ToString();
                     }
                 }
             }
 
             sensorChart.ChartAreas[0].AxisX.ScaleView.Position = nowScrollValue;
-            if (nowScrollValue <= maxValue(dataTime, dataTime.Length))
+
+            //sensorChart.PostPaint += new EventHandler<ChartPaintEventArgs>(sensorChart_PostPaint);
+
+            if ((nowScrollValue + 0.5) <= maxValue(dataTime, dataTime.Length))
                 nowScrollValue += .1;
             sensorChart.Invalidate();
 
@@ -825,6 +1114,7 @@ namespace DataG
                 return 255;
             }
         }
+
         public int colorGreen(double x)//,xx,
         {
             if (x < 15)
@@ -841,6 +1131,20 @@ namespace DataG
             }
                 
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //MessageBox.Show(sensorChart.ChartAreas[0].Position.ToRectangleF().ToString());
+            Graphics g = sensorChart.CreateGraphics();
+            Point p1 = new Point(0, 0);
+            Point p2 = new Point(50, 50);
+            Pen nPen = new Pen(Brushes.Red, 1);
+            //g.DrawRectangle(nPen, f.X, f.Y, f.Width, f.Height);
+            //g.DrawRectangle(nPen, 0, 0, 50, 50);
+            g.DrawLine(nPen, p1, p2);
+        }
+
+        
 
     }
 }
