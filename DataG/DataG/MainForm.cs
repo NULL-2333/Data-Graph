@@ -53,60 +53,7 @@ namespace DataG
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            sensorChart.ChartAreas[0].AxisX.MajorGrid.LineColor = System.Drawing.Color.Transparent;
-            sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
-            sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 10000;
-            sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
-            sensorChart.ChartAreas[0].AxisY.ScaleView.Size = 100;
-
-            //YPanel.Invalidate();
             
-        }
-
-        private void YPanel_Paint(object sender, PaintEventArgs e)
-        {
-            ////initialize the YPanel
-            //double yLength = sensorChart.ChartAreas[0].AxisY.ValueToPixelPosition(sensorChart.ChartAreas[0].AxisY.ScaleView.Position);
-            //int margin = 20;
-            //int size = 10;
-            //YPanel.Height = (int)yLength + margin * 2;
-            //int width = YPanel.Width;
-            //int height = YPanel.Height;
-            
-            //double interval = (double)(height - 5 * margin) / size;
-            //double lineWidth = (double)(width - 2 * margin) / 4 - 2 * margin;
-            //Graphics gs = YPanel.CreateGraphics();
-            //PointF ps1 = new PointF(0, 0);
-            //PointF p2 = new PointF(50, 50);
-            //Pen ps = new Pen(Brushes.Blue, 1);
-            //for (int i = 0; i < size; i++)
-            //{
-            //    ps1 = new PointF(margin * 2, (float)(margin * 2 + i * interval));
-            //    p2 = new PointF((float)(margin * 2 + lineWidth), (float)(margin * 2 + i * interval));
-            //    gs.DrawLine(ps, ps1, p2);
-
-            //    ps1 = new PointF((float)(margin * 4 + lineWidth), (float)(margin * 2 + i * interval));
-            //    p2 = new PointF((float)(ps1.X + lineWidth), (float)(margin * 2 + i * interval));
-            //    gs.DrawLine(ps, ps1, p2);
-
-            //    ps1 = new PointF((float)(margin * 6 + lineWidth * 2), (float)(margin * 2 + i * interval));
-            //    p2 = new PointF((float)(ps1.X + lineWidth), (float)(margin * 2 + i * interval));
-            //    gs.DrawLine(ps, ps1, p2);
-
-            //    ps1 = new PointF((float)(margin * 8 + lineWidth * 3), (float)(margin * 2 + i * interval));
-            //    p2 = new PointF((float)(ps1.X + lineWidth), (float)(margin * 2 + i * interval));
-            //    gs.DrawLine(ps, ps1, p2);
-            //}
-            //for (int i = 0; i < 4; i++)
-            //{
-            //    Label lab = new Label();
-            //    lab.SetBounds((int)(margin * 2 * (i + 1) + lineWidth * i), (int)(margin * 3 + 9 * interval), (width - 2 * margin) / 4, margin);
-            //    lab.Text = "R" + (i + 1).ToString();
-            //    YPanel.Controls.Add(lab);
-            //    ps1 = new PointF((float)(margin * 2 * (i + 1) + lineWidth * i), margin * 2);
-            //    p2 = new PointF((float)(margin * 2 * (i + 1) + lineWidth * i), (float)(margin * 2 + 9 * interval));
-            //    gs.DrawLine(ps, ps1, p2);
-            //}
         }
 
         //read data from .csv file and return to datatable
@@ -325,76 +272,19 @@ namespace DataG
             return re;
         }
 
-        public void CreateYAxis(Chart chart, ChartArea area, Series series,float axisX, float axisWidth, float labelsSize, bool alignLeft)
-        {
-
-            chart.ApplyPaletteColors();  // (*)
-
-            // Create new chart area for original series
-            ChartArea areaSeries = chart.ChartAreas.Add("CAs_" + series.Name);
-            areaSeries.BackColor = Color.Transparent;
-            areaSeries.BorderColor = Color.Transparent;
-            areaSeries.Position.FromRectangleF(area.Position.ToRectangleF());
-            areaSeries.InnerPlotPosition.FromRectangleF(area.InnerPlotPosition.ToRectangleF());
-            areaSeries.AxisX.MajorGrid.Enabled = false;
-            areaSeries.AxisX.MajorTickMark.Enabled = false;
-            areaSeries.AxisX.LabelStyle.Enabled = false;
-            areaSeries.AxisY.MajorGrid.Enabled = false;
-            areaSeries.AxisY.MajorTickMark.Enabled = false;
-            areaSeries.AxisY.LabelStyle.Enabled = false;
-            areaSeries.AxisY.IsStartedFromZero = area.AxisY.IsStartedFromZero;
-            // associate series with new ca
-            series.ChartArea = areaSeries.Name;
-
-            // Create new chart area for axis
-            ChartArea areaAxis = chart.ChartAreas.Add("CA_AxY_" + series.ChartArea);
-
-            areaAxis.BackColor = Color.Transparent;
-            areaAxis.BorderColor = Color.Transparent;
-            RectangleF oRect = area.Position.ToRectangleF();
-            areaAxis.Position = new ElementPosition(oRect.X, oRect.Y, axisWidth, oRect.Height);
-            areaAxis.InnerPlotPosition
-                    .FromRectangleF(areaSeries.InnerPlotPosition.ToRectangleF());
-            
-            // Create a copy of specified series
-            Series seriesCopy = chart.Series.Add(series.Name + "_Copy");
-            seriesCopy.ChartType = series.ChartType;
-            seriesCopy.YAxisType = alignLeft ? AxisType.Primary : AxisType.Secondary;  // (**)
-
-            foreach (DataPoint point in series.Points)
-            {
-                seriesCopy.Points.AddXY(point.XValue, point.YValues[0]);
-            }
-            // Hide copied series
-            seriesCopy.IsVisibleInLegend = false;
-            seriesCopy.Color = Color.Transparent;
-            seriesCopy.BorderColor = Color.Transparent;
-            seriesCopy.ChartArea = areaAxis.Name;
-
-            // Disable grid lines & tickmarks
-            areaAxis.AxisX.LineWidth = 0;
-            areaAxis.AxisX.MajorGrid.Enabled = false;
-            areaAxis.AxisX.MajorTickMark.Enabled = false;
-            areaAxis.AxisX.LabelStyle.Enabled = false;
-
-            Axis areaAxisAxisY = alignLeft ? areaAxis.AxisY : areaAxis.AxisY2;   // (**)
-            areaAxisAxisY.MajorGrid.Enabled = false;
-            areaAxisAxisY.IsStartedFromZero = area.AxisY.IsStartedFromZero;
-            areaAxisAxisY.LabelStyle.Font = area.AxisY.LabelStyle.Font;
-
-            areaAxisAxisY.Title = series.Name;
-            areaAxisAxisY.LineColor = series.Color;    // (*)
-            areaAxisAxisY.TitleForeColor = Color.DarkCyan;  // (*)
-
-            areaAxisAxisY.ScrollBar.Enabled = true;
-            areaAxisAxisY.ScaleView.Size = 1;
-            // Adjust area position
-            areaAxis.Position.X = axisX;
-            areaAxis.InnerPlotPosition.X += labelsSize;
-        }
 
         private void button1_Click_1(object sender, EventArgs e)
         {
+            //delete existing chart
+            sensorChart.Series.Clear();
+            sensorChart.ChartAreas.Clear();
+            sensorChart.ChartAreas.Add(new ChartArea("ChartArea1"));
+            sensorChart.ChartAreas[0].AxisX.MajorGrid.LineColor = System.Drawing.Color.Transparent;
+            sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
+            sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 10000;
+            sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
+            sensorChart.ChartAreas[0].AxisY.ScaleView.Size = 100;
+
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.InitialDirectory = "c://";
             openFileDialog.Filter = "Data Files|*.csv";
@@ -740,8 +630,12 @@ namespace DataG
         private void sensorCheckedListBox_ItemCheck(object sender, ItemCheckEventArgs e)
         {
             int index = e.Index;
-            Series sz = sensorChart.Series[seriesName[index]];
-            sz.Enabled = !sensorCheckedListBox.GetItemChecked(index);
+            if (index < seriesName.Length)
+            {
+                Series sz = sensorChart.Series[seriesName[index]];
+                sz.Enabled = !sensorCheckedListBox.GetItemChecked(index);
+            }
+            
         }
 
         private void allSelectedCheckBox_CheckedChanged(object sender, EventArgs e)
