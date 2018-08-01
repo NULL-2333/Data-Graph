@@ -16,6 +16,9 @@ namespace DataG
         public int yRangeMax = 200;
         public int yRangeMin = 0;
         public int yScale = 100;
+        public int xRangeMax = 10000;
+        public int xRangeMin = 0;
+        public int xScale = 10000;
         public YRangeForm()
         {
             InitializeComponent();
@@ -31,6 +34,9 @@ namespace DataG
             yRangeMax = int.Parse(YRangeMaxTextBox.Text);
             yRangeMin = int.Parse(YRangeMinTextBox.Text);
             yScale = int.Parse(YScaleViewTextBox.Text);
+            xRangeMax = int.Parse(XRangeMaxTextBox.Text);
+            xRangeMin = int.Parse(XRangeMinTextBox.Text);
+            xScale = int.Parse(XScaleViewTextBox.Text);
             this.Close();
         }
 
@@ -42,6 +48,11 @@ namespace DataG
             YScaleViewTextBox.Text = x.ToString();
             x = 0;
             YRangeMinTextBox.Text = x.ToString();
+            int y = 10000;
+            XRangeMaxTextBox.Text = y.ToString();
+            XScaleViewTextBox.Text = y.ToString();
+            x = 0;
+            XRangeMinTextBox.Text = y.ToString();
         }
     }
 }

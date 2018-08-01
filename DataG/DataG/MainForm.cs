@@ -707,25 +707,34 @@ namespace DataG
             caR4.AxisY.IsStartedFromZero = sensorChart.ChartAreas[0].AxisY.IsStartedFromZero;
             sCopy4.ChartArea = caR4.Name;
         }
-
+        //change the value scale from (x1,y1) to (x2,y2)
+        //void changeScale
         void rb1_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(sender.ToString());
+            RadioButton rb = (RadioButton)sender;
+            int no= int.Parse(rb.Name.Substring(3, rb.Name.Length - 3));
+            MessageBox.Show(no.ToString());
         }
 
         void rb2_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(sender.ToString());
+            RadioButton rb = (RadioButton)sender;
+            int no = int.Parse(rb.Name.Substring(3, rb.Name.Length - 3));
+            MessageBox.Show(no.ToString());
         }
 
         void rb3_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(sender.ToString());
+            RadioButton rb = (RadioButton)sender;
+            int no = int.Parse(rb.Name.Substring(3, rb.Name.Length - 3));
+            MessageBox.Show(no.ToString());
         }
 
         void rb4_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(sender.ToString());
+            RadioButton rb = (RadioButton)sender;
+            int no = int.Parse(rb.Name.Substring(3, rb.Name.Length - 3));
+            MessageBox.Show(no.ToString());
         }
 
         private void sensorCheckedListBox_ItemCheck(object sender, ItemCheckEventArgs e)
@@ -993,22 +1002,7 @@ namespace DataG
         {
             flag = false;
         }
-
-        private void XRangeButton_Click(object sender, EventArgs e)
-        {
-
-            XRangeForm a = new XRangeForm();
-            a.ShowDialog();
-            xRangeMax = a.xRangeMax;
-            xRangeMin = a.xRangeMin;
-            xScale = a.xScale;
-
-            sensorChart.ChartAreas[0].AxisX.ScaleView.Size = xScale;
-            sensorChart.ChartAreas[0].AxisX.Maximum = xRangeMax;
-            sensorChart.ChartAreas[0].AxisX.Minimum = xRangeMin;
-
-            sensorChart.Invalidate();
-        }
+        
 
         private void YRangeButton_Click(object sender, EventArgs e)
         {
@@ -1017,6 +1011,13 @@ namespace DataG
             yRangeMax = a.yRangeMax;
             yRangeMin = a.yRangeMin;
             yScale = a.yScale;
+            xRangeMax = a.xRangeMax;
+            xRangeMin = a.xRangeMin;
+            xScale = a.xScale;
+
+            sensorChart.ChartAreas[0].AxisX.ScaleView.Size = xScale;
+            sensorChart.ChartAreas[0].AxisX.Maximum = xRangeMax;
+            sensorChart.ChartAreas[0].AxisX.Minimum = xRangeMin;
 
             sensorChart.ChartAreas[0].AxisY.ScaleView.Size = yScale;
             sensorChart.ChartAreas[0].AxisY.Maximum = yRangeMax;

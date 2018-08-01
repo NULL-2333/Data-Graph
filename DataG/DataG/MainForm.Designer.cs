@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.dataPanel = new System.Windows.Forms.Panel();
             this.textBoxTime = new System.Windows.Forms.TextBox();
             this.timeLabel = new System.Windows.Forms.Label();
@@ -48,12 +48,12 @@
             this.GPSPanel = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
             this.YRangeButton = new System.Windows.Forms.Button();
-            this.XRangeButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.radioButton_Accelerate = new System.Windows.Forms.RadioButton();
             this.radioButton_Speed = new System.Windows.Forms.RadioButton();
             this.radioButton_Normal = new System.Windows.Forms.RadioButton();
             this.YPanel = new System.Windows.Forms.Panel();
+            this.button2 = new System.Windows.Forms.Button();
             this.dataPanel.SuspendLayout();
             this.activatePanel.SuspendLayout();
             this.displayPanel.SuspendLayout();
@@ -109,7 +109,7 @@
             // 
             this.resetButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.resetButton.Location = new System.Drawing.Point(67, 128);
-            this.resetButton.Margin = new System.Windows.Forms.Padding(5);
+            this.resetButton.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.resetButton.Name = "resetButton";
             this.resetButton.Size = new System.Drawing.Size(340, 51);
             this.resetButton.TabIndex = 2;
@@ -194,30 +194,30 @@
             this.fileLoadingButton.Location = new System.Drawing.Point(1176, 742);
             this.fileLoadingButton.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.fileLoadingButton.Name = "fileLoadingButton";
-            this.fileLoadingButton.Size = new System.Drawing.Size(139, 60);
+            this.fileLoadingButton.Size = new System.Drawing.Size(139, 39);
             this.fileLoadingButton.TabIndex = 6;
-            this.fileLoadingButton.Text = "Load File...";
+            this.fileLoadingButton.Text = "Load CSV...";
             this.fileLoadingButton.UseVisualStyleBackColor = true;
             this.fileLoadingButton.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // sensorChart
             // 
-            chartArea3.AxisX.LabelStyle.Format = "N2";
-            chartArea3.Name = "ChartArea1";
-            chartArea3.Position.Auto = false;
-            chartArea3.Position.Height = 94F;
-            chartArea3.Position.Width = 81.35392F;
-            chartArea3.Position.X = 3F;
-            chartArea3.Position.Y = 3F;
-            this.sensorChart.ChartAreas.Add(chartArea3);
+            chartArea1.AxisX.LabelStyle.Format = "N2";
+            chartArea1.Name = "ChartArea1";
+            chartArea1.Position.Auto = false;
+            chartArea1.Position.Height = 94F;
+            chartArea1.Position.Width = 81.35392F;
+            chartArea1.Position.X = 3F;
+            chartArea1.Position.Y = 3F;
+            this.sensorChart.ChartAreas.Add(chartArea1);
             this.sensorChart.Cursor = System.Windows.Forms.Cursors.Hand;
-            legend3.Name = "Legend1";
-            this.sensorChart.Legends.Add(legend3);
+            legend1.Name = "Legend1";
+            this.sensorChart.Legends.Add(legend1);
             this.sensorChart.Location = new System.Drawing.Point(16, 19);
             this.sensorChart.Margin = new System.Windows.Forms.Padding(5, 2, 5, 2);
             this.sensorChart.Name = "sensorChart";
             this.sensorChart.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.sensorChart.Size = new System.Drawing.Size(1442, 716);
+            this.sensorChart.Size = new System.Drawing.Size(1443, 716);
             this.sensorChart.TabIndex = 8;
             this.sensorChart.TabStop = false;
             this.sensorChart.Text = "chart1";
@@ -235,7 +235,7 @@
             this.GPSPanel.BackColor = System.Drawing.SystemColors.Info;
             this.GPSPanel.Controls.Add(this.button1);
             this.GPSPanel.Location = new System.Drawing.Point(1467, 19);
-            this.GPSPanel.Margin = new System.Windows.Forms.Padding(4);
+            this.GPSPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.GPSPanel.Name = "GPSPanel";
             this.GPSPanel.Size = new System.Drawing.Size(427, 718);
             this.GPSPanel.TabIndex = 9;
@@ -244,8 +244,9 @@
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(67, 636);
+            this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(138, 59);
+            this.button1.Size = new System.Drawing.Size(139, 59);
             this.button1.TabIndex = 0;
             this.button1.Text = "button1";
             this.button1.UseVisualStyleBackColor = true;
@@ -254,26 +255,14 @@
             // YRangeButton
             // 
             this.YRangeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.YRangeButton.Location = new System.Drawing.Point(1176, 878);
+            this.YRangeButton.Location = new System.Drawing.Point(1176, 866);
             this.YRangeButton.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.YRangeButton.Name = "YRangeButton";
-            this.YRangeButton.Size = new System.Drawing.Size(139, 60);
+            this.YRangeButton.Size = new System.Drawing.Size(139, 46);
             this.YRangeButton.TabIndex = 10;
-            this.YRangeButton.Text = "Y-Range";
+            this.YRangeButton.Text = "Configuration";
             this.YRangeButton.UseVisualStyleBackColor = true;
             this.YRangeButton.Click += new System.EventHandler(this.YRangeButton_Click);
-            // 
-            // XRangeButton
-            // 
-            this.XRangeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.XRangeButton.Location = new System.Drawing.Point(1176, 810);
-            this.XRangeButton.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
-            this.XRangeButton.Name = "XRangeButton";
-            this.XRangeButton.Size = new System.Drawing.Size(139, 60);
-            this.XRangeButton.TabIndex = 11;
-            this.XRangeButton.Text = "X-Range";
-            this.XRangeButton.UseVisualStyleBackColor = true;
-            this.XRangeButton.Click += new System.EventHandler(this.XRangeButton_Click);
             // 
             // groupBox1
             // 
@@ -281,9 +270,9 @@
             this.groupBox1.Controls.Add(this.radioButton_Speed);
             this.groupBox1.Controls.Add(this.radioButton_Normal);
             this.groupBox1.Location = new System.Drawing.Point(1321, 746);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox1.Size = new System.Drawing.Size(137, 176);
             this.groupBox1.TabIndex = 12;
             this.groupBox1.TabStop = false;
@@ -293,7 +282,7 @@
             // 
             this.radioButton_Accelerate.AutoSize = true;
             this.radioButton_Accelerate.Location = new System.Drawing.Point(25, 125);
-            this.radioButton_Accelerate.Margin = new System.Windows.Forms.Padding(4);
+            this.radioButton_Accelerate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.radioButton_Accelerate.Name = "radioButton_Accelerate";
             this.radioButton_Accelerate.Size = new System.Drawing.Size(108, 19);
             this.radioButton_Accelerate.TabIndex = 2;
@@ -306,7 +295,7 @@
             // 
             this.radioButton_Speed.AutoSize = true;
             this.radioButton_Speed.Location = new System.Drawing.Point(25, 78);
-            this.radioButton_Speed.Margin = new System.Windows.Forms.Padding(4);
+            this.radioButton_Speed.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.radioButton_Speed.Name = "radioButton_Speed";
             this.radioButton_Speed.Size = new System.Drawing.Size(68, 19);
             this.radioButton_Speed.TabIndex = 1;
@@ -320,7 +309,7 @@
             this.radioButton_Normal.AutoSize = true;
             this.radioButton_Normal.Checked = true;
             this.radioButton_Normal.Location = new System.Drawing.Point(25, 25);
-            this.radioButton_Normal.Margin = new System.Windows.Forms.Padding(4);
+            this.radioButton_Normal.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.radioButton_Normal.Name = "radioButton_Normal";
             this.radioButton_Normal.Size = new System.Drawing.Size(76, 19);
             this.radioButton_Normal.TabIndex = 0;
@@ -334,19 +323,31 @@
             this.YPanel.AutoScroll = true;
             this.YPanel.BackColor = System.Drawing.SystemColors.Info;
             this.YPanel.Location = new System.Drawing.Point(737, 744);
+            this.YPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.YPanel.Name = "YPanel";
             this.YPanel.Size = new System.Drawing.Size(432, 199);
             this.YPanel.TabIndex = 13;
+            // 
+            // button2
+            // 
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.5F);
+            this.button2.Location = new System.Drawing.Point(1176, 800);
+            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(137, 44);
+            this.button2.TabIndex = 14;
+            this.button2.Text = "Load Settings";
+            this.button2.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(1827, 950);
+            this.ClientSize = new System.Drawing.Size(1904, 951);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.YPanel);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.XRangeButton);
             this.Controls.Add(this.YRangeButton);
             this.Controls.Add(this.GPSPanel);
             this.Controls.Add(this.sensorChart);
@@ -390,13 +391,13 @@
         private System.Windows.Forms.CheckedListBox sensorCheckedListBox;
         private System.Windows.Forms.CheckBox allSelectedCheckBox;
         private System.Windows.Forms.Button YRangeButton;
-        private System.Windows.Forms.Button XRangeButton;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.RadioButton radioButton_Accelerate;
         private System.Windows.Forms.RadioButton radioButton_Speed;
         private System.Windows.Forms.RadioButton radioButton_Normal;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Panel YPanel;
+        private System.Windows.Forms.Button button2;
     }
 }
 
