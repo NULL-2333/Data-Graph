@@ -989,22 +989,7 @@ namespace DataG
         {
             flag = false;
         }
-
-        private void XRangeButton_Click(object sender, EventArgs e)
-        {
-
-            XRangeForm a = new XRangeForm();
-            a.ShowDialog();
-            xRangeMax = a.xRangeMax;
-            xRangeMin = a.xRangeMin;
-            xScale = a.xScale;
-
-            sensorChart.ChartAreas[0].AxisX.ScaleView.Size = xScale;
-            sensorChart.ChartAreas[0].AxisX.Maximum = xRangeMax;
-            sensorChart.ChartAreas[0].AxisX.Minimum = xRangeMin;
-
-            sensorChart.Invalidate();
-        }
+        
 
         private void YRangeButton_Click(object sender, EventArgs e)
         {
@@ -1013,6 +998,13 @@ namespace DataG
             yRangeMax = a.yRangeMax;
             yRangeMin = a.yRangeMin;
             yScale = a.yScale;
+            xRangeMax = a.xRangeMax;
+            xRangeMin = a.xRangeMin;
+            xScale = a.xScale;
+
+            sensorChart.ChartAreas[0].AxisX.ScaleView.Size = xScale;
+            sensorChart.ChartAreas[0].AxisX.Maximum = xRangeMax;
+            sensorChart.ChartAreas[0].AxisX.Minimum = xRangeMin;
 
             sensorChart.ChartAreas[0].AxisY.ScaleView.Size = yScale;
             sensorChart.ChartAreas[0].AxisY.Maximum = yRangeMax;
