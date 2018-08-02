@@ -45,6 +45,7 @@ namespace DataG
         int yRangeMin = 0;                                      //the min value of y coordinate
         int xScale = 40;                                        //the size of x view
         int yScale = 100;                                       //the size of y view
+        double xInterval = 2.0;
         double[] speed = new double[dtrNum];                    //the speed in the csv file
         int speedRow = 0;
         DataTable dt = new DataTable();
@@ -369,7 +370,7 @@ namespace DataG
             sensorChart.ChartAreas[0].AxisX.ScaleView.Size = xScale;
             sensorChart.ChartAreas[0].AxisX.Maximum = xRangeMax;
             sensorChart.ChartAreas[0].AxisX.Minimum = xRangeMin;
-            sensorChart.ChartAreas[0].AxisX.Interval = 2;
+            sensorChart.ChartAreas[0].AxisX.Interval = xInterval;
             sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
             sensorChart.ChartAreas[0].AxisY.ScaleView.Size = yScale;
             sensorChart.ChartAreas[0].AxisY.Maximum = yRangeMax;
@@ -938,6 +939,7 @@ namespace DataG
             a.xRangeMax = xRangeMax;
             a.xRangeMin = xRangeMin;
             a.xScale = xScale;
+            a.interval = xInterval;
             a.ShowDialog();
             yRangeMax = a.yRangeMax;
             yRangeMin = a.yRangeMin;
@@ -945,11 +947,12 @@ namespace DataG
             xRangeMax = a.xRangeMax;
             xRangeMin = a.xRangeMin;
             xScale = a.xScale;
+            xInterval = a.interval;
 
             sensorChart.ChartAreas[0].AxisX.ScaleView.Size = xScale;
             sensorChart.ChartAreas[0].AxisX.Maximum = xRangeMax;
             sensorChart.ChartAreas[0].AxisX.Minimum = xRangeMin;
-
+            sensorChart.ChartAreas[0].AxisX.Interval = xInterval;
             sensorChart.ChartAreas[0].AxisY.ScaleView.Size = yScale;
             sensorChart.ChartAreas[0].AxisY.Maximum = yRangeMax;
             sensorChart.ChartAreas[0].AxisY.Minimum = yRangeMin;
@@ -958,9 +961,10 @@ namespace DataG
             //save settings to log file
             string s1 = "x: " + xRangeMin.ToString() + " - " + xRangeMax.ToString() + "\r\n";
             string s2 = "x scale: " + xScale.ToString() + "\r\n";
+            string s5 = "x interval: " + xInterval.ToString() + "\r\n";
             string s3 = "y: " + yRangeMin.ToString() + " - " + yRangeMax.ToString() + "\r\n";
             string s4 = "y scale: " + yScale.ToString() + "\r\n";
-            File.WriteAllText(@"..//..//Log/setting.log", s1 + s2 + s3 + s4);
+            File.WriteAllText(@"..//..//Log/setting.log", s1 + s2 + s5 + s3 + s4);
         }
 
         private void radioButton_Normal_CheckedChanged(object sender, EventArgs e)
@@ -1087,20 +1091,22 @@ namespace DataG
             xRangeMin = int.Parse(Regex.Split(xR, " ", RegexOptions.IgnoreCase)[1]);
             xRangeMax = int.Parse(Regex.Split(xR, " ", RegexOptions.IgnoreCase)[3]);
             //handle the y range
-            string yR = sArray[2];
+            string yR = sArray[3];
             yRangeMin = int.Parse(Regex.Split(yR, " ", RegexOptions.IgnoreCase)[1]);
             yRangeMax = int.Parse(Regex.Split(yR, " ", RegexOptions.IgnoreCase)[3]);
             //handle the x scale
             string xS = sArray[1];
             xScale = int.Parse(Regex.Split(xS, " ", RegexOptions.IgnoreCase)[2]);
             //handle the y scale
-            string yS = sArray[3];
+            string yS = sArray[4];
             yScale = int.Parse(Regex.Split(yS, " ", RegexOptions.IgnoreCase)[2]);
-
+            //handle the x interval
+            string xi = sArray[2];
+            xInterval = double.Parse(Regex.Split(xi, " ", RegexOptions.IgnoreCase)[2]);
             sensorChart.ChartAreas[0].AxisX.ScaleView.Size = xScale;
             sensorChart.ChartAreas[0].AxisX.Maximum = xRangeMax;
             sensorChart.ChartAreas[0].AxisX.Minimum = xRangeMin;
-
+            sensorChart.ChartAreas[0].AxisX.Interval = xInterval;
             sensorChart.ChartAreas[0].AxisY.ScaleView.Size = yScale;
             sensorChart.ChartAreas[0].AxisY.Maximum = yRangeMax;
             sensorChart.ChartAreas[0].AxisY.Minimum = yRangeMin;
