@@ -33,6 +33,8 @@ namespace DataG
         double[] x = new double[dtrNum];                        //the x coordinate in GPSPannel
         double[] y = new double[dtrNum];                        //the x coordinate in GPSPannel
 
+        double[] dataSensor = new double[dtrNum];
+
         double nowScrollValue = -0.5;                                 //the position of scrollbar
         double newPlace = 1;                                       //the position of moving dot
         bool fileOpen = false;                                  //determine whether the file has been opened
@@ -41,7 +43,7 @@ namespace DataG
 
         int xRangeMax = 70;                                  //the max value of x coordinate
         int xRangeMin = 0;                                      //the min value of x coordinate
-        int yRangeMax = 200;                                    //the max value of y coordinate
+        int yRangeMax = 100;                                    //the max value of y coordinate
         int yRangeMin = 0;                                      //the min value of y coordinate
         int xScale = 40;                                        //the size of x view
         int yScale = 100;                                       //the size of y view
@@ -612,12 +614,19 @@ namespace DataG
             int no= int.Parse(rb.Name.Substring(3, rb.Name.Length - 3));
             //MessageBox.Show(no.ToString());
             double[] point = new double[dtrNum];
-            for(int j = 0; j < dtrNum; j++)
-            {
-                point[j] = double.Parse(dt.Rows[j][speedRow + 1].ToString());
-            }
+            sensorChart.Series[no].Points.Clear();
+                double[] dataSensor = new double[dtrNum];
+                for (int j = 0; j < dtrNum; j++)
+                {
+                    dataSensor[j] = data[j, no];
+                }
+                
             
-            
+            sensorChart.Series[no].Points.DataBindXY(dataTime, dataSensor);
+            sensorChart.Series[no].ChartType = SeriesChartType.Line;
+            sensorChart.Invalidate();
+
+
         }
         void change(int no, ChartArea caR)
         {
