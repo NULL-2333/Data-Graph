@@ -825,7 +825,7 @@ namespace DataG
 
             if ((nowScrollValue + xScale / 2) >= minValue(dataTime, dataTime.Length) && (nowScrollValue + xScale / 2) <= maxValue(dataTime, dataTime.Length))
             {
-                if ((nowScrollValue + xScale / 2) < xScale / 2)
+                if ((nowScrollValue + xScale / 2) <= xScale / 2)
                     textBoxTime.Text = Math.Round(nowScrollValue + xScale / 2 + moveSpeed, 2).ToString();
                 else
                     textBoxTime.Text = Math.Round(nowScrollValue + xScale / 2 + moveSpeed - 0.1, 2).ToString();
