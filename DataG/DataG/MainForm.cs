@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Threading;
+using System.IO;
+using System.Text.RegularExpressions;
 
 namespace DataG
 {
@@ -271,7 +273,6 @@ namespace DataG
             }
             return re;
         }
-
 
         private void button1_Click_1(object sender, EventArgs e)
         {
@@ -708,7 +709,6 @@ namespace DataG
         
         private void buttonPlay_Click(object sender, EventArgs e)
         {
-            
             if (fileOpen == true)
                 chartTimer.Enabled = true;
         }
@@ -896,11 +896,16 @@ namespace DataG
         {
             flag = false;
         }
-        
 
-        private void YRangeButton_Click(object sender, EventArgs e)
+        private void ConfigureButton_Click(object sender, EventArgs e)
         {
-            YRangeForm a = new YRangeForm();
+            RangeForm a = new RangeForm();
+            a.yRangeMax = yRangeMax;
+            a.yRangeMin = yRangeMin;
+            a.yScale = yScale;
+            a.xRangeMax = xRangeMax;
+            a.xRangeMin = xRangeMin;
+            a.xScale = xScale;
             a.ShowDialog();
             yRangeMax = a.yRangeMax;
             yRangeMin = a.yRangeMin;
@@ -918,6 +923,12 @@ namespace DataG
             sensorChart.ChartAreas[0].AxisY.Minimum = yRangeMin;
 
             sensorChart.Invalidate();
+            //save settings to log file
+            string s1 = "x: " + xRangeMin.ToString() + " - " + xRangeMax.ToString() + "\r\n";
+            string s2 = "x scale: " + xScale.ToString() + "\r\n";
+            string s3 = "y: " + yRangeMin.ToString() + " - " + yRangeMax.ToString() + "\r\n";
+            string s4 = "y scale: " + yScale.ToString() + "\r\n";
+            File.WriteAllText(@"..//..//Log/setting.log", s1 + s2 + s3 + s4);
         }
 
         private void radioButton_Normal_CheckedChanged(object sender, EventArgs e)
@@ -1031,17 +1042,40 @@ namespace DataG
                 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void settingButton_Click(object sender, EventArgs e)
         {
-            //MessageBox.Show(sensorChart.ChartAreas[0].Position.ToRectangleF().ToString());
-            Graphics g = sensorChart.CreateGraphics();
-            Point p1 = new Point(0, 0);
-            Point p2 = new Point(50, 50);
-            Pen nPen = new Pen(Brushes.Red, 1);
-            //g.DrawRectangle(nPen, f.X, f.Y, f.Width, f.Height);
-            //g.DrawRectangle(nPen, 0, 0, 50, 50);
-            g.DrawLine(nPen, p1, p2);
+            //read setting.log file
+            string setting = File.ReadAllText(@"..//..//Log/setting.log");
+            //MessageBox.Show(str);
+            string[] sArray = Regex.Split(setting, "\r\n", RegexOptions.IgnoreCase);
+            //foreach (string i in sArray) MessageBox.Show(i.ToString());
+            int len = sArray.Length - 1;
+            //handle the x range
+            string xR = sArray[0];
+            xRangeMin = int.Parse(Regex.Split(xR, " ", RegexOptions.IgnoreCase)[1]);
+            xRangeMax = int.Parse(Regex.Split(xR, " ", RegexOptions.IgnoreCase)[3]);
+            //handle the y range
+            string yR = sArray[2];
+            yRangeMin = int.Parse(Regex.Split(yR, " ", RegexOptions.IgnoreCase)[1]);
+            yRangeMax = int.Parse(Regex.Split(yR, " ", RegexOptions.IgnoreCase)[3]);
+            //handle the x scale
+            string xS = sArray[1];
+            xScale = int.Parse(Regex.Split(xS, " ", RegexOptions.IgnoreCase)[2]);
+            //handle the y scale
+            string yS = sArray[3];
+            yScale = int.Parse(Regex.Split(yS, " ", RegexOptions.IgnoreCase)[2]);
+
+            sensorChart.ChartAreas[0].AxisX.ScaleView.Size = xScale;
+            sensorChart.ChartAreas[0].AxisX.Maximum = xRangeMax;
+            sensorChart.ChartAreas[0].AxisX.Minimum = xRangeMin;
+
+            sensorChart.ChartAreas[0].AxisY.ScaleView.Size = yScale;
+            sensorChart.ChartAreas[0].AxisY.Maximum = yRangeMax;
+            sensorChart.ChartAreas[0].AxisY.Minimum = yRangeMin;
+
+            sensorChart.Invalidate();
         }
+
 
         
 

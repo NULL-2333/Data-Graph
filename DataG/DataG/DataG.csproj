@@ -65,11 +65,11 @@
     <Compile Include="XRangeForm.Designer.cs">
       <DependentUpon>XRangeForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="YRangeForm.cs">
+    <Compile Include="RangeForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="YRangeForm.Designer.cs">
-      <DependentUpon>YRangeForm.cs</DependentUpon>
+    <Compile Include="RangeForm.Designer.cs">
+      <DependentUpon>RangeForm.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -90,8 +90,8 @@
     <EmbeddedResource Include="XRangeForm.resx">
       <DependentUpon>XRangeForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="YRangeForm.resx">
-      <DependentUpon>YRangeForm.cs</DependentUpon>
+    <EmbeddedResource Include="RangeForm.resx">
+      <DependentUpon>RangeForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
