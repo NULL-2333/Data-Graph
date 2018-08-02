@@ -18,14 +18,9 @@ namespace DataG
         public int yScale = 100;
         public int xRangeMax = 70;
         public int xRangeMin = 0;
-<<<<<<< HEAD:DataG/DataG/YRangeForm.cs
-        public int xScale = 10000;
         public double interval = 0;
-        public YRangeForm()
-=======
         public int xScale = 1;
         public RangeForm()
->>>>>>> 432931e2541550e796a61fb4addc19af0bf019bd:DataG/DataG/RangeForm.cs
         {
             InitializeComponent();
         }

@@ -45,37 +45,24 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-<<<<<<< HEAD:DataG/DataG/YRangeForm.Designer.cs
             this.label8 = new System.Windows.Forms.Label();
             this.IntervaltextBox = new System.Windows.Forms.TextBox();
-=======
->>>>>>> 432931e2541550e796a61fb4addc19af0bf019bd:DataG/DataG/RangeForm.Designer.cs
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // YRangeMinTextBox
             // 
-<<<<<<< HEAD:DataG/DataG/YRangeForm.Designer.cs
             this.YRangeMinTextBox.Location = new System.Drawing.Point(205, 58);
             this.YRangeMinTextBox.Margin = new System.Windows.Forms.Padding(2);
-=======
-            this.YRangeMinTextBox.Location = new System.Drawing.Point(273, 72);
-            this.YRangeMinTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
->>>>>>> 432931e2541550e796a61fb4addc19af0bf019bd:DataG/DataG/RangeForm.Designer.cs
             this.YRangeMinTextBox.Name = "YRangeMinTextBox";
             this.YRangeMinTextBox.Size = new System.Drawing.Size(167, 25);
             this.YRangeMinTextBox.TabIndex = 9;
             // 
             // YRangeMaxTextBox
             // 
-<<<<<<< HEAD:DataG/DataG/YRangeForm.Designer.cs
             this.YRangeMaxTextBox.Location = new System.Drawing.Point(205, 25);
             this.YRangeMaxTextBox.Margin = new System.Windows.Forms.Padding(2);
-=======
-            this.YRangeMaxTextBox.Location = new System.Drawing.Point(273, 31);
-            this.YRangeMaxTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
->>>>>>> 432931e2541550e796a61fb4addc19af0bf019bd:DataG/DataG/RangeForm.Designer.cs
             this.YRangeMaxTextBox.Name = "YRangeMaxTextBox";
             this.YRangeMaxTextBox.Size = new System.Drawing.Size(167, 25);
             this.YRangeMaxTextBox.TabIndex = 8;
@@ -112,13 +99,8 @@
             // 
             // cancelButton
             // 
-<<<<<<< HEAD:DataG/DataG/YRangeForm.Designer.cs
             this.cancelButton.Location = new System.Drawing.Point(434, 289);
             this.cancelButton.Margin = new System.Windows.Forms.Padding(2);
-=======
-            this.cancelButton.Location = new System.Drawing.Point(579, 361);
-            this.cancelButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
->>>>>>> 432931e2541550e796a61fb4addc19af0bf019bd:DataG/DataG/RangeForm.Designer.cs
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(179, 36);
             this.cancelButton.TabIndex = 11;
@@ -128,13 +110,8 @@
             // 
             // confirmButton
             // 
-<<<<<<< HEAD:DataG/DataG/YRangeForm.Designer.cs
             this.confirmButton.Location = new System.Drawing.Point(106, 289);
             this.confirmButton.Margin = new System.Windows.Forms.Padding(2);
-=======
-            this.confirmButton.Location = new System.Drawing.Point(141, 361);
-            this.confirmButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
->>>>>>> 432931e2541550e796a61fb4addc19af0bf019bd:DataG/DataG/RangeForm.Designer.cs
             this.confirmButton.Name = "confirmButton";
             this.confirmButton.Size = new System.Drawing.Size(179, 36);
             this.confirmButton.TabIndex = 10;
@@ -144,13 +121,8 @@
             // 
             // YScaleViewTextBox
             // 
-<<<<<<< HEAD:DataG/DataG/YRangeForm.Designer.cs
             this.YScaleViewTextBox.Location = new System.Drawing.Point(205, 89);
             this.YScaleViewTextBox.Margin = new System.Windows.Forms.Padding(2);
-=======
-            this.YScaleViewTextBox.Location = new System.Drawing.Point(273, 111);
-            this.YScaleViewTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
->>>>>>> 432931e2541550e796a61fb4addc19af0bf019bd:DataG/DataG/RangeForm.Designer.cs
             this.YScaleViewTextBox.Name = "YScaleViewTextBox";
             this.YScaleViewTextBox.Size = new System.Drawing.Size(167, 25);
             this.YScaleViewTextBox.TabIndex = 13;
@@ -203,44 +175,23 @@
             // 
             // XScaleViewTextBox
             // 
-<<<<<<< HEAD:DataG/DataG/YRangeForm.Designer.cs
             this.XScaleViewTextBox.Location = new System.Drawing.Point(201, 90);
             this.XScaleViewTextBox.Name = "XScaleViewTextBox";
             this.XScaleViewTextBox.Size = new System.Drawing.Size(100, 21);
-=======
-            this.XScaleViewTextBox.Location = new System.Drawing.Point(268, 112);
-            this.XScaleViewTextBox.Margin = new System.Windows.Forms.Padding(4);
-            this.XScaleViewTextBox.Name = "XScaleViewTextBox";
-            this.XScaleViewTextBox.Size = new System.Drawing.Size(132, 25);
->>>>>>> 432931e2541550e796a61fb4addc19af0bf019bd:DataG/DataG/RangeForm.Designer.cs
             this.XScaleViewTextBox.TabIndex = 15;
             // 
             // XRangeMinTextBox
             // 
-<<<<<<< HEAD:DataG/DataG/YRangeForm.Designer.cs
             this.XRangeMinTextBox.Location = new System.Drawing.Point(200, 57);
             this.XRangeMinTextBox.Name = "XRangeMinTextBox";
             this.XRangeMinTextBox.Size = new System.Drawing.Size(100, 21);
-=======
-            this.XRangeMinTextBox.Location = new System.Drawing.Point(267, 71);
-            this.XRangeMinTextBox.Margin = new System.Windows.Forms.Padding(4);
-            this.XRangeMinTextBox.Name = "XRangeMinTextBox";
-            this.XRangeMinTextBox.Size = new System.Drawing.Size(132, 25);
->>>>>>> 432931e2541550e796a61fb4addc19af0bf019bd:DataG/DataG/RangeForm.Designer.cs
             this.XRangeMinTextBox.TabIndex = 14;
             // 
             // XRangeMaxTextBox
             // 
-<<<<<<< HEAD:DataG/DataG/YRangeForm.Designer.cs
             this.XRangeMaxTextBox.Location = new System.Drawing.Point(200, 21);
             this.XRangeMaxTextBox.Name = "XRangeMaxTextBox";
             this.XRangeMaxTextBox.Size = new System.Drawing.Size(100, 21);
-=======
-            this.XRangeMaxTextBox.Location = new System.Drawing.Point(267, 26);
-            this.XRangeMaxTextBox.Margin = new System.Windows.Forms.Padding(4);
-            this.XRangeMaxTextBox.Name = "XRangeMaxTextBox";
-            this.XRangeMaxTextBox.Size = new System.Drawing.Size(132, 25);
->>>>>>> 432931e2541550e796a61fb4addc19af0bf019bd:DataG/DataG/RangeForm.Designer.cs
             this.XRangeMaxTextBox.TabIndex = 13;
             // 
             // label5
@@ -273,7 +224,6 @@
             this.label7.TabIndex = 12;
             this.label7.Text = "Scale View Size:";
             // 
-<<<<<<< HEAD:DataG/DataG/YRangeForm.Designer.cs
             // label8
             // 
             this.label8.AutoSize = true;
@@ -290,11 +240,8 @@
             this.IntervaltextBox.Name = "IntervaltextBox";
             this.IntervaltextBox.Size = new System.Drawing.Size(100, 21);
             this.IntervaltextBox.TabIndex = 17;
-            // 
-            // YRangeForm
-=======
+            //
             // RangeForm
->>>>>>> 432931e2541550e796a61fb4addc19af0bf019bd:DataG/DataG/RangeForm.Designer.cs
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -305,15 +252,9 @@
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.confirmButton);
             this.Controls.Add(this.label1);
-<<<<<<< HEAD:DataG/DataG/YRangeForm.Designer.cs
-            this.Margin = new System.Windows.Forms.Padding(2);
-            this.Name = "YRangeForm";
-            this.Text = "YRangeForm";
-=======
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "RangeForm";
             this.Text = "RangeForm";
->>>>>>> 432931e2541550e796a61fb4addc19af0bf019bd:DataG/DataG/RangeForm.Designer.cs
             this.Load += new System.EventHandler(this.YRangeForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

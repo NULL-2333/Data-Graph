@@ -55,9 +55,8 @@ D:\RacingSoftware\6\Data-Graph\DataG\DataG\obj\Debug\DataG.csprojResolveAssembly
 D:\RacingSoftware\6\Data-Graph\DataG\DataG\obj\Debug\DataG.MainForm.resources
 D:\RacingSoftware\6\Data-Graph\DataG\DataG\obj\Debug\DataG.InputForm.resources
 D:\RacingSoftware\6\Data-Graph\DataG\DataG\obj\Debug\DataG.Properties.Resources.resources
-D:\RacingSoftware\6\Data-Graph\DataG\DataG\obj\Debug\DataG.XRangeForm.resources
-D:\RacingSoftware\6\Data-Graph\DataG\DataG\obj\Debug\DataG.YRangeForm.resources
 D:\RacingSoftware\6\Data-Graph\DataG\DataG\obj\Debug\DataG.csproj.GenerateResource.Cache
 D:\RacingSoftware\6\Data-Graph\DataG\DataG\bin\Debug\DataG.exe
 D:\RacingSoftware\6\Data-Graph\DataG\DataG\bin\Debug\DataG.pdb
 C:\Users\user\Desktop\DataRead\DataG\DataG\obj\Debug\DataG.RangeForm.resources
+D:\RacingSoftware\6\Data-Graph\DataG\DataG\obj\Debug\DataG.RangeForm.resources
