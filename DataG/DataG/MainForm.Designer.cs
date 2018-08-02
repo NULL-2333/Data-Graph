@@ -226,6 +226,7 @@
             // 
             // chartTimer
             // 
+            this.chartTimer.Interval = 1;
             this.chartTimer.Tick += new System.EventHandler(this.chartTimer_Tick);
             // 
             // GPSPanel

@@ -1,5 +1,5 @@
-x: 0 - 70
-x scale: 1
-x interval: 0.1
+x: -20 - 70
+x scale: 40
+x interval: 2
 y: 0 - 200
 y scale: 100

@@ -33,21 +33,25 @@ namespace DataG
         double[] x = new double[dtrNum];                        //the x coordinate in GPSPannel
         double[] y = new double[dtrNum];                        //the x coordinate in GPSPannel
 
-        double nowScrollValue = -0.5;                                 //the position of scrollbar
-        double newPlace = 1;                                       //the position of moving dot
+        static int xRangeMax = 70;                              //the max value of x coordinate
+        static int xRangeMin = 0;                               //the min value of x coordinate
+        static int yRangeMax = 200;                             //the max value of y coordinate
+        static int yRangeMin = 0;                               //the min value of y coordinate
+        static int xScale = 40;                                 //the size of x view
+        static int yScale = 100;                                //the size of y view
+        static double xInterval = 2.0;                          //the interval of x axis
+
+        double nowScrollValue = -xScale / 2;                    //the position of scrollbar
+        double newPlace = 1;                                    //the position of moving dot
         bool fileOpen = false;                                  //determine whether the file has been opened
         bool flag = false;                                      //drag line
         bool flagPlace = true;
-
-        int xRangeMax = 70;                                  //the max value of x coordinate
-        int xRangeMin = 0;                                      //the min value of x coordinate
-        int yRangeMax = 200;                                    //the max value of y coordinate
-        int yRangeMin = 0;                                      //the min value of y coordinate
-        int xScale = 40;                                        //the size of x view
-        int yScale = 100;                                       //the size of y view
-        double xInterval = 2.0;
+        double moveSpeed = 1;                                   //the speed of play
+        bool firstPlayFlag = true;                              //the flag of first play
+        
         double[] speed = new double[dtrNum];                    //the speed in the csv file
         int speedRow = 0;
+
         DataTable dt = new DataTable();
         ChartArea caR2;
         ChartArea caR3;
@@ -742,6 +746,12 @@ namespace DataG
         
         private void buttonPlay_Click(object sender, EventArgs e)
         {
+            if (firstPlayFlag == true)
+            {
+                resetButton_Click(sender, e);
+                firstPlayFlag = false;
+            }
+                
             if (fileOpen == true)
                 chartTimer.Enabled = true;
         }
@@ -752,7 +762,7 @@ namespace DataG
             sensorChart.ChartAreas[0].AxisX.ScaleView.Size = xScale;
             sensorChart.ChartAreas[0].AxisX.Maximum = xRangeMax;
             sensorChart.ChartAreas[0].AxisX.Minimum = xRangeMin;
-            sensorChart.ChartAreas[0].AxisX.Interval = 0.1;
+            sensorChart.ChartAreas[0].AxisX.Interval = xInterval;
             sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
             sensorChart.ChartAreas[0].AxisY.ScaleView.Size = yScale;
             sensorChart.ChartAreas[0].AxisY.Maximum = yRangeMax;
@@ -770,15 +780,15 @@ namespace DataG
             sensorChart.ChartAreas[0].AxisX.ScaleView.Size = xScale;
             sensorChart.ChartAreas[0].AxisX.Maximum = xRangeMax;
             sensorChart.ChartAreas[0].AxisX.Minimum = xRangeMin;
-            sensorChart.ChartAreas[0].AxisX.Interval = 0.1;
+            sensorChart.ChartAreas[0].AxisX.Interval = xInterval;
             sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
             sensorChart.ChartAreas[0].AxisY.ScaleView.Size = yScale;
             sensorChart.ChartAreas[0].AxisY.Maximum = yRangeMax;
             sensorChart.ChartAreas[0].AxisY.Minimum = yRangeMin;
 
-            nowScrollValue = (int)minValue(dataTime, dataTime.Length);
-            newPlace = (int)minValue(dataTime, dataTime.Length);
-            sensorChart.ChartAreas[0].AxisX.ScaleView.Position = nowScrollValue;
+            nowScrollValue = (int)minValue(dataTime, dataTime.Length) - xScale / 2;
+            newPlace = (int)minValue(dataTime, dataTime.Length) - xScale / 2;
+            sensorChart.ChartAreas[0].AxisX.ScaleView.Position = nowScrollValue + xScale / 2;
             sensorChart.Invalidate();
             chartTimer.Enabled = false;
 
@@ -788,14 +798,10 @@ namespace DataG
 
         private void sensorChart_PostPaint(object sender, ChartPaintEventArgs e)
         {
-            //double x0 = sensorChart.ChartAreas[0].AxisX.ValueToPixelPosition(nowScrollValue);
-            //double y0 = sensorChart.ChartAreas[0].AxisY.ValueToPixelPosition(sensorCfbvhart.ChartAreas[0].AxisY.Minimum);
-            //double y1 = sensorChart.ChartAreas[0].AxisY.ValueToPixelPosition(sensorChart.ChartAreas[0].AxisY.Maximum);
-            double x = sensorChart.ChartAreas[0].AxisX.ScaleView.Position + 0.4;
+            double x = sensorChart.ChartAreas[0].AxisX.ScaleView.Position + xScale / 2;
             double x0 = sensorChart.ChartAreas[0].AxisX.ValueToPixelPosition(x);
             double y0 = sensorChart.ChartAreas[0].AxisY.ValueToPixelPosition(sensorChart.ChartAreas[0].AxisY.Minimum);
             double y1 = sensorChart.ChartAreas[0].AxisY.ValueToPixelPosition(sensorChart.ChartAreas[0].AxisY.Maximum);
-            //if (x < sensorChart.ChartAreas[0].AxisX.ScaleView.Position + sensorChart.ChartAreas[0].AxisX.ScaleView.Size)
             e.ChartGraphics.Graphics.DrawLine(new Pen(Color.Red, 1), (float)x0, (float)y0, (float)x0, (float)y1);
         }
 
@@ -804,16 +810,23 @@ namespace DataG
             
             sensorChart.PostPaint += new EventHandler<ChartPaintEventArgs>(sensorChart_PostPaint);
 
-            if (nowScrollValue >= minValue(dataTime, dataTime.Length) && nowScrollValue <= maxValue(dataTime, dataTime.Length))
+            if ((nowScrollValue + xScale / 2) >= minValue(dataTime, dataTime.Length) && (nowScrollValue + xScale / 2) <= maxValue(dataTime, dataTime.Length))
             {
-                textBoxTime.Text = Math.Round(nowScrollValue + 0.5, 2).ToString();
+
+                textBoxTime.Text = Math.Round(nowScrollValue + xScale / 2 + moveSpeed, 2).ToString();
                 TextBox txtBox = new TextBox();
                 for (int i = 0; i < dtcNum - 1; i++)
                 {
                     txtBox = (TextBox)this.Controls.Find("textBox" + i.ToString(), true)[0];
                     if (txtBox != null && sensorCheckedListBox.GetItemChecked(i))
                     {
-                        txtBox.Text = data[findSub(Math.Round(nowScrollValue + 0.5, 2), dataTime, dataTime.Length), i].ToString();
+                        double xx = nowScrollValue + xScale / 2 + moveSpeed;
+                        int xLeftSub = findLeftNear(xx, dataTime, dataTime.Length);
+                        int xRightSub = xLeftSub + 1;
+                        double xLeft = dataTime[xLeftSub], xRight = dataTime[xRightSub];
+                        double k = (data[xLeftSub, i] - data[xRightSub, i]) / (xLeft - xRight);
+                        double b = data[xLeftSub, i] - k * xLeft;
+                        txtBox.Text = Math.Round(k * xx + b, 8).ToString();
                     }
                 }
             }
@@ -822,8 +835,8 @@ namespace DataG
 
             //sensorChart.PostPaint += new EventHandler<ChartPaintEventArgs>(sensorChart_PostPaint);
 
-            if ((nowScrollValue + 0.5) <= maxValue(dataTime, dataTime.Length))
-                nowScrollValue += .1;
+            if ((nowScrollValue + xScale / 2) <= maxValue(dataTime, dataTime.Length))
+                nowScrollValue += moveSpeed;
             sensorChart.Invalidate();
 
             if (flagPlace == true)
@@ -841,13 +854,13 @@ namespace DataG
                 GPSPanel.Refresh();
                 m = (newPlace - xLeft) / (xRight - xLeft) * (x[xRightSub] - x[xLeftSub]) + x[xLeftSub];
                 n = (newPlace - xLeft) / (xRight - xLeft) * (y[xRightSub] - y[xLeftSub]) + y[xLeftSub];
-
+                Graphics g3 = GPSPanel.CreateGraphics();
                 PointF pp = new PointF();
                 pp = new PointF((float)m, (float)n);
-                g2.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
+                g3.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
                 this.Update();
                 if (newPlace <= maxValue(dataTime, dataTime.Length))
-                    newPlace += .1;
+                    newPlace += moveSpeed;
                 if (newPlace > maxValue(dataTime, dataTime.Length))
                 {
                     flagPlace = false;
