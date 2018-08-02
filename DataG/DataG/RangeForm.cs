@@ -10,17 +10,22 @@ using System.Windows.Forms;
 
 namespace DataG
 {
-    public partial class YRangeForm : Form
+    public partial class RangeForm : Form
     {
         
         public int yRangeMax = 200;
         public int yRangeMin = 0;
         public int yScale = 100;
-        public int xRangeMax = 10000;
+        public int xRangeMax = 70;
         public int xRangeMin = 0;
+<<<<<<< HEAD:DataG/DataG/YRangeForm.cs
         public int xScale = 10000;
         public double interval = 0;
         public YRangeForm()
+=======
+        public int xScale = 1;
+        public RangeForm()
+>>>>>>> 432931e2541550e796a61fb4addc19af0bf019bd:DataG/DataG/RangeForm.cs
         {
             InitializeComponent();
         }
@@ -44,16 +49,17 @@ namespace DataG
 
         private void YRangeForm_Load(object sender, EventArgs e)
         {
-            int x = 200;
+            int x = yRangeMax;
             YRangeMaxTextBox.Text = x.ToString();
-            x = 100;
+            x = yScale;
             YScaleViewTextBox.Text = x.ToString();
-            x = 0;
+            x = yRangeMin;
             YRangeMinTextBox.Text = x.ToString();
-            int y = 10000;
+            int y = xRangeMax;
             XRangeMaxTextBox.Text = y.ToString();
+            y = xScale;
             XScaleViewTextBox.Text = y.ToString();
-            x = 0;
+            y = xRangeMin;
             XRangeMinTextBox.Text = y.ToString();
         }
     }

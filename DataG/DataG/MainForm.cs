@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Threading;
+using System.IO;
+using System.Text.RegularExpressions;
 
 namespace DataG
 {
@@ -58,60 +60,7 @@ namespace DataG
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            sensorChart.ChartAreas[0].AxisX.MajorGrid.LineColor = System.Drawing.Color.Transparent;
-            sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
-            sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 10000;
-            sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
-            sensorChart.ChartAreas[0].AxisY.ScaleView.Size = 100;
-
-            //YPanel.Invalidate();
             
-        }
-
-        private void YPanel_Paint(object sender, PaintEventArgs e)
-        {
-            ////initialize the YPanel
-            //double yLength = sensorChart.ChartAreas[0].AxisY.ValueToPixelPosition(sensorChart.ChartAreas[0].AxisY.ScaleView.Position);
-            //int margin = 20;
-            //int size = 10;
-            //YPanel.Height = (int)yLength + margin * 2;
-            //int width = YPanel.Width;
-            //int height = YPanel.Height;
-            
-            //double interval = (double)(height - 5 * margin) / size;
-            //double lineWidth = (double)(width - 2 * margin) / 4 - 2 * margin;
-            //Graphics gs = YPanel.CreateGraphics();
-            //PointF ps1 = new PointF(0, 0);
-            //PointF p2 = new PointF(50, 50);
-            //Pen ps = new Pen(Brushes.Blue, 1);
-            //for (int i = 0; i < size; i++)
-            //{
-            //    ps1 = new PointF(margin * 2, (float)(margin * 2 + i * interval));
-            //    p2 = new PointF((float)(margin * 2 + lineWidth), (float)(margin * 2 + i * interval));
-            //    gs.DrawLine(ps, ps1, p2);
-
-            //    ps1 = new PointF((float)(margin * 4 + lineWidth), (float)(margin * 2 + i * interval));
-            //    p2 = new PointF((float)(ps1.X + lineWidth), (float)(margin * 2 + i * interval));
-            //    gs.DrawLine(ps, ps1, p2);
-
-            //    ps1 = new PointF((float)(margin * 6 + lineWidth * 2), (float)(margin * 2 + i * interval));
-            //    p2 = new PointF((float)(ps1.X + lineWidth), (float)(margin * 2 + i * interval));
-            //    gs.DrawLine(ps, ps1, p2);
-
-            //    ps1 = new PointF((float)(margin * 8 + lineWidth * 3), (float)(margin * 2 + i * interval));
-            //    p2 = new PointF((float)(ps1.X + lineWidth), (float)(margin * 2 + i * interval));
-            //    gs.DrawLine(ps, ps1, p2);
-            //}
-            //for (int i = 0; i < 4; i++)
-            //{
-            //    Label lab = new Label();
-            //    lab.SetBounds((int)(margin * 2 * (i + 1) + lineWidth * i), (int)(margin * 3 + 9 * interval), (width - 2 * margin) / 4, margin);
-            //    lab.Text = "R" + (i + 1).ToString();
-            //    YPanel.Controls.Add(lab);
-            //    ps1 = new PointF((float)(margin * 2 * (i + 1) + lineWidth * i), margin * 2);
-            //    p2 = new PointF((float)(margin * 2 * (i + 1) + lineWidth * i), (float)(margin * 2 + 9 * interval));
-            //    gs.DrawLine(ps, ps1, p2);
-            //}
         }
 
         //read data from .csv file and return to datatable
@@ -330,76 +279,18 @@ namespace DataG
             return re;
         }
 
-        public void CreateYAxis(Chart chart, ChartArea area, Series series,float axisX, float axisWidth, float labelsSize, bool alignLeft)
-        {
-
-            chart.ApplyPaletteColors();  // (*)
-
-            // Create new chart area for original series
-            ChartArea areaSeries = chart.ChartAreas.Add("CAs_" + series.Name);
-            areaSeries.BackColor = Color.Transparent;
-            areaSeries.BorderColor = Color.Transparent;
-            areaSeries.Position.FromRectangleF(area.Position.ToRectangleF());
-            areaSeries.InnerPlotPosition.FromRectangleF(area.InnerPlotPosition.ToRectangleF());
-            areaSeries.AxisX.MajorGrid.Enabled = false;
-            areaSeries.AxisX.MajorTickMark.Enabled = false;
-            areaSeries.AxisX.LabelStyle.Enabled = false;
-            areaSeries.AxisY.MajorGrid.Enabled = false;
-            areaSeries.AxisY.MajorTickMark.Enabled = false;
-            areaSeries.AxisY.LabelStyle.Enabled = false;
-            areaSeries.AxisY.IsStartedFromZero = area.AxisY.IsStartedFromZero;
-            // associate series with new ca
-            series.ChartArea = areaSeries.Name;
-
-            // Create new chart area for axis
-            ChartArea areaAxis = chart.ChartAreas.Add("CA_AxY_" + series.ChartArea);
-
-            areaAxis.BackColor = Color.Transparent;
-            areaAxis.BorderColor = Color.Transparent;
-            RectangleF oRect = area.Position.ToRectangleF();
-            areaAxis.Position = new ElementPosition(oRect.X, oRect.Y, axisWidth, oRect.Height);
-            areaAxis.InnerPlotPosition
-                    .FromRectangleF(areaSeries.InnerPlotPosition.ToRectangleF());
-            
-            // Create a copy of specified series
-            Series seriesCopy = chart.Series.Add(series.Name + "_Copy");
-            seriesCopy.ChartType = series.ChartType;
-            seriesCopy.YAxisType = alignLeft ? AxisType.Primary : AxisType.Secondary;  // (**)
-
-            foreach (DataPoint point in series.Points)
-            {
-                seriesCopy.Points.AddXY(point.XValue, point.YValues[0]);
-            }
-            // Hide copied series
-            seriesCopy.IsVisibleInLegend = false;
-            seriesCopy.Color = Color.Transparent;
-            seriesCopy.BorderColor = Color.Transparent;
-            seriesCopy.ChartArea = areaAxis.Name;
-
-            // Disable grid lines & tickmarks
-            areaAxis.AxisX.LineWidth = 0;
-            areaAxis.AxisX.MajorGrid.Enabled = false;
-            areaAxis.AxisX.MajorTickMark.Enabled = false;
-            areaAxis.AxisX.LabelStyle.Enabled = false;
-
-            Axis areaAxisAxisY = alignLeft ? areaAxis.AxisY : areaAxis.AxisY2;   // (**)
-            areaAxisAxisY.MajorGrid.Enabled = false;
-            areaAxisAxisY.IsStartedFromZero = area.AxisY.IsStartedFromZero;
-            areaAxisAxisY.LabelStyle.Font = area.AxisY.LabelStyle.Font;
-
-            areaAxisAxisY.Title = series.Name;
-            areaAxisAxisY.LineColor = series.Color;    // (*)
-            areaAxisAxisY.TitleForeColor = Color.DarkCyan;  // (*)
-
-            areaAxisAxisY.ScrollBar.Enabled = true;
-            areaAxisAxisY.ScaleView.Size = 1;
-            // Adjust area position
-            areaAxis.Position.X = axisX;
-            areaAxis.InnerPlotPosition.X += labelsSize;
-        }
-
         private void button1_Click_1(object sender, EventArgs e)
         {
+            //delete existing chart
+            sensorChart.Series.Clear();
+            sensorChart.ChartAreas.Clear();
+            sensorChart.ChartAreas.Add(new ChartArea("ChartArea1"));
+            sensorChart.ChartAreas[0].AxisX.MajorGrid.LineColor = System.Drawing.Color.Transparent;
+            sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
+            sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 10000;
+            sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
+            sensorChart.ChartAreas[0].AxisY.ScaleView.Size = 100;
+            sensorChart.ChartAreas[0].AxisX.LabelStyle.Format = "N2";
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.InitialDirectory = "c://";
             openFileDialog.Filter = "Data Files|*.csv";
@@ -772,8 +663,12 @@ namespace DataG
         private void sensorCheckedListBox_ItemCheck(object sender, ItemCheckEventArgs e)
         {
             int index = e.Index;
-            Series sz = sensorChart.Series[seriesName[index]];
-            sz.Enabled = !sensorCheckedListBox.GetItemChecked(index);
+            if (index < seriesName.Length)
+            {
+                Series sz = sensorChart.Series[seriesName[index]];
+                sz.Enabled = !sensorCheckedListBox.GetItemChecked(index);
+            }
+            
         }
 
         private void allSelectedCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -846,7 +741,6 @@ namespace DataG
         
         private void buttonPlay_Click(object sender, EventArgs e)
         {
-            
             if (fileOpen == true)
                 chartTimer.Enabled = true;
         }
@@ -1034,11 +928,16 @@ namespace DataG
         {
             flag = false;
         }
-        
 
-        private void YRangeButton_Click(object sender, EventArgs e)
+        private void ConfigureButton_Click(object sender, EventArgs e)
         {
-            YRangeForm a = new YRangeForm();
+            RangeForm a = new RangeForm();
+            a.yRangeMax = yRangeMax;
+            a.yRangeMin = yRangeMin;
+            a.yScale = yScale;
+            a.xRangeMax = xRangeMax;
+            a.xRangeMin = xRangeMin;
+            a.xScale = xScale;
             a.ShowDialog();
             yRangeMax = a.yRangeMax;
             yRangeMin = a.yRangeMin;
@@ -1056,6 +955,12 @@ namespace DataG
             sensorChart.ChartAreas[0].AxisY.Minimum = yRangeMin;
 
             sensorChart.Invalidate();
+            //save settings to log file
+            string s1 = "x: " + xRangeMin.ToString() + " - " + xRangeMax.ToString() + "\r\n";
+            string s2 = "x scale: " + xScale.ToString() + "\r\n";
+            string s3 = "y: " + yRangeMin.ToString() + " - " + yRangeMax.ToString() + "\r\n";
+            string s4 = "y scale: " + yScale.ToString() + "\r\n";
+            File.WriteAllText(@"..//..//Log/setting.log", s1 + s2 + s3 + s4);
         }
 
         private void radioButton_Normal_CheckedChanged(object sender, EventArgs e)
@@ -1169,17 +1074,40 @@ namespace DataG
                 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void settingButton_Click(object sender, EventArgs e)
         {
-            //MessageBox.Show(sensorChart.ChartAreas[0].Position.ToRectangleF().ToString());
-            Graphics g = sensorChart.CreateGraphics();
-            Point p1 = new Point(0, 0);
-            Point p2 = new Point(50, 50);
-            Pen nPen = new Pen(Brushes.Red, 1);
-            //g.DrawRectangle(nPen, f.X, f.Y, f.Width, f.Height);
-            //g.DrawRectangle(nPen, 0, 0, 50, 50);
-            g.DrawLine(nPen, p1, p2);
+            //read setting.log file
+            string setting = File.ReadAllText(@"..//..//Log/setting.log");
+            //MessageBox.Show(str);
+            string[] sArray = Regex.Split(setting, "\r\n", RegexOptions.IgnoreCase);
+            //foreach (string i in sArray) MessageBox.Show(i.ToString());
+            int len = sArray.Length - 1;
+            //handle the x range
+            string xR = sArray[0];
+            xRangeMin = int.Parse(Regex.Split(xR, " ", RegexOptions.IgnoreCase)[1]);
+            xRangeMax = int.Parse(Regex.Split(xR, " ", RegexOptions.IgnoreCase)[3]);
+            //handle the y range
+            string yR = sArray[2];
+            yRangeMin = int.Parse(Regex.Split(yR, " ", RegexOptions.IgnoreCase)[1]);
+            yRangeMax = int.Parse(Regex.Split(yR, " ", RegexOptions.IgnoreCase)[3]);
+            //handle the x scale
+            string xS = sArray[1];
+            xScale = int.Parse(Regex.Split(xS, " ", RegexOptions.IgnoreCase)[2]);
+            //handle the y scale
+            string yS = sArray[3];
+            yScale = int.Parse(Regex.Split(yS, " ", RegexOptions.IgnoreCase)[2]);
+
+            sensorChart.ChartAreas[0].AxisX.ScaleView.Size = xScale;
+            sensorChart.ChartAreas[0].AxisX.Maximum = xRangeMax;
+            sensorChart.ChartAreas[0].AxisX.Minimum = xRangeMin;
+
+            sensorChart.ChartAreas[0].AxisY.ScaleView.Size = yScale;
+            sensorChart.ChartAreas[0].AxisY.Maximum = yRangeMax;
+            sensorChart.ChartAreas[0].AxisY.Minimum = yRangeMin;
+
+            sensorChart.Invalidate();
         }
+
 
         
 
