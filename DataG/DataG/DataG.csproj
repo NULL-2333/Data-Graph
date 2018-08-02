@@ -59,14 +59,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="XRangeForm.cs" />
-    <Compile Include="XRangeForm.Designer.cs">
-      <DependentUpon>XRangeForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="YRangeForm.cs" />
-    <Compile Include="YRangeForm.Designer.cs">
-      <DependentUpon>YRangeForm.cs</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -83,12 +75,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="XRangeForm.resx">
-      <DependentUpon>XRangeForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="YRangeForm.resx">
-      <DependentUpon>YRangeForm.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
