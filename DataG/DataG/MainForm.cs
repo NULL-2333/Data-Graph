@@ -285,7 +285,7 @@ namespace DataG
             sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 10000;
             sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
             sensorChart.ChartAreas[0].AxisY.ScaleView.Size = 100;
-
+            sensorChart.ChartAreas[0].AxisX.LabelStyle.Format = "N2";
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.InitialDirectory = "c://";
             openFileDialog.Filter = "Data Files|*.csv";

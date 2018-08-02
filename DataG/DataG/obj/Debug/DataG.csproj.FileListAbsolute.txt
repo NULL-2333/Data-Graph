@@ -36,7 +36,6 @@ C:\Users\user\Desktop\DataRead\DataG\DataG\obj\Debug\DataG.MainForm.resources
 C:\Users\user\Desktop\DataRead\DataG\DataG\obj\Debug\DataG.InputForm.resources
 D:\RacingSoftware\Data-Graph\DataG\DataG\obj\Debug\DataG.MainForm.resources
 D:\RacingSoftware\Data-Graph\DataG\DataG\obj\Debug\DataG.InputForm.resources
-C:\Users\user\Desktop\DataRead\DataG\DataG\obj\Debug\DataG.XRangeForm.resources
 D:\RacingSoftware\5\Data-Graph\DataG\DataG\bin\Debug\DataG.exe.config
 D:\RacingSoftware\5\Data-Graph\DataG\DataG\obj\Debug\DataG.exe
 D:\RacingSoftware\5\Data-Graph\DataG\DataG\obj\Debug\DataG.pdb

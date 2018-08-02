@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.dataPanel = new System.Windows.Forms.Panel();
             this.textBoxTime = new System.Windows.Forms.TextBox();
             this.timeLabel = new System.Windows.Forms.Label();
@@ -200,17 +200,17 @@
             // 
             // sensorChart
             // 
-            chartArea2.AxisX.LabelStyle.Format = "N2";
-            chartArea2.Name = "ChartArea1";
-            chartArea2.Position.Auto = false;
-            chartArea2.Position.Height = 94F;
-            chartArea2.Position.Width = 81.35392F;
-            chartArea2.Position.X = 3F;
-            chartArea2.Position.Y = 3F;
-            this.sensorChart.ChartAreas.Add(chartArea2);
+            chartArea1.AxisX.LabelStyle.Format = "N3";
+            chartArea1.Name = "ChartArea1";
+            chartArea1.Position.Auto = false;
+            chartArea1.Position.Height = 94F;
+            chartArea1.Position.Width = 81.35392F;
+            chartArea1.Position.X = 3F;
+            chartArea1.Position.Y = 3F;
+            this.sensorChart.ChartAreas.Add(chartArea1);
             this.sensorChart.Cursor = System.Windows.Forms.Cursors.Hand;
-            legend2.Name = "Legend1";
-            this.sensorChart.Legends.Add(legend2);
+            legend1.Name = "Legend1";
+            this.sensorChart.Legends.Add(legend1);
             this.sensorChart.Location = new System.Drawing.Point(16, 19);
             this.sensorChart.Margin = new System.Windows.Forms.Padding(5, 2, 5, 2);
             this.sensorChart.Name = "sensorChart";
