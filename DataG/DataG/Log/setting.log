@@ -1,5 +1,12 @@
+<<<<<<< HEAD
 x: -20 - 70
 x scale: 40
 x interval: 2
 y: 0 - 200
+=======
+x: 0 - 70
+x scale: 40
+x interval: 2
+y: 0 - 100
+>>>>>>> f75876ffaf24ed09e099915718399f09cac08b46
 y scale: 100
