@@ -48,6 +48,7 @@ namespace DataG
         bool flagPlace = true;
         double moveSpeed = 1;                                   //the speed of play
         bool firstPlayFlag = true;                              //the flag of first play
+        bool scaleFlag = true;
         
         double[] speed = new double[dtrNum];                    //the speed in the csv file
         int speedRow = 0;
@@ -753,14 +754,15 @@ namespace DataG
         
         private void buttonPlay_Click(object sender, EventArgs e)
         {
-            if (firstPlayFlag == true)
-            {
-                resetButton_Click(sender, e);
-                firstPlayFlag = false;
-            }
-                
             if (fileOpen == true)
+            {
+                if (firstPlayFlag == true)
+                {
+                    resetButton_Click(sender, e);
+                    firstPlayFlag = false;
+                }
                 chartTimer.Enabled = true;
+            } 
         }
 
         private void buttonStop_Click(object sender, EventArgs e)
@@ -783,24 +785,28 @@ namespace DataG
 
         private void resetButton_Click(object sender, EventArgs e)
         {
-            sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
-            sensorChart.ChartAreas[0].AxisX.ScaleView.Size = xScale;
-            sensorChart.ChartAreas[0].AxisX.Maximum = xRangeMax;
-            sensorChart.ChartAreas[0].AxisX.Minimum = xRangeMin;
-            sensorChart.ChartAreas[0].AxisX.Interval = xInterval;
-            sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
-            sensorChart.ChartAreas[0].AxisY.ScaleView.Size = yScale;
-            sensorChart.ChartAreas[0].AxisY.Maximum = yRangeMax;
-            sensorChart.ChartAreas[0].AxisY.Minimum = yRangeMin;
+            if (fileOpen == true)
+            {
+                sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
+                sensorChart.ChartAreas[0].AxisX.ScaleView.Size = xScale;
+                sensorChart.ChartAreas[0].AxisX.Maximum = xRangeMax;
+                sensorChart.ChartAreas[0].AxisX.Minimum = xRangeMin;
+                sensorChart.ChartAreas[0].AxisX.Interval = xInterval;
+                sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
+                sensorChart.ChartAreas[0].AxisY.ScaleView.Size = yScale;
+                sensorChart.ChartAreas[0].AxisY.Maximum = yRangeMax;
+                sensorChart.ChartAreas[0].AxisY.Minimum = yRangeMin;
 
-            nowScrollValue = (int)minValue(dataTime, dataTime.Length) - xScale / 2;
-            newPlace = (int)minValue(dataTime, dataTime.Length) - xScale / 2;
-            sensorChart.ChartAreas[0].AxisX.ScaleView.Position = nowScrollValue + xScale / 2;
-            sensorChart.Invalidate();
-            chartTimer.Enabled = false;
+                nowScrollValue = (int)minValue(dataTime, dataTime.Length) - xScale / 2;
+                newPlace = (int)minValue(dataTime, dataTime.Length) - xScale / 2;
+                sensorChart.ChartAreas[0].AxisX.ScaleView.Position = nowScrollValue + xScale / 2;
+                sensorChart.Invalidate();
+                chartTimer.Enabled = false;
 
-            GPSPanel.Refresh();
-            flagPlace = true;
+                GPSPanel.Refresh();
+                flagPlace = true;
+                scaleFlag = true;
+            } 
         }
 
         private void sensorChart_PostPaint(object sender, ChartPaintEventArgs e)
@@ -839,8 +845,19 @@ namespace DataG
             }
 
             sensorChart.ChartAreas[0].AxisX.ScaleView.Position = nowScrollValue;
-            if ((nowScrollValue + xScale / 2) <= maxValue(dataTime, dataTime.Length))
+            if ((nowScrollValue + xScale / 2) < xScale / 2){
                 nowScrollValue += moveSpeed;
+            }
+            else if ((nowScrollValue + xScale / 2) <= maxValue(dataTime, dataTime.Length))
+            {
+                if (scaleFlag == true)
+                {
+                    scaleFlag = false;
+                    nowScrollValue += 0.1;
+                }
+                nowScrollValue += moveSpeed;
+            }
+               
             sensorChart.Invalidate();
 
             if (flagPlace == true)
