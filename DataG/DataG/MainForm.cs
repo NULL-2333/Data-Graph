@@ -825,15 +825,21 @@ namespace DataG
 
             if ((nowScrollValue + xScale / 2) >= minValue(dataTime, dataTime.Length) && (nowScrollValue + xScale / 2) <= maxValue(dataTime, dataTime.Length))
             {
-
-                textBoxTime.Text = Math.Round(nowScrollValue + xScale / 2 + moveSpeed, 2).ToString();
+                if ((nowScrollValue + xScale / 2) < xScale / 2)
+                    textBoxTime.Text = Math.Round(nowScrollValue + xScale / 2 + moveSpeed, 2).ToString();
+                else
+                    textBoxTime.Text = Math.Round(nowScrollValue + xScale / 2 + moveSpeed - 0.1, 2).ToString();
                 TextBox txtBox = new TextBox();
                 for (int i = 0; i < dtcNum - 1; i++)
                 {
                     txtBox = (TextBox)this.Controls.Find("textBox" + i.ToString(), true)[0];
                     if (txtBox != null && sensorCheckedListBox.GetItemChecked(i))
                     {
-                        double xx = nowScrollValue + xScale / 2 + moveSpeed;
+                        double xx = 0;
+                        if ((nowScrollValue + xScale / 2) < xScale / 2)
+                            xx = nowScrollValue + xScale / 2 + moveSpeed;
+                        else
+                            xx = nowScrollValue + xScale / 2 + moveSpeed - 0.1;
                         int xLeftSub2 = findLeftNear(xx, dataTime, dataTime.Length);
                         int xRightSub2 = xLeftSub2 + 1;
                         double xLeft2 = dataTime[xLeftSub2], xRight2 = dataTime[xRightSub2];
