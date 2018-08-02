@@ -41,10 +41,15 @@ namespace DataG
         int xRangeMin = 0;                                      //the min value of x coordinate
         int yRangeMax = 200;                                    //the max value of y coordinate
         int yRangeMin = 0;                                      //the min value of y coordinate
-        int xScale = 1;                                        //the size of x view
+        int xScale = 40;                                        //the size of x view
         int yScale = 100;                                       //the size of y view
         double[] speed = new double[dtrNum];                    //the speed in the csv file
         int speedRow = 0;
+        DataTable dt = new DataTable();
+        ChartArea caR2;
+        ChartArea caR3;
+        ChartArea caR4;
+
 
         public MainForm()
         {
@@ -405,7 +410,7 @@ namespace DataG
             {
                 fileName = openFileDialog.FileName;
             }
-            DataTable dt = new DataTable();
+            dt = new DataTable();
             if (fileName == "")
             {
                 MessageBox.Show("No file selected", "Warning");
@@ -473,7 +478,7 @@ namespace DataG
             sensorChart.ChartAreas[0].AxisX.ScaleView.Size = xScale;
             sensorChart.ChartAreas[0].AxisX.Maximum = xRangeMax;
             sensorChart.ChartAreas[0].AxisX.Minimum = xRangeMin;
-            sensorChart.ChartAreas[0].AxisX.Interval = 0.1;
+            sensorChart.ChartAreas[0].AxisX.Interval = 2;
             sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
             sensorChart.ChartAreas[0].AxisY.ScaleView.Size = yScale;
             sensorChart.ChartAreas[0].AxisY.Maximum = yRangeMax;
@@ -639,7 +644,7 @@ namespace DataG
             sCopy2.BorderColor = Color.Transparent;
 
             this.Refresh();
-            ChartArea caR2 = sensorChart.ChartAreas.Add("R2");
+            caR2 = sensorChart.ChartAreas.Add("R2");
             caR2.BackColor = Color.Transparent;
             caR2.BorderColor = Color.Transparent;
             caR2.Position.FromRectangleF(sensorChart.ChartAreas[0].Position.ToRectangleF());
@@ -665,7 +670,7 @@ namespace DataG
             sCopy3.Color = Color.Transparent;
             sCopy3.BorderColor = Color.Transparent;
 
-            ChartArea caR3 = sensorChart.ChartAreas.Add("R3");
+            caR3 = sensorChart.ChartAreas.Add("R3");
             caR3.BackColor = Color.Transparent;
             caR3.BorderColor = Color.Transparent;
             caR3.Position.FromRectangleF(caR2.Position.ToRectangleF());
@@ -676,7 +681,7 @@ namespace DataG
             caR3.AxisX.LabelStyle.Enabled = false;
             caR3.AxisY.MajorGrid.Enabled = false;
             caR3.AxisY.Title = "R3";
-            caR3.AxisY.Maximum = 30;
+            caR3.AxisY.Maximum = 80;
             caR3.AxisY.Minimum = 0;
             caR3.AxisY.IsStartedFromZero = sensorChart.ChartAreas[0].AxisY.IsStartedFromZero;
             sCopy3.ChartArea = caR3.Name;
@@ -691,7 +696,7 @@ namespace DataG
             sCopy4.Color = Color.Transparent;
             sCopy4.BorderColor = Color.Transparent;
 
-            ChartArea caR4 = sensorChart.ChartAreas.Add("R4");
+            caR4 = sensorChart.ChartAreas.Add("R4");
             caR4.BackColor = Color.Transparent;
             caR4.BorderColor = Color.Transparent;
             caR4.Position.FromRectangleF(caR3.Position.ToRectangleF());
@@ -713,28 +718,55 @@ namespace DataG
         {
             RadioButton rb = (RadioButton)sender;
             int no= int.Parse(rb.Name.Substring(3, rb.Name.Length - 3));
-            MessageBox.Show(no.ToString());
+            //MessageBox.Show(no.ToString());
+            double[] point = new double[dtrNum];
+            for(int j = 0; j < dtrNum; j++)
+            {
+                point[j] = double.Parse(dt.Rows[j][speedRow + 1].ToString());
+            }
+            
+            
+        }
+        void change(int no, ChartArea caR)
+        {
+            double[] point = new double[dtrNum];
+            double[] after = new double[dtrNum];
+
+            for (int j = 0; j < dtrNum; j++)
+            {
+                point[j] = double.Parse(dt.Rows[j][no + 1].ToString());
+            }
+            for (int j = 0; j < dtrNum; j++)
+            {
+                after[j] = (point[j]- caR.AxisY.Minimum) / (caR.AxisY.Maximum - caR.AxisY.Minimum) * 100;
+            }
+            sensorChart.Series[no].Points.Clear();
+            sensorChart.Series[no].Points.DataBindXY(dataTime, after); //sensorChart.Series[0].Points.DataBindXY(dataTime, dataSensors);
+            sensorChart.Series[no].ChartType = SeriesChartType.Line;
+            sensorChart.Invalidate();
+
         }
 
         void rb2_Click(object sender, EventArgs e)
         {
             RadioButton rb = (RadioButton)sender;
             int no = int.Parse(rb.Name.Substring(3, rb.Name.Length - 3));
-            MessageBox.Show(no.ToString());
+            // MessageBox.Show(no.ToString());
+            change(no,caR2);
         }
 
         void rb3_Click(object sender, EventArgs e)
         {
             RadioButton rb = (RadioButton)sender;
             int no = int.Parse(rb.Name.Substring(3, rb.Name.Length - 3));
-            MessageBox.Show(no.ToString());
+            change(no, caR3);
         }
 
         void rb4_Click(object sender, EventArgs e)
         {
             RadioButton rb = (RadioButton)sender;
             int no = int.Parse(rb.Name.Substring(3, rb.Name.Length - 3));
-            MessageBox.Show(no.ToString());
+            change(no, caR4);
         }
 
         private void sensorCheckedListBox_ItemCheck(object sender, ItemCheckEventArgs e)
