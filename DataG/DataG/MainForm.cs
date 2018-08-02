@@ -870,7 +870,6 @@ namespace DataG
                 else
                 {
                     flagPlace = false;
-                    //this.GPSPanel.Refresh();
                 }
                 Graphics gg = GPSPanel.CreateGraphics();
                 gg.DrawImage(bitmap, new PointF(0.0f, 0.0f));
