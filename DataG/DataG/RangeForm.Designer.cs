@@ -41,12 +41,13 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.YAxisComboBox = new System.Windows.Forms.ComboBox();
+            this.label9 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.YScaleViewTextBox = new System.Windows.Forms.TextBox();
             this.YRangeMaxTextBox = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.YRangeMinTextBox = new System.Windows.Forms.TextBox();
+            this.settingSaveButton = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -63,7 +64,7 @@
             // 
             // cancelButton
             // 
-            this.cancelButton.Location = new System.Drawing.Point(466, 289);
+            this.cancelButton.Location = new System.Drawing.Point(567, 330);
             this.cancelButton.Margin = new System.Windows.Forms.Padding(2);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(179, 36);
@@ -74,7 +75,7 @@
             // 
             // confirmButton
             // 
-            this.confirmButton.Location = new System.Drawing.Point(264, 289);
+            this.confirmButton.Location = new System.Drawing.Point(165, 330);
             this.confirmButton.Margin = new System.Windows.Forms.Padding(2);
             this.confirmButton.Name = "confirmButton";
             this.confirmButton.Size = new System.Drawing.Size(179, 36);
@@ -172,10 +173,10 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.YAxisComboBox);
+            this.groupBox1.Controls.Add(this.label9);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.YScaleViewTextBox);
             this.groupBox1.Controls.Add(this.YRangeMaxTextBox);
-            this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.YRangeMinTextBox);
             this.groupBox1.Location = new System.Drawing.Point(466, 72);
@@ -187,6 +188,29 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Y";
             // 
+            // YAxisComboBox
+            // 
+            this.YAxisComboBox.FormattingEnabled = true;
+            this.YAxisComboBox.Items.AddRange(new object[] {
+            "R1",
+            "R2",
+            "R3",
+            "R4"});
+            this.YAxisComboBox.Location = new System.Drawing.Point(265, 114);
+            this.YAxisComboBox.Name = "YAxisComboBox";
+            this.YAxisComboBox.Size = new System.Drawing.Size(165, 23);
+            this.YAxisComboBox.TabIndex = 19;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Millimeter);
+            this.label9.Location = new System.Drawing.Point(8, 109);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(180, 33);
+            this.label9.TabIndex = 18;
+            this.label9.Text = "Y Axis Type:";
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -197,14 +221,6 @@
             this.label2.TabIndex = 6;
             this.label2.Text = "Maximum Value:";
             // 
-            // YScaleViewTextBox
-            // 
-            this.YScaleViewTextBox.Location = new System.Drawing.Point(264, 112);
-            this.YScaleViewTextBox.Margin = new System.Windows.Forms.Padding(2);
-            this.YScaleViewTextBox.Name = "YScaleViewTextBox";
-            this.YScaleViewTextBox.Size = new System.Drawing.Size(167, 25);
-            this.YScaleViewTextBox.TabIndex = 13;
-            // 
             // YRangeMaxTextBox
             // 
             this.YRangeMaxTextBox.Location = new System.Drawing.Point(264, 29);
@@ -212,16 +228,6 @@
             this.YRangeMaxTextBox.Name = "YRangeMaxTextBox";
             this.YRangeMaxTextBox.Size = new System.Drawing.Size(167, 25);
             this.YRangeMaxTextBox.TabIndex = 8;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Millimeter, ((byte)(134)));
-            this.label4.Location = new System.Drawing.Point(5, 106);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(232, 33);
-            this.label4.TabIndex = 12;
-            this.label4.Text = "Scale View Size:";
             // 
             // label3
             // 
@@ -241,12 +247,24 @@
             this.YRangeMinTextBox.Size = new System.Drawing.Size(167, 25);
             this.YRangeMinTextBox.TabIndex = 9;
             // 
+            // settingSaveButton
+            // 
+            this.settingSaveButton.Location = new System.Drawing.Point(366, 330);
+            this.settingSaveButton.Margin = new System.Windows.Forms.Padding(2);
+            this.settingSaveButton.Name = "settingSaveButton";
+            this.settingSaveButton.Size = new System.Drawing.Size(179, 36);
+            this.settingSaveButton.TabIndex = 17;
+            this.settingSaveButton.Text = "Save Setting...";
+            this.settingSaveButton.UseVisualStyleBackColor = true;
+            this.settingSaveButton.Click += new System.EventHandler(this.settingSaveButton_Click);
+            // 
             // RangeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(942, 335);
+            this.ClientSize = new System.Drawing.Size(942, 377);
+            this.Controls.Add(this.settingSaveButton);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.cancelButton);
@@ -254,7 +272,6 @@
             this.Controls.Add(this.label1);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "RangeForm";
-            //this.Text = "RangeForm";
             this.Load += new System.EventHandler(this.YRangeForm_Load);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
@@ -281,10 +298,11 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox YScaleViewTextBox;
         private System.Windows.Forms.TextBox YRangeMaxTextBox;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox YRangeMinTextBox;
+        private System.Windows.Forms.ComboBox YAxisComboBox;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Button settingSaveButton;
     }
 }

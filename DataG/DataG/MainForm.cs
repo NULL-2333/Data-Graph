@@ -38,8 +38,8 @@ namespace DataG
         static int yRangeMax = 200;                             //the max value of y coordinate
         static int yRangeMin = 0;                               //the min value of y coordinate
         static int xScale = 40;                                 //the size of x view
-        static int yScale = 100;                                //the size of y view
         static double xInterval = 2.0;                          //the interval of x axis
+        static string yType = "R1";                             //the type of y axis
 
         double nowScrollValue = -xScale / 2;                    //the position of scrollbar
         double newPlace = 0;                                    //the position of moving dot
@@ -285,6 +285,26 @@ namespace DataG
             return re;
         }
 
+        void change(int no, ChartArea caR)
+        {
+            double[] point = new double[dtrNum];
+            double[] after = new double[dtrNum];
+
+            for (int j = 0; j < dtrNum; j++)
+            {
+                point[j] = double.Parse(dt.Rows[j][no + 1].ToString());
+            }
+            for (int j = 0; j < dtrNum; j++)
+            {
+                after[j] = (point[j] - caR.AxisY.Minimum) / (caR.AxisY.Maximum - caR.AxisY.Minimum) * (sensorChart.ChartAreas[0].AxisY.Maximum - sensorChart.ChartAreas[0].AxisY.Minimum);
+            }
+            sensorChart.Series[no].Points.Clear();
+            sensorChart.Series[no].Points.DataBindXY(dataTime, after); //sensorChart.Series[0].Points.DataBindXY(dataTime, dataSensors);
+            sensorChart.Series[no].ChartType = SeriesChartType.Line;
+            sensorChart.Invalidate();
+
+        }
+
         private void button1_Click_1(object sender, EventArgs e)
         {
             //delete existing chart
@@ -294,8 +314,6 @@ namespace DataG
             sensorChart.ChartAreas[0].AxisX.MajorGrid.LineColor = System.Drawing.Color.Transparent;
             sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
             sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 10000;
-            sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
-            sensorChart.ChartAreas[0].AxisY.ScaleView.Size = 100;
             sensorChart.ChartAreas[0].AxisX.LabelStyle.Format = "N2";
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.InitialDirectory = "c://";
@@ -376,10 +394,9 @@ namespace DataG
             sensorChart.ChartAreas[0].AxisX.Maximum = xRangeMax;
             sensorChart.ChartAreas[0].AxisX.Minimum = xRangeMin;
             sensorChart.ChartAreas[0].AxisX.Interval = xInterval;
-            sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
-            sensorChart.ChartAreas[0].AxisY.ScaleView.Size = yScale;
             sensorChart.ChartAreas[0].AxisY.Maximum = yRangeMax;
             sensorChart.ChartAreas[0].AxisY.Minimum = yRangeMin;
+            sensorChart.ChartAreas[0].AxisY.ScaleView.Size = yRangeMax - yRangeMin;
 
             for (int i = 0; i < dtcNum - 1; i++)
             {
@@ -463,6 +480,7 @@ namespace DataG
                 Panel pan = new Panel();
                 Point pl = new Point(0, 0);
                 pan.Height = 30;
+                pan.Name = seriesName[i] + "Panel";
                 pl.Y += i * pan.Height;
                 pan.Location = pl;
                 pan.Width = YPanel.Width - 20;
@@ -509,27 +527,15 @@ namespace DataG
                 rb2.Click += rb2_Click;
                 rb3.Click += rb3_Click;
                 rb4.Click += rb4_Click;
-
             }
             nowScrollValue = (int)minValue(dataTime, dataTime.Length);
             newPlace = (int)minValue(dataTime, dataTime.Length);
 
             sensorChart.ChartAreas[0].InnerPlotPosition.X = (float)35;
             sensorChart.ChartAreas[0].InnerPlotPosition.Height = (float)90;
-            //sensorChart.Series[0].Points.Clear();
-            //for (int i = 0; i < dtrNum; i++)
-            //{
-            //    data[i, 0] = 100;
-            //}
-            //double[] dataSensors = new double[dtrNum];
-            //for (int j = 0; j < dtrNum; j++)
-            //{
-            //    dataSensors[j] = data[j, 0];
-            //}
-            //sensorChart.Series[0].Points.DataBindXY(dataTime, dataSensors);  
-            //sensorChart.Invalidate();
             //create 3 other chartareas for R2, R3, R4 Axises
             sensorChart.ChartAreas[0].AxisY.Title = "R1";
+            sensorChart.ChartAreas[0].Name = "R1";
             Series sCopy2 = sensorChart.Series.Add("R2Copy");
             sCopy2.ChartType = sensorChart.Series[0].ChartType;
             foreach (DataPoint point in sensorChart.Series[0].Points)
@@ -550,7 +556,9 @@ namespace DataG
             caR2.AxisX.MajorGrid.Enabled = false;
             caR2.AxisX.MajorTickMark.Enabled = false;
             caR2.AxisX.LabelStyle.Enabled = false;
+            caR2.AxisX.Enabled = AxisEnabled.False;
             caR2.AxisY.MajorGrid.Enabled = false;
+            caR2.AxisY.LineColor = Color.Black;
             caR2.AxisY.Title = "R2";
             caR2.AxisY.Maximum = 2;
             caR2.AxisY.Minimum = -2;
@@ -576,6 +584,7 @@ namespace DataG
             caR3.AxisX.MajorGrid.Enabled = false;
             caR3.AxisX.MajorTickMark.Enabled = false;
             caR3.AxisX.LabelStyle.Enabled = false;
+            caR3.AxisX.Enabled = AxisEnabled.False;
             caR3.AxisY.MajorGrid.Enabled = false;
             caR3.AxisY.Title = "R3";
             caR3.AxisY.Maximum = 80;
@@ -602,6 +611,7 @@ namespace DataG
             caR4.AxisX.MajorGrid.Enabled = false;
             caR4.AxisX.MajorTickMark.Enabled = false;
             caR4.AxisX.LabelStyle.Enabled = false;
+            caR4.AxisX.Enabled = AxisEnabled.False;
             caR4.AxisY.MajorGrid.Enabled = false;
             caR4.AxisY.Title = "R4";
             caR4.AxisY.Maximum = 8000;
@@ -617,37 +627,17 @@ namespace DataG
             //MessageBox.Show(no.ToString());
             double[] point = new double[dtrNum];
             sensorChart.Series[no].Points.Clear();
-                double[] dataSensor = new double[dtrNum];
-                for (int j = 0; j < dtrNum; j++)
-                {
-                    dataSensor[j] = data[j, no];
-                }
+            double[] dataSensor = new double[dtrNum];
+            for (int j = 0; j < dtrNum; j++)
+            {
+                dataSensor[j] = data[j, no];
+            }
                 
             
             sensorChart.Series[no].Points.DataBindXY(dataTime, dataSensor);
             sensorChart.Series[no].ChartType = SeriesChartType.Line;
             sensorChart.Invalidate();
 
-
-        }
-
-        void change(int no, ChartArea caR)
-        {
-            double[] point = new double[dtrNum];
-            double[] after = new double[dtrNum];
-
-            for (int j = 0; j < dtrNum; j++)
-            {
-                point[j] = double.Parse(dt.Rows[j][no + 1].ToString());
-            }
-            for (int j = 0; j < dtrNum; j++)
-            {
-                after[j] = (point[j]- caR.AxisY.Minimum) / (caR.AxisY.Maximum - caR.AxisY.Minimum) * 100;
-            }
-            sensorChart.Series[no].Points.Clear();
-            sensorChart.Series[no].Points.DataBindXY(dataTime, after); //sensorChart.Series[0].Points.DataBindXY(dataTime, dataSensors);
-            sensorChart.Series[no].ChartType = SeriesChartType.Line;
-            sensorChart.Invalidate();
 
         }
 
@@ -773,7 +763,6 @@ namespace DataG
             sensorChart.ChartAreas[0].AxisX.Minimum = xRangeMin;
             sensorChart.ChartAreas[0].AxisX.Interval = xInterval;
             sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
-            sensorChart.ChartAreas[0].AxisY.ScaleView.Size = yScale;
             sensorChart.ChartAreas[0].AxisY.Maximum = yRangeMax;
             sensorChart.ChartAreas[0].AxisY.Minimum = yRangeMin;
 
@@ -793,7 +782,6 @@ namespace DataG
                 sensorChart.ChartAreas[0].AxisX.Minimum = xRangeMin;
                 sensorChart.ChartAreas[0].AxisX.Interval = xInterval;
                 sensorChart.ChartAreas[0].AxisY.ScrollBar.Enabled = true;
-                sensorChart.ChartAreas[0].AxisY.ScaleView.Size = yScale;
                 sensorChart.ChartAreas[0].AxisY.Maximum = yRangeMax;
                 sensorChart.ChartAreas[0].AxisY.Minimum = yRangeMin;
 
@@ -820,12 +808,12 @@ namespace DataG
 
         private void chartTimer_Tick(object sender, EventArgs e)
         {
-            
+            DateTime beforDT = System.DateTime.Now;
             sensorChart.PostPaint += new EventHandler<ChartPaintEventArgs>(sensorChart_PostPaint);
 
             if ((nowScrollValue + xScale / 2) >= minValue(dataTime, dataTime.Length) && (nowScrollValue + xScale / 2) <= maxValue(dataTime, dataTime.Length))
             {
-                if ((nowScrollValue + xScale / 2) < xScale / 2)
+                if ((nowScrollValue + xScale / 2) <= xScale / 2)
                     textBoxTime.Text = Math.Round(nowScrollValue + xScale / 2 + moveSpeed, 2).ToString();
                 else
                     textBoxTime.Text = Math.Round(nowScrollValue + xScale / 2 + moveSpeed - 0.1, 2).ToString();
@@ -897,6 +885,11 @@ namespace DataG
                 Graphics gg = GPSPanel.CreateGraphics();
                 gg.DrawImage(bitmap, new PointF(0.0f, 0.0f));
             }
+            DateTime afterDT = System.DateTime.Now;
+            TimeSpan ts = afterDT.Subtract(beforDT);
+            //MessageBox.Show(ts.TotalMilliseconds.ToString());
+            chartTimer.Interval = 1000 - (int)ts.TotalMilliseconds;
+
         }
 
         private void sensorChart_MouseMove(object sender, MouseEventArgs e)
@@ -976,36 +969,46 @@ namespace DataG
             RangeForm a = new RangeForm();
             a.yRangeMax = yRangeMax;
             a.yRangeMin = yRangeMin;
-            a.yScale = yScale;
             a.xRangeMax = xRangeMax;
             a.xRangeMin = xRangeMin;
             a.xScale = xScale;
             a.interval = xInterval;
+            a.yType = yType;
             a.ShowDialog();
             yRangeMax = a.yRangeMax;
             yRangeMin = a.yRangeMin;
-            yScale = a.yScale;
             xRangeMax = a.xRangeMax;
             xRangeMin = a.xRangeMin;
             xScale = a.xScale;
             xInterval = a.interval;
-
+            yType = a.yType;
+            int i = int.Parse(yType[1].ToString());
             sensorChart.ChartAreas[0].AxisX.ScaleView.Size = xScale;
             sensorChart.ChartAreas[0].AxisX.Maximum = xRangeMax;
             sensorChart.ChartAreas[0].AxisX.Minimum = xRangeMin;
             sensorChart.ChartAreas[0].AxisX.Interval = xInterval;
-            sensorChart.ChartAreas[0].AxisY.ScaleView.Size = yScale;
-            sensorChart.ChartAreas[0].AxisY.Maximum = yRangeMax;
-            sensorChart.ChartAreas[0].AxisY.Minimum = yRangeMin;
 
+            sensorChart.ChartAreas["R" + i.ToString()].AxisY.Maximum = yRangeMax;
+            sensorChart.ChartAreas["R" + i.ToString()].AxisY.Minimum = yRangeMin;
+            sensorChart.ChartAreas["R" + i.ToString()].AxisY.ScaleView.Size = yRangeMax - yRangeMin;
+            for (int j = 0; j < dtcNum - 1; j++)
+            {
+                string s = "R" + i.ToString() + "_" + j.ToString();
+
+                RadioButton rb = new RadioButton();
+                rb = (RadioButton)this.Controls.Find(s, true)[0];
+                if (rb.Checked == true)
+                {
+                    if (i == 1) rb1_Click(rb, e);
+                    else if (i == 2) rb2_Click(rb, e);
+                    else if (i == 3) rb3_Click(rb, e);
+                    else if (i == 4) rb4_Click(rb, e);
+                }
+                
+
+            }
             sensorChart.Invalidate();
-            //save settings to log file
-            string s1 = "x: " + xRangeMin.ToString() + " - " + xRangeMax.ToString() + "\r\n";
-            string s2 = "x scale: " + xScale.ToString() + "\r\n";
-            string s5 = "x interval: " + xInterval.ToString() + "\r\n";
-            string s3 = "y: " + yRangeMin.ToString() + " - " + yRangeMax.ToString() + "\r\n";
-            string s4 = "y scale: " + yScale.ToString() + "\r\n";
-            File.WriteAllText(@"..//..//Log/setting.log", s1 + s2 + s5 + s3 + s4);
+            
         }
 
         private void radioButton_Normal_CheckedChanged(object sender, EventArgs e)
@@ -1122,25 +1125,24 @@ namespace DataG
         private void settingButton_Click(object sender, EventArgs e)
         {
             //read setting.log file
-            string setting = File.ReadAllText(@"..//..//Log/setting.log");
-            //MessageBox.Show(str);
-            string[] sArray = Regex.Split(setting, "\r\n", RegexOptions.IgnoreCase);
-            //foreach (string i in sArray) MessageBox.Show(i.ToString());
-            int len = sArray.Length - 1;
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.InitialDirectory = "c://";
+            openFileDialog.Filter = "Log Files|*.log";
+            openFileDialog.RestoreDirectory = true;
+            openFileDialog.FilterIndex = 1;
+            string fileName = "";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                fileName = openFileDialog.FileName;
+            }
+            string[] sArray = File.ReadAllLines(fileName);
             //handle the x range
             string xR = sArray[0];
-            xRangeMin = int.Parse(Regex.Split(xR, " ", RegexOptions.IgnoreCase)[1]);
-            xRangeMax = int.Parse(Regex.Split(xR, " ", RegexOptions.IgnoreCase)[3]);
-            //handle the y range
-            string yR = sArray[3];
-            yRangeMin = int.Parse(Regex.Split(yR, " ", RegexOptions.IgnoreCase)[1]);
-            yRangeMax = int.Parse(Regex.Split(yR, " ", RegexOptions.IgnoreCase)[3]);
+            xRangeMin = int.Parse(Regex.Split(xR, " ", RegexOptions.IgnoreCase)[2]);
+            xRangeMax = int.Parse(Regex.Split(xR, " ", RegexOptions.IgnoreCase)[4]);
             //handle the x scale
             string xS = sArray[1];
             xScale = int.Parse(Regex.Split(xS, " ", RegexOptions.IgnoreCase)[2]);
-            //handle the y scale
-            string yS = sArray[4];
-            yScale = int.Parse(Regex.Split(yS, " ", RegexOptions.IgnoreCase)[2]);
             //handle the x interval
             string xi = sArray[2];
             xInterval = double.Parse(Regex.Split(xi, " ", RegexOptions.IgnoreCase)[2]);
@@ -1148,15 +1150,24 @@ namespace DataG
             sensorChart.ChartAreas[0].AxisX.Maximum = xRangeMax;
             sensorChart.ChartAreas[0].AxisX.Minimum = xRangeMin;
             sensorChart.ChartAreas[0].AxisX.Interval = xInterval;
-            sensorChart.ChartAreas[0].AxisY.ScaleView.Size = yScale;
-            sensorChart.ChartAreas[0].AxisY.Maximum = yRangeMax;
-            sensorChart.ChartAreas[0].AxisY.Minimum = yRangeMin;
+            for (int i = 1; i <= 4; i++)
+            {
+                //determine y type
+                string yT = sArray[i * 2 + 1];
+                yType = Regex.Split(yT, ":", RegexOptions.IgnoreCase)[0];
+                //handle the y range
+                string yR = sArray[i * 2 + 2];
+                yRangeMin = int.Parse(Regex.Split(yR, " ", RegexOptions.IgnoreCase)[2]);
+                yRangeMax = int.Parse(Regex.Split(yR, " ", RegexOptions.IgnoreCase)[4]);
 
+               
+                sensorChart.ChartAreas["R" + i.ToString()].AxisY.Maximum = yRangeMax;
+                sensorChart.ChartAreas["R" + i.ToString()].AxisY.Minimum = yRangeMin;
+
+                sensorChart.Invalidate();
+            }
             sensorChart.Invalidate();
         }
-
-
-        
 
     }
 }

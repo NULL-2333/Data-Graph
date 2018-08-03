@@ -1,5 +1,11 @@
-x: 0 - 70
-x scale: 50
+x range: 0 - 70
+x scale: 40
 x interval: 2
-y: 0 - 200
-y scale: 100
+R1:
+y range: 0 - 200
+R2:
+y range: 0 - 200
+R3:
+y range: 0 - 200
+R4:
+y range: 0 - 200
