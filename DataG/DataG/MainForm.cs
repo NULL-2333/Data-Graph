@@ -35,7 +35,7 @@ namespace DataG
 
         static int xRangeMax = 70;                              //the max value of x coordinate
         static int xRangeMin = 0;                               //the min value of x coordinate
-        static int yRangeMax = 200;                             //the max value of y coordinate
+        static int yRangeMax = 100;                             //the max value of y coordinate
         static int yRangeMin = 0;                               //the min value of y coordinate
         static int xScale = 40;                                 //the size of x view
         static double xInterval = 2.0;                          //the interval of x axis
@@ -52,6 +52,8 @@ namespace DataG
         
         double[] speed = new double[dtrNum];                    //the speed in the csv file
         int speedRow = 0;
+        double maxspeed = 0;
+        double minspeed = 0;
 
         DataTable dt = new DataTable();
         ChartArea caR2;
@@ -445,7 +447,7 @@ namespace DataG
             Graphics g = GPSPanel.CreateGraphics();
             PointF p1 = new PointF();
             PointF p2 = new PointF();
-            Pen nPen = new Pen(Brushes.Red, 1);
+            Pen nPen = new Pen(Brushes.Red, 2);
             for (int i = 0; i < dtrNum - 1; i++)
             {
                 p1 = new PointF((float)x[i], (float)y[i]);
@@ -794,6 +796,17 @@ namespace DataG
                 GPSPanel.Refresh();
                 flagPlace = true;
                 scaleFlag = true;
+                dataPanel.Refresh();
+                textBoxTime.Clear();
+                TextBox txtBox = new TextBox();
+                for (int i = 0; i < dtcNum - 1; i++)
+                {
+                    txtBox = (TextBox)this.Controls.Find("textBox" + i.ToString(), true)[0];
+                    if (txtBox != null)
+                    {
+                        txtBox.Text = "";
+                    }
+                }
             } 
         }
 
@@ -1017,7 +1030,7 @@ namespace DataG
             Graphics g2 = Graphics.FromImage(bitmap);
             PointF p11 = new PointF();
             PointF p22 = new PointF();
-            Pen nPen = new Pen(Brushes.Red, 1);
+            Pen nPen = new Pen(Brushes.Red, 2);
             for (int i = 0; i < dtrNum - 1; i++)
             {
                 p11 = new PointF((float)x[i], (float)y[i]);
@@ -1044,7 +1057,7 @@ namespace DataG
             {
                 PointF p11 = new PointF();
                 PointF p22 = new PointF();
-                Pen nPen = new Pen(Brushes.Red, 1);
+                Pen nPen = new Pen(Brushes.Red, 2);
                 for (int i = 0; i < dtrNum -1 ; i++)
                 {
                     p11 = new PointF((float)x[i], (float)y[i]);
@@ -1062,7 +1075,7 @@ namespace DataG
                 Pen p4 = new Pen(Brushes.OrangeRed, 1);//2
                 Pen p5 = new Pen(Brushes.Orange, 1);//3
                 Pen p6;
-                
+                maxspeed = maxValue(speed,dtrNum);
                 for (int i = 0; i < dtrNum - 1; i++)
                 {
                     p11 = new PointF((float)x[i], (float)y[i]);
@@ -1088,36 +1101,40 @@ namespace DataG
             Graphics gg = GPSPanel.CreateGraphics();
             gg.DrawImage(bitmap, new PointF(0.0f, 0.0f));
         }
-
+        
         public int colorRed(double x)//xx,,
         {
-            if (x > 15)
-            {
-                double y = 255 - 10 * (x-15);
-                if (y > 0)
-                return Convert.ToInt32(Math.Floor(y));
-            else
-                return 255;
-            }
-            else
+            double len = maxspeed - minspeed;
+            double tlen = maxspeed - x;
+            
+            if (tlen / len >= 0.5)
             {
                 return 255;
+                
             }
+            else
+            {int k = Convert.ToInt32(2 * ((tlen) / len) * 255);
+                return k;
+
+            }
+            
         }
 
         public int colorGreen(double x)//,xx,
         {
-            if (x < 15)
+            double len = maxspeed - minspeed;
+            double tlen = maxspeed - x;
+           
+            if (tlen / len >= 0.5)
             {
-                double y = 255 - 10 * x;
-            if (y > 0)
-                return Convert.ToInt32(Math.Floor(y));
-            else
-                return 0;
+                int k = Convert.ToInt32(2 * ((len - tlen) / len) * 255);
+                return k;
+                
             }
             else
             {
-                return 0;
+                return 255;
+                
             }
                 
         }
