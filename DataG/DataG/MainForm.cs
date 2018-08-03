@@ -307,7 +307,50 @@ namespace DataG
 
         }
 
-        private void button1_Click_1(object sender, EventArgs e)
+        void rb1_Click(object sender, EventArgs e)
+        {
+            RadioButton rb = (RadioButton)sender;
+            int no = int.Parse(rb.Name.Substring(3, rb.Name.Length - 3));
+            //MessageBox.Show(no.ToString());
+            double[] point = new double[dtrNum];
+            sensorChart.Series[no].Points.Clear();
+            double[] dataSensor = new double[dtrNum];
+            for (int j = 0; j < dtrNum; j++)
+            {
+                dataSensor[j] = data[j, no];
+            }
+
+
+            sensorChart.Series[no].Points.DataBindXY(dataTime, dataSensor);
+            sensorChart.Series[no].ChartType = SeriesChartType.Line;
+            sensorChart.Invalidate();
+
+
+        }
+
+        void rb2_Click(object sender, EventArgs e)
+        {
+            RadioButton rb = (RadioButton)sender;
+            int no = int.Parse(rb.Name.Substring(3, rb.Name.Length - 3));
+            // MessageBox.Show(no.ToString());
+            change(no, caR2);
+        }
+
+        void rb3_Click(object sender, EventArgs e)
+        {
+            RadioButton rb = (RadioButton)sender;
+            int no = int.Parse(rb.Name.Substring(3, rb.Name.Length - 3));
+            change(no, caR3);
+        }
+
+        void rb4_Click(object sender, EventArgs e)
+        {
+            RadioButton rb = (RadioButton)sender;
+            int no = int.Parse(rb.Name.Substring(3, rb.Name.Length - 3));
+            change(no, caR4);
+        }
+
+        private void fileLoadingButton_Click(object sender, EventArgs e)
         {
             //delete existing chart
             sensorChart.Series.Clear();
@@ -620,49 +663,6 @@ namespace DataG
             caR4.AxisY.Minimum = 0;
             caR4.AxisY.IsStartedFromZero = sensorChart.ChartAreas[0].AxisY.IsStartedFromZero;
             sCopy4.ChartArea = caR4.Name;
-        }
-        
-        void rb1_Click(object sender, EventArgs e)
-        {
-            RadioButton rb = (RadioButton)sender;
-            int no= int.Parse(rb.Name.Substring(3, rb.Name.Length - 3));
-            //MessageBox.Show(no.ToString());
-            double[] point = new double[dtrNum];
-            sensorChart.Series[no].Points.Clear();
-            double[] dataSensor = new double[dtrNum];
-            for (int j = 0; j < dtrNum; j++)
-            {
-                dataSensor[j] = data[j, no];
-            }
-                
-            
-            sensorChart.Series[no].Points.DataBindXY(dataTime, dataSensor);
-            sensorChart.Series[no].ChartType = SeriesChartType.Line;
-            sensorChart.Invalidate();
-
-
-        }
-
-        void rb2_Click(object sender, EventArgs e)
-        {
-            RadioButton rb = (RadioButton)sender;
-            int no = int.Parse(rb.Name.Substring(3, rb.Name.Length - 3));
-            // MessageBox.Show(no.ToString());
-            change(no,caR2);
-        }
-
-        void rb3_Click(object sender, EventArgs e)
-        {
-            RadioButton rb = (RadioButton)sender;
-            int no = int.Parse(rb.Name.Substring(3, rb.Name.Length - 3));
-            change(no, caR3);
-        }
-
-        void rb4_Click(object sender, EventArgs e)
-        {
-            RadioButton rb = (RadioButton)sender;
-            int no = int.Parse(rb.Name.Substring(3, rb.Name.Length - 3));
-            change(no, caR4);
         }
 
         private void sensorCheckedListBox_ItemCheck(object sender, ItemCheckEventArgs e)
