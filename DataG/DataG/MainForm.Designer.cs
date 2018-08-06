@@ -211,8 +211,8 @@
             this.sensorChart.Cursor = System.Windows.Forms.Cursors.Hand;
             legend1.Name = "Legend1";
             this.sensorChart.Legends.Add(legend1);
-            this.sensorChart.Location = new System.Drawing.Point(12, 15);
-            this.sensorChart.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            this.sensorChart.Location = new System.Drawing.Point(16, 19);
+            this.sensorChart.Margin = new System.Windows.Forms.Padding(5, 2, 5, 2);
             this.sensorChart.Name = "sensorChart";
             this.sensorChart.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.sensorChart.Size = new System.Drawing.Size(1082, 573);
@@ -241,6 +241,7 @@
             // ConfigureButton
             // 
             this.ConfigureButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+
             this.ConfigureButton.Location = new System.Drawing.Point(880, 713);
             this.ConfigureButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ConfigureButton.Name = "ConfigureButton";
@@ -325,6 +326,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
+            this.ClientSize = new System.Drawing.Size(1735, 951);
             this.ClientSize = new System.Drawing.Size(1370, 749);
             this.Controls.Add(this.settingButton);
             this.Controls.Add(this.YPanel);

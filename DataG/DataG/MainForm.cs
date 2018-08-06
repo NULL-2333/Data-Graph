@@ -46,7 +46,7 @@ namespace DataG
         bool fileOpen = false;                                  //determine whether the file has been opened
         bool flag = false;                                      //drag line
         bool flagPlace = true;
-        double moveSpeed = 1;                                   //the speed of play
+        double moveSpeed = 0.5;                                   //the speed of play
         bool firstPlayFlag = true;                              //the flag of first play
         bool scaleFlag = true;
         
@@ -916,8 +916,10 @@ namespace DataG
             DateTime afterDT = System.DateTime.Now;
             TimeSpan ts = afterDT.Subtract(beforDT);
             //MessageBox.Show(ts.TotalMilliseconds.ToString());
-            chartTimer.Interval = 1000 - (int)ts.TotalMilliseconds;
-
+            if ((int)ts.TotalMilliseconds >= 200)
+                chartTimer.Interval = 1;
+            else
+                chartTimer.Interval = 200 - (int)ts.TotalMilliseconds;
         }
 
         private void sensorChart_MouseMove(object sender, MouseEventArgs e)
@@ -1073,10 +1075,11 @@ namespace DataG
                 PointF p11 = new PointF();
                 PointF p22 = new PointF();
                 Pen nPen = new Pen(Brushes.Red, 2);
-                for (int i = 0; i < dtrNum -10 ; i+=10)
+                for (int i = 0; i < dtrNum -5 ; i+=5)
                 {
                     p11 = new PointF((float)x[i], (float)y[i]);
-                    p22 = new PointF((float)x[i + 10], (float)y[i + 10]);
+                    p22 = new PointF((float)x[i + 5], (float)y[i + 5]);
+
                     g2.DrawLine(nPen, p11, p22);
                 }
             }

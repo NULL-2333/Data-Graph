@@ -1,10 +1,10 @@
-<<<<<<< HEAD
 x range: 0 - 70
 x scale: 40
 x interval: 2
+x interval: 2
 R1:
-y range: 0 - 200
 R2:
+y range: 0 - 100
 y range: 0 - 200
 R3:
 y range: 0 - 200
