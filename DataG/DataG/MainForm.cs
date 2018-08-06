@@ -491,10 +491,10 @@ namespace DataG
             PointF p1 = new PointF();
             PointF p2 = new PointF();
             Pen nPen = new Pen(Brushes.Red, 2);
-            for (int i = 0; i < dtrNum - 1; i++)
+            for (int i = 0; i < dtrNum - 10; i+=10)
             {
                 p1 = new PointF((float)x[i], (float)y[i]);
-                p2 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                p2 = new PointF((float)x[i + 10], (float)y[i + 10]);
                 g.DrawLine(nPen, p1, p2);
             }
             //add new labels and checkbox
@@ -1058,10 +1058,10 @@ namespace DataG
                 PointF p11 = new PointF();
                 PointF p22 = new PointF();
                 Pen nPen = new Pen(Brushes.Red, 2);
-                for (int i = 0; i < dtrNum -1 ; i++)
+                for (int i = 0; i < dtrNum -10 ; i+=10)
                 {
                     p11 = new PointF((float)x[i], (float)y[i]);
-                    p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                    p22 = new PointF((float)x[i + 10], (float)y[i + 10]);
                     g2.DrawLine(nPen, p11, p22);
                 }
             }
