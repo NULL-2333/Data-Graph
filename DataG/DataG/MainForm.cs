@@ -52,6 +52,11 @@ namespace DataG
         
         double[] speed = new double[dtrNum];                    //the speed in the csv file
         int speedRow = 0;
+        double[] accelerate = new double[dtrNum];                    //the speed in the csv file
+        int accelerateRow = 0;
+        double maxacc = 0;
+        double minacc = 0;
+
         double maxspeed = 0;
         double minspeed = 0;
 
@@ -384,6 +389,7 @@ namespace DataG
             dtcNum = dt.Columns.Count;
             data = new double[dtrNum, dtcNum - 1];
             speed = new double[dtrNum];
+            accelerate = new double[dtrNum];  
             dataTime = new double[dtrNum];
             seriesName = new string[dtcNum - 1];
             for (int i = 0; i < dtrNum; i++)
@@ -412,10 +418,19 @@ namespace DataG
                     break;
                 }
             }
+            for (int i = 0; i < dtcNum - 1; i++)
+            {
+                if (seriesName[i].Contains("ACCEL_Y(g)"))
+                {
+                    accelerateRow = i;
+                    break;
+                }
+            }
 
             for (int i = 0; i < dtrNum; i++)
             {
                 speed[i] = double.Parse(dt.Rows[i][speedRow + 1].ToString());
+                accelerate[i] = double.Parse(dt.Rows[i][accelerateRow + 1].ToString());
             }
 
             InputForm a = new InputForm();
@@ -1069,43 +1084,40 @@ namespace DataG
             {
                 PointF p11 = new PointF();
                 PointF p22 = new PointF();
-                Pen p1 = new Pen(Brushes.Red, 1); //1
-                Pen p2 = new Pen(Brushes.Green, 1);//5
-                Pen p3 = new Pen(Brushes.Yellow, 1);//4
-                Pen p4 = new Pen(Brushes.OrangeRed, 1);//2
-                Pen p5 = new Pen(Brushes.Orange, 1);//3
                 Pen p6;
                 maxspeed = maxValue(speed,dtrNum);
+                minspeed = minValue(speed, dtrNum);
                 for (int i = 0; i < dtrNum - 1; i++)
                 {
                     p11 = new PointF((float)x[i], (float)y[i]);
                     p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
-                    p6 = new Pen(Color.FromArgb(colorRed(speed[i]), colorGreen(speed[i]), 0), 2);
+                    p6 = new Pen(Color.FromArgb(colorRed(speed[i], maxspeed, minspeed), colorGreen(speed[i], maxspeed, minspeed), 0), 2);
                     g2.DrawLine(p6, p11, p22);
-                    /*if (speed[i] < 2)
-                        g2.DrawLine(p2, p11, p22);
-                    else if (speed[i] > 2 && speed[i] < 10)
-                        g2.DrawLine(p3, p11, p22);
-                    else if (speed[i] > 10 && speed[i] < 15)
-                        g2.DrawLine(p5, p11, p22);
-                    else if (speed[i] > 15 && speed[i] < 20)
-                        g2.DrawLine(p4, p11, p22);
-                    else
-                        g2.DrawLine(p1, p11, p22);*/
                 }
             }
             else
             {
-
+                PointF p11 = new PointF();
+                PointF p22 = new PointF();
+                Pen p6;
+                maxacc = maxValue(accelerate, dtrNum);
+                minacc = minValue(accelerate, dtrNum);
+                for (int i = 0; i < dtrNum - 1; i++)
+                {
+                    p11 = new PointF((float)x[i], (float)y[i]);
+                    p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                    p6 = new Pen(Color.FromArgb(colorRed(accelerate[i],maxacc, minacc), colorGreen(accelerate[i], maxacc, minacc), 0), 2);
+                    g2.DrawLine(p6, p11, p22);
+                }
             }
             Graphics gg = GPSPanel.CreateGraphics();
             gg.DrawImage(bitmap, new PointF(0.0f, 0.0f));
         }
         
-        public int colorRed(double x)//xx,,
+        public int colorRed(double x,double max, double min)//xx,,
         {
-            double len = maxspeed - minspeed;
-            double tlen = maxspeed - x;
+            double len = max - min;
+            double tlen = max - x;
             
             if (tlen / len >= 0.5)
             {
@@ -1120,10 +1132,10 @@ namespace DataG
             
         }
 
-        public int colorGreen(double x)//,xx,
+        public int colorGreen(double x, double max, double min)//,xx,
         {
-            double len = maxspeed - minspeed;
-            double tlen = maxspeed - x;
+            double len = max - min;
+            double tlen = max - x;
            
             if (tlen / len >= 0.5)
             {
