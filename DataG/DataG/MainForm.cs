@@ -61,9 +61,10 @@ namespace DataG
         double minspeed = 0;
 
         DataTable dt = new DataTable();
-        ChartArea caR2;
-        ChartArea caR3;
-        ChartArea caR4;
+        public ChartArea caR2;
+        public ChartArea caR3;
+        public ChartArea caR4;
+
 
 
         public MainForm()
@@ -1004,6 +1005,13 @@ namespace DataG
             a.xScale = xScale;
             a.interval = xInterval;
             a.yType = yType;
+            a.yMax2 = caR2.AxisY.Maximum;
+            a.yMax3 = caR3.AxisY.Maximum;
+            a.yMax4 = caR4.AxisY.Maximum;
+            a.yMin2 = caR2.AxisY.Minimum;
+            a.yMin3 = caR3.AxisY.Minimum;
+            a.yMin4 = caR4.AxisY.Minimum;
+
             a.ShowDialog();
             yRangeMax = a.yRangeMax;
             yRangeMin = a.yRangeMin;

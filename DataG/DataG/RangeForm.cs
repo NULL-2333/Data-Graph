@@ -20,6 +20,15 @@ namespace DataG
         public int xScale = 1;
         public double interval = 2;
         public string yType = "R1";
+        public double yMax2 = 0;
+        public double yMax3 = 0;
+        public double yMax4 = 0;
+        public double yMin2 = 0;
+        public double yMin3 = 0;
+        public double yMin4 = 0;
+
+        MainForm mf = new MainForm();
+        
 
         public RangeForm()
         {
@@ -41,6 +50,7 @@ namespace DataG
             xScale = int.Parse(XScaleViewTextBox.Text);
             interval = double.Parse(IntervaltextBox.Text);
             yType = YAxisComboBox.Text;
+            
             this.Close();
         }
 
@@ -60,6 +70,7 @@ namespace DataG
             IntervaltextBox.Text = z.ToString();
             string yt = yType;
             YAxisComboBox.Text = yt;
+            
         }
 
         private void settingSaveButton_Click(object sender, EventArgs e)
@@ -69,12 +80,16 @@ namespace DataG
             saveFileDialog.Filter = "Log Files|*.log";
             saveFileDialog.RestoreDirectory = true;
             saveFileDialog.FilterIndex = 1;
+            FileStream fs;
             string fileName = "";
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 fileName = saveFileDialog.FileName;
             }
-            //save settings to log file
+
+            fs = new FileStream(fileName, FileMode.Create);
+            fs.Close();
+            //fs.Write();
             List<string> lines = new List<string>(File.ReadAllLines(fileName));
             //save logs about x axis
             lines[0] = "x range: " + XRangeMinTextBox.Text + " - " + XRangeMaxTextBox.Text;
@@ -94,6 +109,25 @@ namespace DataG
             }
 
             File.WriteAllLines(fileName, lines.ToArray());
+        }
+
+        private void YAxisComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (YAxisComboBox.SelectedIndex == 1)
+            {
+                YRangeMaxTextBox.Text = yMax2.ToString();
+                YRangeMinTextBox.Text = yMin2.ToString();
+            }
+            else if (YAxisComboBox.SelectedIndex == 2)
+            {
+                YRangeMaxTextBox.Text = yMax3.ToString();
+                YRangeMinTextBox.Text = yMin3.ToString();
+            }
+            else if (YAxisComboBox.SelectedIndex == 3)
+            {
+                YRangeMaxTextBox.Text = yMax4.ToString();
+                YRangeMinTextBox.Text = yMin4.ToString();
+            }
         }
     }
 }
