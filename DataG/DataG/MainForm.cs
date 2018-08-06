@@ -1060,17 +1060,10 @@ namespace DataG
                 PointF p11 = new PointF();
                 PointF p22 = new PointF();
                 Pen nPen = new Pen(Brushes.Red, 2);
-<<<<<<< HEAD
                 for (int i = 0; i < dtrNum -5 ; i+=5)
                 {
                     p11 = new PointF((float)x[i], (float)y[i]);
                     p22 = new PointF((float)x[i + 5], (float)y[i + 5]);
-=======
-                for (int i = 0; i < dtrNum -10 ; i+=10)
-                {
-                    p11 = new PointF((float)x[i], (float)y[i]);
-                    p22 = new PointF((float)x[i + 10], (float)y[i + 10]);
->>>>>>> cbcf2a790497c6f51b4134bddcb64b6e1b6d7b14
                     g2.DrawLine(nPen, p11, p22);
                 }
             }
