@@ -60,3 +60,14 @@ D:\RacingSoftware\6\Data-Graph\DataG\DataG\bin\Debug\DataG.exe
 D:\RacingSoftware\6\Data-Graph\DataG\DataG\bin\Debug\DataG.pdb
 C:\Users\user\Desktop\DataRead\DataG\DataG\obj\Debug\DataG.RangeForm.resources
 D:\RacingSoftware\6\Data-Graph\DataG\DataG\obj\Debug\DataG.RangeForm.resources
+D:\RacingSoftware\7\Data-Graph\DataG\DataG\bin\Debug\DataG.exe.config
+D:\RacingSoftware\7\Data-Graph\DataG\DataG\obj\Debug\DataG.exe
+D:\RacingSoftware\7\Data-Graph\DataG\DataG\obj\Debug\DataG.pdb
+D:\RacingSoftware\7\Data-Graph\DataG\DataG\bin\Debug\DataG.exe
+D:\RacingSoftware\7\Data-Graph\DataG\DataG\bin\Debug\DataG.pdb
+D:\RacingSoftware\7\Data-Graph\DataG\DataG\obj\Debug\DataG.csprojResolveAssemblyReference.cache
+D:\RacingSoftware\7\Data-Graph\DataG\DataG\obj\Debug\DataG.MainForm.resources
+D:\RacingSoftware\7\Data-Graph\DataG\DataG\obj\Debug\DataG.InputForm.resources
+D:\RacingSoftware\7\Data-Graph\DataG\DataG\obj\Debug\DataG.Properties.Resources.resources
+D:\RacingSoftware\7\Data-Graph\DataG\DataG\obj\Debug\DataG.RangeForm.resources
+D:\RacingSoftware\7\Data-Graph\DataG\DataG\obj\Debug\DataG.csproj.GenerateResource.Cache
