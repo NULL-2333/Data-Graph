@@ -61,9 +61,10 @@ namespace DataG
         double minspeed = 0;
 
         DataTable dt = new DataTable();
-        ChartArea caR2;
-        ChartArea caR3;
-        ChartArea caR4;
+        public ChartArea caR2;
+        public ChartArea caR3;
+        public ChartArea caR4;
+
 
 
         public MainForm()
@@ -997,16 +998,23 @@ namespace DataG
         private void ConfigureButton_Click(object sender, EventArgs e)
         {
             RangeForm a = new RangeForm();
-            a.yRangeMax = yRangeMax;
-            a.yRangeMin = yRangeMin;
+            a.yMax1 = yRangeMax;
+            a.yMin1 = yRangeMin;
             a.xRangeMax = xRangeMax;
             a.xRangeMin = xRangeMin;
             a.xScale = xScale;
             a.interval = xInterval;
             a.yType = yType;
+            a.yMax2 = caR2.AxisY.Maximum;
+            a.yMax3 = caR3.AxisY.Maximum;
+            a.yMax4 = caR4.AxisY.Maximum;
+            a.yMin2 = caR2.AxisY.Minimum;
+            a.yMin3 = caR3.AxisY.Minimum;
+            a.yMin4 = caR4.AxisY.Minimum;
+
             a.ShowDialog();
-            yRangeMax = a.yRangeMax;
-            yRangeMin = a.yRangeMin;
+            yRangeMax = a.yMax1;
+            yRangeMin = a.yMin1;
             xRangeMax = a.xRangeMax;
             xRangeMin = a.xRangeMin;
             xScale = a.xScale;
