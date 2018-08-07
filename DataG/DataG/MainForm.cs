@@ -74,7 +74,8 @@ namespace DataG
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            
+            this.pictureBox1.Image = Image.FromFile("D:/RacingSoftware//7//Data-Graph//DataG//steer.png", false);
+
         }
 
         //read data from .csv file and return to datatable
@@ -405,7 +406,7 @@ namespace DataG
             for (int i = 0; i < dtrNum; i++)
             {
                 dataTime[i] = dataTime[i] - k;
-                dataTime[i] /= 1000;
+                //dataTime[i] /= 1000;
             }
             for (int i = 0; i < dtcNum - 1; i++)
             {
@@ -592,7 +593,7 @@ namespace DataG
             nowScrollValue = (int)minValue(dataTime, dataTime.Length);
             newPlace = (int)minValue(dataTime, dataTime.Length);
 
-            sensorChart.ChartAreas[0].InnerPlotPosition.X = (float)35;
+            sensorChart.ChartAreas[0].InnerPlotPosition.X = (float)30;
             sensorChart.ChartAreas[0].InnerPlotPosition.Height = (float)90;
             //create 3 other chartareas for R2, R3, R4 Axises
             sensorChart.ChartAreas[0].AxisY.Title = "R1";
@@ -613,7 +614,7 @@ namespace DataG
             caR2.BorderColor = Color.Transparent;
             caR2.Position.FromRectangleF(sensorChart.ChartAreas[0].Position.ToRectangleF());
             caR2.InnerPlotPosition.FromRectangleF(sensorChart.ChartAreas[0].InnerPlotPosition.ToRectangleF());
-            caR2.InnerPlotPosition.X -= (float)10;
+            caR2.InnerPlotPosition.X -= (float)7;
             caR2.AxisX.MajorGrid.Enabled = false;
             caR2.AxisX.MajorTickMark.Enabled = false;
             caR2.AxisX.LabelStyle.Enabled = false;
@@ -641,7 +642,7 @@ namespace DataG
             caR3.BorderColor = Color.Transparent;
             caR3.Position.FromRectangleF(caR2.Position.ToRectangleF());
             caR3.InnerPlotPosition.FromRectangleF(caR2.InnerPlotPosition.ToRectangleF());
-            caR3.InnerPlotPosition.X -= (float)10;
+            caR3.InnerPlotPosition.X -= (float)7;
             caR3.AxisX.MajorGrid.Enabled = false;
             caR3.AxisX.MajorTickMark.Enabled = false;
             caR3.AxisX.LabelStyle.Enabled = false;
@@ -668,7 +669,7 @@ namespace DataG
             caR4.BorderColor = Color.Transparent;
             caR4.Position.FromRectangleF(caR3.Position.ToRectangleF());
             caR4.InnerPlotPosition.FromRectangleF(caR3.InnerPlotPosition.ToRectangleF());
-            caR4.InnerPlotPosition.X -= (float)10;
+            caR4.InnerPlotPosition.X -= (float)7;
             caR4.AxisX.MajorGrid.Enabled = false;
             caR4.AxisX.MajorTickMark.Enabled = false;
             caR4.AxisX.LabelStyle.Enabled = false;
