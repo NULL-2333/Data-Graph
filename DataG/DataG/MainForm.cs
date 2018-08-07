@@ -57,9 +57,12 @@ namespace DataG
         int accelerateRow = 0;
         double[] steering = new double[dtrNum];                    //the speed in the csv file
         int steerRow = 0;
+        float steer_before = 0;
+        float steer = 0;
+        int x_steer = 0;
+
         double maxacc = 0;
         double minacc = 0;
-
         double maxspeed = 0;
         double minspeed = 0;
 
@@ -741,9 +744,7 @@ namespace DataG
         {
             int mouseX = e.X;
             int mouseY = e.Y;
-            float steer = 0;
-            int x_steer = 0;
-            float steer_before = 0;
+           
             double xx = sensorChart.ChartAreas[0].AxisX.PixelPositionToValue(mouseX);
             if (fileOpen == true)
             {
@@ -799,9 +800,10 @@ namespace DataG
                     g2.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
                     
                 }
-                x_steer = Convert.ToInt32(Math.Floor(xx));
+                x_steer = findLeftNear(xx, dataTime, dataTime.Length);
                 steer = Convert.ToSingle(steering[x_steer]);
-                this.pictureBox1.Image = RotateImage(this.pictureBox1.Image, steer);
+                this.pictureBox1.Image = RotateImage(this.pictureBox1.Image, steer-steer_before);
+                steer_before = steer;
 
             }
         }
@@ -1026,6 +1028,11 @@ namespace DataG
                         PointF pp = new PointF();
                         pp = new PointF((float)m, (float)n);
                         g2.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
+
+                        x_steer = findLeftNear(xx, dataTime, dataTime.Length);
+                        steer = Convert.ToSingle(steering[x_steer]);
+                        this.pictureBox1.Image = RotateImage(this.pictureBox1.Image, steer - steer_before);
+                        steer_before = steer;
                     }
                 }
             }
