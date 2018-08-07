@@ -74,7 +74,7 @@ namespace DataG
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            this.pictureBox1.Image = Image.FromFile("D:/RacingSoftware//7//Data-Graph//DataG//steer.png", false);
+            this.pictureBox1.Image = Image.FromFile(@"..\..\..\steer.png", false);
 
         }
 
@@ -367,6 +367,20 @@ namespace DataG
             sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
             sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 10000;
             sensorChart.ChartAreas[0].AxisX.LabelStyle.Format = "N2";
+            //delete all textboxes, checkboxes and radiobuttons
+            //for (int i = 2; i < dataPanel.Controls.Count;i++ )
+            dataPanel.Controls.Clear();
+            dataPanel.Controls.Add(timeLabel);
+            dataPanel.Controls.Add(textBoxTime);
+            displayPanel.Controls.Clear();
+            displayPanel.Controls.Add(label4);
+            displayPanel.Controls.Add(allSelectedCheckBox);
+            sensorCheckedListBox.Items.Clear();
+            displayPanel.Controls.Add(sensorCheckedListBox);
+            YPanel.Controls.Clear();
+
+
+
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.InitialDirectory = "c://";
             openFileDialog.Filter = "Data Files|*.csv";
@@ -406,7 +420,15 @@ namespace DataG
             for (int i = 0; i < dtrNum; i++)
             {
                 dataTime[i] = dataTime[i] - k;
-                //dataTime[i] /= 1000;
+
+                
+            }
+            if ((dataTime[2] - (int)dataTime[2]) == 0)
+            {
+                for (int i = 0; i < dtrNum; i++)
+                {
+                    dataTime[i] /= 1000;
+                }
             }
             for (int i = 0; i < dtcNum - 1; i++)
             {
@@ -747,14 +769,16 @@ namespace DataG
                             txtBox.Text = Math.Round(k * xx + b, 8).ToString();
                         }
                     }
-
-                   Graphics g2 = GPSPanel.CreateGraphics();
+                    //MessageBox.Show(xLeftSub.ToString());
+                    Graphics g2 = GPSPanel.CreateGraphics();
                     double m, n;
                     m = (xx - xLeft) / (xRight - xLeft) * (x[xRightSub] - x[xLeftSub]) + x[xLeftSub];
+
                     n = (xx - xLeft) / (xRight - xLeft) * (y[xRightSub] - y[xLeftSub]) + y[xLeftSub];
                     
                     PointF pp = new PointF();
                     pp = new PointF((float)m, (float)n);
+                    //MessageBox.Show(pp.X.ToString() + " " + pp.Y.ToString());
                     g2.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
                     
                 }
