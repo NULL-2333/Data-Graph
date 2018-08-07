@@ -1087,7 +1087,6 @@ namespace DataG
                 {
                     p11 = new PointF((float)x[i], (float)y[i]);
                     p22 = new PointF((float)x[i + 5], (float)y[i + 5]);
-
                     g2.DrawLine(nPen, p11, p22);
                 }
             }
