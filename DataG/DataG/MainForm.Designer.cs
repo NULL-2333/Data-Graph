@@ -71,7 +71,7 @@
             this.dataPanel.Controls.Add(this.textBoxTime);
             this.dataPanel.Controls.Add(this.timeLabel);
             this.dataPanel.Location = new System.Drawing.Point(16, 595);
-            this.dataPanel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dataPanel.Margin = new System.Windows.Forms.Padding(2);
             this.dataPanel.Name = "dataPanel";
             this.dataPanel.Size = new System.Drawing.Size(300, 159);
             this.dataPanel.TabIndex = 2;
@@ -161,7 +161,7 @@
             this.allSelectedCheckBox.Checked = true;
             this.allSelectedCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.allSelectedCheckBox.Location = new System.Drawing.Point(12, 35);
-            this.allSelectedCheckBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.allSelectedCheckBox.Margin = new System.Windows.Forms.Padding(2);
             this.allSelectedCheckBox.Name = "allSelectedCheckBox";
             this.allSelectedCheckBox.Size = new System.Drawing.Size(42, 16);
             this.allSelectedCheckBox.TabIndex = 2;
@@ -174,7 +174,7 @@
             this.sensorCheckedListBox.CheckOnClick = true;
             this.sensorCheckedListBox.FormattingEnabled = true;
             this.sensorCheckedListBox.Location = new System.Drawing.Point(10, 56);
-            this.sensorCheckedListBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.sensorCheckedListBox.Margin = new System.Windows.Forms.Padding(2);
             this.sensorCheckedListBox.Name = "sensorCheckedListBox";
             this.sensorCheckedListBox.Size = new System.Drawing.Size(207, 84);
             this.sensorCheckedListBox.TabIndex = 1;
@@ -247,7 +247,7 @@
             // 
             this.ConfigureButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.ConfigureButton.Location = new System.Drawing.Point(891, 714);
-            this.ConfigureButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ConfigureButton.Margin = new System.Windows.Forms.Padding(2);
             this.ConfigureButton.Name = "ConfigureButton";
             this.ConfigureButton.Size = new System.Drawing.Size(104, 42);
             this.ConfigureButton.TabIndex = 10;
@@ -309,7 +309,7 @@
             this.YPanel.AutoScroll = true;
             this.YPanel.BackColor = System.Drawing.SystemColors.Info;
             this.YPanel.Location = new System.Drawing.Point(560, 596);
-            this.YPanel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.YPanel.Margin = new System.Windows.Forms.Padding(2);
             this.YPanel.Name = "YPanel";
             this.YPanel.Size = new System.Drawing.Size(324, 159);
             this.YPanel.TabIndex = 13;
@@ -336,10 +336,10 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(0, 36);
+            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(186, 145);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox1.Size = new System.Drawing.Size(221, 237);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
@@ -360,7 +360,7 @@
             this.Controls.Add(this.displayPanel);
             this.Controls.Add(this.activatePanel);
             this.Controls.Add(this.dataPanel);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "MainForm";
@@ -374,7 +374,6 @@
             this.GPSGroupBox.ResumeLayout(false);
             this.GPSGroupBox.PerformLayout();
             this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
