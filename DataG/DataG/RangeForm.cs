@@ -74,6 +74,32 @@ namespace DataG
             {
                 fileName = saveFileDialog.FileName;
             }
+            if (System.IO.File.Exists(fileName))
+            {
+
+            }
+            else
+            {
+                //File.Create(fileName);
+                FileStream F = new FileStream(fileName, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+                F.Close();
+                StreamWriter sw = new StreamWriter(fileName);
+                //F.Write()
+                sw.WriteLine("x range: " + XRangeMinTextBox.Text + " - " + XRangeMaxTextBox.Text);
+                sw.WriteLine("x scale: " + XScaleViewTextBox.Text);
+                sw.WriteLine("x interval: " + IntervaltextBox.Text);
+                sw.WriteLine("R1:");
+                sw.WriteLine("y range: " + YRangeMinTextBox.Text + " - " + YRangeMaxTextBox.Text);
+                sw.WriteLine("R2:");
+                sw.WriteLine("y range: " + YRangeMinTextBox.Text + " - " + YRangeMaxTextBox.Text);
+                sw.WriteLine("R3:");
+                sw.WriteLine("y range: " + YRangeMinTextBox.Text + " - " + YRangeMaxTextBox.Text);
+                sw.WriteLine("R4:");
+                sw.WriteLine("y range: " + YRangeMinTextBox.Text + " - " + YRangeMaxTextBox.Text);
+                sw.Close();
+                
+            }
+
             //save settings to log file
             List<string> lines = new List<string>(File.ReadAllLines(fileName));
             //save logs about x axis
