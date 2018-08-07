@@ -55,6 +55,8 @@ namespace DataG
         int speedRow = 0;
         double[] accelerate = new double[dtrNum];                    //the speed in the csv file
         int accelerateRow = 0;
+        double[] steering = new double[dtrNum];                    //the speed in the csv file
+        int steerRow = 0;
         double maxacc = 0;
         double minacc = 0;
 
@@ -406,6 +408,7 @@ namespace DataG
             dtcNum = dt.Columns.Count;
             data = new double[dtrNum, dtcNum - 1];
             speed = new double[dtrNum];
+            steering = new double[dtrNum];
             accelerate = new double[dtrNum];  
             dataTime = new double[dtrNum];
             seriesName = new string[dtcNum - 1];
@@ -451,11 +454,21 @@ namespace DataG
                     break;
                 }
             }
+            for (int i = 0; i < dtcNum - 1; i++)
+            {
+                if (seriesName[i].Contains("SteeringPosition"))
+                {
+                    steerRow = i;
+                    break;
+                }
+            }
+
 
             for (int i = 0; i < dtrNum; i++)
             {
                 speed[i] = double.Parse(dt.Rows[i][speedRow + 1].ToString());
                 accelerate[i] = double.Parse(dt.Rows[i][accelerateRow + 1].ToString());
+                steering[i] = double.Parse(dt.Rows[i][steerRow + 1].ToString());
             }
 
             InputForm a = new InputForm();
@@ -728,6 +741,9 @@ namespace DataG
         {
             int mouseX = e.X;
             int mouseY = e.Y;
+            float steer = 0;
+            int x_steer = 0;
+            float steer_before = 0;
             double xx = sensorChart.ChartAreas[0].AxisX.PixelPositionToValue(mouseX);
             if (fileOpen == true)
             {
@@ -783,7 +799,9 @@ namespace DataG
                     g2.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
                     
                 }
-                this.pictureBox1.Image = RotateImage(this.pictureBox1.Image, 20);
+                x_steer = Convert.ToInt32(Math.Floor(xx));
+                steer = Convert.ToSingle(steering[x_steer]);
+                this.pictureBox1.Image = RotateImage(this.pictureBox1.Image, steer);
 
             }
         }
