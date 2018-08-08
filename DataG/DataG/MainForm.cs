@@ -632,7 +632,6 @@ namespace DataG
             }
             nowScrollValue = (int)minValue(dataTime, dataTime.Length);
             newPlace = (int)minValue(dataTime, dataTime.Length);
-
             sensorChart.ChartAreas[0].InnerPlotPosition.X = (float)45;
             sensorChart.ChartAreas[0].InnerPlotPosition.Height = (float)90;
             //create 3 other chartareas for R2, R3, R4 Axises
@@ -1235,6 +1234,11 @@ namespace DataG
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 fileName = openFileDialog.FileName;
+            }
+            if (fileName.Equals(""))
+            {
+                MessageBox.Show("No file choosed!");
+                return;
             }
             string[] sArray = File.ReadAllLines(fileName);
             //handle the x range
