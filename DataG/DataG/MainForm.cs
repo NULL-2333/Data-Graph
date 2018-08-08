@@ -803,7 +803,7 @@ namespace DataG
                 }
                 x_steer = findLeftNear(xx, dataTime, dataTime.Length);
                 steer = Convert.ToSingle(steering[x_steer]);
-                this.pictureBox1.Image = RotateImage(this.pictureBox1.Image, steer - steer_before);
+                this.pictureBox1.Image = RotateImage(Image.FromFile(@"..\..\..\steer.png", false), steer - steer_before);
                 steer_before = steer;
 
             }
@@ -967,7 +967,7 @@ namespace DataG
             }
             int xLeftSub3 = findLeftNear(nowSteeringPlace, dataTime, dataTime.Length);
             steer = Convert.ToSingle(steering[xLeftSub3]);
-            this.pictureBox1.Image = RotateImage(this.pictureBox1.Image, steer - steer_before);
+            this.pictureBox1.Image = RotateImage(Image.FromFile(@"..\..\..\steer.png", false), steer - steer_before);
             steer_before = steer;
             if (nowSteeringPlace <= maxValue(dataTime, dataTime.Length))
                 nowSteeringPlace += moveSpeed;
@@ -1040,7 +1040,7 @@ namespace DataG
 
                         x_steer = findLeftNear(xx, dataTime, dataTime.Length);
                         steer = Convert.ToSingle(steering[x_steer]);
-                        this.pictureBox1.Image = RotateImage(this.pictureBox1.Image, steer - steer_before);
+                        this.pictureBox1.Image = RotateImage(Image.FromFile(@"..\..\..\steer.png", false), steer - steer_before);
                         steer_before = steer;
                     }
                 }
@@ -1295,8 +1295,6 @@ namespace DataG
 
             //dispose of our Graphics object
             gfx.Dispose();
-
-            //return the image
             return bmp;
         }
     }
