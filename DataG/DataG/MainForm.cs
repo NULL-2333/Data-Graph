@@ -321,6 +321,34 @@ namespace DataG
 
         }
 
+        public static Image RotateImage(Image img, float rotationAngle)
+        {
+            //create an empty Bitmap image
+            Bitmap bmp = new Bitmap(img.Width, img.Height);
+            bmp.SetResolution(img.HorizontalResolution, img.VerticalResolution);
+            //turn the Bitmap into a Graphics object
+            Graphics gfx = Graphics.FromImage(bmp);
+
+            //now we set the rotation point to the center of our image
+            gfx.TranslateTransform((float)bmp.Width / 2, (float)bmp.Height / 2);
+
+            //now rotate the image
+            gfx.RotateTransform(rotationAngle);
+
+            gfx.TranslateTransform(-(float)bmp.Width / 2, -(float)bmp.Height / 2);
+
+            //set the InterpolationMode to HighQualityBicubic so to ensure a high
+            //quality image once it is transformed to the specified size
+            gfx.InterpolationMode = InterpolationMode.HighQualityBicubic;
+
+            //now draw our new image onto the graphics object
+            gfx.DrawImage(img, new Point(0, 0));
+
+            //dispose of our Graphics object
+            gfx.Dispose();
+            return bmp;
+        }
+
         void rb1_Click(object sender, EventArgs e)
         {
             RadioButton rb = (RadioButton)sender;
@@ -817,6 +845,7 @@ namespace DataG
                     resetButton_Click(sender, e);
                     firstPlayFlag = false;
                 }
+                chartTimer.Interval = (int)(1000 * moveSpeed);
                 chartTimer.Enabled = true;
             } 
         }
@@ -887,7 +916,8 @@ namespace DataG
 
         private void chartTimer_Tick(object sender, EventArgs e)
         {
-            DateTime beforDT = System.DateTime.Now;
+            chartTimer.Interval = (int)(1000 * moveSpeed);
+            //DateTime beforDT = System.DateTime.Now;
             sensorChart.PostPaint += new EventHandler<ChartPaintEventArgs>(sensorChart_PostPaint);
 
             if ((nowScrollValue + xScale / 2) >= minValue(dataTime, dataTime.Length) && (nowScrollValue + xScale / 2) <= maxValue(dataTime, dataTime.Length))
@@ -971,12 +1001,12 @@ namespace DataG
             if (nowSteeringPlace <= maxValue(dataTime, dataTime.Length))
                 nowSteeringPlace += moveSpeed;
 
-            DateTime afterDT = System.DateTime.Now;
-            TimeSpan ts = afterDT.Subtract(beforDT);
-            if ((int)ts.TotalMilliseconds >= 200)
-                chartTimer.Interval = 1;
-            else
-                chartTimer.Interval = 1000 - (int)ts.TotalMilliseconds;
+            //DateTime afterDT = System.DateTime.Now;
+            //TimeSpan ts = afterDT.Subtract(beforDT);
+            //if ((int)ts.TotalMilliseconds >= 200)
+            //    chartTimer.Interval = 1;
+            //else
+            //chartTimer.Interval = (int)(1000 * moveSpeed);// - (int)ts.TotalMilliseconds;
         }
 
         private void sensorChart_MouseMove(object sender, MouseEventArgs e)
@@ -1072,7 +1102,7 @@ namespace DataG
             a.yMin2 = caR2.AxisY.Minimum;
             a.yMin3 = caR3.AxisY.Minimum;
             a.yMin4 = caR4.AxisY.Minimum;
-
+            a.speed = moveSpeed;
             a.ShowDialog();
             yRangeMax = a.yMax1;
             yRangeMin = a.yMin1;
@@ -1081,6 +1111,7 @@ namespace DataG
             xScale = a.xScale;
             xInterval = a.interval;
             yType = a.yType;
+            moveSpeed = a.speed;
             int i = int.Parse(yType[1].ToString());
             sensorChart.ChartAreas[0].AxisX.ScaleView.Size = xScale;
             sensorChart.ChartAreas[0].AxisX.Maximum = xRangeMax;
@@ -1271,35 +1302,11 @@ namespace DataG
 
                 sensorChart.Invalidate();
             }
+            string speedString = sArray[11];
+            moveSpeed = double.Parse(Regex.Split(speedString, " ", RegexOptions.IgnoreCase)[2]);
             sensorChart.Invalidate();
         }
 
-        public static Image RotateImage(Image img, float rotationAngle)
-        {
-            //create an empty Bitmap image
-            Bitmap bmp = new Bitmap(img.Width, img.Height);
-            bmp.SetResolution(img.HorizontalResolution, img.VerticalResolution);
-            //turn the Bitmap into a Graphics object
-            Graphics gfx = Graphics.FromImage(bmp);
-
-            //now we set the rotation point to the center of our image
-            gfx.TranslateTransform((float)bmp.Width / 2, (float)bmp.Height / 2);
-
-            //now rotate the image
-            gfx.RotateTransform(rotationAngle);
-
-            gfx.TranslateTransform(-(float)bmp.Width / 2, -(float)bmp.Height / 2);
-
-            //set the InterpolationMode to HighQualityBicubic so to ensure a high
-            //quality image once it is transformed to the specified size
-            gfx.InterpolationMode = InterpolationMode.HighQualityBicubic;
-
-            //now draw our new image onto the graphics object
-            gfx.DrawImage(img, new Point(0, 0));
-
-            //dispose of our Graphics object
-            gfx.Dispose();
-            return bmp;
-        }
+        
     }
 }

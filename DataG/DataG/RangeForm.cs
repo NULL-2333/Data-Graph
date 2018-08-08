@@ -27,8 +27,7 @@ namespace DataG
         public double yMin3 = 0;
         public double yMax4 = 8000;
         public double yMin4 = 0;
-
-        MainForm mf = new MainForm();
+        public double speed = 1;
         
 
         public RangeForm()
@@ -51,7 +50,12 @@ namespace DataG
             xScale = int.Parse(XScaleViewTextBox.Text);
             interval = double.Parse(IntervaltextBox.Text);
             yType = YAxisComboBox.Text;
-            
+            if (double.Parse(speedTextBox.Text) > 0)
+                speed = double.Parse(speedTextBox.Text);
+            else
+            {
+                MessageBox.Show("Invalid Speed");
+            }
             this.Close();
         }
 
@@ -71,7 +75,8 @@ namespace DataG
             IntervaltextBox.Text = z.ToString();
             string yt = yType;
             YAxisComboBox.Text = yt;
-            
+            double s = speed;
+            speedTextBox.Text = s.ToString();
         }
 
         private void settingSaveButton_Click(object sender, EventArgs e)
@@ -81,7 +86,6 @@ namespace DataG
             saveFileDialog.Filter = "Log Files|*.log";
             saveFileDialog.RestoreDirectory = true;
             saveFileDialog.FilterIndex = 1;
-            FileStream fs;
             string fileName = "";
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
@@ -107,6 +111,7 @@ namespace DataG
                 sw.WriteLine("y range: " + yMin3 + " - " + yMax3);
                 sw.WriteLine("R4:");
                 sw.WriteLine("y range: " + yMin4 + " - " + yMax4);
+                sw.WriteLine("move speed: " + speed);
                 sw.Close();
                 
             }
@@ -129,7 +134,7 @@ namespace DataG
                 lines[i * 2 + 1] = YAxisComboBox.Text + ":";
                 lines[i * 2 + 2] = "y range: " + YRangeMinTextBox.Text + " - " + YRangeMaxTextBox.Text;
             }
-
+            lines[11] = "move speed: " + speedTextBox.Text;
             File.WriteAllLines(fileName, lines.ToArray());
             MessageBox.Show("Setting File Saved!");
         }
