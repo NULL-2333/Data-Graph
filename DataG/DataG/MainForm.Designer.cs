@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea8 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend8 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.dataPanel = new System.Windows.Forms.Panel();
             this.textBoxTime = new System.Windows.Forms.TextBox();
             this.timeLabel = new System.Windows.Forms.Label();
@@ -103,14 +103,14 @@
             this.activatePanel.Location = new System.Drawing.Point(1113, 597);
             this.activatePanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.activatePanel.Name = "activatePanel";
-            this.activatePanel.Size = new System.Drawing.Size(320, 158);
+            this.activatePanel.Size = new System.Drawing.Size(320, 141);
             this.activatePanel.TabIndex = 3;
             // 
             // resetButton
             // 
             this.resetButton.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.resetButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.resetButton.Location = new System.Drawing.Point(38, 82);
+            this.resetButton.Location = new System.Drawing.Point(27, 85);
             this.resetButton.Name = "resetButton";
             this.resetButton.Size = new System.Drawing.Size(255, 41);
             this.resetButton.TabIndex = 2;
@@ -122,7 +122,7 @@
             // 
             this.buttonStop.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.buttonStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonStop.Location = new System.Drawing.Point(188, 34);
+            this.buttonStop.Location = new System.Drawing.Point(177, 25);
             this.buttonStop.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.buttonStop.Name = "buttonStop";
             this.buttonStop.Size = new System.Drawing.Size(105, 39);
@@ -134,7 +134,7 @@
             // buttonPlay
             // 
             this.buttonPlay.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonPlay.Location = new System.Drawing.Point(38, 34);
+            this.buttonPlay.Location = new System.Drawing.Point(27, 25);
             this.buttonPlay.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonPlay.Name = "buttonPlay";
             this.buttonPlay.Size = new System.Drawing.Size(99, 39);
@@ -205,17 +205,17 @@
             // 
             // sensorChart
             // 
-            chartArea8.AxisX.LabelStyle.Format = "N3";
-            chartArea8.Name = "ChartArea1";
-            chartArea8.Position.Auto = false;
-            chartArea8.Position.Height = 94F;
-            chartArea8.Position.Width = 81.35392F;
-            chartArea8.Position.X = 3F;
-            chartArea8.Position.Y = 3F;
-            this.sensorChart.ChartAreas.Add(chartArea8);
+            chartArea2.AxisX.LabelStyle.Format = "N3";
+            chartArea2.Name = "ChartArea1";
+            chartArea2.Position.Auto = false;
+            chartArea2.Position.Height = 94F;
+            chartArea2.Position.Width = 81.35392F;
+            chartArea2.Position.X = 3F;
+            chartArea2.Position.Y = 3F;
+            this.sensorChart.ChartAreas.Add(chartArea2);
             this.sensorChart.Cursor = System.Windows.Forms.Cursors.Hand;
-            legend8.Name = "Legend1";
-            this.sensorChart.Legends.Add(legend8);
+            legend2.Name = "Legend1";
+            this.sensorChart.Legends.Add(legend2);
             this.sensorChart.Location = new System.Drawing.Point(16, 11);
             this.sensorChart.Margin = new System.Windows.Forms.Padding(7, 2, 7, 2);
             this.sensorChart.Name = "sensorChart";
@@ -246,7 +246,7 @@
             // ConfigureButton
             // 
             this.ConfigureButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.ConfigureButton.Location = new System.Drawing.Point(891, 714);
+            this.ConfigureButton.Location = new System.Drawing.Point(890, 696);
             this.ConfigureButton.Margin = new System.Windows.Forms.Padding(2);
             this.ConfigureButton.Name = "ConfigureButton";
             this.ConfigureButton.Size = new System.Drawing.Size(104, 42);
@@ -262,7 +262,7 @@
             this.GPSGroupBox.Controls.Add(this.radioButton_Normal);
             this.GPSGroupBox.Location = new System.Drawing.Point(1000, 596);
             this.GPSGroupBox.Name = "GPSGroupBox";
-            this.GPSGroupBox.Size = new System.Drawing.Size(103, 158);
+            this.GPSGroupBox.Size = new System.Drawing.Size(103, 142);
             this.GPSGroupBox.TabIndex = 12;
             this.GPSGroupBox.TabStop = false;
             this.GPSGroupBox.Text = "GPS";
@@ -317,7 +317,7 @@
             // settingButton
             // 
             this.settingButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.5F);
-            this.settingButton.Location = new System.Drawing.Point(890, 656);
+            this.settingButton.Location = new System.Drawing.Point(890, 645);
             this.settingButton.Name = "settingButton";
             this.settingButton.Size = new System.Drawing.Size(103, 42);
             this.settingButton.TabIndex = 14;
@@ -348,7 +348,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(1303, 749);
+            this.ClientSize = new System.Drawing.Size(1370, 749);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.settingButton);
             this.Controls.Add(this.YPanel);
