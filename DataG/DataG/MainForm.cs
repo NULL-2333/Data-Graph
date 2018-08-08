@@ -44,10 +44,11 @@ namespace DataG
 
         double nowScrollValue = -xScale / 2;                    //the position of scrollbar
         double newPlace = 0;                                    //the position of moving dot
+        double nowSteeringPlace = 0;
         bool fileOpen = false;                                  //determine whether the file has been opened
         bool flag = false;                                      //drag line
         bool flagPlace = true;
-        double moveSpeed = 0.5;                                   //the speed of play
+        double moveSpeed = 1;                                   //the speed of play
         bool firstPlayFlag = true;                              //the flag of first play
         bool scaleFlag = true;
         
@@ -802,7 +803,7 @@ namespace DataG
                 }
                 x_steer = findLeftNear(xx, dataTime, dataTime.Length);
                 steer = Convert.ToSingle(steering[x_steer]);
-                this.pictureBox1.Image = RotateImage(this.pictureBox1.Image, steer-steer_before);
+                this.pictureBox1.Image = RotateImage(this.pictureBox1.Image, steer - steer_before);
                 steer_before = steer;
 
             }
@@ -853,6 +854,8 @@ namespace DataG
 
                 nowScrollValue = (int)minValue(dataTime, dataTime.Length) - xScale / 2;
                 newPlace = (int)minValue(dataTime, dataTime.Length) - xScale / 2;
+                nowSteeringPlace = 0;
+                this.pictureBox1.Image = RotateImage(this.pictureBox1.Image,  - steer_before);
                 sensorChart.ChartAreas[0].AxisX.ScaleView.Position = nowScrollValue + xScale / 2;
                 sensorChart.Invalidate();
                 chartTimer.Enabled = false;
@@ -962,13 +965,19 @@ namespace DataG
                 Graphics gg = GPSPanel.CreateGraphics();
                 gg.DrawImage(bitmap, new PointF(0.0f, 0.0f));
             }
+            int xLeftSub3 = findLeftNear(nowSteeringPlace, dataTime, dataTime.Length);
+            steer = Convert.ToSingle(steering[xLeftSub3]);
+            this.pictureBox1.Image = RotateImage(this.pictureBox1.Image, steer - steer_before);
+            steer_before = steer;
+            if (nowSteeringPlace <= maxValue(dataTime, dataTime.Length))
+                nowSteeringPlace += moveSpeed;
+
             DateTime afterDT = System.DateTime.Now;
             TimeSpan ts = afterDT.Subtract(beforDT);
-            //MessageBox.Show(ts.TotalMilliseconds.ToString());
             if ((int)ts.TotalMilliseconds >= 200)
                 chartTimer.Interval = 1;
             else
-                chartTimer.Interval = 200 - (int)ts.TotalMilliseconds;
+                chartTimer.Interval = 1000 - (int)ts.TotalMilliseconds;
         }
 
         private void sensorChart_MouseMove(object sender, MouseEventArgs e)
