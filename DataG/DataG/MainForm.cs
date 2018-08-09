@@ -1358,6 +1358,9 @@ namespace DataG
             g3.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
 
             textBoxTime.Text = dataTime[key].ToString();
+            steer = Convert.ToSingle(steering[key]);
+            this.pictureBox1.Image = RotateImage(Image.FromFile(@"..\..\..\steer.png", false), steer - steer_before);
+            steer_before = steer;
         }
     }
 }
