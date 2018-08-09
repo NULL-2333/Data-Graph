@@ -656,8 +656,7 @@ namespace DataG
             }
             nowScrollValue = (int)minValue(dataTime, dataTime.Length);
             newPlace = (int)minValue(dataTime, dataTime.Length);
-
-            sensorChart.ChartAreas[0].InnerPlotPosition.X = (float)25;
+            sensorChart.ChartAreas[0].InnerPlotPosition.X = (float)45;
             sensorChart.ChartAreas[0].InnerPlotPosition.Height = (float)90;
             //create 3 other chartareas for R2, R3, R4 Axises
             sensorChart.ChartAreas[0].AxisY.Title = "R1";
@@ -678,7 +677,7 @@ namespace DataG
             caR2.BorderColor = Color.Transparent;
             caR2.Position.FromRectangleF(sensorChart.ChartAreas[0].Position.ToRectangleF());
             caR2.InnerPlotPosition.FromRectangleF(sensorChart.ChartAreas[0].InnerPlotPosition.ToRectangleF());
-            caR2.InnerPlotPosition.X -= (float)7;
+            caR2.InnerPlotPosition.X -= (float)12;
             caR2.AxisX.MajorGrid.Enabled = false;
             caR2.AxisX.MajorTickMark.Enabled = false;
             caR2.AxisX.LabelStyle.Enabled = false;
@@ -706,7 +705,7 @@ namespace DataG
             caR3.BorderColor = Color.Transparent;
             caR3.Position.FromRectangleF(caR2.Position.ToRectangleF());
             caR3.InnerPlotPosition.FromRectangleF(caR2.InnerPlotPosition.ToRectangleF());
-            caR3.InnerPlotPosition.X -= (float)7;
+            caR3.InnerPlotPosition.X -= (float)12;
             caR3.AxisX.MajorGrid.Enabled = false;
             caR3.AxisX.MajorTickMark.Enabled = false;
             caR3.AxisX.LabelStyle.Enabled = false;
@@ -733,7 +732,7 @@ namespace DataG
             caR4.BorderColor = Color.Transparent;
             caR4.Position.FromRectangleF(caR3.Position.ToRectangleF());
             caR4.InnerPlotPosition.FromRectangleF(caR3.InnerPlotPosition.ToRectangleF());
-            caR4.InnerPlotPosition.X -= (float)7;
+            caR4.InnerPlotPosition.X -= (float)12;
             caR4.AxisX.MajorGrid.Enabled = false;
             caR4.AxisX.MajorTickMark.Enabled = false;
             caR4.AxisX.LabelStyle.Enabled = false;
@@ -842,6 +841,7 @@ namespace DataG
                     resetButton_Click(sender, e);
                     firstPlayFlag = false;
                 }
+                chartTimer.Interval = (int)(1000 * moveSpeed);
                 chartTimer.Enabled = true;
             } 
         }
@@ -912,7 +912,8 @@ namespace DataG
 
         private void chartTimer_Tick(object sender, EventArgs e)
         {
-            DateTime beforDT = System.DateTime.Now;
+            chartTimer.Interval = (int)(1000 * moveSpeed);
+            //DateTime beforDT = System.DateTime.Now;
             sensorChart.PostPaint += new EventHandler<ChartPaintEventArgs>(sensorChart_PostPaint);
 
             if ((nowScrollValue + xScale / 2) >= minValue(dataTime, dataTime.Length) && (nowScrollValue + xScale / 2) <= maxValue(dataTime, dataTime.Length))
@@ -996,12 +997,12 @@ namespace DataG
             if (nowSteeringPlace <= maxValue(dataTime, dataTime.Length))
                 nowSteeringPlace += moveSpeed;
 
-            DateTime afterDT = System.DateTime.Now;
-            TimeSpan ts = afterDT.Subtract(beforDT);
-            if ((int)ts.TotalMilliseconds >= 200)
-                chartTimer.Interval = 1;
-            else
-                chartTimer.Interval = 1000 - (int)ts.TotalMilliseconds;
+            //DateTime afterDT = System.DateTime.Now;
+            //TimeSpan ts = afterDT.Subtract(beforDT);
+            //if ((int)ts.TotalMilliseconds >= 200)
+            //    chartTimer.Interval = 1;
+            //else
+            //chartTimer.Interval = (int)(1000 * moveSpeed);// - (int)ts.TotalMilliseconds;
         }
 
         private void sensorChart_MouseMove(object sender, MouseEventArgs e)
@@ -1099,7 +1100,7 @@ namespace DataG
             a.yMin2 = caR2.AxisY.Minimum;
             a.yMin3 = caR3.AxisY.Minimum;
             a.yMin4 = caR4.AxisY.Minimum;
-
+            a.speed = moveSpeed;
             a.ShowDialog();
             yRangeMax = a.yMax1;
             yRangeMin = a.yMin1;
@@ -1108,6 +1109,7 @@ namespace DataG
             xScale = a.xScale;
             xInterval = a.interval;
             yType = a.yType;
+            moveSpeed = a.speed;
             int i = int.Parse(yType[1].ToString());
             sensorChart.ChartAreas[0].AxisX.ScaleView.Size = xScale;
             sensorChart.ChartAreas[0].AxisX.Maximum = xRangeMax;
@@ -1298,8 +1300,11 @@ namespace DataG
 
                 sensorChart.Invalidate();
             }
+            string speedString = sArray[11];
+            moveSpeed = double.Parse(Regex.Split(speedString, " ", RegexOptions.IgnoreCase)[2]);
             sensorChart.Invalidate();
         }
+
 
         public static Image RotateImage(Image img, float rotationAngle)
         {
