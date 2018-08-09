@@ -448,13 +448,7 @@ namespace DataG
             seriesName = new string[dtcNum - 1];
 
             gpsTime = new double[dtrNum];
-
-            double time = 0;
-            double xx = 0;
-            double m, n;
-            double dis = 0;
-            
-
+           
             for (int i = 0; i < dtrNum; i++)
             {
                 dataTime[i] = double.Parse(dt.Rows[i][0].ToString());
@@ -1439,6 +1433,35 @@ namespace DataG
                 //GPSPanel.Invalidate();
                 GPSPanel.Update();//if Refresh() there will be blinking problem!
                 g3.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
+                Graphics g4 = sensorChart.CreateGraphics();
+                //MessageBox.Show(sensorChart.Width.ToString());
+                Point p1 = new Point(0, 0);
+                Point p2 = new Point(0, sensorChart.Height);
+                double dT = Convert.ToDouble(dataTime[key].ToString("0.0"));
+                sensorChart.Invalidate();
+                for (int i = 0; i < sensorChart.Width; i++)
+                {
+                    double xValue = Math.Round(sensorChart.ChartAreas[0].AxisX.PixelPositionToValue(i), 1);
+                    if (xValue == dT)
+                    {
+                        p1 = new Point(i, 0);
+                        p2 = new Point(i, sensorChart.Height);
+
+                        if (xValue > sensorChart.ChartAreas[0].AxisX.ScaleView.Position + sensorChart.ChartAreas[0].AxisX.ScaleView.Size)
+                        {
+                            sensorChart.ChartAreas[0].AxisX.ScaleView.Position += sensorChart.ChartAreas[0].AxisX.ScaleView.Size / 2;
+                            sensorChart.Invalidate();
+                        }
+                        if (xValue < sensorChart.ChartAreas[0].AxisX.ScaleView.Position)
+                        {
+                            sensorChart.ChartAreas[0].AxisX.ScaleView.Position -= sensorChart.ChartAreas[0].AxisX.ScaleView.Size / 2;
+                            sensorChart.Invalidate();
+                        }
+                        g4.DrawLine(new Pen(Brushes.Blue), p1, p2);
+                        break;
+                    }
+                }
+                //g4.DrawLine(new Pen(Brushes.Blue), p1, p2);
                 textBoxTime.Text = dataTime[key].ToString();
                 steer = Convert.ToSingle(steering[key]);
                 this.pictureBox1.Image = RotateImage(Image.FromFile(@"..\..\..\steer.png", false), steer - steer_before);
