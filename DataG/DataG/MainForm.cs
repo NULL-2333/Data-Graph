@@ -52,6 +52,7 @@ namespace DataG
         double moveSpeed = 1;                                   //the speed of play
         bool firstPlayFlag = true;                              //the flag of first play
         bool scaleFlag = true;
+        bool flag_gps = false;
         
         double[] speed = new double[dtrNum];                    //the speed in the csv file
         int speedRow = 0;
@@ -320,6 +321,34 @@ namespace DataG
             sensorChart.Series[no].ChartType = SeriesChartType.Line;
             sensorChart.Invalidate();
 
+        }
+
+        public static Image RotateImage(Image img, float rotationAngle)
+        {
+            //create an empty Bitmap image
+            Bitmap bmp = new Bitmap(img.Width, img.Height);
+            bmp.SetResolution(img.HorizontalResolution, img.VerticalResolution);
+            //turn the Bitmap into a Graphics object
+            Graphics gfx = Graphics.FromImage(bmp);
+
+            //now we set the rotation point to the center of our image
+            gfx.TranslateTransform((float)bmp.Width / 2, (float)bmp.Height / 2);
+
+            //now rotate the image
+            gfx.RotateTransform(rotationAngle);
+
+            gfx.TranslateTransform(-(float)bmp.Width / 2, -(float)bmp.Height / 2);
+
+            //set the InterpolationMode to HighQualityBicubic so to ensure a high
+            //quality image once it is transformed to the specified size
+            gfx.InterpolationMode = InterpolationMode.HighQualityBicubic;
+
+            //now draw our new image onto the graphics object
+            gfx.DrawImage(img, new Point(0, 0));
+
+            //dispose of our Graphics object
+            gfx.Dispose();
+            return bmp;
         }
 
         void rb1_Click(object sender, EventArgs e)
@@ -1074,6 +1103,7 @@ namespace DataG
                 }
             }
         }
+
         private void sensorChart_MouseDown(object sender, MouseEventArgs e)
         {
             flag = true;
@@ -1305,35 +1335,6 @@ namespace DataG
             sensorChart.Invalidate();
         }
 
-
-        public static Image RotateImage(Image img, float rotationAngle)
-        {
-            //create an empty Bitmap image
-            Bitmap bmp = new Bitmap(img.Width, img.Height);
-            bmp.SetResolution(img.HorizontalResolution, img.VerticalResolution);
-            //turn the Bitmap into a Graphics object
-            Graphics gfx = Graphics.FromImage(bmp);
-
-            //now we set the rotation point to the center of our image
-            gfx.TranslateTransform((float)bmp.Width / 2, (float)bmp.Height / 2);
-
-            //now rotate the image
-            gfx.RotateTransform(rotationAngle);
-
-            gfx.TranslateTransform(-(float)bmp.Width / 2, -(float)bmp.Height / 2);
-
-            //set the InterpolationMode to HighQualityBicubic so to ensure a high
-            //quality image once it is transformed to the specified size
-            gfx.InterpolationMode = InterpolationMode.HighQualityBicubic;
-
-            //now draw our new image onto the graphics object
-            gfx.DrawImage(img, new Point(0, 0));
-
-            //dispose of our Graphics object
-            gfx.Dispose();
-            return bmp;
-        }
-
         private void GPSPanel_MouseClick(object sender, MouseEventArgs e)
         {
             GPSPanel.Refresh();
@@ -1342,7 +1343,7 @@ namespace DataG
             double temp = 0;
             double min = 100;
             int key = 0;
-            for(int i =0; i< dtrNum; i++)
+            for(int i = 0; i< dtrNum; i++)
             {
                 temp = (x[i] - mouseX) * (x[i] - mouseX) + (y[i] - mouseY) * (y[i] - mouseY);
                 if (temp < min)
@@ -1361,6 +1362,66 @@ namespace DataG
             steer = Convert.ToSingle(steering[key]);
             this.pictureBox1.Image = RotateImage(Image.FromFile(@"..\..\..\steer.png", false), steer - steer_before);
             steer_before = steer;
+            TextBox txtBox = new TextBox();
+            for (int i = 0; i < dtcNum - 1; i++)
+            {
+                txtBox = (TextBox)this.Controls.Find("textBox" + i.ToString(), true)[0];
+                if (txtBox != null && sensorCheckedListBox.GetItemChecked(i))
+                {
+                    txtBox.Text = data[key, i].ToString();
+                }
+            }
+            
+        }
+
+        private void GPSPanel_MouseDown(object sender, MouseEventArgs e)
+        {
+            flag_gps = true;
+        }
+
+        private void GPSPanel_MouseUp(object sender, MouseEventArgs e)
+        {
+            flag_gps = false;
+        }
+
+        private void GPSPanel_MouseMove(object sender, MouseEventArgs e)
+        {
+            int mouseX = e.X;
+            int mouseY = e.Y;
+            double temp = 0;
+            double min = 100;
+            int key = 0;
+            for (int i = 0; i < dtrNum; i++)
+            {
+                temp = (x[i] - mouseX) * (x[i] - mouseX) + (y[i] - mouseY) * (y[i] - mouseY);
+                if (temp < min)
+                {
+                    min = temp;
+                    key = i;
+                }
+            }
+            Graphics g3 = GPSPanel.CreateGraphics();
+            PointF pp = new PointF();
+            pp = new PointF((float)x[key], (float)y[key]);
+            if (flag_gps)
+            {
+                //GPSPanel.Invalidate();
+                GPSPanel.Update();//if Refresh() there will be blinking problem!
+                g3.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
+                textBoxTime.Text = dataTime[key].ToString();
+                steer = Convert.ToSingle(steering[key]);
+                this.pictureBox1.Image = RotateImage(Image.FromFile(@"..\..\..\steer.png", false), steer - steer_before);
+                steer_before = steer;
+                TextBox txtBox = new TextBox();
+                for (int i = 0; i < dtcNum - 1; i++)
+                {
+                    txtBox = (TextBox)this.Controls.Find("textBox" + i.ToString(), true)[0];
+                    if (txtBox != null && sensorCheckedListBox.GetItemChecked(i))
+                    {
+                        txtBox.Text = data[key, i].ToString();
+                    }
+                }
+            }
         }
     }
 }
