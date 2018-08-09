@@ -322,6 +322,34 @@ namespace DataG
 
         }
 
+        public static Image RotateImage(Image img, float rotationAngle)
+        {
+            //create an empty Bitmap image
+            Bitmap bmp = new Bitmap(img.Width, img.Height);
+            bmp.SetResolution(img.HorizontalResolution, img.VerticalResolution);
+            //turn the Bitmap into a Graphics object
+            Graphics gfx = Graphics.FromImage(bmp);
+
+            //now we set the rotation point to the center of our image
+            gfx.TranslateTransform((float)bmp.Width / 2, (float)bmp.Height / 2);
+
+            //now rotate the image
+            gfx.RotateTransform(rotationAngle);
+
+            gfx.TranslateTransform(-(float)bmp.Width / 2, -(float)bmp.Height / 2);
+
+            //set the InterpolationMode to HighQualityBicubic so to ensure a high
+            //quality image once it is transformed to the specified size
+            gfx.InterpolationMode = InterpolationMode.HighQualityBicubic;
+
+            //now draw our new image onto the graphics object
+            gfx.DrawImage(img, new Point(0, 0));
+
+            //dispose of our Graphics object
+            gfx.Dispose();
+            return bmp;
+        }
+
         void rb1_Click(object sender, EventArgs e)
         {
             RadioButton rb = (RadioButton)sender;
@@ -1074,6 +1102,7 @@ namespace DataG
                 }
             }
         }
+
         private void sensorChart_MouseDown(object sender, MouseEventArgs e)
         {
             flag = true;
@@ -1305,35 +1334,6 @@ namespace DataG
             sensorChart.Invalidate();
         }
 
-
-        public static Image RotateImage(Image img, float rotationAngle)
-        {
-            //create an empty Bitmap image
-            Bitmap bmp = new Bitmap(img.Width, img.Height);
-            bmp.SetResolution(img.HorizontalResolution, img.VerticalResolution);
-            //turn the Bitmap into a Graphics object
-            Graphics gfx = Graphics.FromImage(bmp);
-
-            //now we set the rotation point to the center of our image
-            gfx.TranslateTransform((float)bmp.Width / 2, (float)bmp.Height / 2);
-
-            //now rotate the image
-            gfx.RotateTransform(rotationAngle);
-
-            gfx.TranslateTransform(-(float)bmp.Width / 2, -(float)bmp.Height / 2);
-
-            //set the InterpolationMode to HighQualityBicubic so to ensure a high
-            //quality image once it is transformed to the specified size
-            gfx.InterpolationMode = InterpolationMode.HighQualityBicubic;
-
-            //now draw our new image onto the graphics object
-            gfx.DrawImage(img, new Point(0, 0));
-
-            //dispose of our Graphics object
-            gfx.Dispose();
-            return bmp;
-        }
-
         private void GPSPanel_MouseClick(object sender, MouseEventArgs e)
         {
             GPSPanel.Refresh();
@@ -1342,7 +1342,7 @@ namespace DataG
             double temp = 0;
             double min = 100;
             int key = 0;
-            for(int i =0; i< dtrNum; i++)
+            for(int i = 0; i< dtrNum; i++)
             {
                 temp = (x[i] - mouseX) * (x[i] - mouseX) + (y[i] - mouseY) * (y[i] - mouseY);
                 if (temp < min)
@@ -1357,7 +1357,30 @@ namespace DataG
             pp = new PointF((float)x[key], (float)y[key]);
             g3.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
 
+            //Graphics g4 = sensorChart.CreateGraphics();
+            //for (int i = 0; i < sensorChart.Width; i++)
+            //{
+            //    if (sensorChart.ChartAreas[0].AxisX.PixelPositionToValue(i) == dataTime[key])
+            //    {
+            //        Point p1 = new Point(i, 0);
+            //        Point p2 = new Point(i, 200);
+            //        g4.DrawLine(new Pen(Brushes.Blue), p1, p2);
+            //        break;
+            //    }
+            //}
+
             textBoxTime.Text = dataTime[key].ToString();
+            TextBox txtBox = new TextBox();
+            for (int i = 0; i < dtcNum - 1; i++)
+            {
+                txtBox = (TextBox)this.Controls.Find("textBox" + i.ToString(), true)[0];
+                if (txtBox != null && sensorCheckedListBox.GetItemChecked(i))
+                {
+                    txtBox.Text = data[key, i].ToString();
+                }
+            }
+
         }
+
     }
 }
