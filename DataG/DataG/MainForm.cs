@@ -12,6 +12,7 @@ using System.Threading;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Drawing.Drawing2D;
+using System.Collections;
 
 namespace DataG
 {
@@ -32,7 +33,7 @@ namespace DataG
         double maxAbsX;                                         //the max abstract value of x coordinate
         double maxAbsY;                                         //the max abstract value of x coordinate
         double[] x = new double[dtrNum];                        //the x coordinate in GPSPannel
-        double[] y = new double[dtrNum];                        //the x coordinate in GPSPannel
+        double[] y = new double[dtrNum];                        //the y coordinate in GPSPannel
 
         static int xRangeMax = 70;                              //the max value of x coordinate
         static int xRangeMin = 0;                               //the min value of x coordinate
@@ -72,7 +73,7 @@ namespace DataG
         public ChartArea caR3;
         public ChartArea caR4;
 
-
+        double[] gpsTime = new double[dtrNum];
 
         public MainForm()
         {
@@ -416,6 +417,15 @@ namespace DataG
             accelerate = new double[dtrNum];  
             dataTime = new double[dtrNum];
             seriesName = new string[dtcNum - 1];
+
+            gpsTime = new double[dtrNum];
+
+            double time = 0;
+            double xx = 0;
+            double m, n;
+            double dis = 0;
+            
+
             for (int i = 0; i < dtrNum; i++)
             {
                 dataTime[i] = double.Parse(dt.Rows[i][0].ToString());
@@ -544,6 +554,20 @@ namespace DataG
                 x[i] = (maxAbsX + glpx[i]) * 0.5 * (GPSPanel.Width) / maxAbsX;
                 y[i] = (maxAbsY - glpy[i]) * 0.5 * (GPSPanel.Height) / maxAbsY;
             }
+            //for (int i = 0; i < dtrNum; i++)
+            //{
+            //    xx = dataTime[i];
+            //    int xLeftSub = findLeftNear(xx, dataTime, dataTime.Length);
+            //    int xRightSub = xLeftSub + 1;
+            //    double xLeft = dataTime[xLeftSub], xRight = dataTime[xLeftSub];
+            //    m = (xx - xLeft) / (xRight - xLeft) * (x[xRightSub] - x[xLeftSub]) + x[xLeftSub];
+            //    n = (xx - xLeft) / (xRight - xLeft) * (y[xRightSub] - y[xLeftSub]) + y[xLeftSub];
+
+            //    dis = m * m + n * n;
+            //    gpsTime[i, 0] = dis;
+            //    gpsTime[i, 1] = time; 
+            //}
+
             Graphics g = GPSPanel.CreateGraphics();
             PointF p1 = new PointF();
             PointF p2 = new PointF();
@@ -1002,9 +1026,9 @@ namespace DataG
 
                         textBoxTime.Clear();
                         TextBox txtBox = new TextBox();
-                        for (int i = 0; i < dtcNum - 1; i++)
+                        for (int j = 0; j < dtcNum - 1; j++)
                         {
-                            txtBox = (TextBox)this.Controls.Find("textBox" + i.ToString(), true)[0];
+                            txtBox = (TextBox)this.Controls.Find("textBox" + j.ToString(), true)[0];
                             if (txtBox != null)
                             {
                                 txtBox.Text = "";
@@ -1018,7 +1042,8 @@ namespace DataG
                         double xLeft = dataTime[xLeftSub], xRight = dataTime[xLeftSub];
                         //two points:A(xLeft,datY[xLeftSub]),B(xRight,datY[xRightSub])
                         xRight = dataTime[xRightSub];
-                        for (int i = 0; i < dtcNum - 1; i++)
+                        int i = 0;
+                        for (; i < dtcNum - 1; i++)
                         {
                             double k = (data[xLeftSub, i] - data[xRightSub, i]) / (xLeft - xRight);
                             double b = data[xLeftSub, i] - k * xLeft;
@@ -1031,9 +1056,11 @@ namespace DataG
                         Graphics g2 = GPSPanel.CreateGraphics();
 
                         double m, n;
+                        double dis = 0;
                         m = (xx - xLeft) / (xRight - xLeft) * (x[xRightSub] - x[xLeftSub]) + x[xLeftSub];
                         n = (xx - xLeft) / (xRight - xLeft) * (y[xRightSub] - y[xLeftSub]) + y[xLeftSub];
-
+                        dis = m * m + n * n;
+                        
                         PointF pp = new PointF();
                         pp = new PointF((float)m, (float)n);
                         g2.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
@@ -1046,7 +1073,6 @@ namespace DataG
                 }
             }
         }
-
         private void sensorChart_MouseDown(object sender, MouseEventArgs e)
         {
             flag = true;
@@ -1301,6 +1327,32 @@ namespace DataG
             //dispose of our Graphics object
             gfx.Dispose();
             return bmp;
+        }
+
+        private void GPSPanel_MouseClick(object sender, MouseEventArgs e)
+        {
+            GPSPanel.Refresh();
+            int mouseX = e.X;
+            int mouseY = e.Y;
+            double temp = 0;
+            double min = 100;
+            int key = 0;
+            for(int i =0; i< dtrNum; i++)
+            {
+                temp = (x[i] - mouseX) * (x[i] - mouseX) + (y[i] - mouseY) * (y[i] - mouseY);
+                if (temp < min)
+                {
+                    min = temp;
+                    key = i;
+                }
+                    
+            }
+            Graphics g3 = GPSPanel.CreateGraphics();
+            PointF pp = new PointF();
+            pp = new PointF((float)x[key], (float)y[key]);
+            g3.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
+
+            textBoxTime.Text = dataTime[key].ToString();
         }
     }
 }
