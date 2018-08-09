@@ -457,6 +457,7 @@ namespace DataG
             for (int i = 0; i < dtrNum; i++)
             {
                 dataTime[i] = double.Parse(dt.Rows[i][0].ToString());
+                //dataTime[i] = Math.Round(dataTime[i], 2);
                 for (int j = 0; j < dtcNum - 1; j++)
                 {
                     data[i, j] = double.Parse(dt.Rows[i][j + 1].ToString());
@@ -1352,22 +1353,40 @@ namespace DataG
                 }
                     
             }
+            this.Refresh();
             Graphics g3 = GPSPanel.CreateGraphics();
             PointF pp = new PointF();
             pp = new PointF((float)x[key], (float)y[key]);
             g3.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
 
-            //Graphics g4 = sensorChart.CreateGraphics();
-            //for (int i = 0; i < sensorChart.Width; i++)
-            //{
-            //    if (sensorChart.ChartAreas[0].AxisX.PixelPositionToValue(i) == dataTime[key])
-            //    {
-            //        Point p1 = new Point(i, 0);
-            //        Point p2 = new Point(i, 200);
-            //        g4.DrawLine(new Pen(Brushes.Blue), p1, p2);
-            //        break;
-            //    }
-            //}
+            Graphics g4 = sensorChart.CreateGraphics();
+            //MessageBox.Show(sensorChart.Width.ToString());
+            Point p1 = new Point(0, 0);
+            Point p2 = new Point(0, sensorChart.Height);
+            double dT = Convert.ToDouble(dataTime[key].ToString("0.0"));
+            for (int i = 0; i < sensorChart.Width; i++)
+            {
+                double xValue = Math.Round(sensorChart.ChartAreas[0].AxisX.PixelPositionToValue(i), 1);
+                if (xValue == dT)
+                {
+                    p1 = new Point(i, 0);
+                    p2 = new Point(i, sensorChart.Height);
+                    
+                    if (xValue > sensorChart.ChartAreas[0].AxisX.ScaleView.Position + sensorChart.ChartAreas[0].AxisX.ScaleView.Size)
+                    {
+                        sensorChart.ChartAreas[0].AxisX.ScaleView.Position += sensorChart.ChartAreas[0].AxisX.ScaleView.Size / 2;
+                        sensorChart.Invalidate();
+                    }
+                    if (xValue < sensorChart.ChartAreas[0].AxisX.ScaleView.Position)
+                    {
+                        sensorChart.ChartAreas[0].AxisX.ScaleView.Position -= sensorChart.ChartAreas[0].AxisX.ScaleView.Size / 2;
+                        sensorChart.Invalidate();
+                    }
+                    g4.DrawLine(new Pen(Brushes.Blue), p1, p2);
+                    break;
+                }
+            }
+            g4.DrawLine(new Pen(Brushes.Blue), p1, p2);
 
             textBoxTime.Text = dataTime[key].ToString();
             TextBox txtBox = new TextBox();
