@@ -49,16 +49,17 @@ namespace DataG
         bool fileOpen = false;                                  //determine whether the file has been opened
         bool flag = false;                                      //drag line
         bool flagPlace = true;
-        double moveSpeed = 1;                                   //the speed of play
+        double moveSpeed = .1;                                  //the speed of play
         bool firstPlayFlag = true;                              //the flag of first play
+        bool haveReset = true;
         bool scaleFlag = true;
         bool flag_gps = false;
         
         double[] speed = new double[dtrNum];                    //the speed in the csv file
         int speedRow = 0;
-        double[] accelerate = new double[dtrNum];                    //the speed in the csv file
+        double[] accelerate = new double[dtrNum];               //the speed in the csv file
         int accelerateRow = 0;
-        double[] steering = new double[dtrNum];                    //the speed in the csv file
+        double[] steering = new double[dtrNum];                 //the speed in the csv file
         int steerRow = 0;
         float steer_before = 0;
         float steer = 0;
@@ -506,7 +507,7 @@ namespace DataG
             {
                 speed[i] = double.Parse(dt.Rows[i][speedRow + 1].ToString());
                 accelerate[i] = double.Parse(dt.Rows[i][accelerateRow + 1].ToString());
-                steering[i] = double.Parse(dt.Rows[i][steerRow + 1].ToString());
+                steering[i] = -double.Parse(dt.Rows[i][steerRow + 1].ToString());
             }
 
             InputForm a = new InputForm();
@@ -855,7 +856,7 @@ namespace DataG
 
             }
         }
-        
+
         private void buttonPlay_Click(object sender, EventArgs e)
         {
             if (fileOpen == true)
@@ -865,6 +866,44 @@ namespace DataG
                     resetButton_Click(sender, e);
                     firstPlayFlag = false;
                 }
+                if (haveReset == true)
+                {
+                    ChartArea ca = new ChartArea();
+                    ca = sensorChart.ChartAreas.Add("Vertical");
+                    ca.BackColor = Color.Transparent;
+                    ca.BorderColor = Color.Transparent;
+                    ca.Position.FromRectangleF(sensorChart.ChartAreas[0].Position.ToRectangleF());
+                    ca.InnerPlotPosition.FromRectangleF(sensorChart.ChartAreas[0].InnerPlotPosition.ToRectangleF());
+                    //ca.InnerPlotPosition.X = (sensorChart.ChartAreas[0].Position.X + sensorChart.ChartAreas[0].Position.Right) / 2;
+                    ca.AxisY.MajorGrid.Enabled = false;
+                    ca.AxisY.MajorTickMark.Enabled = false;
+                    ca.AxisY.LabelStyle.Enabled = false;
+                    ca.AxisY.Enabled = AxisEnabled.False;
+
+                    ca.AxisX.MajorGrid.Enabled = false;
+                    ca.AxisX.LineColor = Color.Black;
+                    ca.AxisX.MajorGrid.Enabled = true;
+                    ca.AxisX.Maximum = 2;
+                    ca.AxisX.Minimum = 0;
+                    ca.AxisX.Interval = 1;
+                    ca.AxisX.MajorTickMark.Enabled = false;
+                    ca.AxisX.LabelStyle.Enabled = false;
+                    //ca.AxisY.IsStartedFromZero = sensorChart.ChartAreas[0].AxisY.IsStartedFromZero; 
+
+                    Series sCopy2 = sensorChart.Series.Add("caS");
+                    sCopy2.ChartType = sensorChart.Series[0].ChartType;
+                    foreach (DataPoint point in sensorChart.Series[0].Points)
+                    {
+                        sCopy2.Points.AddXY(point.XValue, point.YValues[0]);
+                    }
+                    sCopy2.IsVisibleInLegend = false;
+                    sCopy2.Color = Color.Transparent;
+                    sCopy2.BorderColor = Color.Transparent;
+                    sCopy2.ChartArea = ca.Name;
+                    haveReset = false;
+                }
+                
+
                 chartTimer.Interval = (int)(1000 * moveSpeed);
                 chartTimer.Enabled = true;
             } 
@@ -905,6 +944,14 @@ namespace DataG
                 nowSteeringPlace = 0;
                 this.pictureBox1.Image = RotateImage(this.pictureBox1.Image,  - steer_before);
                 sensorChart.ChartAreas[0].AxisX.ScaleView.Position = nowScrollValue + xScale / 2;
+                if (firstPlayFlag == false)
+                {
+                    //sensorChart.ChartAreas["Vertical"].Dispose();
+                    sensorChart.ChartAreas.Remove(sensorChart.ChartAreas["Vertical"]);
+                    sensorChart.Series.Remove(sensorChart.Series["caS"]);
+                }
+                
+
                 sensorChart.Invalidate();
                 chartTimer.Enabled = false;
 
@@ -922,6 +969,9 @@ namespace DataG
                         txtBox.Text = "";
                     }
                 }
+
+                haveReset = true;
+
             } 
         }
 
@@ -936,10 +986,13 @@ namespace DataG
 
         private void chartTimer_Tick(object sender, EventArgs e)
         {
-            chartTimer.Interval = (int)(1000 * moveSpeed);
-            //DateTime beforDT = System.DateTime.Now;
-            sensorChart.PostPaint += new EventHandler<ChartPaintEventArgs>(sensorChart_PostPaint);
-
+            //FileStream fs1 = File.OpenWrite(@"C:\Users\user\Desktop\1.txt");
+            //FileStream fs2 = File.OpenWrite(@"C:\Users\user\Desktop\2.txt");
+            //chartTimer.Interval = (int)(1000 * moveSpeed);
+            DateTime beforDT = System.DateTime.Now;
+            //sensorChart.PostPaint += new EventHandler<ChartPaintEventArgs>(sensorChart_PostPaint);
+            int xLeftSub3 = findLeftNear(nowSteeringPlace, dataTime, dataTime.Length);
+            //xxx += 10;
             if ((nowScrollValue + xScale / 2) >= minValue(dataTime, dataTime.Length) && (nowScrollValue + xScale / 2) <= maxValue(dataTime, dataTime.Length))
             {
                 if ((nowScrollValue + xScale / 2) <= xScale / 2)
@@ -949,24 +1002,34 @@ namespace DataG
                 TextBox txtBox = new TextBox();
                 for (int i = 0; i < dtcNum - 1; i++)
                 {
-                    txtBox = (TextBox)this.Controls.Find("textBox" + i.ToString(), true)[0];
+                    
                     if (txtBox != null && sensorCheckedListBox.GetItemChecked(i))
                     {
+                        txtBox = (TextBox)this.Controls.Find("textBox" + i.ToString(), true)[0];
                         double xx = 0;
                         if ((nowScrollValue + xScale / 2) < xScale / 2)
                             xx = nowScrollValue + xScale / 2 + moveSpeed;
                         else
                             xx = nowScrollValue + xScale / 2 + moveSpeed - 0.1;
                         int xLeftSub2 = findLeftNear(xx, dataTime, dataTime.Length);
-                        int xRightSub2 = xLeftSub2 + 1;
-                        double xLeft2 = dataTime[xLeftSub2], xRight2 = dataTime[xRightSub2];
-                        double k = (data[xLeftSub2, i] - data[xRightSub2, i]) / (xLeft2 - xRight2);
-                        double b = data[xLeftSub2, i] - k * xLeft2;
-                        txtBox.Text = Math.Round(k * xx + b, 8).ToString();
+                        //int xRightSub2 = xLeftSub2 + 1;
+                        //double xLeft2 = dataTime[xLeftSub2], xRight2 = dataTime[xRightSub2];
+                        //double k = (data[xLeftSub2, i] - data[xRightSub2, i]) / (xLeft2 - xRight2);
+                        //double b = data[xLeftSub2, i] - k * xLeft2;
+                        //txtBox.Text = Math.Round(k * xx + b, 8).ToString();
+                        txtBox.Text = Math.Round(data[xLeftSub2, i], 4).ToString();
+
                     }
                 }
             }
-
+            DateTime afterDT2 = System.DateTime.Now;
+            TimeSpan ts2 = afterDT2.Subtract(beforDT);
+            //fs1.Position = fs1.Length;
+            //string s1 = ts2.TotalMilliseconds.ToString()+"\r\n";
+            //Encoding encoder = Encoding.UTF8;
+            //byte[] bytes = encoder.GetBytes(s1);  
+            //fs1.Write(bytes,0,bytes.Length);
+            //fs1.Close();
             sensorChart.ChartAreas[0].AxisX.ScaleView.Position = nowScrollValue;
             if ((nowScrollValue + xScale / 2) < xScale / 2){
                 nowScrollValue += moveSpeed;
@@ -981,7 +1044,7 @@ namespace DataG
                 nowScrollValue += moveSpeed;
             }
                
-            sensorChart.Invalidate();
+            //sensorChart.Invalidate();
 
             if (flagPlace == true)
             {
@@ -989,15 +1052,17 @@ namespace DataG
                 Graphics g2 = Graphics.FromImage(bitmap);
                 //find the Subscript with the xLeft
                 double xx2 = newPlace + xScale / 2 + moveSpeed;
-                int xLeftSub = findLeftNear(xx2, dataTime, dataTime.Length);
+                int xLeftSub = xLeftSub3;// findLeftNear(xx2, dataTime, dataTime.Length);
                 int xRightSub = xLeftSub + 1;
                 double xLeft = dataTime[xLeftSub], xRight = dataTime[xRightSub];
                 //two points:A(xLeft,datY[xLeftSub]),B(xRight,datY[xRightSub])
 
                 double m, n;
                 GPSPanel.Refresh();
-                m = (xx2 - xLeft) / (xRight - xLeft) * (x[xRightSub] - x[xLeftSub]) + x[xLeftSub];
-                n = (xx2 - xLeft) / (xRight - xLeft) * (y[xRightSub] - y[xLeftSub]) + y[xLeftSub];
+                //m = (xx2 - xLeft) / (xRight - xLeft) * (x[xRightSub] - x[xLeftSub]) + x[xLeftSub];
+                //n = (xx2 - xLeft) / (xRight - xLeft) * (y[xRightSub] - y[xLeftSub]) + y[xLeftSub];
+                m = x[xLeftSub];
+                n = y[xLeftSub];
                 Graphics g3 = GPSPanel.CreateGraphics();
                 PointF pp = new PointF();
                 pp = new PointF((float)m, (float)n);
@@ -1014,19 +1079,25 @@ namespace DataG
                 Graphics gg = GPSPanel.CreateGraphics();
                 gg.DrawImage(bitmap, new PointF(0.0f, 0.0f));
             }
-            int xLeftSub3 = findLeftNear(nowSteeringPlace, dataTime, dataTime.Length);
+            //int xLeftSub3 = findLeftNear(nowSteeringPlace, dataTime, dataTime.Length);
             steer = Convert.ToSingle(steering[xLeftSub3]);
             this.pictureBox1.Image = RotateImage(Image.FromFile(@"..\..\..\steer.png", false), steer - steer_before);
             steer_before = steer;
             if (nowSteeringPlace <= maxValue(dataTime, dataTime.Length))
                 nowSteeringPlace += moveSpeed;
 
-            //DateTime afterDT = System.DateTime.Now;
-            //TimeSpan ts = afterDT.Subtract(beforDT);
-            //if ((int)ts.TotalMilliseconds >= 200)
-            //    chartTimer.Interval = 1;
-            //else
-            //chartTimer.Interval = (int)(1000 * moveSpeed);// - (int)ts.TotalMilliseconds;
+            DateTime afterDT = System.DateTime.Now;
+            TimeSpan ts = afterDT.Subtract(beforDT);
+            //fs2.Position = fs2.Length;
+            //string s2 = ts.TotalMilliseconds.ToString() + "\r\n";
+            //Encoding encoder2 = Encoding.UTF8;
+            //byte[] bytes2 = encoder.GetBytes(s2);
+            //fs2.Write(bytes2, 0, bytes2.Length);
+            //fs2.Close();
+            if ((int)ts.TotalMilliseconds >= (int)(1000 * moveSpeed))
+                chartTimer.Interval = 1;
+            else
+                chartTimer.Interval = (int)(1000 * moveSpeed) - (int)ts.TotalMilliseconds;
         }
 
         private void sensorChart_MouseMove(object sender, MouseEventArgs e)
@@ -1189,54 +1260,67 @@ namespace DataG
             Refresh();
         }
 
+        Bitmap bitm;
+        bool isBitCre = false;
+
         private void GPSPanel_Paint(object sender, PaintEventArgs e)
         {
-            Bitmap bitmap = new Bitmap(GPSPanel.Width, GPSPanel.Height);
-            Graphics g2 = Graphics.FromImage(bitmap);
-            if (radioButton_Normal.Checked) //normal
+            if (isBitCre == false && fileOpen == true)
             {
-                PointF p11 = new PointF();
-                PointF p22 = new PointF();
-                Pen nPen = new Pen(Brushes.Red, 2);
-                for (int i = 0; i < dtrNum -5 ; i+=5)
+                bitm = new Bitmap(GPSPanel.Width, GPSPanel.Height);
+                Graphics g2 = Graphics.FromImage(bitm);
+                if (radioButton_Normal.Checked) //normal
                 {
-                    p11 = new PointF((float)x[i], (float)y[i]);
-                    p22 = new PointF((float)x[i + 5], (float)y[i + 5]);
-                    g2.DrawLine(nPen, p11, p22);
+                    PointF p11 = new PointF();
+                    PointF p22 = new PointF();
+                    Pen nPen = new Pen(Brushes.Red, 2);
+                    for (int i = 0; i < dtrNum - 5; i += 5)
+                    {
+                        p11 = new PointF((float)x[i], (float)y[i]);
+                        p22 = new PointF((float)x[i + 5], (float)y[i + 5]);
+                        g2.DrawLine(nPen, p11, p22);
+                    }
                 }
+                else if (radioButton_Speed.Checked) //speed
+                {
+                    PointF p11 = new PointF();
+                    PointF p22 = new PointF();
+                    Pen p6;
+                    maxspeed = maxValue(speed, dtrNum);
+                    minspeed = minValue(speed, dtrNum);
+                    for (int i = 0; i < dtrNum - 1; i++)
+                    {
+                        p11 = new PointF((float)x[i], (float)y[i]);
+                        p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                        p6 = new Pen(Color.FromArgb(colorRed(speed[i], maxspeed, minspeed), colorGreen(speed[i], maxspeed, minspeed), 0), 2);
+                        g2.DrawLine(p6, p11, p22);
+                    }
+                }
+                else
+                {
+                    PointF p11 = new PointF();
+                    PointF p22 = new PointF();
+                    Pen p6;
+                    maxacc = maxValue(accelerate, dtrNum);
+                    minacc = minValue(accelerate, dtrNum);
+                    for (int i = 0; i < dtrNum - 1; i++)
+                    {
+                        p11 = new PointF((float)x[i], (float)y[i]);
+                        p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                        p6 = new Pen(Color.FromArgb(colorRed(accelerate[i], maxacc, minacc), colorGreen(accelerate[i], maxacc, minacc), 0), 2);
+                        g2.DrawLine(p6, p11, p22);
+                    }
+                }
+                Graphics gg = GPSPanel.CreateGraphics();
+                gg.DrawImage(bitm, new PointF(0.0f, 0.0f));
+                isBitCre = true;
             }
-            else if (radioButton_Speed.Checked) //speed
+            else if(fileOpen == true)
             {
-                PointF p11 = new PointF();
-                PointF p22 = new PointF();
-                Pen p6;
-                maxspeed = maxValue(speed,dtrNum);
-                minspeed = minValue(speed, dtrNum);
-                for (int i = 0; i < dtrNum - 1; i++)
-                {
-                    p11 = new PointF((float)x[i], (float)y[i]);
-                    p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
-                    p6 = new Pen(Color.FromArgb(colorRed(speed[i], maxspeed, minspeed), colorGreen(speed[i], maxspeed, minspeed), 0), 2);
-                    g2.DrawLine(p6, p11, p22);
-                }
+                Graphics gg = GPSPanel.CreateGraphics();
+                gg.DrawImage(bitm, new PointF(0.0f, 0.0f));
             }
-            else
-            {
-                PointF p11 = new PointF();
-                PointF p22 = new PointF();
-                Pen p6;
-                maxacc = maxValue(accelerate, dtrNum);
-                minacc = minValue(accelerate, dtrNum);
-                for (int i = 0; i < dtrNum - 1; i++)
-                {
-                    p11 = new PointF((float)x[i], (float)y[i]);
-                    p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
-                    p6 = new Pen(Color.FromArgb(colorRed(accelerate[i],maxacc, minacc), colorGreen(accelerate[i], maxacc, minacc), 0), 2);
-                    g2.DrawLine(p6, p11, p22);
-                }
-            }
-            Graphics gg = GPSPanel.CreateGraphics();
-            gg.DrawImage(bitmap, new PointF(0.0f, 0.0f));
+            
         }
         
         public int colorRed(double x,double max, double min)//xx,,
@@ -1411,71 +1495,76 @@ namespace DataG
 
         private void GPSPanel_MouseMove(object sender, MouseEventArgs e)
         {
-            int mouseX = e.X;
-            int mouseY = e.Y;
-            double temp = 0;
-            double min = 100;
-            int key = 0;
-            for (int i = 0; i < dtrNum; i++)
+            if (fileOpen == true)
             {
-                temp = (x[i] - mouseX) * (x[i] - mouseX) + (y[i] - mouseY) * (y[i] - mouseY);
-                if (temp < min)
+                int mouseX = e.X;
+                int mouseY = e.Y;
+                double temp = 0;
+                double min = 100;
+                int key = 0;
+                for (int i = 0; i < dtrNum; i++)
                 {
-                    min = temp;
-                    key = i;
-                }
-            }
-            Graphics g3 = GPSPanel.CreateGraphics();
-            PointF pp = new PointF();
-            pp = new PointF((float)x[key], (float)y[key]);
-            if (flag_gps)
-            {
-                //GPSPanel.Invalidate();
-                GPSPanel.Update();//if Refresh() there will be blinking problem!
-                g3.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
-                Graphics g4 = sensorChart.CreateGraphics();
-                //MessageBox.Show(sensorChart.Width.ToString());
-                Point p1 = new Point(0, 0);
-                Point p2 = new Point(0, sensorChart.Height);
-                double dT = Convert.ToDouble(dataTime[key].ToString("0.0"));
-                sensorChart.Invalidate();
-                for (int i = 0; i < sensorChart.Width; i++)
-                {
-                    double xValue = Math.Round(sensorChart.ChartAreas[0].AxisX.PixelPositionToValue(i), 1);
-                    if (xValue == dT)
+                    temp = (x[i] - mouseX) * (x[i] - mouseX) + (y[i] - mouseY) * (y[i] - mouseY);
+                    if (temp < min)
                     {
-                        p1 = new Point(i, 0);
-                        p2 = new Point(i, sensorChart.Height);
+                        min = temp;
+                        key = i;
+                    }
+                }
+                Graphics g3 = GPSPanel.CreateGraphics();
+                PointF pp = new PointF();
+                pp = new PointF((float)x[key], (float)y[key]);
+                if (flag_gps)
+                {
+                    //GPSPanel.Invalidate();
+                    GPSPanel.Update();//if Refresh() there will be blinking problem!
+                    g3.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
+                    Graphics g4 = sensorChart.CreateGraphics();
+                    //MessageBox.Show(sensorChart.Width.ToString());
+                    Point p1 = new Point(0, 0);
+                    Point p2 = new Point(0, sensorChart.Height);
+                    double dT = Convert.ToDouble(dataTime[key].ToString("0.0"));
+                    sensorChart.Invalidate();
+                    for (int i = 0; i < sensorChart.Width; i++)
+                    {
+                        double xValue = Math.Round(sensorChart.ChartAreas[0].AxisX.PixelPositionToValue(i), 1);
+                        if (xValue == dT)
+                        {
+                            p1 = new Point(i, 0);
+                            p2 = new Point(i, sensorChart.Height);
 
-                        if (xValue > sensorChart.ChartAreas[0].AxisX.ScaleView.Position + sensorChart.ChartAreas[0].AxisX.ScaleView.Size)
-                        {
-                            sensorChart.ChartAreas[0].AxisX.ScaleView.Position += sensorChart.ChartAreas[0].AxisX.ScaleView.Size / 2;
-                            sensorChart.Invalidate();
+                            if (xValue > sensorChart.ChartAreas[0].AxisX.ScaleView.Position + sensorChart.ChartAreas[0].AxisX.ScaleView.Size)
+                            {
+                                sensorChart.ChartAreas[0].AxisX.ScaleView.Position += sensorChart.ChartAreas[0].AxisX.ScaleView.Size / 2;
+                                sensorChart.Invalidate();
+                            }
+                            if (xValue < sensorChart.ChartAreas[0].AxisX.ScaleView.Position)
+                            {
+                                sensorChart.ChartAreas[0].AxisX.ScaleView.Position -= sensorChart.ChartAreas[0].AxisX.ScaleView.Size / 2;
+                                sensorChart.Invalidate();
+                            }
+                            g4.DrawLine(new Pen(Brushes.Blue), p1, p2);
+                            break;
                         }
-                        if (xValue < sensorChart.ChartAreas[0].AxisX.ScaleView.Position)
-                        {
-                            sensorChart.ChartAreas[0].AxisX.ScaleView.Position -= sensorChart.ChartAreas[0].AxisX.ScaleView.Size / 2;
-                            sensorChart.Invalidate();
-                        }
-                        g4.DrawLine(new Pen(Brushes.Blue), p1, p2);
-                        break;
                     }
-                }
-                //g4.DrawLine(new Pen(Brushes.Blue), p1, p2);
-                textBoxTime.Text = dataTime[key].ToString();
-                steer = Convert.ToSingle(steering[key]);
-                this.pictureBox1.Image = RotateImage(Image.FromFile(@"..\..\..\steer.png", false), steer - steer_before);
-                steer_before = steer;
-                TextBox txtBox = new TextBox();
-                for (int i = 0; i < dtcNum - 1; i++)
-                {
-                    txtBox = (TextBox)this.Controls.Find("textBox" + i.ToString(), true)[0];
-                    if (txtBox != null && sensorCheckedListBox.GetItemChecked(i))
+                    //g4.DrawLine(new Pen(Brushes.Blue), p1, p2);
+                    textBoxTime.Text = dataTime[key].ToString();
+                    steer = Convert.ToSingle(steering[key]);
+                    this.pictureBox1.Image = RotateImage(Image.FromFile(@"..\..\..\steer.png", false), steer - steer_before);
+                    steer_before = steer;
+                    TextBox txtBox = new TextBox();
+                    for (int i = 0; i < dtcNum - 1; i++)
                     {
-                        txtBox.Text = data[key, i].ToString();
+                        txtBox = (TextBox)this.Controls.Find("textBox" + i.ToString(), true)[0];
+                        if (txtBox != null && sensorCheckedListBox.GetItemChecked(i))
+                        {
+                            txtBox.Text = data[key, i].ToString();
+                        }
                     }
                 }
             }
+            
         }
+
     }
 }
