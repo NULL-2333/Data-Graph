@@ -1258,6 +1258,7 @@ namespace DataG
 
         private void radioButton_Normal_CheckedChanged(object sender, EventArgs e)
         {
+            //Refresh();
             Bitmap bitmap = new Bitmap(GPSPanel.Width, GPSPanel.Height);
             Graphics g2 = Graphics.FromImage(bitmap);
             PointF p11 = new PointF();
@@ -1269,6 +1270,8 @@ namespace DataG
                 p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
                 g2.DrawLine(nPen, p11, p22);
             }
+            Graphics gg = GPSPanel.CreateGraphics();
+            gg.DrawImage(bitmap, new PointF(0.0f, 0.0f));
         }
 
         private void radioButton_Speed_CheckedChanged(object sender, EventArgs e)
