@@ -77,6 +77,9 @@ namespace DataG
         public ChartArea caR3;
         public ChartArea caR4;
 
+        bool isSteering = false;
+        bool isAccel = false;
+
         double[] gpsTime = new double[dtrNum];
 
         public MainForm()
@@ -470,10 +473,14 @@ namespace DataG
             }
             if ((dataTime[2] - (int)dataTime[2]) == 0)
             {
-                for (int i = 0; i < dtrNum; i++)
+                if(dataTime[2]%10 == 0)
                 {
-                    dataTime[i] /= 1000;
+                    for (int i = 0; i < dtrNum; i++)
+                    {
+                        dataTime[i] /= 1000;
+                    }
                 }
+                
             }
             for (int i = 0; i < dtcNum - 1; i++)
             {
@@ -492,24 +499,33 @@ namespace DataG
                 if (seriesName[i].Contains("ACCEL_Y(g)"))
                 {
                     accelerateRow = i;
+                    isAccel = true;
                     break;
                 }
+                else
+                    isAccel = false;
             }
             for (int i = 0; i < dtcNum - 1; i++)
             {
                 if (seriesName[i].Contains("SteeringPosition"))
                 {
                     steerRow = i;
+                    isSteering = true;
                     break;
                 }
+                else
+                    isSteering = false;
+                
             }
 
 
             for (int i = 0; i < dtrNum; i++)
             {
                 speed[i] = double.Parse(dt.Rows[i][speedRow + 1].ToString());
-                accelerate[i] = double.Parse(dt.Rows[i][accelerateRow + 1].ToString());
-                steering[i] = -double.Parse(dt.Rows[i][steerRow + 1].ToString());
+                if(isAccel)
+                    accelerate[i] = double.Parse(dt.Rows[i][accelerateRow + 1].ToString());
+                if(isSteering)
+                    steering[i] = -double.Parse(dt.Rows[i][steerRow + 1].ToString());
             }
 
             InputForm a = new InputForm();
