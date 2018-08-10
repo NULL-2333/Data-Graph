@@ -52,6 +52,8 @@ namespace DataG
         double moveSpeed = .1;                                  //the speed of play
         bool firstPlayFlag = true;                              //the flag of first play
         bool haveReset = true;
+        Bitmap bitm;
+        bool isBitCre = false;
         bool scaleFlag = true;
         bool flag_gps = false;
         
@@ -1259,9 +1261,6 @@ namespace DataG
         {
             Refresh();
         }
-
-        Bitmap bitm;
-        bool isBitCre = false;
 
         private void GPSPanel_Paint(object sender, PaintEventArgs e)
         {
