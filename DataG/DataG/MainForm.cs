@@ -1184,6 +1184,10 @@ namespace DataG
 
         private void ConfigureButton_Click(object sender, EventArgs e)
         {
+            if (fileOpen == false)
+            {
+                return;
+            }
             RangeForm a = new RangeForm();
             a.yMax1 = yRangeMax;
             a.yMin1 = yRangeMin;
@@ -1361,6 +1365,10 @@ namespace DataG
 
         private void settingButton_Click(object sender, EventArgs e)
         {
+            if (fileOpen == false)
+            {
+                return;
+            }
             //read setting.log file
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.InitialDirectory = "c://";
@@ -1415,6 +1423,10 @@ namespace DataG
 
         private void GPSPanel_MouseClick(object sender, MouseEventArgs e)
         {
+            if (fileOpen == false)
+            {
+                return;
+            }
             GPSPanel.Refresh();
             int mouseX = e.X;
             int mouseY = e.Y;

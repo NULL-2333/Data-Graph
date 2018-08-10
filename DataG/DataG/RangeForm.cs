@@ -50,8 +50,10 @@ namespace DataG
             xScale = int.Parse(XScaleViewTextBox.Text);
             interval = double.Parse(IntervaltextBox.Text);
             yType = YAxisComboBox.Text;
-            if (double.Parse(speedTextBox.Text) > 0)
+            if (double.Parse(speedTextBox.Text) > 0){
                 speed = double.Parse(speedTextBox.Text);
+                speed = 1 / speed;
+            }   
             else
             {
                 MessageBox.Show("Invalid Speed");
@@ -75,7 +77,7 @@ namespace DataG
             IntervaltextBox.Text = z.ToString();
             string yt = yType;
             YAxisComboBox.Text = yt;
-            double s = speed;
+            double s = 1 / speed;
             speedTextBox.Text = s.ToString();
         }
 
