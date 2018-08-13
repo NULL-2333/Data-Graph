@@ -402,6 +402,8 @@ namespace DataG
 
         private void fileLoadingButton_Click(object sender, EventArgs e)
         {
+            fileOpen = false;
+            isBitCre = false;
             //delete existing chart
             sensorChart.Series.Clear();
             sensorChart.ChartAreas.Clear();
@@ -411,7 +413,6 @@ namespace DataG
             sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 10000;
             sensorChart.ChartAreas[0].AxisX.LabelStyle.Format = "N2";
             //delete all textboxes, checkboxes and radiobuttons
-            //for (int i = 2; i < dataPanel.Controls.Count;i++ )
             dataPanel.Controls.Clear();
             dataPanel.Controls.Add(timeLabel);
             dataPanel.Controls.Add(textBoxTime);
@@ -421,7 +422,7 @@ namespace DataG
             sensorCheckedListBox.Items.Clear();
             displayPanel.Controls.Add(sensorCheckedListBox);
             YPanel.Controls.Clear();
-
+            GPSPanel.Refresh();
 
 
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -488,7 +489,7 @@ namespace DataG
             }
             for (int i = 0; i < dtcNum - 1; i++)
             {
-                if (seriesName[i].IndexOf("SPEED") >= 0)
+                if (seriesName[i].IndexOf("speed") >= 0 || seriesName[i].IndexOf("SPEED") >= 0 || seriesName[i].IndexOf("Speed") >= 0)
                 {
                     speedRow = i;
                     break;
@@ -540,6 +541,7 @@ namespace DataG
             if (latName.Equals("") || lonName.Equals(""))
             {
                 MessageBox.Show("No column selected for latitude and lontitude!");
+                fileOpen = false;
                 return;
             }
 
@@ -596,20 +598,6 @@ namespace DataG
                 x[i] = (maxAbsX + glpx[i]) * 0.5 * (GPSPanel.Width) / maxAbsX;
                 y[i] = (maxAbsY - glpy[i]) * 0.5 * (GPSPanel.Height) / maxAbsY;
             }
-            //for (int i = 0; i < dtrNum; i++)
-            //{
-            //    xx = dataTime[i];
-            //    int xLeftSub = findLeftNear(xx, dataTime, dataTime.Length);
-            //    int xRightSub = xLeftSub + 1;
-            //    double xLeft = dataTime[xLeftSub], xRight = dataTime[xLeftSub];
-            //    m = (xx - xLeft) / (xRight - xLeft) * (x[xRightSub] - x[xLeftSub]) + x[xLeftSub];
-            //    n = (xx - xLeft) / (xRight - xLeft) * (y[xRightSub] - y[xLeftSub]) + y[xLeftSub];
-
-            //    dis = m * m + n * n;
-            //    gpsTime[i, 0] = dis;
-            //    gpsTime[i, 1] = time; 
-            //}
-
             Graphics g = GPSPanel.CreateGraphics();
             PointF p1 = new PointF();
             PointF p2 = new PointF();
@@ -620,6 +608,7 @@ namespace DataG
                 p2 = new PointF((float)x[i + 10], (float)y[i + 10]);
                 g.DrawLine(nPen, p1, p2);
             }
+            GPSPanel.Refresh();
             //add new labels and checkbox
             int locY = timeLabel.Location.Y + timeLabel.Height + 5;
 
@@ -1348,7 +1337,12 @@ namespace DataG
             }
             else if(fileOpen == true)
             {
-                
+                //if (radioButton_Normal.Checked) //speed
+                //{
+                //    Graphics gg2 = GPSPanel.CreateGraphics();
+                //    gg2.DrawImage(bitm, new PointF(0.0f, 0.0f));
+                //}
+
                 if (radioButton_Speed.Checked) //speed
                 {
                     bitm = new Bitmap(GPSPanel.Width, GPSPanel.Height);
