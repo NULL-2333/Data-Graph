@@ -16,7 +16,7 @@ using System.Collections;
 
 namespace DataG
 {
-    public partial class MainForm : Form
+    public partial class SingleRun : Form
     {
         //constant variable
         const double EARTH_RAD_M = 6378100.00;                  //the radius of the earth (in meter)
@@ -82,7 +82,7 @@ namespace DataG
 
         double[] gpsTime = new double[dtrNum];
 
-        public MainForm()
+        public SingleRun()
         {
             InitializeComponent();
         }
