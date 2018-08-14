@@ -40,8 +40,8 @@ namespace DataG
         double[] glpy = new double[dtrNum];                     //the y coordinate of 2D coordinate system
         double[] glpx2 = new double[dtrNum];                     //the x coordinate of 2D coordinate system
         double[] glpy2 = new double[dtrNum];
-        double maxAbsX,maxAbsX2;                                         //the max abstract value of x coordinate
-        double maxAbsY, maxAbsY2;                                         //the max abstract value of x coordinate
+        double maxAbsX;                                        //the max abstract value of x coordinate
+        double maxAbsY;                                         //the max abstract value of x coordinate
         double[] x = new double[dtrNum];                        //the x coordinate in GPSPannel
         double[] y = new double[dtrNum];       //the y coordinate in GPSPannel
         double[] x2 = new double[dtrNum2];                        //the x coordinate in GPSPannel
@@ -1658,6 +1658,29 @@ namespace DataG
                 }
             }
 
+        }
+
+        private void segmentationButton_Click(object sender, EventArgs e)
+        {
+            SegmentationDistanceForm sd = new SegmentationDistanceForm();
+            sd.ShowDialog();
+            GPSPanel.Refresh();
+            int dis = int.Parse(sd.segmentationDistance);
+            for (int i = 0; i < dtrNum - 1; i += dis)
+            {
+                Graphics g = GPSPanel.CreateGraphics();
+                Pen np = new Pen(Brushes.Black, 2);
+                if ((i + dis) < dtrNum)
+                {
+                    PointF p11 = new PointF((float)x[i], (float)y[i]);
+                    g.DrawEllipse(np, p11.X, p11.Y, 2, 2);
+                }
+                if ((i + dis) < dtrNum2)
+                {
+                    PointF p21 = new PointF((float)x2[i], (float)y2[i]);
+                    g.DrawEllipse(np, p21.X, p21.Y, 2, 2);
+                }   
+            }
         }
 
     }
