@@ -323,11 +323,11 @@ namespace DataG
             return re;
         }
 
-        void change(int no, ChartArea caR)
+        void change(string noStr, ChartArea caR)
         {
             double[] point = new double[dtrNum];
             double[] after = new double[dtrNum];
-
+            int no = findStrSub(noStr, seriesName, seriesName.Length);
             for (int j = 0; j < dtrNum; j++)
             {
                 point[j] = double.Parse(dt.Rows[j][no + 1].ToString());
@@ -336,9 +336,29 @@ namespace DataG
             {
                 after[j] = (point[j] - caR.AxisY.Minimum) / (caR.AxisY.Maximum - caR.AxisY.Minimum) * (sensorChart.ChartAreas[0].AxisY.Maximum - sensorChart.ChartAreas[0].AxisY.Minimum);
             }
-            sensorChart.Series[no].Points.Clear();
-            sensorChart.Series[no].Points.DataBindXY(dataTime, after); //sensorChart.Series[0].Points.DataBindXY(dataTime, dataSensors);
-            sensorChart.Series[no].ChartType = SeriesChartType.Line;
+            sensorChart.Series[noStr].Points.Clear();
+            sensorChart.Series[noStr].Points.DataBindXY(dataTime, after); //sensorChart.Series[0].Points.DataBindXY(dataTime, dataSensors);
+            sensorChart.Series[noStr].ChartType = SeriesChartType.Line;
+            sensorChart.Invalidate();
+
+        }
+
+        void change2(string noStr, ChartArea caR)
+        {
+            double[] point = new double[dtrNum2];
+            double[] after = new double[dtrNum2];
+            int no = findStrSub(noStr, seriesName2, seriesName2.Length);
+            for (int j = 0; j < dtrNum2; j++)
+            {
+                point[j] = double.Parse(dt2.Rows[j][no + 1].ToString());
+            }
+            for (int j = 0; j < dtrNum2; j++)
+            {
+                after[j] = (point[j] - caR.AxisY.Minimum) / (caR.AxisY.Maximum - caR.AxisY.Minimum) * (sensorChart.ChartAreas[0].AxisY.Maximum - sensorChart.ChartAreas[0].AxisY.Minimum);
+            }
+            sensorChart.Series[noStr].Points.Clear();
+            sensorChart.Series[noStr].Points.DataBindXY(dataTime2, after); //sensorChart.Series[0].Points.DataBindXY(dataTime, dataSensors);
+            sensorChart.Series[noStr].ChartType = SeriesChartType.Line;
             sensorChart.Invalidate();
 
         }
@@ -347,20 +367,26 @@ namespace DataG
         {
             RadioButton rb = (RadioButton)sender;
             int no = int.Parse(rb.Name.Substring(3, rb.Name.Length - 3));
-            //MessageBox.Show(no.ToString());
-            double[] point = new double[dtrNum];
-            sensorChart.Series[no].Points.Clear();
+
+            sensorChart.Series[seriesName[no]].Points.Clear();
             double[] dataSensor = new double[dtrNum];
             for (int j = 0; j < dtrNum; j++)
             {
                 dataSensor[j] = data[j, no];
             }
-
-
-            sensorChart.Series[no].Points.DataBindXY(dataTime, dataSensor);
-            sensorChart.Series[no].ChartType = SeriesChartType.Line;
+            sensorChart.Series[seriesName[no]].Points.DataBindXY(dataTime, dataSensor);
+            sensorChart.Series[seriesName[no]].ChartType = SeriesChartType.Line;
             sensorChart.Invalidate();
 
+            sensorChart.Series[seriesName2[no]].Points.Clear();
+            double[] dataSensor2 = new double[dtrNum2];
+            for (int j = 0; j < dtrNum2; j++)
+            {
+                dataSensor2[j] = data2[j, no];
+            }
+            sensorChart.Series[seriesName2[no]].Points.DataBindXY(dataTime2, dataSensor2);
+            sensorChart.Series[seriesName2[no]].ChartType = SeriesChartType.Line;
+            sensorChart.Invalidate();
 
         }
 
@@ -369,21 +395,24 @@ namespace DataG
             RadioButton rb = (RadioButton)sender;
             int no = int.Parse(rb.Name.Substring(3, rb.Name.Length - 3));
             // MessageBox.Show(no.ToString());
-            change(no, caR2);
+            change(seriesName[no], caR2);
+            change2(seriesName2[no], caR2);
         }
 
         void rb3_Click(object sender, EventArgs e)
         {
             RadioButton rb = (RadioButton)sender;
             int no = int.Parse(rb.Name.Substring(3, rb.Name.Length - 3));
-            change(no, caR3);
+            change(seriesName[no], caR3);
+            change2(seriesName2[no], caR3);
         }
 
         void rb4_Click(object sender, EventArgs e)
         {
             RadioButton rb = (RadioButton)sender;
             int no = int.Parse(rb.Name.Substring(3, rb.Name.Length - 3));
-            change(no, caR4);
+            change(seriesName[no], caR4);
+            change2(seriesName2[no], caR4);
         }
 
         private void fileLoadingButton_Click(object sender, EventArgs e)
@@ -452,6 +481,7 @@ namespace DataG
                     data[i, j] = double.Parse(dt.Rows[i][j + 1].ToString());
                 }
             }
+
             for (int i = 0; i < dtrNum2; i++)
             {
                 dataTime2[i] = double.Parse(dt2.Rows[i][0].ToString());
@@ -481,6 +511,28 @@ namespace DataG
             }
                 
 
+            if ((dataTime[2] - (int)dataTime[2]) == 0)
+            {
+                if (dataTime[2] % 10 == 0)
+                {
+                    for (int i = 0; i < dtrNum; i++)
+                    {
+                        dataTime[i] /= 1000;
+                    }
+                }
+
+            }
+            if ((dataTime2[2] - (int)dataTime2[2]) == 0)
+            {
+                if (dataTime[2] % 10 == 0)
+                {
+                    for (int i = 0; i < dtrNum2; i++)
+                    {
+                        dataTime2[i] /= 1000;
+                    }
+                }
+
+            }
             for (int i = 0; i < dtcNum - 1; i++)
             {
                 seriesName[i] = dt.Columns[i + 1].ColumnName;
@@ -820,6 +872,24 @@ namespace DataG
             for (int i = 0; i < dtcNum - 1; i++)
             {
                 sensorCheckedListBox.SetItemChecked(i, allSelectedCheckBox.Checked);
+            }
+        }
+
+        private void sensorCheckedListBox2_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            int index = e.Index;
+            if (index < seriesName2.Length)
+            {
+                Series sz = sensorChart.Series[seriesName2[index]];
+                sz.Enabled = !sensorCheckedListBox2.GetItemChecked(index);
+            }
+        }
+
+        private void allSelectedCheckBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            for (int i = 0; i < dtcNum - 1; i++)
+            {
+                sensorCheckedListBox2.SetItemChecked(i, allSelectedCheckBox2.Checked);
             }
         }
 
