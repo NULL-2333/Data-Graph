@@ -84,3 +84,4 @@ D:\RacingSoftware\8\Data-Graph\DataG\DataG\obj\Debug\DataG.csproj.GenerateResour
 C:\Users\user\Desktop\DataRead\DataG\DataG\obj\Debug\DataG.MainMenu.resources
 C:\Users\user\Desktop\DataRead\DataG\DataG\obj\Debug\DataG.SingleRun.resources
 C:\Users\user\Desktop\DataRead\DataG\DataG\obj\Debug\DataG.ComparedRun.resources
+C:\Users\user\Desktop\DataRead\DataG\DataG\obj\Debug\DataG.ComparedRun_FileLoadingForm.resources
