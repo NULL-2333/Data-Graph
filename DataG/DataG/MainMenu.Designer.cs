@@ -35,9 +35,11 @@
             // 
             // singleRunButton
             // 
-            this.singleRunButton.Location = new System.Drawing.Point(12, 12);
+            this.singleRunButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.5F);
+            this.singleRunButton.Location = new System.Drawing.Point(9, 10);
+            this.singleRunButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.singleRunButton.Name = "singleRunButton";
-            this.singleRunButton.Size = new System.Drawing.Size(369, 100);
+            this.singleRunButton.Size = new System.Drawing.Size(277, 80);
             this.singleRunButton.TabIndex = 1;
             this.singleRunButton.Text = "Single Run";
             this.singleRunButton.UseVisualStyleBackColor = true;
@@ -45,9 +47,11 @@
             // 
             // comparedRunButton
             // 
-            this.comparedRunButton.Location = new System.Drawing.Point(12, 138);
+            this.comparedRunButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.5F);
+            this.comparedRunButton.Location = new System.Drawing.Point(9, 110);
+            this.comparedRunButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.comparedRunButton.Name = "comparedRunButton";
-            this.comparedRunButton.Size = new System.Drawing.Size(369, 100);
+            this.comparedRunButton.Size = new System.Drawing.Size(277, 80);
             this.comparedRunButton.TabIndex = 2;
             this.comparedRunButton.Text = "Compared Run";
             this.comparedRunButton.UseVisualStyleBackColor = true;
@@ -55,9 +59,11 @@
             // 
             // exitButton
             // 
-            this.exitButton.Location = new System.Drawing.Point(12, 267);
+            this.exitButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.5F);
+            this.exitButton.Location = new System.Drawing.Point(9, 214);
+            this.exitButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.exitButton.Name = "exitButton";
-            this.exitButton.Size = new System.Drawing.Size(369, 100);
+            this.exitButton.Size = new System.Drawing.Size(277, 80);
             this.exitButton.TabIndex = 0;
             this.exitButton.Text = "Exit";
             this.exitButton.UseVisualStyleBackColor = true;
@@ -65,12 +71,13 @@
             // 
             // MainMenu
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(393, 384);
+            this.ClientSize = new System.Drawing.Size(295, 307);
             this.Controls.Add(this.exitButton);
             this.Controls.Add(this.comparedRunButton);
             this.Controls.Add(this.singleRunButton);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "MainMenu";
             this.Text = "MainMenu";
             this.ResumeLayout(false);

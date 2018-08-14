@@ -12,8 +12,8 @@ namespace DataG
 {
     public partial class ComparedRun_FileLoadingForm : Form
     {
-        string firstFileName = "";
-        string secondFileName = "";
+        public string firstFileName = "";
+        public string secondFileName = "";
         //bool 
         public ComparedRun_FileLoadingForm()
         {
@@ -66,7 +66,12 @@ namespace DataG
 
         private void confirmButton_Click(object sender, EventArgs e)
         {
+            this.Close();
+        }
 
+        private void cancelButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

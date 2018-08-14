@@ -21,19 +21,31 @@ namespace DataG
         //constant variable
         const double EARTH_RAD_M = 6378100.00;                  //the radius of the earth (in meter)
         //global variables
-        string fName = "";                                      //the name of opening file
+        string fName1 = "";                                      //the name of opening file
+        string fName2 = "";
+        double[] dataTime = new double[dtrNum];
+        double[] dataTime2 = new double[dtrNum2];
+        double[,] data = new double[dtrNum, dtcNum - 1];
+        double[,] data2 = new double[dtrNum2, dtcNum2 - 1];
         static DataTable dtSave = new DataTable();              //the datatable version of .csv file
+        static DataTable dtSave2 = new DataTable();
         static int dtrNum = dtSave.Rows.Count;                  //the number of rows in dtSave
+        static int dtrNum2 = dtSave2.Rows.Count;
         static int dtcNum = dtSave.Columns.Count + 1;           //the number of columns in dtSave
-        double[] dataTime = new double[dtrNum];                 //the data of time
-        double[,] data = new double[dtrNum, dtcNum - 1];        //the sensors' data of dtSave
+        static int dtcNum2 = dtSave2.Columns.Count + 1;
+
         string[] seriesName = new string[dtcNum - 1];           //the names of different sensors
+        string[] seriesName2 = new string[dtcNum2 - 1];
         double[] glpx = new double[dtrNum];                     //the x coordinate of 2D coordinate system
         double[] glpy = new double[dtrNum];                     //the y coordinate of 2D coordinate system
-        double maxAbsX;                                         //the max abstract value of x coordinate
-        double maxAbsY;                                         //the max abstract value of x coordinate
+        double[] glpx2 = new double[dtrNum];                     //the x coordinate of 2D coordinate system
+        double[] glpy2 = new double[dtrNum];
+        double maxAbsX,maxAbsX2;                                         //the max abstract value of x coordinate
+        double maxAbsY, maxAbsY2;                                         //the max abstract value of x coordinate
         double[] x = new double[dtrNum];                        //the x coordinate in GPSPannel
-        double[] y = new double[dtrNum];                        //the y coordinate in GPSPannel
+        double[] y = new double[dtrNum];       //the y coordinate in GPSPannel
+        double[] x2 = new double[dtrNum2];                        //the x coordinate in GPSPannel
+        double[] y2 = new double[dtrNum2];
 
         static int xRangeMax = 70;                              //the max value of x coordinate
         static int xRangeMin = 0;                               //the min value of x coordinate
@@ -65,7 +77,9 @@ namespace DataG
         int steerRow = 0;
         float steer_before = 0;
         float steer = 0;
-        int x_steer = 0;
+
+        double[] speed2 = new double[dtrNum2];                    //the speed in the csv file
+        int speedRow2 = 0;
 
         double maxacc = 0;
         double minacc = 0;
@@ -73,6 +87,7 @@ namespace DataG
         double minspeed = 0;
 
         DataTable dt = new DataTable();
+        DataTable dt2 = new DataTable();
         public ChartArea caR2;
         public ChartArea caR3;
         public ChartArea caR4;
@@ -374,8 +389,448 @@ namespace DataG
 
         private void fileLoadingButton_Click(object sender, EventArgs e)
         {
+            fileOpen = false;
+            isBitCre = false;
+            //delete existing chart
+            sensorChart.Series.Clear();
+            sensorChart.ChartAreas.Clear();
+            sensorChart.ChartAreas.Add(new ChartArea("ChartArea1"));
+            sensorChart.ChartAreas[0].AxisX.MajorGrid.LineColor = System.Drawing.Color.Transparent;
+            sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
+            sensorChart.ChartAreas[0].AxisX.ScaleView.Size = 10000;
+            sensorChart.ChartAreas[0].AxisX.LabelStyle.Format = "N2";
+            //delete all textboxes, checkboxes and radiobuttons
+            displayPanel.Controls.Clear();
+            displayPanel.Controls.Add(label4);
+            displayPanel.Controls.Add(allSelectedCheckBox);
+            sensorCheckedListBox.Items.Clear();
+            displayPanel.Controls.Add(sensorCheckedListBox);
+            YPanel.Controls.Clear();
+            GPSPanel.Refresh();
+
             ComparedRun_FileLoadingForm crFLF = new ComparedRun_FileLoadingForm();
             crFLF.ShowDialog();
+            fName1 = crFLF.firstFileName;
+            fName2 = crFLF.secondFileName;
+
+            dt = OpenCSV(fName1);
+            
+            fileOpen = true;
+            dtSave = dt;
+            dtrNum = dt.Rows.Count;
+            dtrNum2 = dt2.Rows.Count;
+            if(dtrNum > dtrNum2)
+            {
+                dtrNum = dtrNum;
+            }
+            else
+            {
+                dtrNum = dtrNum2;
+            }
+            dtcNum = dt.Columns.Count;
+            data = new double[dtrNum, dtcNum - 1];
+            speed = new double[dtrNum];
+            //steering = new double[dtrNum];
+            //accelerate = new double[dtrNum];
+            dataTime = new double[dtrNum];
+            seriesName = new string[dtcNum - 1];
+
+            dt2 = OpenCSV(fName2);
+           
+            dtSave2 = dt2;
+            
+            dtcNum2 = dt2.Columns.Count;
+            data2 = new double[dtrNum, dtcNum2 - 1];
+            speed2 = new double[dtrNum];
+            //dataTime2 = new double[dtrNum];
+            seriesName2 = new string[dtcNum - 1];
+
+            gpsTime = new double[dtrNum];
+
+            for (int i = 0; i < dtrNum; i++)
+            {
+                dataTime[i] = double.Parse(dt.Rows[i][0].ToString());
+                //dataTime2[i] = double.Parse(dt2.Rows[i][0].ToString());
+                //dataTime[i] = Math.Round(dataTime[i], 2);
+                for (int j = 0; j < dtcNum - 1; j++)
+                {
+                    data[i, j] = double.Parse(dt.Rows[i][j + 1].ToString());
+                    data2[i, j] = double.Parse(dt2.Rows[i][j + 1].ToString());
+                }
+            }
+            double k = dataTime[0];
+            for (int i = 0; i < dtrNum; i++)
+            {
+                dataTime[i] = dataTime[i] - k;
+                
+            }
+            if ((dataTime[2] - (int)dataTime[2]) == 0)
+            {
+                if (dataTime[2] % 10 == 0)
+                {
+                    for (int i = 0; i < dtrNum; i++)
+                    {
+                        dataTime[i] /= 1000;
+                    }
+                }
+
+            }
+            for (int i = 0; i < dtcNum - 1; i++)
+            {
+                seriesName[i] = dt.Columns[i + 1].ColumnName;
+                seriesName[i] = seriesName[i] + "1";
+                seriesName2[i] = dt2.Columns[i + 1].ColumnName;
+                seriesName2[i] = seriesName2[i] + "2";
+            }
+            for (int i = 0; i < dtcNum - 1; i++)
+            {
+                if (seriesName[i].IndexOf("speed") >= 0 || seriesName[i].IndexOf("SPEED") >= 0 || seriesName[i].IndexOf("Speed") >= 0)
+                {
+                    speedRow = i;
+                    break;
+                }
+            }
+
+            for (int i = 0; i < dtcNum - 1; i++)
+            {
+                if (seriesName2[i].IndexOf("speed") >= 0 || seriesName2[i].IndexOf("SPEED") >= 0 || seriesName2[i].IndexOf("Speed") >= 0)
+                {
+                    speedRow2 = i;
+                    break;
+                }
+            }
+
+            for (int i = 0; i < dtcNum - 1; i++)
+            {
+                if (seriesName[i].Contains("ACCEL_Y(g)"))
+                {
+                    accelerateRow = i;
+                    isAccel = true;
+                    break;
+                }
+                else
+                    isAccel = false;
+            }
+            //for (int i = 0; i < dtcNum - 1; i++)
+            //{
+            //    if (seriesName[i].Contains("SteeringPosition"))
+            //    {
+            //        steerRow = i;
+            //        isSteering = true;
+            //        break;
+            //    }
+            //    else
+            //        isSteering = false;
+
+            //}
+
+            for (int i = 0; i < dtrNum; i++)
+            {
+                speed[i] = double.Parse(dt.Rows[i][speedRow + 1].ToString());
+                speed2[i] = double.Parse(dt2.Rows[i][speedRow2 + 1].ToString());
+                if (isAccel)
+                    accelerate[i] = double.Parse(dt.Rows[i][accelerateRow + 1].ToString());
+                //if (isSteering)
+                //    steering[i] = -double.Parse(dt.Rows[i][steerRow + 1].ToString());
+            }
+
+            InputForm a = new InputForm();
+            a.Names = new string[dtcNum - 1];
+            for (int i = 0; i < dtcNum - 1; i++)
+            {
+                a.Names[i] = seriesName[i];
+            }
+            a.ShowDialog();
+            string latName = a.latName;
+            string lonName = a.lonName;
+
+            if (latName.Equals("") || lonName.Equals(""))
+            {
+                MessageBox.Show("No column selected for latitude and lontitude!");
+                fileOpen = false;
+                return;
+            }
+
+            sensorChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
+            sensorChart.ChartAreas[0].AxisX.ScaleView.Size = xScale;
+            sensorChart.ChartAreas[0].AxisX.Maximum = xRangeMax;
+            sensorChart.ChartAreas[0].AxisX.Minimum = xRangeMin;
+            sensorChart.ChartAreas[0].AxisX.Interval = xInterval;
+            sensorChart.ChartAreas[0].AxisY.Maximum = yRangeMax;
+            sensorChart.ChartAreas[0].AxisY.Minimum = yRangeMin;
+            sensorChart.ChartAreas[0].AxisY.ScaleView.Size = yRangeMax - yRangeMin;
+
+            for (int i = 0; i < dtcNum - 1; i++)
+            {
+                Series s = new Series(seriesName[i]);
+                double[] dataSensor = new double[dtrNum];
+                for (int j = 0; j < dtrNum; j++)
+                {
+                    dataSensor[j] = data[j, i];
+                }
+                s.Points.DataBindXY(dataTime, dataSensor);
+                s.ChartType = SeriesChartType.Line;
+                sensorChart.Series.Add(s);
+
+                Series s2 = new Series(seriesName2[i]);
+                double[] dataSensor2 = new double[dtrNum];
+                for (int j = 0; j < dtrNum; j++)
+                {
+                    dataSensor2[j] = data2[j, i];
+                }
+                s.Points.DataBindXY(dataTime, dataSensor2);
+                s.ChartType = SeriesChartType.Line;
+                sensorChart.Series.Add(s2);
+            }
+
+            double[] datA = new double[dtrNum];     //the latitude1
+            double[] datO = new double[dtrNum];     //the longtitude2
+
+            double[] datA2 = new double[dtrNum];     //the latitude1
+            double[] datO2 = new double[dtrNum];     //the longtitude2
+
+            for (int i = 0; i < dtrNum; i++)
+            {
+                datA[i] = data[i, findStrSub(latName, seriesName, dtcNum - 1)];
+                datA[i] *= 0.017453293;
+                datO[i] = data[i, findStrSub(lonName, seriesName, dtcNum - 1)];
+                datO[i] *= 0.017453293;
+
+                datA2[i] = data2[i, findStrSub(latName, seriesName2, dtcNum2 - 1)];
+                datA2[i] *= 0.017453293;
+                datO2[i] = data[i, findStrSub(lonName, seriesName2, dtcNum2 - 1)];
+                datO2[i] *= 0.017453293;
+            }
+            //convert from lat and lon to x,y
+            glpx = new double[dtrNum];
+            glpy = new double[dtrNum];
+
+            glpx2 = new double[dtrNum];
+            glpy2 = new double[dtrNum];
+
+            for (int i = 0; i < dtrNum; i++)
+            {
+                glpx[i] = (datO[i] - datO[0]) * EARTH_RAD_M;
+                glpy[i] = (datA[i] - datA[0]) * EARTH_RAD_M * Math.Sin(datO[i]);
+                glpx2[i] = (datO2[i] - datO2[0]) * EARTH_RAD_M;
+                glpy2[i] = (datA2[i] - datA2[0]) * EARTH_RAD_M * Math.Sin(datO2[i]);
+            }
+            //change the original (x,y) to the position of panel
+            if(maxAbsValue(glpx, dtrNum)> maxAbsValue(glpx2, dtrNum))
+                maxAbsX = maxAbsValue(glpx, dtrNum);
+            else
+                maxAbsX2 = maxAbsValue(glpx2, dtrNum);
+
+            if(maxAbsValue(glpy, dtrNum)> maxAbsValue(glpy2, dtrNum))
+                maxAbsY = maxAbsValue(glpy, dtrNum);
+            else
+                maxAbsY = maxAbsValue(glpy2, dtrNum);
+
+
+            x = new double[dtrNum];
+            y = new double[dtrNum];
+            x2 = new double[dtrNum];
+            y2 = new double[dtrNum];
+            for (int i = 0; i < dtrNum; i++)
+            {
+                x[i] = (maxAbsX + glpx[i]) * 0.5 * (GPSPanel.Width) / maxAbsX;
+                y[i] = (maxAbsY - glpy[i]) * 0.5 * (GPSPanel.Height) / maxAbsY;
+                x2[i] = (maxAbsX + glpx2[i]) * 0.5 * (GPSPanel.Width) / maxAbsX;
+                y2[i] = (maxAbsY - glpy2[i]) * 0.5 * (GPSPanel.Height) / maxAbsY;
+            }
+            Graphics g = GPSPanel.CreateGraphics();
+            PointF p1 = new PointF();
+            PointF p2 = new PointF();
+            Pen nPen = new Pen(Brushes.Red, 2);
+            Pen nPen2 = new Pen(Brushes.Black, 2);
+            Pen nPen3 = new Pen(Brushes.Green, 2);
+
+            for (int i = 0; i < dtrNum - 10; i += 10)
+            {
+                if(x[i] == x2[i])
+                {
+                    p1 = new PointF((float)x[i], (float)y[i]);
+                    p2 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                    g.DrawLine(nPen2, p1, p2);
+                }
+                else
+                {
+                    p1 = new PointF((float)x[i], (float)y[i]);
+                    p2 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                    g.DrawLine(nPen, p1, p2);
+                    p1 = new PointF((float)x2[i], (float)y2[i]);
+                    p2 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
+                    g.DrawLine(nPen3, p1, p2);
+                }
+            }
+            ///////////////////////////////////////////here
+            GPSPanel.Refresh();
+            //add new labels and checkbox
+            for (int i = 0; i < dtcNum - 1; i++)
+            {
+                //add checkbox to checklist box
+                sensorCheckedListBox.Items.Add(seriesName[i], true);
+                sensorCheckedListBox2.Items.Add(seriesName2[i], true);
+                //add panels to YPanel
+                Panel pan = new Panel();
+                Point pl = new Point(0, 0);
+                pan.Height = 30;
+                pan.Name = seriesName[i] + "Panel";
+                pl.Y += i * pan.Height;
+                pan.Location = pl;
+                pan.Width = YPanel.Width - 20;
+                //pan.BorderStyle = BorderStyle.FixedSingle;
+                YPanel.Controls.Add(pan);
+                //add label to pan
+                Label la = new Label();
+                la.Text = seriesName[i];
+                la.Location = new Point(0, 8);
+                la.Height = pan.Height;
+                la.Width = pan.Width / 2;
+                pan.Controls.Add(la);
+                
+                Panel pan2 = new Panel();
+                Point pl2 = new Point(0, 0);
+                pan2.Height = 30;
+                pan2.Name = seriesName2[i] + "Panel";
+                pl2.Y += i * pan2.Height;
+                pan2.Location = pl2;
+                pan2.Width = YPanel.Width - 20;
+                //pan.BorderStyle = BorderStyle.FixedSingle;
+                YPanel.Controls.Add(pan2);
+                //add label to pan
+                Label la2 = new Label();
+                la2.Text = seriesName2[i];
+                la2.Location = new Point(0, 8);
+                la2.Height = pan2.Height;
+                la2.Width = pan2.Width / 2;
+                pan2.Controls.Add(la2);
+
+                //add radiobutton to pan
+                RadioButton rb1 = new RadioButton();
+                rb1.Text = "R1";
+                rb1.Location = new Point(pan.Width / 2, 0);
+                rb1.Width = pan.Width / 8;
+                rb1.Height = pan.Height;
+                rb1.Checked = true;
+                rb1.Name = "R1_" + i.ToString();
+                pan.Controls.Add(rb1);
+                RadioButton rb2 = new RadioButton();
+                rb2.Text = "R2";
+                rb2.Location = new Point(pan.Width * 5 / 8, 0);
+                rb2.Width = pan.Width / 8;
+                rb2.Height = pan.Height;
+                rb2.Name = "R2_" + i.ToString();
+                pan.Controls.Add(rb2);
+                RadioButton rb3 = new RadioButton();
+                rb3.Text = "R3";
+                rb3.Location = new Point(pan.Width * 6 / 8, 0);
+                rb3.Width = pan.Width / 8;
+                rb3.Height = pan.Height;
+                rb3.Name = "R3_" + i.ToString();
+                pan.Controls.Add(rb3);
+                RadioButton rb4 = new RadioButton();
+                rb4.Text = "R4";
+                rb4.Location = new Point(pan.Width * 7 / 8, 0);
+                rb4.Width = pan.Width / 8;
+                rb4.Height = pan.Height;
+                rb4.Name = "R4_" + i.ToString();
+                pan.Controls.Add(rb4);
+                rb1.Click += rb1_Click;
+                rb2.Click += rb2_Click;
+                rb3.Click += rb3_Click;
+                rb4.Click += rb4_Click;
+            }
+            nowScrollValue = (int)minValue(dataTime, dataTime.Length);
+            newPlace = (int)minValue(dataTime, dataTime.Length);
+            sensorChart.ChartAreas[0].InnerPlotPosition.X = (float)45;
+            sensorChart.ChartAreas[0].InnerPlotPosition.Height = (float)90;
+            //create 3 other chartareas for R2, R3, R4 Axises
+            sensorChart.ChartAreas[0].AxisY.Title = "R1";
+            sensorChart.ChartAreas[0].Name = "R1";
+            Series sCopy2 = sensorChart.Series.Add("R2Copy");
+            sCopy2.ChartType = sensorChart.Series[0].ChartType;
+            foreach (DataPoint point in sensorChart.Series[0].Points)
+            {
+                sCopy2.Points.AddXY(point.XValue, point.YValues[0]);
+            }
+            sCopy2.IsVisibleInLegend = false;
+            sCopy2.Color = Color.Transparent;
+            sCopy2.BorderColor = Color.Transparent;
+
+            this.Refresh();
+            caR2 = sensorChart.ChartAreas.Add("R2");
+            caR2.BackColor = Color.Transparent;
+            caR2.BorderColor = Color.Transparent;
+            caR2.Position.FromRectangleF(sensorChart.ChartAreas[0].Position.ToRectangleF());
+            caR2.InnerPlotPosition.FromRectangleF(sensorChart.ChartAreas[0].InnerPlotPosition.ToRectangleF());
+            caR2.InnerPlotPosition.X -= (float)12;
+            caR2.AxisX.MajorGrid.Enabled = false;
+            caR2.AxisX.MajorTickMark.Enabled = false;
+            caR2.AxisX.LabelStyle.Enabled = false;
+            caR2.AxisX.Enabled = AxisEnabled.False;
+            caR2.AxisY.MajorGrid.Enabled = false;
+            caR2.AxisY.LineColor = Color.Black;
+            caR2.AxisY.Title = "R2";
+            caR2.AxisY.Maximum = 2;
+            caR2.AxisY.Minimum = -2;
+            caR2.AxisY.IsStartedFromZero = sensorChart.ChartAreas[0].AxisY.IsStartedFromZero;
+            sCopy2.ChartArea = caR2.Name;
+
+            Series sCopy3 = sensorChart.Series.Add("R3Copy");
+            sCopy3.ChartType = sensorChart.Series[0].ChartType;
+            foreach (DataPoint point in sensorChart.Series[0].Points)
+            {
+                sCopy3.Points.AddXY(point.XValue, point.YValues[0]);
+            }
+            sCopy3.IsVisibleInLegend = false;
+            sCopy3.Color = Color.Transparent;
+            sCopy3.BorderColor = Color.Transparent;
+
+            caR3 = sensorChart.ChartAreas.Add("R3");
+            caR3.BackColor = Color.Transparent;
+            caR3.BorderColor = Color.Transparent;
+            caR3.Position.FromRectangleF(caR2.Position.ToRectangleF());
+            caR3.InnerPlotPosition.FromRectangleF(caR2.InnerPlotPosition.ToRectangleF());
+            caR3.InnerPlotPosition.X -= (float)12;
+            caR3.AxisX.MajorGrid.Enabled = false;
+            caR3.AxisX.MajorTickMark.Enabled = false;
+            caR3.AxisX.LabelStyle.Enabled = false;
+            caR3.AxisX.Enabled = AxisEnabled.False;
+            caR3.AxisY.MajorGrid.Enabled = false;
+            caR3.AxisY.Title = "R3";
+            caR3.AxisY.Maximum = 80;
+            caR3.AxisY.Minimum = 0;
+            caR3.AxisY.IsStartedFromZero = sensorChart.ChartAreas[0].AxisY.IsStartedFromZero;
+            sCopy3.ChartArea = caR3.Name;
+
+            Series sCopy4 = sensorChart.Series.Add("R4Copy");
+            sCopy4.ChartType = sensorChart.Series[0].ChartType;
+            foreach (DataPoint point in sensorChart.Series[0].Points)
+            {
+                sCopy4.Points.AddXY(point.XValue, point.YValues[0]);
+            }
+            sCopy4.IsVisibleInLegend = false;
+            sCopy4.Color = Color.Transparent;
+            sCopy4.BorderColor = Color.Transparent;
+
+            caR4 = sensorChart.ChartAreas.Add("R4");
+            caR4.BackColor = Color.Transparent;
+            caR4.BorderColor = Color.Transparent;
+            caR4.Position.FromRectangleF(caR3.Position.ToRectangleF());
+            caR4.InnerPlotPosition.FromRectangleF(caR3.InnerPlotPosition.ToRectangleF());
+            caR4.InnerPlotPosition.X -= (float)12;
+            caR4.AxisX.MajorGrid.Enabled = false;
+            caR4.AxisX.MajorTickMark.Enabled = false;
+            caR4.AxisX.LabelStyle.Enabled = false;
+            caR4.AxisX.Enabled = AxisEnabled.False;
+            caR4.AxisY.MajorGrid.Enabled = false;
+            caR4.AxisY.Title = "R4";
+            caR4.AxisY.Maximum = 8000;
+            caR4.AxisY.Minimum = 0;
+            caR4.AxisY.IsStartedFromZero = sensorChart.ChartAreas[0].AxisY.IsStartedFromZero;
+            sCopy4.ChartArea = caR4.Name;
+            
         }
 
         private void sensorCheckedListBox_ItemCheck(object sender, ItemCheckEventArgs e)
