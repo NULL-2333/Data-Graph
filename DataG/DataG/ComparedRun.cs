@@ -472,7 +472,14 @@ namespace DataG
             for (int i = 0; i < dtrNum2; i++)
             {
                 dataTime2[i] = dataTime2[i] - k;
+                
             }
+            if (dataTime2[2] - dataTime2[1] == 1)
+            {
+                for (int i = 0; i < dtrNum2; i++)
+                    dataTime2[i] = dataTime2[i] / 10;
+            }
+                
 
             for (int i = 0; i < dtcNum - 1; i++)
             {
@@ -824,8 +831,6 @@ namespace DataG
             double xx = sensorChart.ChartAreas[0].AxisX.PixelPositionToValue(mouseX);
             if (fileOpen == true)
             {
-                if (xx >= dataTime[0] && xx <= dataTime[dtrNum - 1])
-                {
                     this.Refresh();
 
                     //draw the line with mouse click
@@ -842,16 +847,27 @@ namespace DataG
                     xRight = dataTime[xRightSub];
                     //MessageBox.Show(xLeftSub.ToString());
                     Graphics g2 = GPSPanel.CreateGraphics();
+                if (xx >= dataTime[0] && xx <= dataTime[dtrNum - 1])
+                {
                     double m, n;
                     m = (xx - xLeft) / (xRight - xLeft) * (x[xRightSub] - x[xLeftSub]) + x[xLeftSub];
-
                     n = (xx - xLeft) / (xRight - xLeft) * (y[xRightSub] - y[xLeftSub]) + y[xLeftSub];
 
                     PointF pp = new PointF();
                     pp = new PointF((float)m, (float)n);
                     //MessageBox.Show(pp.X.ToString() + " " + pp.Y.ToString());
                     g2.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
-
+                }
+                if(xx <= dataTime2[dtrNum2 - 1])
+                {
+                    double m2, n2;
+                    m2 = (xx - xLeft) / (xRight - xLeft) * (x2[xRightSub] - x2[xLeftSub]) + x2[xLeftSub];
+                    n2 = (xx - xLeft) / (xRight - xLeft) * (y2[xRightSub] - y2[xLeftSub]) + y2[xLeftSub];
+                    
+                    PointF pp2 = new PointF();
+                    pp2 = new PointF((float)m2, (float)n2);
+                    
+                    g2.FillEllipse(Brushes.Gray, pp2.X, pp2.Y, 5, 5);
                 }
 
             }
@@ -1028,16 +1044,28 @@ namespace DataG
                 double xLeft = dataTime[xLeftSub], xRight = dataTime[xRightSub];
                 //two points:A(xLeft,datY[xLeftSub]),B(xRight,datY[xRightSub])
 
-                double m, n;
+                double m, n, m2, n2;
                 GPSPanel.Refresh();
                 //m = (xx2 - xLeft) / (xRight - xLeft) * (x[xRightSub] - x[xLeftSub]) + x[xLeftSub];
                 //n = (xx2 - xLeft) / (xRight - xLeft) * (y[xRightSub] - y[xLeftSub]) + y[xLeftSub];
                 m = x[xLeftSub];
                 n = y[xLeftSub];
+                
                 Graphics g3 = GPSPanel.CreateGraphics();
                 PointF pp = new PointF();
+                PointF pp2 = new PointF();
                 pp = new PointF((float)m, (float)n);
+                
                 g3.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
+                if(xx2 <= dataTime2[dtrNum2 - 1])
+                {
+                    m2 = x2[xLeftSub];
+                    n2 = y2[xLeftSub];
+                    pp2 = new PointF((float)m2, (float)n2);
+                    g3.FillEllipse(Brushes.Gray, pp2.X, pp2.Y, 5, 5);
+
+                }
+               
                 this.Update();
                 if ((newPlace + moveSpeed) <= maxValue(dataTime, dataTime.Length))
                 {
@@ -1078,33 +1106,42 @@ namespace DataG
                 double xx = sensorChart.ChartAreas[0].AxisX.PixelPositionToValue(mouseX);
                 if (fileOpen == true)
                 {
+                    this.Refresh();
+                        //draw the line with mouse click
+                    Graphics g = sensorChart.CreateGraphics();
+                    Point p1 = new Point(mouseX, 0);
+                    Point p2 = new Point(mouseX, sensorChart.Height);
+                    Pen np = new Pen(Brushes.Blue, 1);
+                    g.DrawLine(np, p1, p2);
+                    //find the Subscript with the xLeft
+                    int xLeftSub = findLeftNear(xx, dataTime, dataTime.Length);
+                    int xRightSub = xLeftSub + 1;
+                    double xLeft = dataTime[xLeftSub], xRight = dataTime[xLeftSub];
+                        //two points:A(xLeft,datY[xLeftSub]),B(xRight,datY[xRightSub])
+                    xRight = dataTime[xRightSub];
+                        
+                    Graphics g2 = GPSPanel.CreateGraphics();
                     if (xx >= dataTime[0] && xx <= dataTime[dtrNum - 1])
                     {
-                        this.Refresh();
-                        //draw the line with mouse click
-                        Graphics g = sensorChart.CreateGraphics();
-                        Point p1 = new Point(mouseX, 0);
-                        Point p2 = new Point(mouseX, sensorChart.Height);
-                        Pen np = new Pen(Brushes.Blue, 1);
-                        g.DrawLine(np, p1, p2);
-                        //find the Subscript with the xLeft
-                        int xLeftSub = findLeftNear(xx, dataTime, dataTime.Length);
-                        int xRightSub = xLeftSub + 1;
-                        double xLeft = dataTime[xLeftSub], xRight = dataTime[xLeftSub];
-                        //two points:A(xLeft,datY[xLeftSub]),B(xRight,datY[xRightSub])
-                        xRight = dataTime[xRightSub];
-                        
-                        Graphics g2 = GPSPanel.CreateGraphics();
-
                         double m, n;
-                        double dis = 0;
                         m = (xx - xLeft) / (xRight - xLeft) * (x[xRightSub] - x[xLeftSub]) + x[xLeftSub];
                         n = (xx - xLeft) / (xRight - xLeft) * (y[xRightSub] - y[xLeftSub]) + y[xLeftSub];
-                        dis = m * m + n * n;
 
                         PointF pp = new PointF();
                         pp = new PointF((float)m, (float)n);
+                        //MessageBox.Show(pp.X.ToString() + " " + pp.Y.ToString());
                         g2.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
+                    }
+                    if (xx <= dataTime2[dtrNum2 - 1])
+                    {
+                        double m2, n2;
+                        m2 = (xx - xLeft) / (xRight - xLeft) * (x2[xRightSub] - x2[xLeftSub]) + x2[xLeftSub];
+                        n2 = (xx - xLeft) / (xRight - xLeft) * (y2[xRightSub] - y2[xLeftSub]) + y2[xLeftSub];
+
+                        PointF pp2 = new PointF();
+                        pp2 = new PointF((float)m2, (float)n2);
+
+                        g2.FillEllipse(Brushes.Gray, pp2.X, pp2.Y, 5, 5);
                     }
                 }
             }
