@@ -14,7 +14,6 @@ namespace DataG
     {
         public string firstFileName = "";
         public string secondFileName = "";
-        //bool 
         public ComparedRun_FileLoadingForm()
         {
             InitializeComponent();

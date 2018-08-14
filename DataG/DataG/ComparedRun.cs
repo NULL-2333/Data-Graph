@@ -35,7 +35,7 @@ namespace DataG
         static int dtcNum2 = dtSave2.Columns.Count + 1;
 
         string[] seriesName = new string[dtcNum - 1];           //the names of different sensors
-        string[] seriesName2 = new string[dtcNum2 - 1];
+        string[] seriesName2 = new string[dtcNum - 1];           //the names of different sensors
         double[] glpx = new double[dtrNum];                     //the x coordinate of 2D coordinate system
         double[] glpy = new double[dtrNum];                     //the y coordinate of 2D coordinate system
         double[] glpx2 = new double[dtrNum];                     //the x coordinate of 2D coordinate system
@@ -71,15 +71,14 @@ namespace DataG
 
         double[] speed = new double[dtrNum];                    //the speed in the csv file
         int speedRow = 0;
-        double[] accelerate = new double[dtrNum];               //the speed in the csv file
-        int accelerateRow = 0;
-        double[] steering = new double[dtrNum];                 //the speed in the csv file
-        int steerRow = 0;
-        float steer_before = 0;
-        float steer = 0;
-
         double[] speed2 = new double[dtrNum2];                    //the speed in the csv file
         int speedRow2 = 0;
+        double[] accelerate = new double[dtrNum];               //the speed in the csv file
+        int accelerateRow = 0;
+        double[] accelerate2 = new double[dtrNum2];               //the speed in the csv file
+        int accelerateRow2 = 0;
+
+        
 
         double maxacc = 0;
         double minacc = 0;
@@ -92,8 +91,8 @@ namespace DataG
         public ChartArea caR3;
         public ChartArea caR4;
 
-        bool isSteering = false;
         bool isAccel = false;
+        bool isAccel2 = false;
 
         double[] gpsTime = new double[dtrNum];
 
@@ -403,8 +402,10 @@ namespace DataG
             displayPanel.Controls.Clear();
             displayPanel.Controls.Add(label4);
             displayPanel.Controls.Add(allSelectedCheckBox);
+            displayPanel.Controls.Add(allSelectedCheckBox2);
             sensorCheckedListBox.Items.Clear();
             displayPanel.Controls.Add(sensorCheckedListBox);
+            displayPanel.Controls.Add(sensorCheckedListBox2);
             YPanel.Controls.Clear();
             GPSPanel.Refresh();
 
@@ -413,74 +414,73 @@ namespace DataG
             fName1 = crFLF.firstFileName;
             fName2 = crFLF.secondFileName;
 
+            if (fName1 == "" || fName2 == "")
+            {
+                return;
+            }
             dt = OpenCSV(fName1);
-            
+            dt2 = OpenCSV(fName2);
             fileOpen = true;
             dtSave = dt;
+            dtSave2 = dt2;
             dtrNum = dt.Rows.Count;
             dtrNum2 = dt2.Rows.Count;
-            if(dtrNum > dtrNum2)
-            {
-                dtrNum = dtrNum;
-            }
-            else
-            {
-                dtrNum = dtrNum2;
-            }
-            dtcNum = dt.Columns.Count;
-            data = new double[dtrNum, dtcNum - 1];
-            speed = new double[dtrNum];
-            //steering = new double[dtrNum];
-            //accelerate = new double[dtrNum];
-            dataTime = new double[dtrNum];
-            seriesName = new string[dtcNum - 1];
-
-            dt2 = OpenCSV(fName2);
-           
-            dtSave2 = dt2;
             
+            dtcNum = dt.Columns.Count;
             dtcNum2 = dt2.Columns.Count;
-            data2 = new double[dtrNum, dtcNum2 - 1];
-            speed2 = new double[dtrNum];
-            //dataTime2 = new double[dtrNum];
-            seriesName2 = new string[dtcNum - 1];
+            if (dtcNum != dtcNum2)
+            {
+                MessageBox.Show("Two files have different formate.");
+                return;
+            }
 
-            gpsTime = new double[dtrNum];
+            data = new double[dtrNum, dtcNum - 1];
+            data2 = new double[dtrNum2, dtcNum - 1];
+            speed = new double[dtrNum];
+            speed2 = new double[dtrNum2];
+            dataTime = new double[dtrNum];
+            dataTime2 = new double[dtrNum2];
+            seriesName = new string[dtcNum - 1];
+            seriesName2 = new string[dtcNum - 1];
 
             for (int i = 0; i < dtrNum; i++)
             {
                 dataTime[i] = double.Parse(dt.Rows[i][0].ToString());
-                //dataTime2[i] = double.Parse(dt2.Rows[i][0].ToString());
-                //dataTime[i] = Math.Round(dataTime[i], 2);
+                dataTime[i] = Math.Round(dataTime[i], 2);
                 for (int j = 0; j < dtcNum - 1; j++)
                 {
                     data[i, j] = double.Parse(dt.Rows[i][j + 1].ToString());
+                }
+            }
+            for (int i = 0; i < dtrNum2; i++)
+            {
+                dataTime2[i] = double.Parse(dt2.Rows[i][0].ToString());
+                dataTime2[i] = Math.Round(dataTime2[i], 2);
+                for (int j = 0; j < dtcNum2 - 1; j++)
+                {
                     data2[i, j] = double.Parse(dt2.Rows[i][j + 1].ToString());
                 }
             }
+
             double k = dataTime[0];
             for (int i = 0; i < dtrNum; i++)
             {
                 dataTime[i] = dataTime[i] - k;
-                
             }
-            if ((dataTime[2] - (int)dataTime[2]) == 0)
-            {
-                if (dataTime[2] % 10 == 0)
-                {
-                    for (int i = 0; i < dtrNum; i++)
-                    {
-                        dataTime[i] /= 1000;
-                    }
-                }
 
+            k = dataTime2[0];
+            for (int i = 0; i < dtrNum2; i++)
+            {
+                dataTime2[i] = dataTime2[i] - k;
             }
+
             for (int i = 0; i < dtcNum - 1; i++)
             {
                 seriesName[i] = dt.Columns[i + 1].ColumnName;
-                seriesName[i] = seriesName[i] + "1";
+                seriesName[i] = seriesName[i] + "_1";
                 seriesName2[i] = dt2.Columns[i + 1].ColumnName;
-                seriesName2[i] = seriesName2[i] + "2";
+                seriesName2[i] = seriesName2[i] + "_2";
+                if (dt.Columns[i + 1].ColumnName != dt2.Columns[i + 1].ColumnName) return;
             }
             for (int i = 0; i < dtcNum - 1; i++)
             {
@@ -511,34 +511,39 @@ namespace DataG
                 else
                     isAccel = false;
             }
-            //for (int i = 0; i < dtcNum - 1; i++)
-            //{
-            //    if (seriesName[i].Contains("SteeringPosition"))
-            //    {
-            //        steerRow = i;
-            //        isSteering = true;
-            //        break;
-            //    }
-            //    else
-            //        isSteering = false;
 
-            //}
+            for (int i = 0; i < dtcNum - 1; i++)
+            {
+                if (seriesName2[i].Contains("ACCEL_Y(g)"))
+                {
+                    accelerateRow2 = i;
+                    isAccel2 = true;
+                    break;
+                }
+                else
+                    isAccel2 = false;
+            }
 
             for (int i = 0; i < dtrNum; i++)
             {
                 speed[i] = double.Parse(dt.Rows[i][speedRow + 1].ToString());
-                speed2[i] = double.Parse(dt2.Rows[i][speedRow2 + 1].ToString());
                 if (isAccel)
                     accelerate[i] = double.Parse(dt.Rows[i][accelerateRow + 1].ToString());
-                //if (isSteering)
-                //    steering[i] = -double.Parse(dt.Rows[i][steerRow + 1].ToString());
             }
+
+            for (int i = 0; i < dtrNum2; i++)
+            {
+                speed2[i] = double.Parse(dt2.Rows[i][speedRow2 + 1].ToString());
+                if (isAccel2)
+                    accelerate2[i] = double.Parse(dt2.Rows[i][accelerateRow2 + 1].ToString());
+            }
+
 
             InputForm a = new InputForm();
             a.Names = new string[dtcNum - 1];
             for (int i = 0; i < dtcNum - 1; i++)
             {
-                a.Names[i] = seriesName[i];
+                a.Names[i] = dt.Columns[i + 1].ColumnName;
             }
             a.ShowDialog();
             string latName = a.latName;
@@ -573,97 +578,73 @@ namespace DataG
                 sensorChart.Series.Add(s);
 
                 Series s2 = new Series(seriesName2[i]);
-                double[] dataSensor2 = new double[dtrNum];
-                for (int j = 0; j < dtrNum; j++)
+                double[] dataSensor2 = new double[dtrNum2];
+                for (int j = 0; j < dtrNum2; j++)
                 {
                     dataSensor2[j] = data2[j, i];
                 }
-                s.Points.DataBindXY(dataTime, dataSensor2);
-                s.ChartType = SeriesChartType.Line;
+                s2.Points.DataBindXY(dataTime2, dataSensor2);
+                s2.ChartType = SeriesChartType.Line;
                 sensorChart.Series.Add(s2);
             }
 
             double[] datA = new double[dtrNum];     //the latitude1
             double[] datO = new double[dtrNum];     //the longtitude2
 
-            double[] datA2 = new double[dtrNum];     //the latitude1
-            double[] datO2 = new double[dtrNum];     //the longtitude2
+            double[] datA2 = new double[dtrNum2];     //the latitude1
+            double[] datO2 = new double[dtrNum2];     //the longtitude2
 
             for (int i = 0; i < dtrNum; i++)
             {
-                datA[i] = data[i, findStrSub(latName, seriesName, dtcNum - 1)];
+                datA[i] = data[i, findStrSub(latName + "_1", seriesName, dtcNum - 1)];
                 datA[i] *= 0.017453293;
-                datO[i] = data[i, findStrSub(lonName, seriesName, dtcNum - 1)];
+                datO[i] = data[i, findStrSub(lonName + "_1", seriesName, dtcNum - 1)];
                 datO[i] *= 0.017453293;
-
-                datA2[i] = data2[i, findStrSub(latName, seriesName2, dtcNum2 - 1)];
+            }
+            for (int i = 0; i < dtrNum2; i++)
+            {
+                datA2[i] = data2[i, findStrSub(latName + "_2", seriesName2, dtcNum2 - 1)];
                 datA2[i] *= 0.017453293;
-                datO2[i] = data[i, findStrSub(lonName, seriesName2, dtcNum2 - 1)];
+                datO2[i] = data2[i, findStrSub(lonName + "_2", seriesName2, dtcNum2 - 1)];
                 datO2[i] *= 0.017453293;
             }
             //convert from lat and lon to x,y
             glpx = new double[dtrNum];
             glpy = new double[dtrNum];
 
-            glpx2 = new double[dtrNum];
-            glpy2 = new double[dtrNum];
+            glpx2 = new double[dtrNum2];
+            glpy2 = new double[dtrNum2];
 
             for (int i = 0; i < dtrNum; i++)
             {
                 glpx[i] = (datO[i] - datO[0]) * EARTH_RAD_M;
                 glpy[i] = (datA[i] - datA[0]) * EARTH_RAD_M * Math.Sin(datO[i]);
+            }
+            for (int i = 0; i < dtrNum2; i++)
+            {
                 glpx2[i] = (datO2[i] - datO2[0]) * EARTH_RAD_M;
                 glpy2[i] = (datA2[i] - datA2[0]) * EARTH_RAD_M * Math.Sin(datO2[i]);
             }
             //change the original (x,y) to the position of panel
-            if(maxAbsValue(glpx, dtrNum)> maxAbsValue(glpx2, dtrNum))
-                maxAbsX = maxAbsValue(glpx, dtrNum);
-            else
-                maxAbsX2 = maxAbsValue(glpx2, dtrNum);
-
-            if(maxAbsValue(glpy, dtrNum)> maxAbsValue(glpy2, dtrNum))
-                maxAbsY = maxAbsValue(glpy, dtrNum);
-            else
-                maxAbsY = maxAbsValue(glpy2, dtrNum);
+            maxAbsX = Math.Max(maxAbsValue(glpx, dtrNum), maxAbsValue(glpx2, dtrNum2));
+            maxAbsY = Math.Max(maxAbsValue(glpy, dtrNum), maxAbsValue(glpy2, dtrNum2));
 
 
             x = new double[dtrNum];
             y = new double[dtrNum];
-            x2 = new double[dtrNum];
-            y2 = new double[dtrNum];
+            x2 = new double[dtrNum2];
+            y2 = new double[dtrNum2];
             for (int i = 0; i < dtrNum; i++)
             {
                 x[i] = (maxAbsX + glpx[i]) * 0.5 * (GPSPanel.Width) / maxAbsX;
                 y[i] = (maxAbsY - glpy[i]) * 0.5 * (GPSPanel.Height) / maxAbsY;
+            }
+            for (int i = 0; i < dtrNum2; i++)
+            {
                 x2[i] = (maxAbsX + glpx2[i]) * 0.5 * (GPSPanel.Width) / maxAbsX;
                 y2[i] = (maxAbsY - glpy2[i]) * 0.5 * (GPSPanel.Height) / maxAbsY;
             }
-            Graphics g = GPSPanel.CreateGraphics();
-            PointF p1 = new PointF();
-            PointF p2 = new PointF();
-            Pen nPen = new Pen(Brushes.Red, 2);
-            Pen nPen2 = new Pen(Brushes.Black, 2);
-            Pen nPen3 = new Pen(Brushes.Green, 2);
 
-            for (int i = 0; i < dtrNum - 10; i += 10)
-            {
-                if(x[i] == x2[i])
-                {
-                    p1 = new PointF((float)x[i], (float)y[i]);
-                    p2 = new PointF((float)x[i + 1], (float)y[i + 1]);
-                    g.DrawLine(nPen2, p1, p2);
-                }
-                else
-                {
-                    p1 = new PointF((float)x[i], (float)y[i]);
-                    p2 = new PointF((float)x[i + 1], (float)y[i + 1]);
-                    g.DrawLine(nPen, p1, p2);
-                    p1 = new PointF((float)x2[i], (float)y2[i]);
-                    p2 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
-                    g.DrawLine(nPen3, p1, p2);
-                }
-            }
-            ///////////////////////////////////////////here
             GPSPanel.Refresh();
             //add new labels and checkbox
             for (int i = 0; i < dtcNum - 1; i++)
@@ -683,28 +664,11 @@ namespace DataG
                 YPanel.Controls.Add(pan);
                 //add label to pan
                 Label la = new Label();
-                la.Text = seriesName[i];
+                la.Text = dt.Columns[i + 1].ColumnName;
                 la.Location = new Point(0, 8);
                 la.Height = pan.Height;
                 la.Width = pan.Width / 2;
                 pan.Controls.Add(la);
-                
-                Panel pan2 = new Panel();
-                Point pl2 = new Point(0, 0);
-                pan2.Height = 30;
-                pan2.Name = seriesName2[i] + "Panel";
-                pl2.Y += i * pan2.Height;
-                pan2.Location = pl2;
-                pan2.Width = YPanel.Width - 20;
-                //pan.BorderStyle = BorderStyle.FixedSingle;
-                YPanel.Controls.Add(pan2);
-                //add label to pan
-                Label la2 = new Label();
-                la2.Text = seriesName2[i];
-                la2.Location = new Point(0, 8);
-                la2.Height = pan2.Height;
-                la2.Width = pan2.Width / 2;
-                pan2.Controls.Add(la2);
 
                 //add radiobutton to pan
                 RadioButton rb1 = new RadioButton();
@@ -998,15 +962,6 @@ namespace DataG
             }
         }
 
-        private void sensorChart_PostPaint(object sender, ChartPaintEventArgs e)
-        {
-            double x = sensorChart.ChartAreas[0].AxisX.ScaleView.Position + xScale / 2;
-            double x0 = sensorChart.ChartAreas[0].AxisX.ValueToPixelPosition(x);
-            double y0 = sensorChart.ChartAreas[0].AxisY.ValueToPixelPosition(sensorChart.ChartAreas[0].AxisY.Minimum);
-            double y1 = sensorChart.ChartAreas[0].AxisY.ValueToPixelPosition(sensorChart.ChartAreas[0].AxisY.Maximum);
-            e.ChartGraphics.Graphics.DrawLine(new Pen(Color.Red, 1), (float)x0, (float)y0, (float)x0, (float)y1);
-        }
-
         private void chartTimer_Tick(object sender, EventArgs e)
         {
             //FileStream fs1 = File.OpenWrite(@"C:\Users\user\Desktop\1.txt");
@@ -1096,8 +1051,6 @@ namespace DataG
                 gg.DrawImage(bitmap, new PointF(0.0f, 0.0f));
             }
             //int xLeftSub3 = findLeftNear(nowSteeringPlace, dataTime, dataTime.Length);
-            steer = Convert.ToSingle(steering[xLeftSub3]);
-            steer_before = steer;
             if (nowSteeringPlace <= maxValue(dataTime, dataTime.Length))
                 nowSteeringPlace += moveSpeed;
 
@@ -1265,11 +1218,18 @@ namespace DataG
                     PointF p11 = new PointF();
                     PointF p22 = new PointF();
                     Pen nPen = new Pen(Brushes.Red, 2);
-                    for (int i = 0; i < dtrNum - 5; i += 5)
+                    Pen nPen3 = new Pen(Brushes.Green, 2);
+                    for (int i = 0; i < dtrNum - 1; i += 1)
                     {
                         p11 = new PointF((float)x[i], (float)y[i]);
-                        p22 = new PointF((float)x[i + 5], (float)y[i + 5]);
+                        p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
                         g2.DrawLine(nPen, p11, p22);
+                    }
+                    for (int i = 0; i < dtrNum2 - 1; i += 1)
+                    {
+                        p11 = new PointF((float)x2[i], (float)y2[i]);
+                        p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
+                        g2.DrawLine(nPen3, p11, p22);
                     }
                     Graphics gg = GPSPanel.CreateGraphics();
                     gg.DrawImage(bitm, new PointF(0.0f, 0.0f));
