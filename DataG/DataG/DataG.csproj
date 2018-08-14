@@ -45,6 +45,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ComparedRun.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ComparedRun.Designer.cs">
+      <DependentUpon>ComparedRun.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainMenu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -71,6 +77,9 @@
     <Compile Include="RangeForm.Designer.cs">
       <DependentUpon>RangeForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ComparedRun.resx">
+      <DependentUpon>ComparedRun.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainMenu.resx">
       <DependentUpon>MainMenu.cs</DependentUpon>
     </EmbeddedResource>

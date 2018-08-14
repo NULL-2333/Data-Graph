@@ -22,5 +22,16 @@ namespace DataG
             SingleRun singleRunForm = new SingleRun();
             singleRunForm.Show();
         }
+
+        private void comparedRunButton_Click(object sender, EventArgs e)
+        {
+            ComparedRun comparedRunForm = new ComparedRun();
+            comparedRunForm.Show();
+        }
+
+        private void exitButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
