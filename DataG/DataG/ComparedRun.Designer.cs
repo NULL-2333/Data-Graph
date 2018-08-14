@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.activatePanel = new System.Windows.Forms.Panel();
             this.resetButton = new System.Windows.Forms.Button();
             this.buttonStop = new System.Windows.Forms.Button();
@@ -75,7 +75,7 @@
             this.resetButton.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.resetButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.resetButton.Location = new System.Drawing.Point(51, 111);
-            this.resetButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.resetButton.Margin = new System.Windows.Forms.Padding(4);
             this.resetButton.Name = "resetButton";
             this.resetButton.Size = new System.Drawing.Size(348, 51);
             this.resetButton.TabIndex = 2;
@@ -134,6 +134,7 @@
             this.allSelectedCheckBox2.TabIndex = 4;
             this.allSelectedCheckBox2.Text = "All";
             this.allSelectedCheckBox2.UseVisualStyleBackColor = true;
+            this.allSelectedCheckBox2.CheckedChanged += new System.EventHandler(this.allSelectedCheckBox2_CheckedChanged);
             // 
             // sensorCheckedListBox2
             // 
@@ -144,6 +145,7 @@
             this.sensorCheckedListBox2.Name = "sensorCheckedListBox2";
             this.sensorCheckedListBox2.Size = new System.Drawing.Size(275, 104);
             this.sensorCheckedListBox2.TabIndex = 3;
+            this.sensorCheckedListBox2.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.sensorCheckedListBox2_ItemCheck);
             // 
             // allSelectedCheckBox
             // 
@@ -194,17 +196,17 @@
             // 
             // sensorChart
             // 
-            chartArea1.AxisX.LabelStyle.Format = "N3";
-            chartArea1.Name = "ChartArea1";
-            chartArea1.Position.Auto = false;
-            chartArea1.Position.Height = 94F;
-            chartArea1.Position.Width = 81.35392F;
-            chartArea1.Position.X = 3F;
-            chartArea1.Position.Y = 3F;
-            this.sensorChart.ChartAreas.Add(chartArea1);
+            chartArea2.AxisX.LabelStyle.Format = "N3";
+            chartArea2.Name = "ChartArea1";
+            chartArea2.Position.Auto = false;
+            chartArea2.Position.Height = 94F;
+            chartArea2.Position.Width = 81.35392F;
+            chartArea2.Position.X = 3F;
+            chartArea2.Position.Y = 3F;
+            this.sensorChart.ChartAreas.Add(chartArea2);
             this.sensorChart.Cursor = System.Windows.Forms.Cursors.Hand;
-            legend1.Name = "Legend1";
-            this.sensorChart.Legends.Add(legend1);
+            legend2.Name = "Legend1";
+            this.sensorChart.Legends.Add(legend2);
             this.sensorChart.Location = new System.Drawing.Point(16, 11);
             this.sensorChart.Margin = new System.Windows.Forms.Padding(7, 2, 7, 2);
             this.sensorChart.Name = "sensorChart";
@@ -227,7 +229,7 @@
             // 
             this.GPSPanel.BackColor = System.Drawing.SystemColors.Info;
             this.GPSPanel.Location = new System.Drawing.Point(1296, 11);
-            this.GPSPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.GPSPanel.Margin = new System.Windows.Forms.Padding(4);
             this.GPSPanel.Name = "GPSPanel";
             this.GPSPanel.Size = new System.Drawing.Size(507, 718);
             this.GPSPanel.TabIndex = 9;
@@ -255,9 +257,9 @@
             this.GPSGroupBox.Controls.Add(this.radioButton_Speed);
             this.GPSGroupBox.Controls.Add(this.radioButton_Normal);
             this.GPSGroupBox.Location = new System.Drawing.Point(1213, 744);
-            this.GPSGroupBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.GPSGroupBox.Margin = new System.Windows.Forms.Padding(4);
             this.GPSGroupBox.Name = "GPSGroupBox";
-            this.GPSGroupBox.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.GPSGroupBox.Padding = new System.Windows.Forms.Padding(4);
             this.GPSGroupBox.Size = new System.Drawing.Size(137, 198);
             this.GPSGroupBox.TabIndex = 12;
             this.GPSGroupBox.TabStop = false;
@@ -267,7 +269,7 @@
             // 
             this.radioButton_Accelerate.AutoSize = true;
             this.radioButton_Accelerate.Location = new System.Drawing.Point(25, 125);
-            this.radioButton_Accelerate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radioButton_Accelerate.Margin = new System.Windows.Forms.Padding(4);
             this.radioButton_Accelerate.Name = "radioButton_Accelerate";
             this.radioButton_Accelerate.Size = new System.Drawing.Size(108, 19);
             this.radioButton_Accelerate.TabIndex = 2;
@@ -280,7 +282,7 @@
             // 
             this.radioButton_Speed.AutoSize = true;
             this.radioButton_Speed.Location = new System.Drawing.Point(25, 78);
-            this.radioButton_Speed.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radioButton_Speed.Margin = new System.Windows.Forms.Padding(4);
             this.radioButton_Speed.Name = "radioButton_Speed";
             this.radioButton_Speed.Size = new System.Drawing.Size(68, 19);
             this.radioButton_Speed.TabIndex = 1;
@@ -294,7 +296,7 @@
             this.radioButton_Normal.AutoSize = true;
             this.radioButton_Normal.Checked = true;
             this.radioButton_Normal.Location = new System.Drawing.Point(25, 25);
-            this.radioButton_Normal.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radioButton_Normal.Margin = new System.Windows.Forms.Padding(4);
             this.radioButton_Normal.Name = "radioButton_Normal";
             this.radioButton_Normal.Size = new System.Drawing.Size(76, 19);
             this.radioButton_Normal.TabIndex = 0;
@@ -317,7 +319,7 @@
             // 
             this.settingButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.5F);
             this.settingButton.Location = new System.Drawing.Point(1068, 819);
-            this.settingButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.settingButton.Margin = new System.Windows.Forms.Padding(4);
             this.settingButton.Name = "settingButton";
             this.settingButton.Size = new System.Drawing.Size(137, 52);
             this.settingButton.TabIndex = 14;
