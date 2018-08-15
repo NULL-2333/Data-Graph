@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.activatePanel = new System.Windows.Forms.Panel();
             this.resetButton = new System.Windows.Forms.Button();
             this.buttonStop = new System.Windows.Forms.Button();
@@ -201,17 +201,17 @@
             // 
             // sensorChart
             // 
-            chartArea1.AxisX.LabelStyle.Format = "N3";
-            chartArea1.Name = "ChartArea1";
-            chartArea1.Position.Auto = false;
-            chartArea1.Position.Height = 94F;
-            chartArea1.Position.Width = 81.35392F;
-            chartArea1.Position.X = 3F;
-            chartArea1.Position.Y = 3F;
-            this.sensorChart.ChartAreas.Add(chartArea1);
+            chartArea2.AxisX.LabelStyle.Format = "N3";
+            chartArea2.Name = "ChartArea1";
+            chartArea2.Position.Auto = false;
+            chartArea2.Position.Height = 94F;
+            chartArea2.Position.Width = 81.35392F;
+            chartArea2.Position.X = 3F;
+            chartArea2.Position.Y = 3F;
+            this.sensorChart.ChartAreas.Add(chartArea2);
             this.sensorChart.Cursor = System.Windows.Forms.Cursors.Hand;
-            legend1.Name = "Legend1";
-            this.sensorChart.Legends.Add(legend1);
+            legend2.Name = "Legend1";
+            this.sensorChart.Legends.Add(legend2);
             this.sensorChart.Location = new System.Drawing.Point(16, 11);
             this.sensorChart.Margin = new System.Windows.Forms.Padding(7, 2, 7, 2);
             this.sensorChart.Name = "sensorChart";
@@ -235,7 +235,7 @@
             this.GPSPanel.BackColor = System.Drawing.SystemColors.Info;
             this.GPSPanel.Controls.Add(this.radioButtonLine2);
             this.GPSPanel.Controls.Add(this.radioButtonLine1);
-            this.GPSPanel.Location = new System.Drawing.Point(734, 10);
+            this.GPSPanel.Location = new System.Drawing.Point(978, 12);
             this.GPSPanel.Name = "GPSPanel";
             this.GPSPanel.Size = new System.Drawing.Size(380, 576);
             this.GPSPanel.TabIndex = 9;
@@ -249,7 +249,7 @@
             // 
             this.radioButtonLine2.AutoSize = true;
             this.radioButtonLine2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.999999F);
-            this.radioButtonLine2.Location = new System.Drawing.Point(178, 555);
+            this.radioButtonLine2.Location = new System.Drawing.Point(225, 555);
             this.radioButtonLine2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radioButtonLine2.Name = "radioButtonLine2";
             this.radioButtonLine2.Size = new System.Drawing.Size(52, 19);
@@ -263,7 +263,7 @@
             // 
             this.radioButtonLine1.AutoSize = true;
             this.radioButtonLine1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.999999F);
-            this.radioButtonLine1.Location = new System.Drawing.Point(92, 555);
+            this.radioButtonLine1.Location = new System.Drawing.Point(126, 554);
             this.radioButtonLine1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radioButtonLine1.Name = "radioButtonLine1";
             this.radioButtonLine1.Size = new System.Drawing.Size(52, 19);
@@ -378,7 +378,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(1028, 599);
+            this.ClientSize = new System.Drawing.Size(1370, 707);
             this.Controls.Add(this.segmentationButton);
             this.Controls.Add(this.settingButton);
             this.Controls.Add(this.YPanel);
