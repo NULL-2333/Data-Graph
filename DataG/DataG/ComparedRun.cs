@@ -927,22 +927,43 @@ namespace DataG
                     double m, n;
                     m = (xx - xLeft) / (xRight - xLeft) * (x[xRightSub] - x[xLeftSub]) + x[xLeftSub];
                     n = (xx - xLeft) / (xRight - xLeft) * (y[xRightSub] - y[xLeftSub]) + y[xLeftSub];
+                    
+                    if (xx <= dataTime[dtrNum - 1])
+                {
+                        PointF pp2 = new PointF();
+                        pp2 = new PointF((float)m, (float)n);
+                        Pen np2 = new Pen(Brushes.Black, 2);
+                        if (xLeftSub + 10 < dtrNum)
+                        {
+                            PointF pp3 = new PointF((float)x[xLeftSub + 10], (float)y[xLeftSub + 10]);
+                            System.Drawing.Drawing2D.AdjustableArrowCap lineCap =
+                                new System.Drawing.Drawing2D.AdjustableArrowCap(6, 6, false);
+                            np2.CustomEndCap = lineCap;
+                            g2.DrawLine(np2, pp2, pp3);
+                        }
 
-                    PointF pp = new PointF();
-                    pp = new PointF((float)m, (float)n);
-                    //MessageBox.Show(pp.X.ToString() + " " + pp.Y.ToString());
-                    g2.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
+                    }
                 }
                 if(xx <= dataTime2[dtrNum2 - 1])
                 {
                     double m2, n2;
                     m2 = (xx - xLeft) / (xRight - xLeft) * (x2[xRightSub] - x2[xLeftSub]) + x2[xLeftSub];
                     n2 = (xx - xLeft) / (xRight - xLeft) * (y2[xRightSub] - y2[xLeftSub]) + y2[xLeftSub];
-                    
-                    PointF pp2 = new PointF();
-                    pp2 = new PointF((float)m2, (float)n2);
-                    
-                    g2.FillEllipse(Brushes.Gray, pp2.X, pp2.Y, 5, 5);
+                    if (xx <= dataTime2[dtrNum2 - 1])
+                {
+                        PointF pp2 = new PointF();
+                        pp2 = new PointF((float)m2, (float)n2);
+                        Pen np2 = new Pen(Brushes.Black, 2);
+                        if (xLeftSub + 10 < dtrNum2)
+                        {
+                            PointF pp3 = new PointF((float)x2[xLeftSub + 10], (float)y2[xLeftSub + 10]);
+                            System.Drawing.Drawing2D.AdjustableArrowCap lineCap =
+                                new System.Drawing.Drawing2D.AdjustableArrowCap(6, 6, false);
+                            np2.CustomEndCap = lineCap;
+                            g2.DrawLine(np2, pp2, pp3);
+                        }
+
+                    }
                 }
 
             }
@@ -1055,9 +1076,6 @@ namespace DataG
 
         private void chartTimer_Tick(object sender, EventArgs e)
         {
-            //FileStream fs1 = File.OpenWrite(@"C:\Users\user\Desktop\1.txt");
-            //FileStream fs2 = File.OpenWrite(@"C:\Users\user\Desktop\2.txt");
-            //chartTimer.Interval = (int)(1000 * moveSpeed);
             DateTime beforDT = System.DateTime.Now;
             //sensorChart.PostPaint += new EventHandler<ChartPaintEventArgs>(sensorChart_PostPaint);
             int xLeftSub3 = findLeftNear(nowSteeringPlace, dataTime, dataTime.Length);
@@ -1074,23 +1092,11 @@ namespace DataG
                         else
                             xx = nowScrollValue + xScale / 2 + moveSpeed - 0.1;
                         int xLeftSub2 = findLeftNear(xx, dataTime, dataTime.Length);
-                        //int xRightSub2 = xLeftSub2 + 1;
-                        //double xLeft2 = dataTime[xLeftSub2], xRight2 = dataTime[xRightSub2];
-                        //double k = (data[xLeftSub2, i] - data[xRightSub2, i]) / (xLeft2 - xRight2);
-                        //double b = data[xLeftSub2, i] - k * xLeft2;
-                        //txtBox.Text = Math.Round(k * xx + b, 8).ToString();
-
                     }
                 }
             }
             DateTime afterDT2 = System.DateTime.Now;
             TimeSpan ts2 = afterDT2.Subtract(beforDT);
-            //fs1.Position = fs1.Length;
-            //string s1 = ts2.TotalMilliseconds.ToString()+"\r\n";
-            //Encoding encoder = Encoding.UTF8;
-            //byte[] bytes = encoder.GetBytes(s1);  
-            //fs1.Write(bytes,0,bytes.Length);
-            //fs1.Close();
             sensorChart.ChartAreas[0].AxisX.ScaleView.Position = nowScrollValue;
             if ((nowScrollValue + xScale / 2) < xScale / 2)
             {
@@ -1128,21 +1134,6 @@ namespace DataG
                     n = y[xLeftSub];
                     PointF pp = new PointF();
                     pp = new PointF((float)m, (float)n);
-                    //g3.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
-                    //float angle = (float)Math.Atan2(y[xLeftSub + 10] - y[xLeftSub], x[xLeftSub + 10] - x[xLeftSub]);
-                    //Image arrow = Image.FromFile(@"C:\Users\user\Desktop\arrow2.png");
-                    //Bitmap temp = new Bitmap(arrow.Width, arrow.Height);
-
-                    //Graphics tgfx = Graphics.FromImage(temp);
-                    //tgfx.TranslateTransform((float)arrow.Width / 2, (float)arrow.Height / 2);
-                    //tgfx.RotateTransform(angle);
-
-                    //tgfx.TranslateTransform(-(float)arrow.Width / 2, -(float)arrow.Height / 2);
-                    //tgfx.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                    //tgfx.DrawImage(arrow, new Point(0, 0));
-                    //tgfx.Dispose();
-                    //g3.DrawImage(temp, pp);
-                    
                     Pen np2 = new Pen(Brushes.Black, 2);
                     if (xLeftSub + 10 < dtrNum)
                     {
@@ -1159,7 +1150,6 @@ namespace DataG
                     n2 = y2[xLeftSub];
                     PointF pp2 = new PointF();
                     pp2 = new PointF((float)m2, (float)n2);
-                    //g3.FillEllipse(Brushes.Gray, pp2.X, pp2.Y, 5, 5);
                     Pen np2 = new Pen(Brushes.Black, 2);
                     if (xLeftSub + 10 < dtrNum2)
                     {
@@ -1190,18 +1180,11 @@ namespace DataG
                 Graphics gg = GPSPanel.CreateGraphics();
                 gg.DrawImage(bitmap, new PointF(0.0f, 0.0f));
             }
-            //int xLeftSub3 = findLeftNear(nowSteeringPlace, dataTime, dataTime.Length);
             if (nowSteeringPlace <= maxValue(dataTime, dataTime.Length))
                 nowSteeringPlace += moveSpeed;
 
             DateTime afterDT = System.DateTime.Now;
             TimeSpan ts = afterDT.Subtract(beforDT);
-            //fs2.Position = fs2.Length;
-            //string s2 = ts.TotalMilliseconds.ToString() + "\r\n";
-            //Encoding encoder2 = Encoding.UTF8;
-            //byte[] bytes2 = encoder.GetBytes(s2);
-            //fs2.Write(bytes2, 0, bytes2.Length);
-            //fs2.Close();
             if ((int)ts.TotalMilliseconds >= (int)(1000 * moveSpeed))
                 chartTimer.Interval = 1;
             else
@@ -1239,10 +1222,25 @@ namespace DataG
                         m = (xx - xLeft) / (xRight - xLeft) * (x[xRightSub] - x[xLeftSub]) + x[xLeftSub];
                         n = (xx - xLeft) / (xRight - xLeft) * (y[xRightSub] - y[xLeftSub]) + y[xLeftSub];
 
-                        PointF pp = new PointF();
-                        pp = new PointF((float)m, (float)n);
-                        //MessageBox.Show(pp.X.ToString() + " " + pp.Y.ToString());
-                        g2.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
+                        //PointF pp = new PointF();
+                        //pp = new PointF((float)m, (float)n);
+                        ////MessageBox.Show(pp.X.ToString() + " " + pp.Y.ToString());
+                        //g2.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
+                        if (xx <= dataTime[dtrNum - 1])
+                        {
+                            PointF pp2 = new PointF();
+                            pp2 = new PointF((float)m, (float)n);
+                            //g3.FillEllipse(Brushes.Gray, pp2.X, pp2.Y, 5, 5);
+                            Pen np2 = new Pen(Brushes.Black, 2);
+                            if (xLeftSub + 10 < dtrNum)
+                            {
+                                PointF pp3 = new PointF((float)x[xLeftSub + 10], (float)y[xLeftSub + 10]);
+                                System.Drawing.Drawing2D.AdjustableArrowCap lineCap =
+                                    new System.Drawing.Drawing2D.AdjustableArrowCap(6, 6, false);
+                                np2.CustomEndCap = lineCap;
+                                g2.DrawLine(np2, pp2, pp3);
+                            }
+                        }
                     }
                     if (xx <= dataTime2[dtrNum2 - 1])
                     {
@@ -1250,10 +1248,27 @@ namespace DataG
                         m2 = (xx - xLeft) / (xRight - xLeft) * (x2[xRightSub] - x2[xLeftSub]) + x2[xLeftSub];
                         n2 = (xx - xLeft) / (xRight - xLeft) * (y2[xRightSub] - y2[xLeftSub]) + y2[xLeftSub];
 
-                        PointF pp2 = new PointF();
-                        pp2 = new PointF((float)m2, (float)n2);
+                        //PointF pp2 = new PointF();
+                        //pp2 = new PointF((float)m2, (float)n2);
 
-                        g2.FillEllipse(Brushes.Gray, pp2.X, pp2.Y, 5, 5);
+                        //g2.FillEllipse(Brushes.Gray, pp2.X, pp2.Y, 5, 5);
+                        if (xx <= dataTime2[dtrNum2 - 1])
+                        {
+                            if (xx <= dataTime2[dtrNum2 - 1])
+                            {
+                                PointF pp2 = new PointF();
+                                pp2 = new PointF((float)m2, (float)n2);
+                                Pen np2 = new Pen(Brushes.Black, 2);
+                                if (xLeftSub + 10 < dtrNum2)
+                                {
+                                    PointF pp3 = new PointF((float)x2[xLeftSub + 10], (float)y2[xLeftSub + 10]);
+                                    System.Drawing.Drawing2D.AdjustableArrowCap lineCap =
+                                        new System.Drawing.Drawing2D.AdjustableArrowCap(6, 6, false);
+                                    np2.CustomEndCap = lineCap;
+                                    g2.DrawLine(np2, pp2, pp3);
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -1762,14 +1777,11 @@ namespace DataG
                         pp = new PointF((float)x2[key], (float)y2[key]);
                         g3.FillEllipse(Brushes.Gray, pp.X, pp.Y, 5, 5);
                     }
-
-
-                    //GPSPanel.Invalidate();
-                    GPSPanel.Update();//if Refresh() there will be blinking problem!
+                    
+                    //GPSPanel.Update();//if Refresh() there will be blinking problem!
 
 
                     Graphics g4 = sensorChart.CreateGraphics();
-                    //MessageBox.Show(sensorChart.Width.ToString());
                     Point p1 = new Point(0, 0);
                     Point p2 = new Point(0, sensorChart.Height);
                     double dT = Convert.ToDouble(dataTime[key].ToString("0.0"));
@@ -1796,7 +1808,6 @@ namespace DataG
                             break;
                         }
                     }
-                    //g4.DrawLine(new Pen(Brushes.Blue), p1, p2);
                 }
             }
 
@@ -1804,13 +1815,6 @@ namespace DataG
 
         private void segmentationButton_Click(object sender, EventArgs e)
         {
-            //Graphics g2 = GPSPanel.CreateGraphics();
-            //Pen np2 = new Pen(Brushes.Black, 2);
-            //PointF p112 = new PointF(0, 0);
-            //PointF p212 = new PointF(50, 50);
-            //AdjustableArrowCap lineCap = new AdjustableArrowCap(5, 5, false);
-            //np2.CustomEndCap = lineCap;
-            //g2.DrawLine(np2, p112, p212);
             if (fileOpen == false) return;
             SegmentationDistanceForm sd = new SegmentationDistanceForm();
             sd.ShowDialog();
