@@ -464,6 +464,7 @@ namespace DataG
             if (dtcNum != dtcNum2)
             {
                 MessageBox.Show("Two files have different formate.");
+                fileOpen = false;
                 return;
             }
 
@@ -1687,42 +1688,53 @@ namespace DataG
                 if (flag_gps)
                 {
                     if (radioButtonLine1.Checked)
-                {
-                    for (int i = 0; i < dtrNum; i++)
-                {
-                    temp = (x[i] - mouseX) * (x[i] - mouseX) + (y[i] - mouseY) * (y[i] - mouseY);
-                    if (temp < min)
                     {
-                        min = temp;
-                        key = i;
-                    }
-                }
-                Graphics g3 = GPSPanel.CreateGraphics();
-                PointF pp = new PointF();
-                pp = new PointF((float)x[key], (float)y[key]);
-                g3.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
-                    }
-                if (radioButtonLine2.Checked)
-                {
-                    for (int i = 0; i < dtrNum; i++)
-                    {
-                        temp = (x2[i] - mouseX) * (x2[i] - mouseX) + (y2[i] - mouseY) * (y2[i] - mouseY);
-                        if (temp < min)
+                        for (int i = 0; i < dtrNum; i++)
                         {
-                            min = temp;
-                            key = i;
+                            temp = (x[i] - mouseX) * (x[i] - mouseX) + (y[i] - mouseY) * (y[i] - mouseY);
+                            if (temp < min)
+                            {
+                                min = temp;
+                                key = i;
+                            }
                         }
+                        Graphics g3 = GPSPanel.CreateGraphics();
+                        PointF pp = new PointF();
+                        pp = new PointF((float)x[key], (float)y[key]);
+                        g3.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
+                        if (key < dtrNum2)
+                        {
+                            pp = new PointF((float)x2[key], (float)y2[key]);
+                            g3.FillEllipse(Brushes.Gray, pp.X, pp.Y, 5, 5);
+                        }
+                        
                     }
-                    Graphics g3 = GPSPanel.CreateGraphics();
-                    PointF pp = new PointF();
-                    pp = new PointF((float)x2[key], (float)y2[key]);
+                    if (radioButtonLine2.Checked)
+                    {
+                        for (int i = 0; i < dtrNum2; i++)
+                        {
+                            temp = (x2[i] - mouseX) * (x2[i] - mouseX) + (y2[i] - mouseY) * (y2[i] - mouseY);
+                            if (temp < min)
+                            {
+                                min = temp;
+                                key = i;
+                            }
+                        }
+                        Graphics g3 = GPSPanel.CreateGraphics();
+                        PointF pp = new PointF();
+                        if (key < dtrNum2)
+                        {
+                            pp = new PointF((float)x[key], (float)y[key]);
+                            g3.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
+                        }
+                        pp = new PointF((float)x2[key], (float)y2[key]);
                         g3.FillEllipse(Brushes.Gray, pp.X, pp.Y, 5, 5);
                     }
-                
-                
+
+
                     //GPSPanel.Invalidate();
                     GPSPanel.Update();//if Refresh() there will be blinking problem!
-                        
+
 
                     Graphics g4 = sensorChart.CreateGraphics();
                     //MessageBox.Show(sensorChart.Width.ToString());
@@ -1760,8 +1772,10 @@ namespace DataG
 
         private void segmentationButton_Click(object sender, EventArgs e)
         {
+            if (fileOpen == false) return;
             SegmentationDistanceForm sd = new SegmentationDistanceForm();
             sd.ShowDialog();
+            if (sd.segmentationDistance == "") return;
             GPSPanel.Refresh();
             int dis = int.Parse(sd.segmentationDistance);
             for (int i = 0; i < dtrNum - 1; i += dis)

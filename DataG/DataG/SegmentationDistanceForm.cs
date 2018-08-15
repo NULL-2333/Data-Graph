@@ -23,5 +23,10 @@ namespace DataG
             segmentationDistance = segmentationDistanceTextBox.Text;
             this.Close();
         }
+
+        private void cancelButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
