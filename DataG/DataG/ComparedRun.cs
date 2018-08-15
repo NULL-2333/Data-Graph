@@ -927,17 +927,16 @@ namespace DataG
                     double m, n;
                     m = (xx - xLeft) / (xRight - xLeft) * (x[xRightSub] - x[xLeftSub]) + x[xLeftSub];
                     n = (xx - xLeft) / (xRight - xLeft) * (y[xRightSub] - y[xLeftSub]) + y[xLeftSub];
-                    
+
                     if (xx <= dataTime[dtrNum - 1])
-                {
+                    {
                         PointF pp2 = new PointF();
                         pp2 = new PointF((float)m, (float)n);
-                        Pen np2 = new Pen(Brushes.Black, 2);
+                        Pen np2 = new Pen(Brushes.Red, 2);
                         if (xLeftSub + 10 < dtrNum)
                         {
                             PointF pp3 = new PointF((float)x[xLeftSub + 10], (float)y[xLeftSub + 10]);
-                            System.Drawing.Drawing2D.AdjustableArrowCap lineCap =
-                                new System.Drawing.Drawing2D.AdjustableArrowCap(6, 6, false);
+                            AdjustableArrowCap lineCap = new AdjustableArrowCap(6, 6, false);
                             np2.CustomEndCap = lineCap;
                             g2.DrawLine(np2, pp2, pp3);
                         }
@@ -953,12 +952,11 @@ namespace DataG
                 {
                         PointF pp2 = new PointF();
                         pp2 = new PointF((float)m2, (float)n2);
-                        Pen np2 = new Pen(Brushes.Black, 2);
+                        Pen np2 = new Pen(Brushes.Green, 2);
                         if (xLeftSub + 10 < dtrNum2)
                         {
                             PointF pp3 = new PointF((float)x2[xLeftSub + 10], (float)y2[xLeftSub + 10]);
-                            System.Drawing.Drawing2D.AdjustableArrowCap lineCap =
-                                new System.Drawing.Drawing2D.AdjustableArrowCap(6, 6, false);
+                            AdjustableArrowCap lineCap = new AdjustableArrowCap(6, 6, false);
                             np2.CustomEndCap = lineCap;
                             g2.DrawLine(np2, pp2, pp3);
                         }
@@ -1134,12 +1132,11 @@ namespace DataG
                     n = y[xLeftSub];
                     PointF pp = new PointF();
                     pp = new PointF((float)m, (float)n);
-                    Pen np2 = new Pen(Brushes.Black, 2);
+                    Pen np2 = new Pen(Brushes.Red, 2);
                     if (xLeftSub + 10 < dtrNum)
                     {
                         PointF pp2 = new PointF((float)x[xLeftSub + 10], (float)y[xLeftSub + 10]);
-                        System.Drawing.Drawing2D.AdjustableArrowCap lineCap =
-                            new System.Drawing.Drawing2D.AdjustableArrowCap(6, 6, false);
+                        AdjustableArrowCap lineCap = new AdjustableArrowCap(6, 6, false);
                         np2.CustomEndCap = lineCap;
                         g2.DrawLine(np2, pp, pp2);
                     }
@@ -1150,12 +1147,11 @@ namespace DataG
                     n2 = y2[xLeftSub];
                     PointF pp2 = new PointF();
                     pp2 = new PointF((float)m2, (float)n2);
-                    Pen np2 = new Pen(Brushes.Black, 2);
+                    Pen np2 = new Pen(Brushes.Green, 2);
                     if (xLeftSub + 10 < dtrNum2)
                     {
                         PointF pp3 = new PointF((float)x2[xLeftSub + 10], (float)y2[xLeftSub + 10]);
-                        System.Drawing.Drawing2D.AdjustableArrowCap lineCap =
-                            new System.Drawing.Drawing2D.AdjustableArrowCap(6, 6, false);
+                        AdjustableArrowCap lineCap = new AdjustableArrowCap(6, 6, false);
                         np2.CustomEndCap = lineCap;
                         g2.DrawLine(np2, pp2, pp3);
                     }
@@ -1231,12 +1227,11 @@ namespace DataG
                             PointF pp2 = new PointF();
                             pp2 = new PointF((float)m, (float)n);
                             //g3.FillEllipse(Brushes.Gray, pp2.X, pp2.Y, 5, 5);
-                            Pen np2 = new Pen(Brushes.Black, 2);
+                            Pen np2 = new Pen(Brushes.Red, 2);
                             if (xLeftSub + 10 < dtrNum)
                             {
                                 PointF pp3 = new PointF((float)x[xLeftSub + 10], (float)y[xLeftSub + 10]);
-                                System.Drawing.Drawing2D.AdjustableArrowCap lineCap =
-                                    new System.Drawing.Drawing2D.AdjustableArrowCap(6, 6, false);
+                                AdjustableArrowCap lineCap =new AdjustableArrowCap(6, 6, false);
                                 np2.CustomEndCap = lineCap;
                                 g2.DrawLine(np2, pp2, pp3);
                             }
@@ -1258,12 +1253,11 @@ namespace DataG
                             {
                                 PointF pp2 = new PointF();
                                 pp2 = new PointF((float)m2, (float)n2);
-                                Pen np2 = new Pen(Brushes.Black, 2);
+                                Pen np2 = new Pen(Brushes.Green, 2);
                                 if (xLeftSub + 10 < dtrNum2)
                                 {
                                     PointF pp3 = new PointF((float)x2[xLeftSub + 10], (float)y2[xLeftSub + 10]);
-                                    System.Drawing.Drawing2D.AdjustableArrowCap lineCap =
-                                        new System.Drawing.Drawing2D.AdjustableArrowCap(6, 6, false);
+                                    AdjustableArrowCap lineCap = new AdjustableArrowCap(6, 6, false);
                                     np2.CustomEndCap = lineCap;
                                     g2.DrawLine(np2, pp2, pp3);
                                 }
@@ -1637,20 +1631,25 @@ namespace DataG
             if (radioButtonLine1.Checked)
             {
                 for (int i = 0; i < dtrNum; i++)
-            {
-                temp = (x[i] - mouseX) * (x[i] - mouseX) + (y[i] - mouseY) * (y[i] - mouseY);
-                if (temp < min)
                 {
-                    min = temp;
-                    key = i;
-                }
+                    temp = (x[i] - mouseX) * (x[i] - mouseX) + (y[i] - mouseY) * (y[i] - mouseY);
+                    if (temp < min)
+                    {
+                        min = temp;
+                        key = i;
+                    }
 
-            }
-            this.Refresh();
-            Graphics g3 = GPSPanel.CreateGraphics();
-            PointF pp = new PointF();
-            pp = new PointF((float)x[key], (float)y[key]);
-            g3.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
+                }
+                this.Refresh();
+                Graphics g3 = GPSPanel.CreateGraphics();
+                PointF pp = new PointF();
+                pp = new PointF((float)x[key], (float)y[key]);
+                g3.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
+                if (key < dtrNum2)
+                {
+                    pp = new PointF((float)x2[key], (float)y2[key]);
+                    g3.FillEllipse(Brushes.Gray, pp.X, pp.Y, 5, 5);
+                }
                 
             }
             if (radioButtonLine2.Checked)
@@ -1668,12 +1667,16 @@ namespace DataG
                 this.Refresh();
                 Graphics g3 = GPSPanel.CreateGraphics();
                 PointF pp = new PointF();
+                if (key < dtrNum)
+                {
+                    pp = new PointF((float)x[key], (float)y[key]);
+                    g3.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
+                }
                 pp = new PointF((float)x2[key], (float)y2[key]);
                 g3.FillEllipse(Brushes.Gray, pp.X, pp.Y, 5, 5);
             }
             
             Graphics g4 = sensorChart.CreateGraphics();
-            //MessageBox.Show(sensorChart.Width.ToString());
             Point p1 = new Point(0, 0);
             Point p2 = new Point(0, sensorChart.Height);
             double dT = Convert.ToDouble(dataTime[key].ToString("0.0"));
