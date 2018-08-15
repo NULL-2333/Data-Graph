@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.activatePanel = new System.Windows.Forms.Panel();
             this.resetButton = new System.Windows.Forms.Button();
             this.buttonStop = new System.Windows.Forms.Button();
@@ -52,9 +52,12 @@
             this.radioButton_Normal = new System.Windows.Forms.RadioButton();
             this.YPanel = new System.Windows.Forms.Panel();
             this.settingButton = new System.Windows.Forms.Button();
+            this.radioButtonLine1 = new System.Windows.Forms.RadioButton();
+            this.radioButtonLine2 = new System.Windows.Forms.RadioButton();
             this.activatePanel.SuspendLayout();
             this.displayPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sensorChart)).BeginInit();
+            this.GPSPanel.SuspendLayout();
             this.GPSGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -197,17 +200,17 @@
             // 
             // sensorChart
             // 
-            chartArea2.AxisX.LabelStyle.Format = "N3";
-            chartArea2.Name = "ChartArea1";
-            chartArea2.Position.Auto = false;
-            chartArea2.Position.Height = 94F;
-            chartArea2.Position.Width = 81.35392F;
-            chartArea2.Position.X = 3F;
-            chartArea2.Position.Y = 3F;
-            this.sensorChart.ChartAreas.Add(chartArea2);
+            chartArea4.AxisX.LabelStyle.Format = "N3";
+            chartArea4.Name = "ChartArea1";
+            chartArea4.Position.Auto = false;
+            chartArea4.Position.Height = 94F;
+            chartArea4.Position.Width = 81.35392F;
+            chartArea4.Position.X = 3F;
+            chartArea4.Position.Y = 3F;
+            this.sensorChart.ChartAreas.Add(chartArea4);
             this.sensorChart.Cursor = System.Windows.Forms.Cursors.Hand;
-            legend2.Name = "Legend1";
-            this.sensorChart.Legends.Add(legend2);
+            legend4.Name = "Legend1";
+            this.sensorChart.Legends.Add(legend4);
             this.sensorChart.Location = new System.Drawing.Point(16, 11);
             this.sensorChart.Margin = new System.Windows.Forms.Padding(7, 2, 7, 2);
             this.sensorChart.Name = "sensorChart";
@@ -229,6 +232,8 @@
             // GPSPanel
             // 
             this.GPSPanel.BackColor = System.Drawing.SystemColors.Info;
+            this.GPSPanel.Controls.Add(this.radioButtonLine2);
+            this.GPSPanel.Controls.Add(this.radioButtonLine1);
             this.GPSPanel.Location = new System.Drawing.Point(979, 13);
             this.GPSPanel.Margin = new System.Windows.Forms.Padding(4);
             this.GPSPanel.Name = "GPSPanel";
@@ -328,6 +333,32 @@
             this.settingButton.UseVisualStyleBackColor = true;
             this.settingButton.Click += new System.EventHandler(this.settingButton_Click);
             // 
+            // radioButtonLine1
+            // 
+            this.radioButtonLine1.AutoSize = true;
+            this.radioButtonLine1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.999999F);
+            this.radioButtonLine1.Location = new System.Drawing.Point(116, 552);
+            this.radioButtonLine1.Name = "radioButtonLine1";
+            this.radioButtonLine1.Size = new System.Drawing.Size(52, 19);
+            this.radioButtonLine1.TabIndex = 0;
+            this.radioButtonLine1.TabStop = true;
+            this.radioButtonLine1.Text = "line1";
+            this.radioButtonLine1.UseVisualStyleBackColor = true;
+            this.radioButtonLine1.Click += new System.EventHandler(this.radioButtonLine1_Click);
+            // 
+            // radioButtonLine2
+            // 
+            this.radioButtonLine2.AutoSize = true;
+            this.radioButtonLine2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.999999F);
+            this.radioButtonLine2.Location = new System.Drawing.Point(187, 552);
+            this.radioButtonLine2.Name = "radioButtonLine2";
+            this.radioButtonLine2.Size = new System.Drawing.Size(52, 19);
+            this.radioButtonLine2.TabIndex = 1;
+            this.radioButtonLine2.TabStop = true;
+            this.radioButtonLine2.Text = "line2";
+            this.radioButtonLine2.UseVisualStyleBackColor = true;
+            this.radioButtonLine2.Click += new System.EventHandler(this.radioButtonLine2_Click);
+            // 
             // ComparedRun
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -352,6 +383,8 @@
             this.displayPanel.ResumeLayout(false);
             this.displayPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sensorChart)).EndInit();
+            this.GPSPanel.ResumeLayout(false);
+            this.GPSPanel.PerformLayout();
             this.GPSGroupBox.ResumeLayout(false);
             this.GPSGroupBox.PerformLayout();
             this.ResumeLayout(false);
@@ -381,6 +414,8 @@
         private System.Windows.Forms.Button settingButton;
         private System.Windows.Forms.CheckBox allSelectedCheckBox2;
         private System.Windows.Forms.CheckedListBox sensorCheckedListBox2;
+        private System.Windows.Forms.RadioButton radioButtonLine2;
+        private System.Windows.Forms.RadioButton radioButtonLine1;
     }
 }
 

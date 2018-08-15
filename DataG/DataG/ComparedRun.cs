@@ -68,6 +68,8 @@ namespace DataG
         bool isBitCre = false;
         bool scaleFlag = true;
         bool flag_gps = false;
+        bool flag_line1 = false;
+        bool flag_line2 = false;
 
         double[] speed = new double[dtrNum];                    //the speed in the csv file
         int speedRow = 0;
@@ -1116,34 +1118,39 @@ namespace DataG
 
                 double m, n, m2, n2;
                 GPSPanel.Refresh();
-                //m = (xx2 - xLeft) / (xRight - xLeft) * (x[xRightSub] - x[xLeftSub]) + x[xLeftSub];
-                //n = (xx2 - xLeft) / (xRight - xLeft) * (y[xRightSub] - y[xLeftSub]) + y[xLeftSub];
-                m = x[xLeftSub];
-                n = y[xLeftSub];
-                
                 Graphics g3 = GPSPanel.CreateGraphics();
-                PointF pp = new PointF();
-                PointF pp2 = new PointF();
-                pp = new PointF((float)m, (float)n);
-                
-                g3.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
+                if (xx2 <= dataTime[dtrNum - 1])
+                {
+                    m = x[xLeftSub];
+                    n = y[xLeftSub];
+                    PointF pp = new PointF();
+                    pp = new PointF((float)m, (float)n);
+                    g3.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
+                }
                 if(xx2 <= dataTime2[dtrNum2 - 1])
                 {
                     m2 = x2[xLeftSub];
                     n2 = y2[xLeftSub];
+                    PointF pp2 = new PointF();
                     pp2 = new PointF((float)m2, (float)n2);
                     g3.FillEllipse(Brushes.Gray, pp2.X, pp2.Y, 5, 5);
 
                 }
                
                 this.Update();
-                if ((newPlace + moveSpeed) <= maxValue(dataTime, dataTime.Length))
+                if(maxValue(dataTime, dataTime.Length) > maxValue(dataTime2, dataTime2.Length))
                 {
+                if ((newPlace + moveSpeed) <= maxValue(dataTime, dataTime.Length))
                     newPlace += moveSpeed;
+                else
+                    flagPlace = false;
                 }
                 else
                 {
-                    flagPlace = false;
+                    if ((newPlace + moveSpeed) <= maxValue(dataTime2, dataTime2.Length))
+                        newPlace += moveSpeed;
+                    else
+                        flagPlace = false;
                 }
                 Graphics gg = GPSPanel.CreateGraphics();
                 gg.DrawImage(bitmap, new PointF(0.0f, 0.0f));
@@ -1543,7 +1550,9 @@ namespace DataG
             double temp = 0;
             double min = 100;
             int key = 0;
-            for (int i = 0; i < dtrNum; i++)
+            if (radioButtonLine1.Checked)
+            {
+                for (int i = 0; i < dtrNum; i++)
             {
                 temp = (x[i] - mouseX) * (x[i] - mouseX) + (y[i] - mouseY) * (y[i] - mouseY);
                 if (temp < min)
@@ -1558,7 +1567,27 @@ namespace DataG
             PointF pp = new PointF();
             pp = new PointF((float)x[key], (float)y[key]);
             g3.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
+                
+            }
+            if (radioButtonLine2.Checked)
+            {
+                for (int i = 0; i < dtrNum2; i++)
+                {
+                    temp = (x2[i] - mouseX) * (x2[i] - mouseX) + (y2[i] - mouseY) * (y2[i] - mouseY);
+                    if (temp < min)
+                    {
+                        min = temp;
+                        key = i;
+                    }
 
+                }
+                this.Refresh();
+                Graphics g3 = GPSPanel.CreateGraphics();
+                PointF pp = new PointF();
+                pp = new PointF((float)x2[key], (float)y2[key]);
+                g3.FillEllipse(Brushes.Gray, pp.X, pp.Y, 5, 5);
+            }
+            
             Graphics g4 = sensorChart.CreateGraphics();
             //MessageBox.Show(sensorChart.Width.ToString());
             Point p1 = new Point(0, 0);
@@ -1595,6 +1624,16 @@ namespace DataG
             flag_gps = true;
         }
 
+        private void radioButtonLine1_Click(object sender, EventArgs e)
+        {
+            flag_line1 = true;
+        }
+
+        private void radioButtonLine2_Click(object sender, EventArgs e)
+        {
+            flag_line2 = true;
+        }
+
         private void GPSPanel_MouseUp(object sender, MouseEventArgs e)
         {
             flag_gps = false;
@@ -1609,7 +1648,11 @@ namespace DataG
                 double temp = 0;
                 double min = 100;
                 int key = 0;
-                for (int i = 0; i < dtrNum; i++)
+                if (flag_gps)
+                {
+                    if (radioButtonLine1.Checked)
+                {
+                    for (int i = 0; i < dtrNum; i++)
                 {
                     temp = (x[i] - mouseX) * (x[i] - mouseX) + (y[i] - mouseY) * (y[i] - mouseY);
                     if (temp < min)
@@ -1621,11 +1664,30 @@ namespace DataG
                 Graphics g3 = GPSPanel.CreateGraphics();
                 PointF pp = new PointF();
                 pp = new PointF((float)x[key], (float)y[key]);
-                if (flag_gps)
+                g3.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
+                    }
+                if (radioButtonLine2.Checked)
                 {
+                    for (int i = 0; i < dtrNum; i++)
+                    {
+                        temp = (x2[i] - mouseX) * (x2[i] - mouseX) + (y2[i] - mouseY) * (y2[i] - mouseY);
+                        if (temp < min)
+                        {
+                            min = temp;
+                            key = i;
+                        }
+                    }
+                    Graphics g3 = GPSPanel.CreateGraphics();
+                    PointF pp = new PointF();
+                    pp = new PointF((float)x2[key], (float)y2[key]);
+                        g3.FillEllipse(Brushes.Gray, pp.X, pp.Y, 5, 5);
+                    }
+                
+                
                     //GPSPanel.Invalidate();
                     GPSPanel.Update();//if Refresh() there will be blinking problem!
-                    g3.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
+                        
+
                     Graphics g4 = sensorChart.CreateGraphics();
                     //MessageBox.Show(sensorChart.Width.ToString());
                     Point p1 = new Point(0, 0);
