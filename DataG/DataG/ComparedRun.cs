@@ -1916,22 +1916,34 @@ namespace DataG
 
         private void segmentationButton_Click(object sender, EventArgs e)
         {
+            if (fileOpen == false) return;
             Graphics g = GPSPanel.CreateGraphics();
-            Pen pen = new Pen(Brushes.Black, 2);
+            Pen pen = new Pen(Brushes.Blue, 2);
             Point p1 = new Point(Convert.ToInt32(x[driver1_x[0]]), Convert.ToInt32(y[driver1_y[0]]));
             Point p2 = new Point(Convert.ToInt32(x2[driver2_x[0]]), Convert.ToInt32(y2[driver2_y[0]]));
-            System.Drawing.Drawing2D.AdjustableArrowCap lineCap =
-                    new System.Drawing.Drawing2D.AdjustableArrowCap(6, 6, false);
-            pen.CustomEndCap = lineCap;
-            g.DrawLine(pen, p1, p2);
+            ExtendLine(p1, p2, 20, g, pen);
+            //AdjustableArrowCap lineCap = new AdjustableArrowCap(6, 6, false);
+            //pen.CustomEndCap = lineCap;
+            //g.DrawLine(pen, p1, p2);
             Point p3 = new Point(Convert.ToInt32(x[driver1_x[1]]), Convert.ToInt32(y[driver1_y[1]]));
             Point p4 = new Point(Convert.ToInt32(x2[driver2_x[1]]), Convert.ToInt32(y2[driver2_y[1]]));
-            g.DrawLine(pen, p3, p4);
+            ExtendLine(p3, p4, 20, g, pen);
+            //g.DrawLine(pen, p3, p4);
             Point p5 = new Point(Convert.ToInt32(x[driver1_x[2]]), Convert.ToInt32(y[driver1_y[2]]));
             Point p6 = new Point(Convert.ToInt32(x2[driver2_x[2]]), Convert.ToInt32(y2[driver2_y[2]]));
-            g.DrawLine(pen, p5, p6);
+            ExtendLine(p5, p6, 20, g, pen);
+            //g.DrawLine(pen, p5, p6);
+            Segmentation s = new Segmentation();
+            s.label11.Text = dataTime[driver1_x[0]].ToString();
+            s.label12.Text = (dataTime[driver1_x[1]] - dataTime[driver1_x[0]]).ToString();
+            s.label13.Text = (dataTime[driver1_x[2]] - dataTime[driver1_x[1]]).ToString();
+            s.label14.Text = (dataTime[dtrNum - 1] - dataTime[driver1_x[2]]).ToString();
 
-
+            s.label21.Text = dataTime2[driver2_x[0]].ToString();
+            s.label22.Text = (dataTime2[driver2_x[1]] - dataTime2[driver2_x[0]]).ToString();
+            s.label23.Text = (dataTime2[driver2_x[2]] - dataTime2[driver2_x[1]]).ToString();
+            s.label24.Text = (dataTime2[dtrNum2 - 1] - dataTime[driver2_x[2]]).ToString();
+            s.Show();
         }
 
         

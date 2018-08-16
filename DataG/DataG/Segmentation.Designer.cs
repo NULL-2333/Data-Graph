@@ -42,6 +42,14 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
             this.firstDriverGroupBox.SuspendLayout();
             this.firstDriverTableLayoutPanel.SuspendLayout();
             this.secondDriverGroupBox.SuspendLayout();
@@ -70,6 +78,10 @@
             this.firstDriverTableLayoutPanel.Controls.Add(this.label3, 0, 1);
             this.firstDriverTableLayoutPanel.Controls.Add(this.label4, 0, 3);
             this.firstDriverTableLayoutPanel.Controls.Add(this.label5, 0, 4);
+            this.firstDriverTableLayoutPanel.Controls.Add(this.label11, 1, 1);
+            this.firstDriverTableLayoutPanel.Controls.Add(this.label12, 1, 2);
+            this.firstDriverTableLayoutPanel.Controls.Add(this.label13, 1, 3);
+            this.firstDriverTableLayoutPanel.Controls.Add(this.label14, 1, 4);
             this.firstDriverTableLayoutPanel.Location = new System.Drawing.Point(0, 49);
             this.firstDriverTableLayoutPanel.Name = "firstDriverTableLayoutPanel";
             this.firstDriverTableLayoutPanel.RowCount = 5;
@@ -78,6 +90,7 @@
             this.firstDriverTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.firstDriverTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.firstDriverTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.firstDriverTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.firstDriverTableLayoutPanel.Size = new System.Drawing.Size(278, 276);
             this.firstDriverTableLayoutPanel.TabIndex = 1;
             // 
@@ -158,6 +171,10 @@
             this.secondDriverTableLayoutPanel.Controls.Add(this.label7, 0, 1);
             this.secondDriverTableLayoutPanel.Controls.Add(this.label8, 0, 2);
             this.secondDriverTableLayoutPanel.Controls.Add(this.label9, 0, 3);
+            this.secondDriverTableLayoutPanel.Controls.Add(this.label21, 1, 1);
+            this.secondDriverTableLayoutPanel.Controls.Add(this.label22, 1, 2);
+            this.secondDriverTableLayoutPanel.Controls.Add(this.label23, 1, 3);
+            this.secondDriverTableLayoutPanel.Controls.Add(this.label24, 1, 4);
             this.secondDriverTableLayoutPanel.Location = new System.Drawing.Point(0, 49);
             this.secondDriverTableLayoutPanel.Name = "secondDriverTableLayoutPanel";
             this.secondDriverTableLayoutPanel.RowCount = 5;
@@ -224,6 +241,94 @@
             this.label9.Text = "3rd Section";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // label11
+            // 
+            this.label11.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(170, 73);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(48, 20);
+            this.label11.TabIndex = 5;
+            this.label11.Text = "NULL";
+            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label12
+            // 
+            this.label12.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(170, 128);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(48, 20);
+            this.label12.TabIndex = 6;
+            this.label12.Text = "NULL";
+            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label13
+            // 
+            this.label13.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(170, 183);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(48, 20);
+            this.label13.TabIndex = 7;
+            this.label13.Text = "NULL";
+            this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label14
+            // 
+            this.label14.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(170, 238);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(48, 20);
+            this.label14.TabIndex = 8;
+            this.label14.Text = "NULL";
+            this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label21
+            // 
+            this.label21.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(170, 73);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(48, 20);
+            this.label21.TabIndex = 8;
+            this.label21.Text = "NULL";
+            this.label21.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label22
+            // 
+            this.label22.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(170, 128);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(48, 20);
+            this.label22.TabIndex = 9;
+            this.label22.Text = "NULL";
+            this.label22.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label23
+            // 
+            this.label23.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(170, 183);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(48, 20);
+            this.label23.TabIndex = 10;
+            this.label23.Text = "NULL";
+            this.label23.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label24
+            // 
+            this.label24.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(170, 238);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(48, 20);
+            this.label24.TabIndex = 11;
+            this.label24.Text = "NULL";
+            this.label24.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // Segmentation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -259,6 +364,14 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
+        public System.Windows.Forms.Label label11;
+        public System.Windows.Forms.Label label12;
+        public System.Windows.Forms.Label label13;
+        public System.Windows.Forms.Label label14;
+        public System.Windows.Forms.Label label21;
+        public System.Windows.Forms.Label label22;
+        public System.Windows.Forms.Label label23;
+        public System.Windows.Forms.Label label24;
 
     }
 }

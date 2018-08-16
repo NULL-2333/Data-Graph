@@ -16,13 +16,5 @@ namespace DataG
         {
             InitializeComponent();
         }
-         //Label la = new Label();
-         //   la.Text = "Time";
-         //   la.Dock = DockStyle.Fill;
-         //   la.TextAlign = ContentAlignment.MiddleCenter;
-         //   firstDriverTableLayoutPanel.Controls.Add(la, 1, 0);
-        //   secondDriverTableLayoutPanel.Controls.Add(la, 1, 0);
-
-        
     }
 }
