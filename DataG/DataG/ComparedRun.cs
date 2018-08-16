@@ -427,6 +427,19 @@ namespace DataG
             change2(seriesName2[no], caR4);
         }
 
+        static void ExtendLine(PointF p1, PointF p2, float length, Graphics g, Pen np)
+        {
+            float lenAB = (float)Math.Sqrt((p1.X - p2.X) * (p1.X - p2.X) + (p1.Y - p2.Y) * (p1.Y - p2.Y));
+
+            PointF p3 = new PointF();
+            p3.X = p2.X + (p2.X - p1.X) / lenAB * length;
+            p3.Y = p2.Y + (p2.Y - p1.Y) / lenAB * length;
+            PointF p4 = new PointF();
+            p4.X = p1.X - (p2.X - p1.X) / lenAB * length;
+            p4.Y = p1.Y - (p2.Y - p1.Y) / lenAB * length;
+            g.DrawLine(np, p3, p4);
+        }       
+
         private void fileLoadingButton_Click(object sender, EventArgs e)
         {
             fileOpen = false;
@@ -1016,17 +1029,16 @@ namespace DataG
                     double m, n;
                     m = (xx - xLeft) / (xRight - xLeft) * (x[xRightSub] - x[xLeftSub]) + x[xLeftSub];
                     n = (xx - xLeft) / (xRight - xLeft) * (y[xRightSub] - y[xLeftSub]) + y[xLeftSub];
-                    
+
                     if (xx <= dataTime[dtrNum - 1])
-                {
+                    {
                         PointF pp2 = new PointF();
                         pp2 = new PointF((float)m, (float)n);
-                        Pen np2 = new Pen(Brushes.Black, 2);
+                        Pen np2 = new Pen(Brushes.Red, 2);
                         if (xLeftSub + 10 < dtrNum)
                         {
                             PointF pp3 = new PointF((float)x[xLeftSub + 10], (float)y[xLeftSub + 10]);
-                            System.Drawing.Drawing2D.AdjustableArrowCap lineCap =
-                                new System.Drawing.Drawing2D.AdjustableArrowCap(6, 6, false);
+                            AdjustableArrowCap lineCap = new AdjustableArrowCap(6, 6, false);
                             np2.CustomEndCap = lineCap;
                             g2.DrawLine(np2, pp2, pp3);
                         }
@@ -1039,15 +1051,14 @@ namespace DataG
                     m2 = (xx - xLeft) / (xRight - xLeft) * (x2[xRightSub] - x2[xLeftSub]) + x2[xLeftSub];
                     n2 = (xx - xLeft) / (xRight - xLeft) * (y2[xRightSub] - y2[xLeftSub]) + y2[xLeftSub];
                     if (xx <= dataTime2[dtrNum2 - 1])
-                {
+                    {
                         PointF pp2 = new PointF();
                         pp2 = new PointF((float)m2, (float)n2);
-                        Pen np2 = new Pen(Brushes.Black, 2);
+                        Pen np2 = new Pen(Brushes.Green, 2);
                         if (xLeftSub + 10 < dtrNum2)
                         {
                             PointF pp3 = new PointF((float)x2[xLeftSub + 10], (float)y2[xLeftSub + 10]);
-                            System.Drawing.Drawing2D.AdjustableArrowCap lineCap =
-                                new System.Drawing.Drawing2D.AdjustableArrowCap(6, 6, false);
+                            AdjustableArrowCap lineCap = new AdjustableArrowCap(6, 6, false);
                             np2.CustomEndCap = lineCap;
                             g2.DrawLine(np2, pp2, pp3);
                         }
@@ -1223,12 +1234,11 @@ namespace DataG
                     n = y[xLeftSub];
                     PointF pp = new PointF();
                     pp = new PointF((float)m, (float)n);
-                    Pen np2 = new Pen(Brushes.Black, 2);
+                    Pen np2 = new Pen(Brushes.Red, 2);
                     if (xLeftSub + 10 < dtrNum)
                     {
                         PointF pp2 = new PointF((float)x[xLeftSub + 10], (float)y[xLeftSub + 10]);
-                        System.Drawing.Drawing2D.AdjustableArrowCap lineCap =
-                            new System.Drawing.Drawing2D.AdjustableArrowCap(6, 6, false);
+                        AdjustableArrowCap lineCap = new AdjustableArrowCap(6, 6, false);
                         np2.CustomEndCap = lineCap;
                         g2.DrawLine(np2, pp, pp2);
                     }
@@ -1239,12 +1249,11 @@ namespace DataG
                     n2 = y2[xLeftSub];
                     PointF pp2 = new PointF();
                     pp2 = new PointF((float)m2, (float)n2);
-                    Pen np2 = new Pen(Brushes.Black, 2);
+                    Pen np2 = new Pen(Brushes.Green, 2);
                     if (xLeftSub + 10 < dtrNum2)
                     {
                         PointF pp3 = new PointF((float)x2[xLeftSub + 10], (float)y2[xLeftSub + 10]);
-                        System.Drawing.Drawing2D.AdjustableArrowCap lineCap =
-                            new System.Drawing.Drawing2D.AdjustableArrowCap(6, 6, false);
+                        AdjustableArrowCap lineCap = new AdjustableArrowCap(6, 6, false);
                         np2.CustomEndCap = lineCap;
                         g2.DrawLine(np2, pp2, pp3);
                     }
@@ -1320,12 +1329,11 @@ namespace DataG
                             PointF pp2 = new PointF();
                             pp2 = new PointF((float)m, (float)n);
                             //g3.FillEllipse(Brushes.Gray, pp2.X, pp2.Y, 5, 5);
-                            Pen np2 = new Pen(Brushes.Black, 2);
+                            Pen np2 = new Pen(Brushes.Red, 2);
                             if (xLeftSub + 10 < dtrNum)
                             {
                                 PointF pp3 = new PointF((float)x[xLeftSub + 10], (float)y[xLeftSub + 10]);
-                                System.Drawing.Drawing2D.AdjustableArrowCap lineCap =
-                                    new System.Drawing.Drawing2D.AdjustableArrowCap(6, 6, false);
+                                AdjustableArrowCap lineCap =new AdjustableArrowCap(6, 6, false);
                                 np2.CustomEndCap = lineCap;
                                 g2.DrawLine(np2, pp2, pp3);
                             }
@@ -1347,12 +1355,11 @@ namespace DataG
                             {
                                 PointF pp2 = new PointF();
                                 pp2 = new PointF((float)m2, (float)n2);
-                                Pen np2 = new Pen(Brushes.Black, 2);
+                                Pen np2 = new Pen(Brushes.Green, 2);
                                 if (xLeftSub + 10 < dtrNum2)
                                 {
                                     PointF pp3 = new PointF((float)x2[xLeftSub + 10], (float)y2[xLeftSub + 10]);
-                                    System.Drawing.Drawing2D.AdjustableArrowCap lineCap =
-                                        new System.Drawing.Drawing2D.AdjustableArrowCap(6, 6, false);
+                                    AdjustableArrowCap lineCap = new AdjustableArrowCap(6, 6, false);
                                     np2.CustomEndCap = lineCap;
                                     g2.DrawLine(np2, pp2, pp3);
                                 }
@@ -1726,20 +1733,25 @@ namespace DataG
             if (radioButtonLine1.Checked)
             {
                 for (int i = 0; i < dtrNum; i++)
-            {
-                temp = (x[i] - mouseX) * (x[i] - mouseX) + (y[i] - mouseY) * (y[i] - mouseY);
-                if (temp < min)
                 {
-                    min = temp;
-                    key = i;
-                }
+                    temp = (x[i] - mouseX) * (x[i] - mouseX) + (y[i] - mouseY) * (y[i] - mouseY);
+                    if (temp < min)
+                    {
+                        min = temp;
+                        key = i;
+                    }
 
-            }
-            this.Refresh();
-            Graphics g3 = GPSPanel.CreateGraphics();
-            PointF pp = new PointF();
-            pp = new PointF((float)x[key], (float)y[key]);
-            g3.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
+                }
+                this.Refresh();
+                Graphics g3 = GPSPanel.CreateGraphics();
+                PointF pp = new PointF();
+                pp = new PointF((float)x[key], (float)y[key]);
+                g3.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
+                if (key < dtrNum2)
+                {
+                    pp = new PointF((float)x2[key], (float)y2[key]);
+                    g3.FillEllipse(Brushes.Gray, pp.X, pp.Y, 5, 5);
+                }
                 
             }
             if (radioButtonLine2.Checked)
@@ -1757,12 +1769,16 @@ namespace DataG
                 this.Refresh();
                 Graphics g3 = GPSPanel.CreateGraphics();
                 PointF pp = new PointF();
+                if (key < dtrNum)
+                {
+                    pp = new PointF((float)x[key], (float)y[key]);
+                    g3.FillEllipse(Brushes.Black, pp.X, pp.Y, 5, 5);
+                }
                 pp = new PointF((float)x2[key], (float)y2[key]);
                 g3.FillEllipse(Brushes.Gray, pp.X, pp.Y, 5, 5);
             }
             
             Graphics g4 = sensorChart.CreateGraphics();
-            //MessageBox.Show(sensorChart.Width.ToString());
             Point p1 = new Point(0, 0);
             Point p2 = new Point(0, sensorChart.Height);
             double dT = Convert.ToDouble(dataTime[key].ToString("0.0"));
@@ -1896,22 +1912,12 @@ namespace DataG
                     }
                 }
             }
-
         }
 
         private void segmentationButton_Click(object sender, EventArgs e)
         {
             Graphics g = GPSPanel.CreateGraphics();
             Pen pen = new Pen(Brushes.Black, 2);
-            //PointF pp = new PointF();
-            //pp = new PointF((float)m, (float)n);
-            //Pen np2 = new Pen(Brushes.Black, 2);
-            //if (xLeftSub + 10 < dtrNum)
-            //{
-            //    PointF pp2 = new PointF((float)x[xLeftSub + 10], (float)y[xLeftSub + 10]);
-                
-            //    g2.DrawLine(np2, pp, pp2);
-            //}
             Point p1 = new Point(Convert.ToInt32(x[driver1_x[0]]), Convert.ToInt32(y[driver1_y[0]]));
             Point p2 = new Point(Convert.ToInt32(x2[driver2_x[0]]), Convert.ToInt32(y2[driver2_y[0]]));
             System.Drawing.Drawing2D.AdjustableArrowCap lineCap =
@@ -1924,32 +1930,11 @@ namespace DataG
             Point p5 = new Point(Convert.ToInt32(x[driver1_x[2]]), Convert.ToInt32(y[driver1_y[2]]));
             Point p6 = new Point(Convert.ToInt32(x2[driver2_x[2]]), Convert.ToInt32(y2[driver2_y[2]]));
             g.DrawLine(pen, p5, p6);
-            //Point p7 = new Point(Convert.ToInt32(x[driver1_x[3]]), Convert.ToInt32(y[driver1_y[3]]));
-            //Point p8 = new Point(Convert.ToInt32(x2[driver2_x[3]]), Convert.ToInt32(y2[driver2_y[3]]));
-            //g.DrawLine(pen, p7, p8);
 
-            //if (fileOpen == false) return;
-            //SegmentationDistanceForm sd = new SegmentationDistanceForm();
-            //sd.ShowDialog();
-            //if (sd.segmentationDistance == "") return;
-            //GPSPanel.Refresh();
-            //int dis = int.Parse(sd.segmentationDistance);
-            //for (int i = 0; i < dtrNum - 1; i += dis)
-            //{
 
-            //    Pen np = new Pen(Brushes.Black, 2);
-            //    if ((i + dis) < dtrNum)
-            //    {
-            //        PointF p11 = new PointF((float)x[i], (float)y[i]);
-            //        g.DrawEllipse(np, p11.X, p11.Y, 2, 2);
-            //    }
-            //    if ((i + dis) < dtrNum2)
-            //    {
-            //        PointF p21 = new PointF((float)x2[i], (float)y2[i]);
-            //        g.DrawEllipse(np, p21.X, p21.Y, 2, 2);
-            //    }   
-            //}
         }
+
+        
 
     }
 }
