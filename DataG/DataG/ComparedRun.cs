@@ -419,6 +419,19 @@ namespace DataG
             change2(seriesName2[no], caR4);
         }
 
+        static void ExtendLine(PointF p1, PointF p2, float length, Graphics g, Pen np)
+        {
+            float lenAB = (float)Math.Sqrt((p1.X - p2.X) * (p1.X - p2.X) + (p1.Y - p2.Y) * (p1.Y - p2.Y));
+
+            PointF p3 = new PointF();
+            p3.X = p2.X + (p2.X - p1.X) / lenAB * length;
+            p3.Y = p2.Y + (p2.Y - p1.Y) / lenAB * length;
+            PointF p4 = new PointF();
+            p4.X = p1.X - (p2.X - p1.X) / lenAB * length;
+            p4.Y = p1.Y - (p2.Y - p1.Y) / lenAB * length;
+            g.DrawLine(np, p3, p4);
+        }       
+
         private void fileLoadingButton_Click(object sender, EventArgs e)
         {
             fileOpen = false;
@@ -1821,41 +1834,15 @@ namespace DataG
             //if (fileOpen == false) return;
             //Segmentation s = new Segmentation();
             //s.Show();
-            PointF p1 = new PointF(1, 1);
-            PointF p2 = new PointF(100, 100);
-
-            PointF v = new PointF()
-            {
-                X = p2.X - p1.X,
-                Y = p2.Y - p1.Y
-            };
-            float offset = 50;
-            PointF p3 = TranslatePoint(p1, offset, v);
-            PointF p4 = TranslatePoint(p2, offset, v);
-            Graphics g = GPSPanel.CreateGraphics();
-            Pen np = new Pen(Brushes.Black, 2);
-            g.DrawLine(np, p3, p4);
-            MessageBox.Show(p3.X.ToString() + " " + p3.Y.ToString());
+            //PointF p1 = new PointF(50, 50);
+            //PointF p2 = new PointF(100, 100);
+            //Graphics g = GPSPanel.CreateGraphics();
+            //Pen np = new Pen(Brushes.Black, 2);
+            //float length = 20;
+            //ExtendLine(p1, p2, length, g, np);
         }
 
-        static PointF TranslatePoint(PointF point, float offset, PointF vector)
-        {
-            float magnitude = (float)Math.Sqrt((vector.X * vector.X) + (vector.Y * vector.Y)); // = length
-            vector.X /= magnitude;
-            vector.Y /= magnitude;
-            PointF translation = new PointF()
-            {
-                X = offset * vector.X,
-                Y = offset * vector.Y
-            };
-            using (Matrix m = new Matrix())
-            {
-                m.Translate(translation.X, translation.Y);
-                PointF[] pts = new PointF[] { point };
-                m.TransformPoints(pts);
-                return pts[0];
-            }
-        }       
+        
 
     }
 }
