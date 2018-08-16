@@ -79,9 +79,7 @@ namespace DataG
         int accelerateRow = 0;
         double[] accelerate2 = new double[dtrNum2];               //the speed in the csv file
         int accelerateRow2 = 0;
-
         
-
         double maxacc = 0;
         double minacc = 0;
         double maxspeed = 0;
@@ -97,6 +95,16 @@ namespace DataG
 
         bool isAccel = false;
         bool isAccel2 = false;
+        double distance1 = 0;
+        double distance2 = 0;
+        double[] driver1 = new double[4];
+        double[] driver2 = new double[4];
+        int[] driver1_x = new int[4];
+        int[] driver1_y = new int[4];
+        int[] driver2_x = new int[4];
+        int[] driver2_y = new int[4];
+        double[] disA = new double[dtrNum];
+        double[] disB = new double[dtrNum2];
 
         double[] gpsTime = new double[dtrNum];
 
@@ -476,6 +484,8 @@ namespace DataG
             dataTime2 = new double[dtrNum2];
             seriesName = new string[dtcNum - 1];
             seriesName2 = new string[dtcNum - 1];
+            disA = new double[dtrNum];
+            disB = new double[dtrNum2];
 
             for (int i = 0; i < dtrNum; i++)
             {
@@ -702,12 +712,72 @@ namespace DataG
             {
                 x[i] = (maxAbsX + glpx[i]) * 0.5 * (GPSPanel.Width) / maxAbsX;
                 y[i] = (maxAbsY - glpy[i]) * 0.5 * (GPSPanel.Height) / maxAbsY;
+                disA[i] = distanceA(i);
             }
             for (int i = 0; i < dtrNum2; i++)
             {
                 x2[i] = (maxAbsX + glpx2[i]) * 0.5 * (GPSPanel.Width) / maxAbsX;
                 y2[i] = (maxAbsY - glpy2[i]) * 0.5 * (GPSPanel.Height) / maxAbsY;
+                disB[i] = distanceB(i);
             }
+            distance1 = distanceA(dtrNum);
+            distance2 = distanceB(dtrNum2);
+           
+            driver1[0] = distance1 / 4;
+            driver2[0] = distance2 / 4;
+            driver1[1] = distance1 / 2;
+            driver2[1] = distance2 / 2;
+            driver1[2] = distance1 / 4 *3;
+            driver2[2] = distance2 / 4 *3;
+            driver1[3] = distance1 ;
+            driver2[3] = distance2 ;
+            
+            driver1_y[0] = driver1_x[0] = findLeftNear(driver1[0],disA,dtrNum);
+            driver1_y[1] = driver1_x[1] = findLeftNear(driver1[1], disA, dtrNum);
+            driver1_y[2] = driver1_x[2] = findLeftNear(driver1[2], disA, dtrNum);
+            driver1_y[3] = driver1_x[3] = findLeftNear(driver1[3], disA, dtrNum);
+
+            driver2_y[0] = driver2_x[0] = findLeftNear(driver2[0], disB, dtrNum2);
+            driver2_y[1] = driver2_x[1] = findLeftNear(driver2[1], disB, dtrNum2);
+            driver2_y[2] = driver2_x[2] = findLeftNear(driver2[2], disB, dtrNum2);
+            driver2_y[3] = driver2_x[3] = findLeftNear(driver2[3], disB, dtrNum2);
+
+            //if (Math.Abs(distanceA(i) - driver1[1]) < 0.1)
+            //    {
+            //        driver1_x[1] = i;
+            //        driver1_y[1] = i;
+            //    }
+            //    if (Math.Abs(distanceA(i) - driver1[2]) < 0.5)
+            //    {
+            //        driver1_x[2] = i;
+            //        driver1_y[2] = i;
+            //    }
+            //    if (Math.Abs(distanceA(i) - driver1[3]) < 0.5)
+            //    {
+            //        driver1_x[3] = i;
+            //        driver1_y[3] = i;
+            //    }
+            //    if (Math.Abs(distanceB(i) - driver2[0]) < 0.5)
+            //    {
+            //        driver2_x[0] = i;
+            //        driver2_y[0] = i;
+            //    }
+            //    if (Math.Abs(distanceB(i) - driver2[1]) < 0.1)
+            //    {
+            //        driver2_x[1] = i;
+            //        driver2_y[1] = i;
+            //    }
+            //    if (Math.Abs(distanceB(i) - driver2[2]) < 0.5)
+            //    {
+            //        driver2_x[2] = i;
+            //        driver2_y[2] = i;
+            //    }
+            //    if (Math.Abs(distanceB(i) - driver2[3]) < 1)
+            //    {
+            //        driver2_x[3] = i;
+            //        driver2_y[3] = i;
+            //    }
+
 
             GPSPanel.Refresh();
             //add new labels and checkbox
@@ -860,7 +930,26 @@ namespace DataG
             sCopy4.ChartArea = caR4.Name;
             
         }
+        double distanceA(int i)
+        {
+            double dis = 0;
+            for (int j = 1; j < i; j++)
+            {
+                 dis += Math.Sqrt((x[j] - x[j - 1]) * (x[j] - x[j - 1]) + (y[j] - y[j - 1]) * (y[j] - y[j - 1]));
 
+            }
+            return dis;
+        }
+        double distanceB(int i)
+        {
+            double dis = 0;
+            for (int j = 1; j < i; j++)
+            {
+                dis += Math.Sqrt((x2[j] - x2[j - 1]) * (x2[j] - x2[j - 1]) + (y2[j] - y2[j - 1]) * (y2[j] - y2[j - 1]));
+
+            }
+            return dis;
+        }
         private void sensorCheckedListBox_ItemCheck(object sender, ItemCheckEventArgs e)
         {
             int index = e.Index;
@@ -1421,7 +1510,7 @@ namespace DataG
                     {
                         p11 = new PointF((float)x2[i], (float)y2[i]);
                         p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
-                        p2 = new Pen(Color.FromArgb(colorRed(speed2[i], maxspeed2, minspeed2), colorGreen(speed2[i], maxspeed2, minspeed2), 0), 2);
+                        p2 = new Pen(Color.FromArgb(colorRed(speed2[i], maxspeed2, minspeed2), colorGreen(speed2[i], maxspeed2, minspeed2), 255), 2);
                         g3.DrawLine(p2, p11, p22);
                     }
                     Graphics gg = GPSPanel.CreateGraphics();
@@ -1450,7 +1539,7 @@ namespace DataG
                 //gg.DrawImage(bitm, new PointF(0.0f, 0.0f));
                 isBitCre = true;
             }
-            else if (fileOpen == true)
+            else if (fileOpen && isBitCre)
             {
                 if (radioButton_Normal.Checked) //speed
                 {
@@ -1497,7 +1586,7 @@ namespace DataG
                     {
                         p11 = new PointF((float)x2[i], (float)y2[i]);
                         p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
-                        p2 = new Pen(Color.FromArgb(colorRed(speed2[i], maxspeed2, minspeed2), colorGreen(speed2[i], maxspeed2, minspeed2), 0), 2);
+                        p2 = new Pen(Color.FromArgb(colorRed(speed2[i], maxspeed2, minspeed2), colorGreen(speed2[i], maxspeed2, minspeed2), 255), 2);
                         g3.DrawLine(p2, p11, p22);
                     }
                 }
@@ -1778,9 +1867,6 @@ namespace DataG
                         g3.FillEllipse(Brushes.Gray, pp.X, pp.Y, 5, 5);
                     }
                     
-                    //GPSPanel.Update();//if Refresh() there will be blinking problem!
-
-
                     Graphics g4 = sensorChart.CreateGraphics();
                     Point p1 = new Point(0, 0);
                     Point p2 = new Point(0, sensorChart.Height);
@@ -1815,27 +1901,54 @@ namespace DataG
 
         private void segmentationButton_Click(object sender, EventArgs e)
         {
-            if (fileOpen == false) return;
-            SegmentationDistanceForm sd = new SegmentationDistanceForm();
-            sd.ShowDialog();
-            if (sd.segmentationDistance == "") return;
-            GPSPanel.Refresh();
-            int dis = int.Parse(sd.segmentationDistance);
-            for (int i = 0; i < dtrNum - 1; i += dis)
-            {
-                Graphics g = GPSPanel.CreateGraphics();
-                Pen np = new Pen(Brushes.Black, 2);
-                if ((i + dis) < dtrNum)
-                {
-                    PointF p11 = new PointF((float)x[i], (float)y[i]);
-                    g.DrawEllipse(np, p11.X, p11.Y, 2, 2);
-                }
-                if ((i + dis) < dtrNum2)
-                {
-                    PointF p21 = new PointF((float)x2[i], (float)y2[i]);
-                    g.DrawEllipse(np, p21.X, p21.Y, 2, 2);
-                }   
-            }
+            Graphics g = GPSPanel.CreateGraphics();
+            Pen pen = new Pen(Brushes.Black, 2);
+            //PointF pp = new PointF();
+            //pp = new PointF((float)m, (float)n);
+            //Pen np2 = new Pen(Brushes.Black, 2);
+            //if (xLeftSub + 10 < dtrNum)
+            //{
+            //    PointF pp2 = new PointF((float)x[xLeftSub + 10], (float)y[xLeftSub + 10]);
+                
+            //    g2.DrawLine(np2, pp, pp2);
+            //}
+            Point p1 = new Point(Convert.ToInt32(x[driver1_x[0]]), Convert.ToInt32(y[driver1_y[0]]));
+            Point p2 = new Point(Convert.ToInt32(x2[driver2_x[0]]), Convert.ToInt32(y2[driver2_y[0]]));
+            System.Drawing.Drawing2D.AdjustableArrowCap lineCap =
+                    new System.Drawing.Drawing2D.AdjustableArrowCap(6, 6, false);
+            pen.CustomEndCap = lineCap;
+            g.DrawLine(pen, p1, p2);
+            Point p3 = new Point(Convert.ToInt32(x[driver1_x[1]]), Convert.ToInt32(y[driver1_y[1]]));
+            Point p4 = new Point(Convert.ToInt32(x2[driver2_x[1]]), Convert.ToInt32(y2[driver2_y[1]]));
+            g.DrawLine(pen, p3, p4);
+            Point p5 = new Point(Convert.ToInt32(x[driver1_x[2]]), Convert.ToInt32(y[driver1_y[2]]));
+            Point p6 = new Point(Convert.ToInt32(x2[driver2_x[2]]), Convert.ToInt32(y2[driver2_y[2]]));
+            g.DrawLine(pen, p5, p6);
+            //Point p7 = new Point(Convert.ToInt32(x[driver1_x[3]]), Convert.ToInt32(y[driver1_y[3]]));
+            //Point p8 = new Point(Convert.ToInt32(x2[driver2_x[3]]), Convert.ToInt32(y2[driver2_y[3]]));
+            //g.DrawLine(pen, p7, p8);
+
+            //if (fileOpen == false) return;
+            //SegmentationDistanceForm sd = new SegmentationDistanceForm();
+            //sd.ShowDialog();
+            //if (sd.segmentationDistance == "") return;
+            //GPSPanel.Refresh();
+            //int dis = int.Parse(sd.segmentationDistance);
+            //for (int i = 0; i < dtrNum - 1; i += dis)
+            //{
+
+            //    Pen np = new Pen(Brushes.Black, 2);
+            //    if ((i + dis) < dtrNum)
+            //    {
+            //        PointF p11 = new PointF((float)x[i], (float)y[i]);
+            //        g.DrawEllipse(np, p11.X, p11.Y, 2, 2);
+            //    }
+            //    if ((i + dis) < dtrNum2)
+            //    {
+            //        PointF p21 = new PointF((float)x2[i], (float)y2[i]);
+            //        g.DrawEllipse(np, p21.X, p21.Y, 2, 2);
+            //    }   
+            //}
         }
 
     }
