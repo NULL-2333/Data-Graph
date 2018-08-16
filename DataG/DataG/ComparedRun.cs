@@ -949,7 +949,7 @@ namespace DataG
                     m2 = (xx - xLeft) / (xRight - xLeft) * (x2[xRightSub] - x2[xLeftSub]) + x2[xLeftSub];
                     n2 = (xx - xLeft) / (xRight - xLeft) * (y2[xRightSub] - y2[xLeftSub]) + y2[xLeftSub];
                     if (xx <= dataTime2[dtrNum2 - 1])
-                {
+                    {
                         PointF pp2 = new PointF();
                         pp2 = new PointF((float)m2, (float)n2);
                         Pen np2 = new Pen(Brushes.Green, 2);
@@ -1818,28 +1818,44 @@ namespace DataG
 
         private void segmentationButton_Click(object sender, EventArgs e)
         {
-            if (fileOpen == false) return;
-            SegmentationDistanceForm sd = new SegmentationDistanceForm();
-            sd.ShowDialog();
-            if (sd.segmentationDistance == "") return;
-            GPSPanel.Refresh();
-            int dis = int.Parse(sd.segmentationDistance);
-            for (int i = 0; i < dtrNum - 1; i += dis)
+            //if (fileOpen == false) return;
+            //Segmentation s = new Segmentation();
+            //s.Show();
+            PointF p1 = new PointF(1, 1);
+            PointF p2 = new PointF(100, 100);
+
+            PointF v = new PointF()
             {
-                Graphics g = GPSPanel.CreateGraphics();
-                Pen np = new Pen(Brushes.Black, 2);
-                if ((i + dis) < dtrNum)
-                {
-                    PointF p11 = new PointF((float)x[i], (float)y[i]);
-                    g.DrawEllipse(np, p11.X, p11.Y, 2, 2);
-                }
-                if ((i + dis) < dtrNum2)
-                {
-                    PointF p21 = new PointF((float)x2[i], (float)y2[i]);
-                    g.DrawEllipse(np, p21.X, p21.Y, 2, 2);
-                }   
-            }
+                X = p2.X - p1.X,
+                Y = p2.Y - p1.Y
+            };
+            float offset = 50;
+            PointF p3 = TranslatePoint(p1, offset, v);
+            PointF p4 = TranslatePoint(p2, offset, v);
+            Graphics g = GPSPanel.CreateGraphics();
+            Pen np = new Pen(Brushes.Black, 2);
+            g.DrawLine(np, p3, p4);
+            MessageBox.Show(p3.X.ToString() + " " + p3.Y.ToString());
         }
+
+        static PointF TranslatePoint(PointF point, float offset, PointF vector)
+        {
+            float magnitude = (float)Math.Sqrt((vector.X * vector.X) + (vector.Y * vector.Y)); // = length
+            vector.X /= magnitude;
+            vector.Y /= magnitude;
+            PointF translation = new PointF()
+            {
+                X = offset * vector.X,
+                Y = offset * vector.Y
+            };
+            using (Matrix m = new Matrix())
+            {
+                m.Translate(translation.X, translation.Y);
+                PointF[] pts = new PointF[] { point };
+                m.TransformPoints(pts);
+                return pts[0];
+            }
+        }       
 
     }
 }

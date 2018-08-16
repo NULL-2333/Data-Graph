@@ -63,11 +63,11 @@
     <Compile Include="MainMenu.Designer.cs">
       <DependentUpon>MainMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="SegmentationDistanceForm.cs">
+    <Compile Include="Segmentation.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SegmentationDistanceForm.Designer.cs">
-      <DependentUpon>SegmentationDistanceForm.cs</DependentUpon>
+    <Compile Include="Segmentation.Designer.cs">
+      <DependentUpon>Segmentation.cs</DependentUpon>
     </Compile>
     <Compile Include="SingleRun.cs">
       <SubType>Form</SubType>
@@ -98,8 +98,8 @@
     <EmbeddedResource Include="MainMenu.resx">
       <DependentUpon>MainMenu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SegmentationDistanceForm.resx">
-      <DependentUpon>SegmentationDistanceForm.cs</DependentUpon>
+    <EmbeddedResource Include="Segmentation.resx">
+      <DependentUpon>Segmentation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SingleRun.resx">
       <DependentUpon>SingleRun.cs</DependentUpon>
