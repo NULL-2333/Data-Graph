@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SingleRun));
             this.dataPanel = new System.Windows.Forms.Panel();
             this.textBoxTime = new System.Windows.Forms.TextBox();
             this.timeLabel = new System.Windows.Forms.Label();
@@ -112,7 +113,7 @@
             this.resetButton.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.resetButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.resetButton.Location = new System.Drawing.Point(67, 102);
-            this.resetButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.resetButton.Margin = new System.Windows.Forms.Padding(4);
             this.resetButton.Name = "resetButton";
             this.resetButton.Size = new System.Drawing.Size(340, 51);
             this.resetButton.TabIndex = 2;
@@ -239,7 +240,7 @@
             // 
             this.GPSPanel.BackColor = System.Drawing.SystemColors.Info;
             this.GPSPanel.Location = new System.Drawing.Point(1611, 14);
-            this.GPSPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.GPSPanel.Margin = new System.Windows.Forms.Padding(4);
             this.GPSPanel.Name = "GPSPanel";
             this.GPSPanel.Size = new System.Drawing.Size(333, 718);
             this.GPSPanel.TabIndex = 9;
@@ -267,9 +268,9 @@
             this.GPSGroupBox.Controls.Add(this.radioButton_Speed);
             this.GPSGroupBox.Controls.Add(this.radioButton_Normal);
             this.GPSGroupBox.Location = new System.Drawing.Point(1333, 745);
-            this.GPSGroupBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.GPSGroupBox.Margin = new System.Windows.Forms.Padding(4);
             this.GPSGroupBox.Name = "GPSGroupBox";
-            this.GPSGroupBox.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.GPSGroupBox.Padding = new System.Windows.Forms.Padding(4);
             this.GPSGroupBox.Size = new System.Drawing.Size(137, 198);
             this.GPSGroupBox.TabIndex = 12;
             this.GPSGroupBox.TabStop = false;
@@ -279,7 +280,7 @@
             // 
             this.radioButton_Accelerate.AutoSize = true;
             this.radioButton_Accelerate.Location = new System.Drawing.Point(25, 125);
-            this.radioButton_Accelerate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radioButton_Accelerate.Margin = new System.Windows.Forms.Padding(4);
             this.radioButton_Accelerate.Name = "radioButton_Accelerate";
             this.radioButton_Accelerate.Size = new System.Drawing.Size(108, 19);
             this.radioButton_Accelerate.TabIndex = 2;
@@ -292,7 +293,7 @@
             // 
             this.radioButton_Speed.AutoSize = true;
             this.radioButton_Speed.Location = new System.Drawing.Point(25, 78);
-            this.radioButton_Speed.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radioButton_Speed.Margin = new System.Windows.Forms.Padding(4);
             this.radioButton_Speed.Name = "radioButton_Speed";
             this.radioButton_Speed.Size = new System.Drawing.Size(68, 19);
             this.radioButton_Speed.TabIndex = 1;
@@ -306,7 +307,7 @@
             this.radioButton_Normal.AutoSize = true;
             this.radioButton_Normal.Checked = true;
             this.radioButton_Normal.Location = new System.Drawing.Point(25, 25);
-            this.radioButton_Normal.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radioButton_Normal.Margin = new System.Windows.Forms.Padding(4);
             this.radioButton_Normal.Name = "radioButton_Normal";
             this.radioButton_Normal.Size = new System.Drawing.Size(76, 19);
             this.radioButton_Normal.TabIndex = 0;
@@ -329,7 +330,7 @@
             // 
             this.settingButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.5F);
             this.settingButton.Location = new System.Drawing.Point(1187, 820);
-            this.settingButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.settingButton.Margin = new System.Windows.Forms.Padding(4);
             this.settingButton.Name = "settingButton";
             this.settingButton.Size = new System.Drawing.Size(137, 52);
             this.settingButton.TabIndex = 14;
@@ -342,7 +343,7 @@
             this.panel1.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Location = new System.Drawing.Point(1303, 14);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(299, 718);
             this.panel1.TabIndex = 15;
@@ -350,7 +351,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(299, 296);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -374,6 +375,7 @@
             this.Controls.Add(this.displayPanel);
             this.Controls.Add(this.activatePanel);
             this.Controls.Add(this.dataPanel);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "SingleRun";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;

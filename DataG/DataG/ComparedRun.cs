@@ -21,31 +21,31 @@ namespace DataG
         //constant variable
         const double EARTH_RAD_M = 6378100.00;                  //the radius of the earth (in meter)
         //global variables
-        string fName1 = "";                                      //the name of opening file
-        string fName2 = "";
-        double[] dataTime = new double[dtrNum];
-        double[] dataTime2 = new double[dtrNum2];
-        double[,] data = new double[dtrNum, dtcNum - 1];
-        double[,] data2 = new double[dtrNum2, dtcNum2 - 1];
-        static DataTable dtSave = new DataTable();              //the datatable version of .csv file
-        static DataTable dtSave2 = new DataTable();
+        string fName1 = "";                                     //the name of first opening file
+        string fName2 = "";                                     //the name of second opening file
+        double[] dataTime = new double[dtrNum];                 //the first file's data of time
+        double[] dataTime2 = new double[dtrNum2];               //the second file's data of time
+        double[,] data = new double[dtrNum, dtcNum - 1];        //the data of first file
+        double[,] data2 = new double[dtrNum2, dtcNum2 - 1];     //the data of second file
+        static DataTable dtSave = new DataTable();              //the datatable version of first .csv file
+        static DataTable dtSave2 = new DataTable();             //the datatable version of second .csv file
         static int dtrNum = dtSave.Rows.Count;                  //the number of rows in dtSave
-        static int dtrNum2 = dtSave2.Rows.Count;
+        static int dtrNum2 = dtSave2.Rows.Count;                //the number of rows in dtSave2
         static int dtcNum = dtSave.Columns.Count + 1;           //the number of columns in dtSave
-        static int dtcNum2 = dtSave2.Columns.Count + 1;
+        static int dtcNum2 = dtSave2.Columns.Count + 1;         //the number of columns in dtSave2
 
-        string[] seriesName = new string[dtcNum - 1];           //the names of different sensors
-        string[] seriesName2 = new string[dtcNum - 1];           //the names of different sensors
-        double[] glpx = new double[dtrNum];                     //the x coordinate of 2D coordinate system
-        double[] glpy = new double[dtrNum];                     //the y coordinate of 2D coordinate system
-        double[] glpx2 = new double[dtrNum];                     //the x coordinate of 2D coordinate system
-        double[] glpy2 = new double[dtrNum];
-        double maxAbsX;                                        //the max abstract value of x coordinate
+        string[] seriesName = new string[dtcNum - 1];           //the first names of different sensors
+        string[] seriesName2 = new string[dtcNum - 1];          //the second names of different sensors
+        double[] glpx = new double[dtrNum];                     //the x coordinate of first 2D coordinate system
+        double[] glpy = new double[dtrNum];                     //the y coordinate of first 2D coordinate system
+        double[] glpx2 = new double[dtrNum];                    //the x coordinate of second 2D coordinate system
+        double[] glpy2 = new double[dtrNum];                    //the y coordinate of second 2D coordinate system
+        double maxAbsX;                                         //the max abstract value of x coordinate
         double maxAbsY;                                         //the max abstract value of x coordinate
-        double[] x = new double[dtrNum];                        //the x coordinate in GPSPannel
-        double[] y = new double[dtrNum];       //the y coordinate in GPSPannel
-        double[] x2 = new double[dtrNum2];                        //the x coordinate in GPSPannel
-        double[] y2 = new double[dtrNum2];
+        double[] x = new double[dtrNum];                        //the first x coordinate in GPSPannel
+        double[] y = new double[dtrNum];                        //the first y coordinate in GPSPannel
+        double[] x2 = new double[dtrNum2];                      //the second x coordinate in GPSPannel
+        double[] y2 = new double[dtrNum2];                      //the second y coordinate in GPSPannel
 
         static int xRangeMax = 70;                              //the max value of x coordinate
         static int xRangeMin = 0;                               //the min value of x coordinate
@@ -57,15 +57,19 @@ namespace DataG
 
         double nowScrollValue = -xScale / 2;                    //the position of scrollbar
         double newPlace = 0;                                    //the position of moving dot
-        double nowSteeringPlace = 0;
+        double nowSteeringPlace = 0;                            //the place of playing
         bool fileOpen = false;                                  //determine whether the file has been opened
         bool flag = false;                                      //drag line
-        bool flagPlace = true;
+        bool flagPlace = true;                                  //determine if reset and stop button clicked
         double moveSpeed = .1;                                  //the speed of play
         bool firstPlayFlag = true;                              //the flag of first play
         bool haveReset = true;
-        Bitmap bitm;
-        bool isBitCre = false;
+        Bitmap bitNormal;
+        bool isBitNormalCre = false;
+        Bitmap bitSpeed;
+        bool isBitSpeedCre = false;
+        Bitmap bitAccele;
+        bool isBitAcceleCre = false;
         bool scaleFlag = true;
         bool flag_gps = false;
         bool flag_line1 = false;
@@ -73,11 +77,11 @@ namespace DataG
 
         double[] speed = new double[dtrNum];                    //the speed in the csv file
         int speedRow = 0;
-        double[] speed2 = new double[dtrNum2];                    //the speed in the csv file
+        double[] speed2 = new double[dtrNum2];                  //the speed in the csv file
         int speedRow2 = 0;
         double[] accelerate = new double[dtrNum];               //the speed in the csv file
         int accelerateRow = 0;
-        double[] accelerate2 = new double[dtrNum2];               //the speed in the csv file
+        double[] accelerate2 = new double[dtrNum2];             //the speed in the csv file
         int accelerateRow2 = 0;
         
         double maxacc = 0;
@@ -443,7 +447,7 @@ namespace DataG
         private void fileLoadingButton_Click(object sender, EventArgs e)
         {
             fileOpen = false;
-            isBitCre = false;
+            isBitNormalCre = false;
             //delete existing chart
             sensorChart.Series.Clear();
             sensorChart.ChartAreas.Clear();
@@ -1470,155 +1474,126 @@ namespace DataG
 
         private void GPSPanel_Paint(object sender, PaintEventArgs e)
         {
-            if (isBitCre == false && fileOpen == true)
+            if (fileOpen == false) return;
+            if (isBitNormalCre == false)
             {
-                bitm = new Bitmap(GPSPanel.Width, GPSPanel.Height);
-                Graphics g2 = Graphics.FromImage(bitm);
-                if (radioButton_Normal.Checked) //normal
+                bitNormal = new Bitmap(GPSPanel.Width, GPSPanel.Height);
+                Graphics g = Graphics.FromImage(bitNormal);
+                PointF p11 = new PointF();
+                PointF p22 = new PointF();
+                Pen nPen = new Pen(Brushes.Red, 2);
+                Pen nPen3 = new Pen(Brushes.Green, 2);
+                for (int i = 0; i < dtrNum - 1; i += 1)
                 {
-                    PointF p11 = new PointF();
-                    PointF p22 = new PointF();
-                    Pen nPen = new Pen(Brushes.Red, 2);
-                    Pen nPen3 = new Pen(Brushes.Green, 2);
-                    for (int i = 0; i < dtrNum - 1; i += 1)
-                    {
-                        p11 = new PointF((float)x[i], (float)y[i]);
-                        p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
-                        g2.DrawLine(nPen, p11, p22);
-                    }
-                    for (int i = 0; i < dtrNum2 - 1; i += 1)
-                    {
-                        p11 = new PointF((float)x2[i], (float)y2[i]);
-                        p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
-                        g2.DrawLine(nPen3, p11, p22);
-                    }
-                    Graphics gg = GPSPanel.CreateGraphics();
-                    gg.DrawImage(bitm, new PointF(0.0f, 0.0f));
+                    p11 = new PointF((float)x[i], (float)y[i]);
+                    p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                    g.DrawLine(nPen, p11, p22);
                 }
-                else if (radioButton_Speed.Checked) //speed
+                for (int i = 0; i < dtrNum2 - 1; i += 1)
                 {
-                    bitm = new Bitmap(GPSPanel.Width, GPSPanel.Height);
-                    Graphics g3 = Graphics.FromImage(bitm);
-                    PointF p11 = new PointF();
-                    PointF p22 = new PointF();
-                    Pen p6;
-                    Pen p2;
-                    maxspeed = maxValue(speed, dtrNum);
-                    minspeed = minValue(speed, dtrNum);
-                    maxspeed2 = maxValue(speed2, dtrNum2);
-                    minspeed2 = minValue(speed2, dtrNum2);
-                    for (int i = 0; i < dtrNum - 1; i++)
-                    {
-                        p11 = new PointF((float)x[i], (float)y[i]);
-                        p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
-                        p6 = new Pen(Color.FromArgb(colorRed(speed[i], maxspeed, minspeed), colorGreen(speed[i], maxspeed, minspeed), 0), 2);
-                        g3.DrawLine(p6, p11, p22);
-                    }
-                    for (int i = 0; i < dtrNum2 - 1; i += 1)
-                    {
-                        p11 = new PointF((float)x2[i], (float)y2[i]);
-                        p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
-                        p2 = new Pen(Color.FromArgb(colorRed(speed2[i], maxspeed2, minspeed2), colorGreen(speed2[i], maxspeed2, minspeed2), 255), 2);
-                        g3.DrawLine(p2, p11, p22);
-                    }
-                    Graphics gg = GPSPanel.CreateGraphics();
-                    gg.DrawImage(bitm, new PointF(0.0f, 0.0f));
+                    p11 = new PointF((float)x2[i], (float)y2[i]);
+                    p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
+                    g.DrawLine(nPen3, p11, p22);
                 }
-                else
+                isBitNormalCre = true;
+                if (radioButton_Normal.Checked)
                 {
-                    bitm = new Bitmap(GPSPanel.Width, GPSPanel.Height);
-                    Graphics g4 = Graphics.FromImage(bitm);
-                    PointF p11 = new PointF();
-                    PointF p22 = new PointF();
-                    Pen p6;
-                    maxacc = maxValue(accelerate, dtrNum);
-                    minacc = minValue(accelerate, dtrNum);
-                    for (int i = 0; i < dtrNum - 1; i++)
-                    {
-                        p11 = new PointF((float)x[i], (float)y[i]);
-                        p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
-                        p6 = new Pen(Color.FromArgb(colorRed(accelerate[i], maxacc, minacc), colorGreen(accelerate[i], maxacc, minacc), 0), 2);
-                        g4.DrawLine(p6, p11, p22);
-                    }
                     Graphics gg = GPSPanel.CreateGraphics();
-                    gg.DrawImage(bitm, new PointF(0.0f, 0.0f));
+                    gg.DrawImage(bitNormal, new PointF(0.0f, 0.0f));
                 }
-                //Graphics gg = GPSPanel.CreateGraphics();
-                //gg.DrawImage(bitm, new PointF(0.0f, 0.0f));
-                isBitCre = true;
             }
-            else if (fileOpen && isBitCre)
+            else
             {
-                if (radioButton_Normal.Checked) //speed
+                if (radioButton_Normal.Checked)
                 {
-                    bitm = new Bitmap(GPSPanel.Width, GPSPanel.Height);
-                    Graphics g2 = Graphics.FromImage(bitm);
-                    PointF p11 = new PointF();
-                    PointF p22 = new PointF();
-                    Pen nPen = new Pen(Brushes.Red, 2);
-                    Pen nPen3 = new Pen(Brushes.Green, 2);
-                    for (int i = 0; i < dtrNum - 1; i += 1)
-                    {
-                        p11 = new PointF((float)x[i], (float)y[i]);
-                        p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
-                        g2.DrawLine(nPen, p11, p22);
-                    }
-                    for (int i = 0; i < dtrNum2 - 1; i += 1)
-                    {
-                        p11 = new PointF((float)x2[i], (float)y2[i]);
-                        p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
-                        g2.DrawLine(nPen3, p11, p22);
-                    }
+                    Graphics gg = GPSPanel.CreateGraphics();
+                    gg.DrawImage(bitNormal, new PointF(0.0f, 0.0f));
                 }
+            }
 
-                if (radioButton_Speed.Checked) //speed
+            if (isBitSpeedCre == false)
+            {
+                bitSpeed = new Bitmap(GPSPanel.Width, GPSPanel.Height);
+                Graphics g3 = Graphics.FromImage(bitSpeed);
+                PointF p11 = new PointF();
+                PointF p22 = new PointF();
+                Pen p6;
+                Pen p2;
+                maxspeed = maxValue(speed, dtrNum);
+                minspeed = minValue(speed, dtrNum);
+                maxspeed2 = maxValue(speed2, dtrNum2);
+                minspeed2 = minValue(speed2, dtrNum2);
+                for (int i = 0; i < dtrNum - 1; i++)
                 {
-                    bitm = new Bitmap(GPSPanel.Width, GPSPanel.Height);
-                    Graphics g3 = Graphics.FromImage(bitm);
-                    PointF p11 = new PointF();
-                    PointF p22 = new PointF();
-                    Pen p6;
-                    Pen p2;
-                    maxspeed = maxValue(speed, dtrNum);
-                    minspeed = minValue(speed, dtrNum);
-                    maxspeed2 = maxValue(speed2, dtrNum2);
-                    minspeed2 = minValue(speed2, dtrNum2);
-                    for (int i = 0; i < dtrNum - 1; i++)
-                    {
-                        p11 = new PointF((float)x[i], (float)y[i]);
-                        p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
-                        p6 = new Pen(Color.FromArgb(colorRed(speed[i], maxspeed, minspeed), colorGreen(speed[i], maxspeed, minspeed), 0), 2);
-                        g3.DrawLine(p6, p11, p22);
-                    }
-                    for (int i = 0; i < dtrNum2 - 1; i += 1)
-                    {
-                        p11 = new PointF((float)x2[i], (float)y2[i]);
-                        p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
-                        p2 = new Pen(Color.FromArgb(colorRed(speed2[i], maxspeed2, minspeed2), colorGreen(speed2[i], maxspeed2, minspeed2), 255), 2);
-                        g3.DrawLine(p2, p11, p22);
-                    }
+                    p11 = new PointF((float)x[i], (float)y[i]);
+                    p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                    p6 = new Pen(Color.FromArgb(colorRed(speed[i], maxspeed, minspeed), colorGreen(speed[i], maxspeed, minspeed), 0), 2);
+                    g3.DrawLine(p6, p11, p22);
                 }
-                if (radioButton_Accelerate.Checked && isAccel)
+                for (int i = 0; i < dtrNum2 - 1; i += 1)
                 {
-                    bitm = new Bitmap(GPSPanel.Width, GPSPanel.Height);
-                    Graphics g4 = Graphics.FromImage(bitm);
-                    PointF p11 = new PointF();
-                    PointF p22 = new PointF();
-                    Pen p6;
-                    maxacc = maxValue(accelerate, dtrNum);
-                    minacc = minValue(accelerate, dtrNum);
-                    for (int i = 0; i < dtrNum - 1; i++)
-                    {
-                        p11 = new PointF((float)x[i], (float)y[i]);
-                        p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
-                        p6 = new Pen(Color.FromArgb(colorRed(accelerate[i], maxacc, minacc), colorGreen(accelerate[i], maxacc, minacc), 0), 2);
-                        g4.DrawLine(p6, p11, p22);
-                    }
-                    //Graphics gg = GPSPanel.CreateGraphics();
-                    //gg.DrawImage(bitm, new PointF(0.0f, 0.0f));
+                    p11 = new PointF((float)x2[i], (float)y2[i]);
+                    p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
+                    p2 = new Pen(Color.FromArgb(colorRed(speed2[i], maxspeed2, minspeed2), colorGreen(speed2[i], maxspeed2, minspeed2), 255), 2);
+                    g3.DrawLine(p2, p11, p22);
                 }
-                Graphics gg = GPSPanel.CreateGraphics();
-                gg.DrawImage(bitm, new PointF(0.0f, 0.0f));
+                isBitSpeedCre = true;
+                if (radioButton_Speed.Checked)
+                {
+                    Graphics gg = GPSPanel.CreateGraphics();
+                    gg.DrawImage(bitSpeed, new PointF(0.0f, 0.0f));
+                }
+            }
+            else
+            {
+                if (radioButton_Speed.Checked)
+                {
+                    Graphics gg = GPSPanel.CreateGraphics();
+                    gg.DrawImage(bitSpeed, new PointF(0.0f, 0.0f));
+                }
+            }
+
+            if (isBitAcceleCre == false)
+            {
+                if (isAccel == false) return;
+                bitAccele = new Bitmap(GPSPanel.Width, GPSPanel.Height);
+                Graphics g3 = Graphics.FromImage(bitAccele);
+                PointF p11 = new PointF();
+                PointF p22 = new PointF();
+                Pen p6;
+                Pen p2;
+                maxspeed = maxValue(accelerate, dtrNum);
+                minspeed = minValue(accelerate, dtrNum);
+                maxspeed2 = maxValue(accelerate2, dtrNum2);
+                minspeed2 = minValue(accelerate2, dtrNum2);
+                for (int i = 0; i < dtrNum - 1; i++)
+                {
+                    p11 = new PointF((float)x[i], (float)y[i]);
+                    p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                    p6 = new Pen(Color.FromArgb(colorRed(accelerate[i], maxspeed, minspeed), colorGreen(accelerate[i], maxspeed, minspeed), 0), 2);
+                    g3.DrawLine(p6, p11, p22);
+                }
+                for (int i = 0; i < dtrNum2 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x2[i], (float)y2[i]);
+                    p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
+                    p2 = new Pen(Color.FromArgb(colorRed(accelerate2[i], maxspeed2, minspeed2), colorGreen(accelerate2[i], maxspeed2, minspeed2), 255), 2);
+                    g3.DrawLine(p2, p11, p22);
+                }
+                isBitAcceleCre = true;
+                if (radioButton_Accelerate.Checked)
+                {
+                    Graphics gg = GPSPanel.CreateGraphics();
+                    gg.DrawImage(bitAccele, new PointF(0.0f, 0.0f));
+                }
+            }
+            else
+            {
+                if (radioButton_Accelerate.Checked)
+                {
+                    Graphics gg = GPSPanel.CreateGraphics();
+                    gg.DrawImage(bitAccele, new PointF(0.0f, 0.0f));
+                }
             }
 
         }
@@ -1946,8 +1921,5 @@ namespace DataG
             s.label24.Text = (dataTime2[dtrNum2 - 1] - dataTime[driver2_x[2]]).ToString();
             s.Show();
         }
-
-        
-
     }
 }

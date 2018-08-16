@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RangeForm));
             this.label1 = new System.Windows.Forms.Label();
             this.cancelButton = new System.Windows.Forms.Button();
             this.confirmButton = new System.Windows.Forms.Button();
@@ -49,8 +50,8 @@
             this.YRangeMinTextBox = new System.Windows.Forms.TextBox();
             this.settingSaveButton = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.speedTextBox = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -99,9 +100,9 @@
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Location = new System.Drawing.Point(19, 72);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox2.Size = new System.Drawing.Size(425, 190);
             this.groupBox2.TabIndex = 15;
             this.groupBox2.TabStop = false;
@@ -188,9 +189,9 @@
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.YRangeMinTextBox);
             this.groupBox1.Location = new System.Drawing.Point(467, 72);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox1.Size = new System.Drawing.Size(461, 190);
             this.groupBox1.TabIndex = 16;
             this.groupBox1.TabStop = false;
@@ -279,6 +280,14 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Others";
             // 
+            // speedTextBox
+            // 
+            this.speedTextBox.Location = new System.Drawing.Point(184, 25);
+            this.speedTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.speedTextBox.Name = "speedTextBox";
+            this.speedTextBox.Size = new System.Drawing.Size(167, 25);
+            this.speedTextBox.TabIndex = 20;
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -288,14 +297,6 @@
             this.label4.Size = new System.Drawing.Size(106, 33);
             this.label4.TabIndex = 19;
             this.label4.Text = "Speed:";
-            // 
-            // speedTextBox
-            // 
-            this.speedTextBox.Location = new System.Drawing.Point(184, 25);
-            this.speedTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.speedTextBox.Name = "speedTextBox";
-            this.speedTextBox.Size = new System.Drawing.Size(167, 25);
-            this.speedTextBox.TabIndex = 20;
             // 
             // RangeForm
             // 
@@ -310,6 +311,7 @@
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.confirmButton);
             this.Controls.Add(this.label1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "RangeForm";
             this.Load += new System.EventHandler(this.YRangeForm_Load);
