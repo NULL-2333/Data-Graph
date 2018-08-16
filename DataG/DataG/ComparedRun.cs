@@ -458,6 +458,7 @@ namespace DataG
             displayPanel.Controls.Add(allSelectedCheckBox);
             displayPanel.Controls.Add(allSelectedCheckBox2);
             sensorCheckedListBox.Items.Clear();
+            sensorCheckedListBox2.Items.Clear();
             displayPanel.Controls.Add(sensorCheckedListBox);
             displayPanel.Controls.Add(sensorCheckedListBox2);
             YPanel.Controls.Clear();
