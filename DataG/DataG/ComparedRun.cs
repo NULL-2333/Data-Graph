@@ -1449,6 +1449,31 @@ namespace DataG
                 PointF p22 = new PointF();
                 Pen nPen = new Pen(Brushes.Red, 2);
                 Pen nPen3 = new Pen(Brushes.Green, 2);
+                p11 = new PointF((float)x[0], (float)y[0]);
+                g.FillEllipse(Brushes.Red, p11.X, p11.Y, 5, 5);
+
+                Label la = new Label();
+                la.Text = "Start";
+                la.Location = new Point((int)p11.X, (int)p11.Y);
+                la.BackColor = Color.Transparent;
+                la.AutoSize = true;
+                GPSPanel.Controls.Add(la);
+
+                p11 = new PointF((float)x[dtrNum - 1], (float)y[dtrNum - 1]);
+                g.FillEllipse(Brushes.Red, p11.X, p11.Y, 5, 5);
+
+                Label la2 = new Label();
+                la2.Text = "End";
+                la2.Location = new Point((int)p11.X, (int)p11.Y);
+                la2.BackColor = Color.Transparent;
+                la2.AutoSize = true;
+                GPSPanel.Controls.Add(la2);
+
+                p11 = new PointF((float)x2[0], (float)y2[0]);
+                g.FillEllipse(Brushes.Green, p11.X, p11.Y, 5, 5);
+                p11 = new PointF((float)x2[dtrNum2 - 1], (float)y2[dtrNum2 - 1]);
+                g.FillEllipse(Brushes.Green, p11.X, p11.Y, 5, 5);
+
                 for (int i = 0; i < dtrNum - 1; i += 1)
                 {
                     p11 = new PointF((float)x[i], (float)y[i]);
@@ -1489,6 +1514,16 @@ namespace DataG
                 minspeed = minValue(speed, dtrNum);
                 maxspeed2 = maxValue(speed2, dtrNum2);
                 minspeed2 = minValue(speed2, dtrNum2);
+
+                p11 = new PointF((float)x[0], (float)y[0]);
+                g3.FillEllipse(Brushes.Red, p11.X, p11.Y, 5, 5);
+                p11 = new PointF((float)x[dtrNum - 1], (float)y[dtrNum - 1]);
+                g3.FillEllipse(Brushes.Red, p11.X, p11.Y, 5, 5);
+                p11 = new PointF((float)x2[0], (float)y2[0]);
+                g3.FillEllipse(Brushes.Green, p11.X, p11.Y, 5, 5);
+                p11 = new PointF((float)x2[dtrNum2 - 1], (float)y2[dtrNum2 - 1]);
+                g3.FillEllipse(Brushes.Green, p11.X, p11.Y, 5, 5);
+
                 for (int i = 0; i < dtrNum - 1; i++)
                 {
                     p11 = new PointF((float)x[i], (float)y[i]);
@@ -1532,6 +1567,16 @@ namespace DataG
                 minspeed = minValue(accelerate, dtrNum);
                 maxspeed2 = maxValue(accelerate2, dtrNum2);
                 minspeed2 = minValue(accelerate2, dtrNum2);
+
+                p11 = new PointF((float)x[0], (float)y[0]);
+                g3.FillEllipse(Brushes.Red, p11.X, p11.Y, 5, 5);
+                p11 = new PointF((float)x[dtrNum - 1], (float)y[dtrNum - 1]);
+                g3.FillEllipse(Brushes.Red, p11.X, p11.Y, 5, 5);
+                p11 = new PointF((float)x2[0], (float)y2[0]);
+                g3.FillEllipse(Brushes.Green, p11.X, p11.Y, 5, 5);
+                p11 = new PointF((float)x2[dtrNum2 - 1], (float)y2[dtrNum2 - 1]);
+                g3.FillEllipse(Brushes.Green, p11.X, p11.Y, 5, 5);
+
                 for (int i = 0; i < dtrNum - 1; i++)
                 {
                     p11 = new PointF((float)x[i], (float)y[i]);
@@ -1868,48 +1913,7 @@ namespace DataG
             PointF p11 = new PointF();
             PointF p22 = new PointF();
             if (fileOpen == false) return;
-            if (startpoint > endpoint) return;
-            //user controled
-            int s_point1 = findLeftNear(startpoint * distance1, disA, dtrNum);
-            int e_point1 = findLeftNear(endpoint * distance1, disA, dtrNum);
-            int s_point2 = findLeftNear(startpoint * distance2, disB, dtrNum2);
-            int e_point2 = findLeftNear(endpoint * distance2, disB, dtrNum2);
-            for (int i = 0; i < s_point1 - 1; i += 1)
-            {
-                p11 = new PointF((float)x[i], (float)y[i]);
-                p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
-                g2.DrawLine(pen1, p11, p22);
-            }
-            for (int i = 0; i < s_point2 - 1; i += 1)
-            {
-                p11 = new PointF((float)x2[i], (float)y2[i]);
-                p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
-                g2.DrawLine(pen2, p11, p22);
-            }
-            for (int i = s_point1; i < e_point1 - 1; i += 1)
-            {
-                p11 = new PointF((float)x[i], (float)y[i]);
-                p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
-                g2.DrawLine(pen3, p11, p22);
-            }
-            for (int i = s_point2; i < e_point2 - 1; i += 1)
-            {
-                p11 = new PointF((float)x2[i], (float)y2[i]);
-                p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
-                g2.DrawLine(pen4, p11, p22);
-            }
-            for (int i = e_point1; i < dtrNum - 1; i += 1)
-            {
-                p11 = new PointF((float)x[i], (float)y[i]);
-                p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
-                g2.DrawLine(pen1, p11, p22);
-            }
-            for (int i = e_point2; i < dtrNum2 - 1; i += 1)
-            {
-                p11 = new PointF((float)x2[i], (float)y2[i]);
-                p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
-                g2.DrawLine(pen2, p11, p22);
-            }
+            
 
             /* standerd
             for (int i = 0; i < driver1_x[0] - 1; i += 1)
@@ -1980,7 +1984,7 @@ namespace DataG
             //Point p6 = new Point(Convert.ToInt32(x2[driver2_x[2]]), Convert.ToInt32(y2[driver2_y[2]]));
             //ExtendLine(p5, p6, 20, g, pen);
             ////g.DrawLine(pen, p5, p6);
-            Segmentation s = new Segmentation();
+            StandardSegmentation s = new StandardSegmentation();
             s.label11.Text = dataTime[driver1_x[0]].ToString();
             s.label12.Text = (dataTime[driver1_x[1]] - dataTime[driver1_x[0]]).ToString();
             s.label13.Text = (dataTime[driver1_x[2]] - dataTime[driver1_x[1]]).ToString();
@@ -1991,6 +1995,95 @@ namespace DataG
             s.label23.Text = (dataTime2[driver2_x[2]] - dataTime2[driver2_x[1]]).ToString();
             s.label24.Text = (dataTime2[dtrNum2 - 1] - dataTime[driver2_x[2]]).ToString();
             s.Show();
+            //Segmentation s = new Segmentation();
+            //s.time[0] = dataTime[driver1_x[0]];
+            //s.time[1] = (dataTime[driver1_x[1]] - dataTime[driver1_x[0]]);
+            //s.time[2] = (dataTime[driver1_x[2]] - dataTime[driver1_x[1]]);
+            //s.time[3] = (dataTime[dtrNum - 1] - dataTime[driver1_x[2]]);
+
+            //s.time2[0] = dataTime2[driver2_x[0]];
+            //s.time2[1] = (dataTime2[driver2_x[1]] - dataTime2[driver2_x[0]]);
+            //s.time2[2] = (dataTime2[driver2_x[2]] - dataTime2[driver2_x[1]]);
+            //s.time2[3] = (dataTime2[dtrNum2 - 1] - dataTime[driver2_x[2]]);
+            //s.Show();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            double[] time = new double[2];
+            ProfessionalSegmentation ps = new ProfessionalSegmentation();
+            ps.ShowDialog();
+            //if (ps.isOK)
+            //{
+                startpoint = (double)ps.start/100;
+                endpoint = (double)ps.end/100;
+                
+                Bitmap bitm;
+                bitm = new Bitmap(GPSPanel.Width, GPSPanel.Height);
+                Graphics g2 = Graphics.FromImage(bitm);
+                Pen pen1 = new Pen(Brushes.LightBlue, 2); //Blue for color1; Green for color2
+                Pen pen2 = new Pen(Brushes.DarkBlue, 2);
+                Pen pen3 = new Pen(Brushes.LightGreen, 2);
+                Pen pen4 = new Pen(Brushes.DarkGreen, 2);
+                PointF p11 = new PointF();
+                PointF p22 = new PointF();
+                if (fileOpen == false) return;
+                if (startpoint > endpoint) return;
+
+                int s_point1 = findLeftNear(startpoint * distance1, disA, dtrNum);
+                int e_point1 = findLeftNear(endpoint * distance1, disA, dtrNum);
+                int s_point2 = findLeftNear(startpoint * distance2, disB, dtrNum2);
+                int e_point2 = findLeftNear(endpoint * distance2, disB, dtrNum2);
+
+                time[0] = dataTime[e_point1]-dataTime[s_point1];
+                time[1] = dataTime[e_point2] - dataTime[s_point2];
+
+
+                for (int i = 0; i < s_point1 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x[i], (float)y[i]);
+                    p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                    g2.DrawLine(pen1, p11, p22);
+                }
+                for (int i = 0; i < s_point2 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x2[i], (float)y2[i]);
+                    p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
+                    g2.DrawLine(pen2, p11, p22);
+                }
+                for (int i = s_point1; i < e_point1 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x[i], (float)y[i]);
+                    p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                    g2.DrawLine(pen3, p11, p22);
+                }
+                for (int i = s_point2; i < e_point2 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x2[i], (float)y2[i]);
+                    p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
+                    g2.DrawLine(pen4, p11, p22);
+                }
+                for (int i = e_point1; i < dtrNum - 1; i += 1)
+                {
+                    p11 = new PointF((float)x[i], (float)y[i]);
+                    p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                    g2.DrawLine(pen1, p11, p22);
+                }
+                for (int i = e_point2; i < dtrNum2 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x2[i], (float)y2[i]);
+                    p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
+                    g2.DrawLine(pen2, p11, p22);
+                }
+                Graphics gg = GPSPanel.CreateGraphics();
+                gg.DrawImage(bitm, new PointF(0.0f, 0.0f));
+
+            //}
+            //user controled
+            ProfessionalSegmentationTime pst = new ProfessionalSegmentationTime();
+            pst.time[0] = time[0];
+            pst.time[1] = time[1];
+            pst.ShowDialog();
         }
     }
 }

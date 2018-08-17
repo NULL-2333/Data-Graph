@@ -55,7 +55,8 @@
             this.radioButton_Normal = new System.Windows.Forms.RadioButton();
             this.YPanel = new System.Windows.Forms.Panel();
             this.settingButton = new System.Windows.Forms.Button();
-            this.segmentationButton = new System.Windows.Forms.Button();
+            this.standardButton = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.activatePanel.SuspendLayout();
             this.displayPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sensorChart)).BeginInit();
@@ -69,17 +70,17 @@
             this.activatePanel.Controls.Add(this.resetButton);
             this.activatePanel.Controls.Add(this.buttonStop);
             this.activatePanel.Controls.Add(this.buttonPlay);
-            this.activatePanel.Location = new System.Drawing.Point(1019, 595);
+            this.activatePanel.Location = new System.Drawing.Point(1105, 595);
             this.activatePanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.activatePanel.Name = "activatePanel";
-            this.activatePanel.Size = new System.Drawing.Size(340, 158);
+            this.activatePanel.Size = new System.Drawing.Size(254, 158);
             this.activatePanel.TabIndex = 3;
             // 
             // resetButton
             // 
             this.resetButton.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.resetButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.resetButton.Location = new System.Drawing.Point(55, 111);
+            this.resetButton.Location = new System.Drawing.Point(12, 111);
             this.resetButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.resetButton.Name = "resetButton";
             this.resetButton.Size = new System.Drawing.Size(261, 41);
@@ -92,7 +93,7 @@
             // 
             this.buttonStop.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.buttonStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonStop.Location = new System.Drawing.Point(198, 34);
+            this.buttonStop.Location = new System.Drawing.Point(155, 34);
             this.buttonStop.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.buttonStop.Name = "buttonStop";
             this.buttonStop.Size = new System.Drawing.Size(105, 39);
@@ -194,7 +195,7 @@
             this.fileLoadingButton.Location = new System.Drawing.Point(800, 595);
             this.fileLoadingButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.fileLoadingButton.Name = "fileLoadingButton";
-            this.fileLoadingButton.Size = new System.Drawing.Size(104, 36);
+            this.fileLoadingButton.Size = new System.Drawing.Size(202, 23);
             this.fileLoadingButton.TabIndex = 6;
             this.fileLoadingButton.Text = "Load CSV...";
             this.fileLoadingButton.UseVisualStyleBackColor = true;
@@ -278,10 +279,10 @@
             // ConfigureButton
             // 
             this.ConfigureButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.ConfigureButton.Location = new System.Drawing.Point(800, 676);
+            this.ConfigureButton.Location = new System.Drawing.Point(800, 654);
             this.ConfigureButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.ConfigureButton.Name = "ConfigureButton";
-            this.ConfigureButton.Size = new System.Drawing.Size(104, 36);
+            this.ConfigureButton.Size = new System.Drawing.Size(202, 24);
             this.ConfigureButton.TabIndex = 10;
             this.ConfigureButton.Text = "Configuration";
             this.ConfigureButton.UseVisualStyleBackColor = true;
@@ -292,11 +293,11 @@
             this.GPSGroupBox.Controls.Add(this.radioButton_Accelerate);
             this.GPSGroupBox.Controls.Add(this.radioButton_Speed);
             this.GPSGroupBox.Controls.Add(this.radioButton_Normal);
-            this.GPSGroupBox.Location = new System.Drawing.Point(912, 595);
+            this.GPSGroupBox.Location = new System.Drawing.Point(1009, 595);
             this.GPSGroupBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.GPSGroupBox.Name = "GPSGroupBox";
             this.GPSGroupBox.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.GPSGroupBox.Size = new System.Drawing.Size(100, 160);
+            this.GPSGroupBox.Size = new System.Drawing.Size(89, 160);
             this.GPSGroupBox.TabIndex = 12;
             this.GPSGroupBox.TabStop = false;
             this.GPSGroupBox.Text = "GPS";
@@ -354,34 +355,47 @@
             // settingButton
             // 
             this.settingButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.5F);
-            this.settingButton.Location = new System.Drawing.Point(800, 635);
+            this.settingButton.Location = new System.Drawing.Point(800, 626);
             this.settingButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.settingButton.Name = "settingButton";
-            this.settingButton.Size = new System.Drawing.Size(103, 36);
+            this.settingButton.Size = new System.Drawing.Size(202, 22);
             this.settingButton.TabIndex = 14;
             this.settingButton.Text = "Load Settings";
             this.settingButton.UseVisualStyleBackColor = true;
             this.settingButton.Click += new System.EventHandler(this.settingButton_Click);
             // 
-            // segmentationButton
+            // standardButton
             // 
-            this.segmentationButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.segmentationButton.Location = new System.Drawing.Point(800, 719);
-            this.segmentationButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.segmentationButton.Name = "segmentationButton";
-            this.segmentationButton.Size = new System.Drawing.Size(104, 36);
-            this.segmentationButton.TabIndex = 15;
-            this.segmentationButton.Text = "Segmentation";
-            this.segmentationButton.UseVisualStyleBackColor = true;
-            this.segmentationButton.Click += new System.EventHandler(this.segmentationButton_Click);
+            this.standardButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.standardButton.Location = new System.Drawing.Point(800, 686);
+            this.standardButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.standardButton.Name = "standardButton";
+            this.standardButton.Size = new System.Drawing.Size(202, 36);
+            this.standardButton.TabIndex = 15;
+            this.standardButton.Text = "Standard Segmentation";
+            this.standardButton.UseVisualStyleBackColor = true;
+            this.standardButton.Click += new System.EventHandler(this.segmentationButton_Click);
+            // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.button1.Location = new System.Drawing.Point(800, 725);
+            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(202, 30);
+            this.button1.TabIndex = 16;
+            this.button1.Text = "Professional Segmentation";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // ComparedRun
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(1183, 599);
-            this.Controls.Add(this.segmentationButton);
+            this.ClientSize = new System.Drawing.Size(1028, 749);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.standardButton);
             this.Controls.Add(this.settingButton);
             this.Controls.Add(this.YPanel);
             this.Controls.Add(this.GPSGroupBox);
@@ -434,7 +448,8 @@
         private System.Windows.Forms.CheckedListBox sensorCheckedListBox2;
         private System.Windows.Forms.RadioButton radioButtonLine2;
         private System.Windows.Forms.RadioButton radioButtonLine1;
-        private System.Windows.Forms.Button segmentationButton;
+        private System.Windows.Forms.Button standardButton;
+        private System.Windows.Forms.Button button1;
     }
 }
 

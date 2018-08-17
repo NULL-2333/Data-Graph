@@ -1,6 +1,6 @@
 ﻿namespace DataG
 {
-    partial class Segmentation
+    partial class StandardSegmentation
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Segmentation));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StandardSegmentation));
             this.firstDriverGroupBox = new System.Windows.Forms.GroupBox();
             this.firstDriverTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.label6 = new System.Windows.Forms.Label();
@@ -330,7 +330,7 @@
             this.label24.Text = "NULL";
             this.label24.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // Segmentation
+            // StandardSegmentation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -338,8 +338,8 @@
             this.Controls.Add(this.secondDriverGroupBox);
             this.Controls.Add(this.firstDriverGroupBox);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "Segmentation";
-            this.Text = "Segmentation";
+            this.Name = "StandardSegmentation";
+            this.Text = "Standard Segmentation";
             this.firstDriverGroupBox.ResumeLayout(false);
             this.firstDriverTableLayoutPanel.ResumeLayout(false);
             this.firstDriverTableLayoutPanel.PerformLayout();
