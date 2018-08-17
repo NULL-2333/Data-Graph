@@ -112,6 +112,9 @@ namespace DataG
 
         double[] gpsTime = new double[dtrNum];
 
+        double startpoint = 0.1;//user can choose the start & end
+        double endpoint = 0.9;
+
         public ComparedRun()
         {
             InitializeComponent();
@@ -1228,7 +1231,7 @@ namespace DataG
 
                 }
                 GPSPanel.Refresh();
-                this.Update();
+                //this.Update();
                 if(maxValue(dataTime, dataTime.Length) > maxValue(dataTime2, dataTime2.Length))
                 {
                 if ((newPlace + moveSpeed) <= maxValue(dataTime, dataTime.Length))
@@ -1865,6 +1868,50 @@ namespace DataG
             PointF p11 = new PointF();
             PointF p22 = new PointF();
             if (fileOpen == false) return;
+            if (startpoint > endpoint) return;
+            //user controled
+            int s_point1 = findLeftNear(startpoint * distance1, disA, dtrNum);
+            int e_point1 = findLeftNear(endpoint * distance1, disA, dtrNum);
+            int s_point2 = findLeftNear(startpoint * distance2, disB, dtrNum2);
+            int e_point2 = findLeftNear(endpoint * distance2, disB, dtrNum2);
+            for (int i = 0; i < s_point1 - 1; i += 1)
+            {
+                p11 = new PointF((float)x[i], (float)y[i]);
+                p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                g2.DrawLine(pen1, p11, p22);
+            }
+            for (int i = 0; i < s_point2 - 1; i += 1)
+            {
+                p11 = new PointF((float)x2[i], (float)y2[i]);
+                p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
+                g2.DrawLine(pen2, p11, p22);
+            }
+            for (int i = s_point1; i < e_point1 - 1; i += 1)
+            {
+                p11 = new PointF((float)x[i], (float)y[i]);
+                p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                g2.DrawLine(pen3, p11, p22);
+            }
+            for (int i = s_point2; i < e_point2 - 1; i += 1)
+            {
+                p11 = new PointF((float)x2[i], (float)y2[i]);
+                p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
+                g2.DrawLine(pen4, p11, p22);
+            }
+            for (int i = e_point1; i < dtrNum - 1; i += 1)
+            {
+                p11 = new PointF((float)x[i], (float)y[i]);
+                p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                g2.DrawLine(pen1, p11, p22);
+            }
+            for (int i = e_point2; i < dtrNum2 - 1; i += 1)
+            {
+                p11 = new PointF((float)x2[i], (float)y2[i]);
+                p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
+                g2.DrawLine(pen2, p11, p22);
+            }
+
+            /* standerd
             for (int i = 0; i < driver1_x[0] - 1; i += 1)
             {
                 p11 = new PointF((float)x[i], (float)y[i]);
@@ -1912,7 +1959,7 @@ namespace DataG
                 p11 = new PointF((float)x2[i], (float)y2[i]);
                 p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
                 g2.DrawLine(pen4, p11, p22);
-            }
+            }*/
             Graphics gg = GPSPanel.CreateGraphics();
             gg.DrawImage(bitm, new PointF(0.0f, 0.0f));
             /*
