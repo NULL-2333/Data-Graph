@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace DataG
 {
-    public partial class Segmentation : Form
+    public partial class StandardSegmentation : Form
     {
-        public Segmentation()
+        public StandardSegmentation()
         {
             InitializeComponent();
         }

@@ -99,5 +99,6 @@ D:\RacingSoftware\9\Data-Graph\DataG\DataG\obj\Debug\DataG.InputForm.resources
 D:\RacingSoftware\9\Data-Graph\DataG\DataG\obj\Debug\DataG.Properties.Resources.resources
 D:\RacingSoftware\9\Data-Graph\DataG\DataG\obj\Debug\DataG.RangeForm.resources
 D:\RacingSoftware\9\Data-Graph\DataG\DataG\obj\Debug\DataG.csproj.GenerateResource.Cache
-C:\Users\user\Desktop\DataRead\DataG\DataG\obj\Debug\DataG.Segmentation.resources
 D:\RacingSoftware\9\Data-Graph\DataG\DataG\obj\Debug\DataG.Segmentation.resources
+C:\Users\user\Desktop\DataRead\DataG\DataG\obj\Debug\DataG.ProfessionalSegmentation.resources
+C:\Users\user\Desktop\DataRead\DataG\DataG\obj\Debug\DataG.StandardSegmentation.resources
