@@ -84,8 +84,8 @@ namespace DataG
         double[] accelerate2 = new double[dtrNum2];             //the speed in the csv file
         int accelerateRow2 = 0;
         
-        double maxacc = 0;
-        double minacc = 0;
+        //double maxacc = 0;
+        //double minacc = 0;
         double maxspeed = 0;
         double minspeed = 0;
         double maxspeed2 = 0;
