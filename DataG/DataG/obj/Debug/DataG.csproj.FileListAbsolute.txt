@@ -104,3 +104,4 @@ C:\Users\user\Desktop\DataRead\DataG\DataG\obj\Debug\DataG.StandardSegmentation.
 D:\RacingSoftware\9\Data-Graph\DataG\DataG\obj\Debug\DataG.ProfessionalSegmentation.resources
 D:\RacingSoftware\9\Data-Graph\DataG\DataG\obj\Debug\DataG.StandardSegmentation.resources
 D:\RacingSoftware\9\Data-Graph\DataG\DataG\obj\Debug\DataG.ProfessionalSegmentationTime.resources
+C:\Users\user\Desktop\DataRead\DataG\DataG\obj\Debug\DataG.ProfessionalSegmentationTime.resources
