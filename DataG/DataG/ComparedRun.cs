@@ -2010,10 +2010,10 @@ namespace DataG
             Bitmap bitm;
             bitm = new Bitmap(GPSPanel.Width, GPSPanel.Height);
             Graphics g2 = Graphics.FromImage(bitm);
-            Pen pen1 = new Pen(Brushes.LightBlue, 2); //Blue for color1; Green for color2
-            Pen pen2 = new Pen(Brushes.DarkBlue, 2);
-            Pen pen3 = new Pen(Brushes.LightGreen, 2);
-            Pen pen4 = new Pen(Brushes.DarkGreen, 2);
+            Pen pen1 = new Pen(Brushes.LightGray, 2); //Blue for color1; Green for color2
+            Pen pen2 = new Pen(Brushes.Gray, 2);
+            Pen pen3 = new Pen(Brushes.Red, 2);
+            Pen pen4 = new Pen(Brushes.Pink, 2);
             PointF p11 = new PointF();
             PointF p22 = new PointF();
             if (fileOpen == false) return;
