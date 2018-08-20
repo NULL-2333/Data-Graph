@@ -39,9 +39,10 @@
             // 
             this.secondTimeLabel.AutoSize = true;
             this.secondTimeLabel.Font = new System.Drawing.Font("Microsoft YaHei UI", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Millimeter, ((byte)(134)));
-            this.secondTimeLabel.Location = new System.Drawing.Point(295, 82);
+            this.secondTimeLabel.Location = new System.Drawing.Point(250, 84);
+            this.secondTimeLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.secondTimeLabel.Name = "secondTimeLabel";
-            this.secondTimeLabel.Size = new System.Drawing.Size(93, 38);
+            this.secondTimeLabel.Size = new System.Drawing.Size(73, 30);
             this.secondTimeLabel.TabIndex = 14;
             this.secondTimeLabel.Text = "NULL";
             // 
@@ -49,9 +50,10 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft YaHei UI", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Millimeter, ((byte)(134)));
-            this.label6.Location = new System.Drawing.Point(12, 82);
+            this.label6.Location = new System.Drawing.Point(9, 84);
+            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(280, 38);
+            this.label6.Size = new System.Drawing.Size(223, 30);
             this.label6.TabIndex = 13;
             this.label6.Text = "2nd Driver Time[s]:";
             // 
@@ -59,9 +61,10 @@
             // 
             this.firstTimeLabel.AutoSize = true;
             this.firstTimeLabel.Font = new System.Drawing.Font("Microsoft YaHei UI", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Millimeter, ((byte)(134)));
-            this.firstTimeLabel.Location = new System.Drawing.Point(295, 21);
+            this.firstTimeLabel.Location = new System.Drawing.Point(250, 29);
+            this.firstTimeLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.firstTimeLabel.Name = "firstTimeLabel";
-            this.firstTimeLabel.Size = new System.Drawing.Size(93, 38);
+            this.firstTimeLabel.Size = new System.Drawing.Size(73, 30);
             this.firstTimeLabel.TabIndex = 12;
             this.firstTimeLabel.Text = "NULL";
             // 
@@ -69,23 +72,23 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft YaHei UI", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Millimeter, ((byte)(134)));
-            this.label5.Location = new System.Drawing.Point(12, 21);
+            this.label5.Location = new System.Drawing.Point(9, 29);
+            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(267, 38);
+            this.label5.Size = new System.Drawing.Size(214, 30);
             this.label5.TabIndex = 11;
             this.label5.Text = "1st Driver Time[s]:";
             // 
             // ProfessionalSegmentationTime
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(420, 146);
+            this.ClientSize = new System.Drawing.Size(395, 165);
             this.Controls.Add(this.secondTimeLabel);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.firstTimeLabel);
             this.Controls.Add(this.label5);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "ProfessionalSegmentationTime";
             this.Text = "Segmentation Time";
             this.Load += new System.EventHandler(this.ProfessionalSegmentationTime_Load);
