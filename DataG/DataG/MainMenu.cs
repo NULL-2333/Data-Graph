@@ -33,5 +33,24 @@ namespace DataG
         {
             this.Close();
         }
+
+        private void singleRunButton_Resize(object sender, EventArgs e)
+        {
+            //this.Controls.
+            //int Move = 12;
+            //this.Controls["singleRunButton"].Location = new Point(Move, Move);
+            //this.Controls["singleRunButton"].Height = (this.Height - Move * 4) / 3;
+            //this.Controls["singleRunButton"].Width = this.Width - Move * 2;
+
+            //this.Controls["comparedRunButton"].Location = new Point(Move, Move * 2 + this.Controls["singleRunButton"].Height);
+            //this.Controls["comparedRunButton"].Height = (this.Height - Move * 4) / 3;
+            //this.Controls["comparedRunButton"].Width = this.Width - Move * 2;
+
+            //this.Controls["singleRunButton"].Location = new Point(Move, Move * 3 + this.Controls["comparedRunButton"].Height);
+            //this.Controls["singleRunButton"].Height = (this.Height - Move * 4) / 3;
+            //this.Controls["singleRunButton"].Width = this.Width - Move * 2;
+
+            //this.Refresh();
+        }
     }
 }

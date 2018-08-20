@@ -36,5 +36,11 @@ namespace DataG
 
             this.Refresh();
         }
+
+        //private void startTrackBar_ValueChanged(object sender, EventArgs e)
+        //{
+        //    start = trackBar1.Value;
+        //    end = trackBar2.Value;
+        //}
     }
 }

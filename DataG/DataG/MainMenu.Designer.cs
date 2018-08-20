@@ -45,11 +45,12 @@
             this.singleRunButton.Text = "Single Run";
             this.singleRunButton.UseVisualStyleBackColor = true;
             this.singleRunButton.Click += new System.EventHandler(this.singleRunButton_Click);
+            this.singleRunButton.Resize += new System.EventHandler(this.singleRunButton_Resize);
             // 
             // comparedRunButton
             // 
             this.comparedRunButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.5F);
-            this.comparedRunButton.Location = new System.Drawing.Point(12, 138);
+            this.comparedRunButton.Location = new System.Drawing.Point(12, 140);
             this.comparedRunButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.comparedRunButton.Name = "comparedRunButton";
             this.comparedRunButton.Size = new System.Drawing.Size(369, 100);

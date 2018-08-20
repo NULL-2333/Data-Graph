@@ -31,11 +31,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProfessionalSegmentation));
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.startTextBox = new System.Windows.Forms.TextBox();
-            this.endTextBox = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.confirmButton = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.endTextBox = new System.Windows.Forms.TextBox();
+            this.startTextBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -58,31 +58,16 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "End Point";
             // 
-            // startTextBox
+            // confirmButton
             // 
-            this.startTextBox.Location = new System.Drawing.Point(273, 58);
-            this.startTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.startTextBox.Name = "startTextBox";
-            this.startTextBox.Size = new System.Drawing.Size(121, 25);
-            this.startTextBox.TabIndex = 2;
-            // 
-            // endTextBox
-            // 
-            this.endTextBox.Location = new System.Drawing.Point(273, 122);
-            this.endTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.endTextBox.Name = "endTextBox";
-            this.endTextBox.Size = new System.Drawing.Size(121, 25);
-            this.endTextBox.TabIndex = 3;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft YaHei UI", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Millimeter, ((byte)(134)));
-            this.label3.Location = new System.Drawing.Point(401, 48);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(43, 38);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "%";
+            this.confirmButton.Location = new System.Drawing.Point(169, 200);
+            this.confirmButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.confirmButton.Name = "confirmButton";
+            this.confirmButton.Size = new System.Drawing.Size(147, 49);
+            this.confirmButton.TabIndex = 6;
+            this.confirmButton.Text = "Confirm";
+            this.confirmButton.UseVisualStyleBackColor = true;
+            this.confirmButton.Click += new System.EventHandler(this.confirmButton_Click);
             // 
             // label4
             // 
@@ -94,16 +79,31 @@
             this.label4.TabIndex = 5;
             this.label4.Text = "%";
             // 
-            // confirmButton
+            // label3
             // 
-            this.confirmButton.Location = new System.Drawing.Point(169, 200);
-            this.confirmButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.confirmButton.Name = "confirmButton";
-            this.confirmButton.Size = new System.Drawing.Size(147, 49);
-            this.confirmButton.TabIndex = 6;
-            this.confirmButton.Text = "Confirm";
-            this.confirmButton.UseVisualStyleBackColor = true;
-            this.confirmButton.Click += new System.EventHandler(this.confirmButton_Click);
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft YaHei UI", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Millimeter, ((byte)(134)));
+            this.label3.Location = new System.Drawing.Point(401, 48);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(43, 38);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "%";
+            // 
+            // endTextBox
+            // 
+            this.endTextBox.Location = new System.Drawing.Point(273, 122);
+            this.endTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.endTextBox.Name = "endTextBox";
+            this.endTextBox.Size = new System.Drawing.Size(121, 25);
+            this.endTextBox.TabIndex = 3;
+            // 
+            // startTextBox
+            // 
+            this.startTextBox.Location = new System.Drawing.Point(273, 58);
+            this.startTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.startTextBox.Name = "startTextBox";
+            this.startTextBox.Size = new System.Drawing.Size(121, 25);
+            this.startTextBox.TabIndex = 2;
             // 
             // ProfessionalSegmentation
             // 
@@ -130,10 +130,10 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox startTextBox;
-        private System.Windows.Forms.TextBox endTextBox;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button confirmButton;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox endTextBox;
+        private System.Windows.Forms.TextBox startTextBox;
     }
 }

@@ -1984,17 +1984,19 @@ namespace DataG
             //Point p6 = new Point(Convert.ToInt32(x2[driver2_x[2]]), Convert.ToInt32(y2[driver2_y[2]]));
             //ExtendLine(p5, p6, 20, g, pen);
             ////g.DrawLine(pen, p5, p6);
-            StandardSegmentation ss = new StandardSegmentation();
-            ss.label11.Text = dataTime[driver1_x[0]].ToString();
-            ss.label12.Text = (dataTime[driver1_x[1]] - dataTime[driver1_x[0]]).ToString();
-            ss.label13.Text = (dataTime[driver1_x[2]] - dataTime[driver1_x[1]]).ToString();
-            ss.label14.Text = (dataTime[dtrNum - 1] - dataTime[driver1_x[2]]).ToString();
+            //StandardSegmentation ss = new StandardSegmentation();
+            label11.Text = dataTime[driver1_x[0]].ToString();
+            label12.Text = (dataTime[driver1_x[1]] - dataTime[driver1_x[0]]).ToString();
+            label13.Text = (dataTime[driver1_x[2]] - dataTime[driver1_x[1]]).ToString();
+            label14.Text = (dataTime[dtrNum - 1] - dataTime[driver1_x[2]]).ToString();
 
-            ss.label21.Text = dataTime2[driver2_x[0]].ToString();
-            ss.label22.Text = (dataTime2[driver2_x[1]] - dataTime2[driver2_x[0]]).ToString();
-            ss.label23.Text = (dataTime2[driver2_x[2]] - dataTime2[driver2_x[1]]).ToString();
-            ss.label24.Text = (dataTime2[dtrNum2 - 1] - dataTime[driver2_x[2]]).ToString();
-            ss.Show();
+            label21.Text = dataTime2[driver2_x[0]].ToString();
+            label22.Text = (dataTime2[driver2_x[1]] - dataTime2[driver2_x[0]]).ToString();
+            label23.Text = (dataTime2[driver2_x[2]] - dataTime2[driver2_x[1]]).ToString();
+            label24.Text = (dataTime2[dtrNum2 - 1] - dataTime[driver2_x[2]]).ToString();
+            //ss.Show();
+            firstDriverGroupBox.Refresh();
+            secondDriverGroupBox.Refresh();
         }
 
         private void button1_Click(object sender, EventArgs e)
