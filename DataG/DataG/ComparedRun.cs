@@ -111,9 +111,13 @@ namespace DataG
         double[] disB = new double[dtrNum2];
 
         double[] gpsTime = new double[dtrNum];
+        double barpos1 = 0;
+        double barpos2 = 0;
+        double barpos3 = 0;
 
         double startpoint = 0.1;//user can choose the start & end
         double endpoint = 0.9;
+        double endpoint2 = 0;
 
         public ComparedRun()
         {
@@ -122,6 +126,9 @@ namespace DataG
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            barpos1 = firstTrackBar.Value;
+            barpos2 = secondTrackBar.Value;
+            barpos3 = thirdTrackBar.Value;
 
         }
 
@@ -1914,7 +1921,9 @@ namespace DataG
             PointF p22 = new PointF();
             if (fileOpen == false) return;
 
-
+            barpos1 = 25;
+            barpos2 = 50;
+            barpos3 = 75;
             //standerd
             for (int i = 0; i < driver1_x[0] - 1; i += 1)
             {
@@ -1999,79 +2008,285 @@ namespace DataG
             secondDriverGroupBox.Refresh();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+
+        private void firstTrackBar_ValueChanged(object sender, EventArgs e)
         {
-            double[] time = new double[2];
-            ProfessionalSegmentation ps = new ProfessionalSegmentation();
-            ps.ShowDialog();
-            startpoint = (double)ps.start / 100;
-            endpoint = (double)ps.end / 100;
-
-            Bitmap bitm;
-            bitm = new Bitmap(GPSPanel.Width, GPSPanel.Height);
-            Graphics g2 = Graphics.FromImage(bitm);
-            Pen pen1 = new Pen(Brushes.LightGray, 2); //Blue for color1; Green for color2
-            Pen pen2 = new Pen(Brushes.Gray, 2);
-            Pen pen3 = new Pen(Brushes.Red, 2);
-            Pen pen4 = new Pen(Brushes.Pink, 2);
-            PointF p11 = new PointF();
-            PointF p22 = new PointF();
-            if (fileOpen == false) return;
-            if (startpoint > endpoint) return;
-
-            int s_point1 = findLeftNear(startpoint * distance1, disA, dtrNum);
-            int e_point1 = findLeftNear(endpoint * distance1, disA, dtrNum);
-            int s_point2 = findLeftNear(startpoint * distance2, disB, dtrNum2);
-            int e_point2 = findLeftNear(endpoint * distance2, disB, dtrNum2);
-
-            time[0] = dataTime[e_point1] - dataTime[s_point1];
-            time[1] = dataTime[e_point2] - dataTime[s_point2];
-
-
-            for (int i = 0; i < s_point1 - 1; i += 1)
+            barpos1 = firstTrackBar.Value;
+            if(barpos1 < barpos2)
             {
-                p11 = new PointF((float)x[i], (float)y[i]);
-                p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
-                g2.DrawLine(pen1, p11, p22);
-            }
-            for (int i = 0; i < s_point2 - 1; i += 1)
-            {
-                p11 = new PointF((float)x2[i], (float)y2[i]);
-                p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
-                g2.DrawLine(pen2, p11, p22);
-            }
-            for (int i = s_point1; i < e_point1 - 1; i += 1)
-            {
-                p11 = new PointF((float)x[i], (float)y[i]);
-                p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
-                g2.DrawLine(pen3, p11, p22);
-            }
-            for (int i = s_point2; i < e_point2 - 1; i += 1)
-            {
-                p11 = new PointF((float)x2[i], (float)y2[i]);
-                p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
-                g2.DrawLine(pen4, p11, p22);
-            }
-            for (int i = e_point1; i < dtrNum - 1; i += 1)
-            {
-                p11 = new PointF((float)x[i], (float)y[i]);
-                p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
-                g2.DrawLine(pen1, p11, p22);
-            }
-            for (int i = e_point2; i < dtrNum2 - 1; i += 1)
-            {
-                p11 = new PointF((float)x2[i], (float)y2[i]);
-                p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
-                g2.DrawLine(pen2, p11, p22);
-            }
-            Graphics gg = GPSPanel.CreateGraphics();
-            gg.DrawImage(bitm, new PointF(0.0f, 0.0f));
+                startpoint = (double)barpos1 / 100;
+                endpoint = (double)barpos2 / 100;
+                endpoint2 = (double)barpos3 / 100;
 
-            //user controled
-            ProfessionalSegmentationTime pst = new ProfessionalSegmentationTime();
-            pst.time[0] = time[0];
-            pst.time[1] = time[1];
-            pst.ShowDialog();
+                Bitmap bitm;
+                bitm = new Bitmap(GPSPanel.Width, GPSPanel.Height);
+                Graphics g2 = Graphics.FromImage(bitm);
+                Pen pen1 = new Pen(Brushes.LightBlue, 2); //Blue for color1; Green for color2
+                Pen pen2 = new Pen(Brushes.Blue, 2);
+                Pen pen3 = new Pen(Brushes.LightGreen, 2);
+                Pen pen4 = new Pen(Brushes.Green, 2);
+                PointF p11 = new PointF();
+                PointF p22 = new PointF();
+                if (fileOpen == false) return;
+
+                int s_point1 = findLeftNear(startpoint * distance1, disA, dtrNum);
+                int e_point1 = findLeftNear(endpoint * distance1, disA, dtrNum);
+                int s_point2 = findLeftNear(startpoint * distance2, disB, dtrNum2);
+                int e_point2 = findLeftNear(endpoint * distance2, disB, dtrNum2);
+                int e_point3 = findLeftNear(endpoint2 * distance1, disA, dtrNum);
+                int e_point4 = findLeftNear(endpoint2 * distance2, disB, dtrNum2);
+
+                //time[0] = dataTime[e_point1] - dataTime[s_point1];
+                //time[1] = dataTime[e_point2] - dataTime[s_point2];
+
+                for (int i = 0; i < s_point1 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x[i], (float)y[i]);
+                    p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                    g2.DrawLine(pen1, p11, p22);
+                }
+                for (int i = 0; i < s_point2 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x2[i], (float)y2[i]);
+                    p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
+                    g2.DrawLine(pen2, p11, p22);
+                }
+                for (int i = s_point1; i < e_point1 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x[i], (float)y[i]);
+                    p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                    g2.DrawLine(pen3, p11, p22);
+                }
+                for (int i = s_point2; i < e_point2 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x2[i], (float)y2[i]);
+                    p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
+                    g2.DrawLine(pen4, p11, p22);
+                }
+                for (int i = e_point1; i < e_point3 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x[i], (float)y[i]);
+                    p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                    g2.DrawLine(pen1, p11, p22);
+                }
+                for (int i = e_point2; i < e_point4 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x2[i], (float)y2[i]);
+                    p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
+                    g2.DrawLine(pen2, p11, p22);
+                }
+                for (int i = e_point3; i < dtrNum - 1; i += 1)
+                {
+                    p11 = new PointF((float)x[i], (float)y[i]);
+                    p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                    g2.DrawLine(pen3, p11, p22);
+                }
+                for (int i = e_point4; i < dtrNum2 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x2[i], (float)y2[i]);
+                    p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
+                    g2.DrawLine(pen4, p11, p22);
+                }
+                Graphics gg = GPSPanel.CreateGraphics();
+                gg.DrawImage(bitm, new PointF(0.0f, 0.0f));
+
+                label11.Text = dataTime[s_point1].ToString("0.00");
+                label12.Text = (dataTime[e_point1] - dataTime[s_point1]).ToString("0.00");
+                label13.Text = (dataTime[e_point3] - dataTime[e_point1]).ToString("0.00");
+                label14.Text = (dataTime[dtrNum - 1] - dataTime[e_point3]).ToString("0.00");
+
+                label21.Text = dataTime2[s_point2].ToString("0.00");
+                label22.Text = (dataTime2[e_point2] - dataTime2[s_point2]).ToString("0.00");
+                label23.Text = (dataTime2[e_point4] - dataTime2[e_point2]).ToString("0.00");
+                label24.Text = (dataTime2[dtrNum2 - 1] - dataTime[e_point4]).ToString("0.00");
+            }
+        }
+
+        private void secondTrackBar_ValueChanged(object sender, EventArgs e)
+        {
+            barpos2 = secondTrackBar.Value;
+            if (barpos1 < barpos2 && barpos2 < barpos3)
+            {
+                startpoint = (double)barpos1 / 100;
+                endpoint = (double)barpos2 / 100;
+                endpoint2 = (double)barpos3 / 100;
+
+                Bitmap bitm;
+                bitm = new Bitmap(GPSPanel.Width, GPSPanel.Height);
+                Graphics g2 = Graphics.FromImage(bitm);
+                Pen pen1 = new Pen(Brushes.LightBlue, 2); //Blue for color1; Green for color2
+                Pen pen2 = new Pen(Brushes.Blue, 2);
+                Pen pen3 = new Pen(Brushes.LightGreen, 2);
+                Pen pen4 = new Pen(Brushes.Green, 2);
+                PointF p11 = new PointF();
+                PointF p22 = new PointF();
+                if (fileOpen == false) return;
+
+                int s_point1 = findLeftNear(startpoint * distance1, disA, dtrNum);
+                int e_point1 = findLeftNear(endpoint * distance1, disA, dtrNum);
+                int s_point2 = findLeftNear(startpoint * distance2, disB, dtrNum2);
+                int e_point2 = findLeftNear(endpoint * distance2, disB, dtrNum2);
+                int e_point3 = findLeftNear(endpoint2 * distance1, disA, dtrNum);
+                int e_point4 = findLeftNear(endpoint2 * distance2, disB, dtrNum2);
+
+                //time[0] = dataTime[e_point1] - dataTime[s_point1];
+                //time[1] = dataTime[e_point2] - dataTime[s_point2];
+
+                for (int i = 0; i < s_point1 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x[i], (float)y[i]);
+                    p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                    g2.DrawLine(pen1, p11, p22);
+                }
+                for (int i = 0; i < s_point2 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x2[i], (float)y2[i]);
+                    p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
+                    g2.DrawLine(pen2, p11, p22);
+                }
+                for (int i = s_point1; i < e_point1 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x[i], (float)y[i]);
+                    p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                    g2.DrawLine(pen3, p11, p22);
+                }
+                for (int i = s_point2; i < e_point2 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x2[i], (float)y2[i]);
+                    p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
+                    g2.DrawLine(pen4, p11, p22);
+                }
+                for (int i = e_point1; i < dtrNum - 1; i += 1)
+                {
+                    p11 = new PointF((float)x[i], (float)y[i]);
+                    p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                    g2.DrawLine(pen1, p11, p22);
+                }
+                for (int i = e_point2; i < dtrNum2 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x2[i], (float)y2[i]);
+                    p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
+                    g2.DrawLine(pen2, p11, p22);
+                }
+                for (int i = e_point3; i < dtrNum - 1; i += 1)
+                {
+                    p11 = new PointF((float)x[i], (float)y[i]);
+                    p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                    g2.DrawLine(pen3, p11, p22);
+                }
+                for (int i = e_point4; i < dtrNum2 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x2[i], (float)y2[i]);
+                    p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
+                    g2.DrawLine(pen4, p11, p22);
+                }
+                Graphics gg = GPSPanel.CreateGraphics();
+                gg.DrawImage(bitm, new PointF(0.0f, 0.0f));
+
+                label11.Text = dataTime[s_point1].ToString("0.00");
+                label12.Text = (dataTime[e_point1] - dataTime[s_point1]).ToString("0.00");
+                label13.Text = (dataTime[e_point3] - dataTime[e_point1]).ToString("0.00");
+                label14.Text = (dataTime[dtrNum - 1] - dataTime[e_point3]).ToString("0.00");
+
+                label21.Text = dataTime2[s_point2].ToString("0.00");
+                label22.Text = (dataTime2[e_point2] - dataTime2[s_point2]).ToString("0.00");
+                label23.Text = (dataTime2[e_point4] - dataTime2[e_point2]).ToString("0.00");
+                label24.Text = (dataTime2[dtrNum2 - 1] - dataTime[e_point4]).ToString("0.00");
+            }
+
+        }
+
+        private void thirdTrackBar_ValueChanged(object sender, EventArgs e)
+        {
+            barpos3 = thirdTrackBar.Value;
+
+            endpoint2 = (double)barpos3 / 100;
+            if (barpos2 < barpos3)
+            {
+                startpoint = (double)barpos1 / 100;
+                endpoint = (double)barpos2 / 100;
+                Bitmap bitm;
+                bitm = new Bitmap(GPSPanel.Width, GPSPanel.Height);
+                Graphics g2 = Graphics.FromImage(bitm);
+                Pen pen1 = new Pen(Brushes.LightBlue, 2); //Blue for color1; Green for color2
+                Pen pen2 = new Pen(Brushes.Blue, 2);
+                Pen pen3 = new Pen(Brushes.LightGreen, 2);
+                Pen pen4 = new Pen(Brushes.Green, 2);
+                PointF p11 = new PointF();
+                PointF p22 = new PointF();
+                if (fileOpen == false) return;
+
+                int s_point1 = findLeftNear(startpoint * distance1, disA, dtrNum);
+                int e_point1 = findLeftNear(endpoint * distance1, disA, dtrNum);
+                int s_point2 = findLeftNear(startpoint * distance2, disB, dtrNum2);
+                int e_point2 = findLeftNear(endpoint * distance2, disB, dtrNum2);
+                int e_point3 = findLeftNear(endpoint2 * distance1, disA, dtrNum);
+                int e_point4 = findLeftNear(endpoint2 * distance2, disB, dtrNum2);
+
+                //time[0] = dataTime[e_point1] - dataTime[s_point1];
+                //time[1] = dataTime[e_point2] - dataTime[s_point2];
+
+                for (int i = 0; i < s_point1 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x[i], (float)y[i]);
+                    p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                    g2.DrawLine(pen1, p11, p22);
+                }
+                for (int i = 0; i < s_point2 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x2[i], (float)y2[i]);
+                    p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
+                    g2.DrawLine(pen2, p11, p22);
+                }
+                for (int i = s_point1; i < e_point1 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x[i], (float)y[i]);
+                    p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                    g2.DrawLine(pen3, p11, p22);
+                }
+                for (int i = s_point2; i < e_point2 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x2[i], (float)y2[i]);
+                    p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
+                    g2.DrawLine(pen4, p11, p22);
+                }
+                for (int i = e_point1; i < dtrNum - 1; i += 1)
+                {
+                    p11 = new PointF((float)x[i], (float)y[i]);
+                    p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                    g2.DrawLine(pen1, p11, p22);
+                }
+                for (int i = e_point2; i < dtrNum2 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x2[i], (float)y2[i]);
+                    p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
+                    g2.DrawLine(pen2, p11, p22);
+                }
+                for (int i = e_point3; i < dtrNum - 1; i += 1)
+                {
+                    p11 = new PointF((float)x[i], (float)y[i]);
+                    p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                    g2.DrawLine(pen3, p11, p22);
+                }
+                for (int i = e_point4; i < dtrNum2 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x2[i], (float)y2[i]);
+                    p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
+                    g2.DrawLine(pen4, p11, p22);
+                }
+                Graphics gg = GPSPanel.CreateGraphics();
+                gg.DrawImage(bitm, new PointF(0.0f, 0.0f));
+
+                label11.Text = dataTime[s_point1].ToString("0.00");
+                label12.Text = (dataTime[e_point1] - dataTime[s_point1]).ToString("0.00");
+                label13.Text = (dataTime[e_point3] - dataTime[e_point1]).ToString("0.00");
+                label14.Text = (dataTime[dtrNum - 1] - dataTime[e_point3]).ToString("0.00");
+
+                label21.Text = dataTime2[s_point2].ToString("0.00");
+                label22.Text = (dataTime2[e_point2] - dataTime2[s_point2]).ToString("0.00");
+                label23.Text = (dataTime2[e_point4] - dataTime2[e_point2]).ToString("0.00");
+                label24.Text = (dataTime2[dtrNum2 - 1] - dataTime[e_point4]).ToString("0.00");
+            }
         }
     }
 }

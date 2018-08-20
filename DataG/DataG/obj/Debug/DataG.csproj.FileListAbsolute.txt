@@ -85,12 +85,12 @@ C:\Users\user\Desktop\DataRead\DataG\DataG\obj\Debug\DataG.MainMenu.resources
 C:\Users\user\Desktop\DataRead\DataG\DataG\obj\Debug\DataG.SingleRun.resources
 C:\Users\user\Desktop\DataRead\DataG\DataG\obj\Debug\DataG.ComparedRun.resources
 C:\Users\user\Desktop\DataRead\DataG\DataG\obj\Debug\DataG.ComparedRun_FileLoadingForm.resources
+C:\Users\user\Desktop\DataRead\DataG\DataG\obj\Debug\DataG.ProfessionalSegmentation.resources
+C:\Users\user\Desktop\DataRead\DataG\DataG\obj\Debug\DataG.StandardSegmentation.resources
+C:\Users\user\Desktop\DataRead\DataG\DataG\obj\Debug\DataG.ProfessionalSegmentationTime.resources
 D:\RacingSoftware\9\Data-Graph\DataG\DataG\bin\Debug\DataG.exe.config
-D:\RacingSoftware\9\Data-Graph\DataG\DataG\obj\Debug\DataG.exe
-D:\RacingSoftware\9\Data-Graph\DataG\DataG\obj\Debug\DataG.pdb
 D:\RacingSoftware\9\Data-Graph\DataG\DataG\bin\Debug\DataG.exe
 D:\RacingSoftware\9\Data-Graph\DataG\DataG\bin\Debug\DataG.pdb
-D:\RacingSoftware\9\Data-Graph\DataG\DataG\obj\Debug\DataG.csprojResolveAssemblyReference.cache
 D:\RacingSoftware\9\Data-Graph\DataG\DataG\obj\Debug\DataG.ComparedRun.resources
 D:\RacingSoftware\9\Data-Graph\DataG\DataG\obj\Debug\DataG.ComparedRun_FileLoadingForm.resources
 D:\RacingSoftware\9\Data-Graph\DataG\DataG\obj\Debug\DataG.MainMenu.resources
@@ -99,9 +99,5 @@ D:\RacingSoftware\9\Data-Graph\DataG\DataG\obj\Debug\DataG.InputForm.resources
 D:\RacingSoftware\9\Data-Graph\DataG\DataG\obj\Debug\DataG.Properties.Resources.resources
 D:\RacingSoftware\9\Data-Graph\DataG\DataG\obj\Debug\DataG.RangeForm.resources
 D:\RacingSoftware\9\Data-Graph\DataG\DataG\obj\Debug\DataG.csproj.GenerateResource.Cache
-C:\Users\user\Desktop\DataRead\DataG\DataG\obj\Debug\DataG.ProfessionalSegmentation.resources
-C:\Users\user\Desktop\DataRead\DataG\DataG\obj\Debug\DataG.StandardSegmentation.resources
-D:\RacingSoftware\9\Data-Graph\DataG\DataG\obj\Debug\DataG.ProfessionalSegmentation.resources
-D:\RacingSoftware\9\Data-Graph\DataG\DataG\obj\Debug\DataG.StandardSegmentation.resources
-D:\RacingSoftware\9\Data-Graph\DataG\DataG\obj\Debug\DataG.ProfessionalSegmentationTime.resources
-C:\Users\user\Desktop\DataRead\DataG\DataG\obj\Debug\DataG.ProfessionalSegmentationTime.resources
+D:\RacingSoftware\9\Data-Graph\DataG\DataG\obj\Debug\DataG.exe
+D:\RacingSoftware\9\Data-Graph\DataG\DataG\obj\Debug\DataG.pdb

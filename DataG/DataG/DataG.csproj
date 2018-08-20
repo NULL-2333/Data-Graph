@@ -63,24 +63,6 @@
     <Compile Include="MainMenu.Designer.cs">
       <DependentUpon>MainMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="ProfessionalSegmentation.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ProfessionalSegmentation.Designer.cs">
-      <DependentUpon>ProfessionalSegmentation.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ProfessionalSegmentationTime.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ProfessionalSegmentationTime.Designer.cs">
-      <DependentUpon>ProfessionalSegmentationTime.cs</DependentUpon>
-    </Compile>
-    <Compile Include="StandardSegmentation.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="StandardSegmentation.Designer.cs">
-      <DependentUpon>StandardSegmentation.cs</DependentUpon>
-    </Compile>
     <Compile Include="SingleRun.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -110,15 +92,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainMenu.resx">
       <DependentUpon>MainMenu.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ProfessionalSegmentation.resx">
-      <DependentUpon>ProfessionalSegmentation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ProfessionalSegmentationTime.resx">
-      <DependentUpon>ProfessionalSegmentationTime.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="StandardSegmentation.resx">
-      <DependentUpon>StandardSegmentation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SingleRun.resx">
       <DependentUpon>SingleRun.cs</DependentUpon>
