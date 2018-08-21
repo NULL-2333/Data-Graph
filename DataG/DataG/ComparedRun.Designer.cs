@@ -254,7 +254,7 @@
             this.sensorChart.Margin = new System.Windows.Forms.Padding(7, 2, 7, 2);
             this.sensorChart.Name = "sensorChart";
             this.sensorChart.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.sensorChart.Size = new System.Drawing.Size(855, 574);
+            this.sensorChart.Size = new System.Drawing.Size(844, 574);
             this.sensorChart.TabIndex = 8;
             this.sensorChart.TabStop = false;
             this.sensorChart.Text = "chart1";
@@ -273,10 +273,10 @@
             this.GPSPanel.BackColor = System.Drawing.SystemColors.Info;
             this.GPSPanel.Controls.Add(this.radioButtonLine2);
             this.GPSPanel.Controls.Add(this.radioButtonLine1);
-            this.GPSPanel.Location = new System.Drawing.Point(1104, 11);
+            this.GPSPanel.Location = new System.Drawing.Point(871, 8);
             this.GPSPanel.Margin = new System.Windows.Forms.Padding(4);
             this.GPSPanel.Name = "GPSPanel";
-            this.GPSPanel.Size = new System.Drawing.Size(255, 574);
+            this.GPSPanel.Size = new System.Drawing.Size(275, 574);
             this.GPSPanel.TabIndex = 9;
             this.GPSPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.GPSPanel_Paint);
             this.GPSPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.GPSPanel_MouseClick);
@@ -409,7 +409,7 @@
             this.standardButton.Name = "standardButton";
             this.standardButton.Size = new System.Drawing.Size(223, 48);
             this.standardButton.TabIndex = 15;
-            this.standardButton.Text = "Standard Segmentation";
+            this.standardButton.Text = "Segmentation";
             this.standardButton.UseVisualStyleBackColor = true;
             this.standardButton.Click += new System.EventHandler(this.segmentationButton_Click);
             // 
@@ -418,12 +418,13 @@
             this.firstDriverGroupBox.BackColor = System.Drawing.Color.Transparent;
             this.firstDriverGroupBox.Controls.Add(this.firstDriverTableLayoutPanel);
             this.firstDriverGroupBox.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.firstDriverGroupBox.Location = new System.Drawing.Point(880, 309);
+            this.firstDriverGroupBox.Location = new System.Drawing.Point(1154, 305);
             this.firstDriverGroupBox.Name = "firstDriverGroupBox";
-            this.firstDriverGroupBox.Size = new System.Drawing.Size(217, 135);
+            this.firstDriverGroupBox.Size = new System.Drawing.Size(213, 135);
             this.firstDriverGroupBox.TabIndex = 1;
             this.firstDriverGroupBox.TabStop = false;
             this.firstDriverGroupBox.Text = "1st Driver";
+            this.firstDriverGroupBox.Visible = false;
             // 
             // firstDriverTableLayoutPanel
             // 
@@ -555,12 +556,13 @@
             // 
             this.secondDriverGroupBox.Controls.Add(this.secondDriverTableLayoutPanel);
             this.secondDriverGroupBox.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.secondDriverGroupBox.Location = new System.Drawing.Point(880, 450);
+            this.secondDriverGroupBox.Location = new System.Drawing.Point(1154, 455);
             this.secondDriverGroupBox.Name = "secondDriverGroupBox";
             this.secondDriverGroupBox.Size = new System.Drawing.Size(217, 135);
             this.secondDriverGroupBox.TabIndex = 2;
             this.secondDriverGroupBox.TabStop = false;
             this.secondDriverGroupBox.Text = "2nd Driver";
+            this.secondDriverGroupBox.Visible = false;
             // 
             // secondDriverTableLayoutPanel
             // 
@@ -698,7 +700,7 @@
             this.tableLayoutPanel1.Controls.Add(this.label16, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.label18, 0, 4);
             this.tableLayoutPanel1.Controls.Add(this.firstTrackBar, 0, 1);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(880, 11);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(1154, 8);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 6;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 11.11111F));
@@ -709,6 +711,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 22.22222F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(217, 291);
             this.tableLayoutPanel1.TabIndex = 17;
+            this.tableLayoutPanel1.Visible = false;
             // 
             // thirdTrackBar
             // 
@@ -788,9 +791,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1370, 749);
+            this.Controls.Add(this.firstDriverGroupBox);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.secondDriverGroupBox);
-            this.Controls.Add(this.firstDriverGroupBox);
             this.Controls.Add(this.settingButton);
             this.Controls.Add(this.standardButton);
             this.Controls.Add(this.YPanel);
