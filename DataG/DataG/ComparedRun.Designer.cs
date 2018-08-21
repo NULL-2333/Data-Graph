@@ -408,7 +408,7 @@
             this.standardButton.Name = "standardButton";
             this.standardButton.Size = new System.Drawing.Size(297, 60);
             this.standardButton.TabIndex = 15;
-            this.standardButton.Text = "Standard Segmentation";
+            this.standardButton.Text = "Segmentation";
             this.standardButton.UseVisualStyleBackColor = true;
             this.standardButton.Click += new System.EventHandler(this.segmentationButton_Click);
             // 
@@ -425,6 +425,7 @@
             this.firstDriverGroupBox.TabIndex = 1;
             this.firstDriverGroupBox.TabStop = false;
             this.firstDriverGroupBox.Text = "1st Driver";
+            this.firstDriverGroupBox.Visible = false;
             // 
             // firstDriverTableLayoutPanel
             // 
@@ -574,6 +575,7 @@
             this.secondDriverGroupBox.TabIndex = 2;
             this.secondDriverGroupBox.TabStop = false;
             this.secondDriverGroupBox.Text = "2nd Driver";
+            this.secondDriverGroupBox.Visible = false;
             // 
             // secondDriverTableLayoutPanel
             // 
@@ -733,6 +735,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 22.22222F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(289, 364);
             this.tableLayoutPanel1.TabIndex = 17;
+            this.tableLayoutPanel1.Visible = false;
             // 
             // thirdTrackBar
             // 
@@ -817,10 +820,10 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(1827, 953);
+            this.ClientSize = new System.Drawing.Size(1831, 952);
+            this.Controls.Add(this.firstDriverGroupBox);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.secondDriverGroupBox);
-            this.Controls.Add(this.firstDriverGroupBox);
             this.Controls.Add(this.settingButton);
             this.Controls.Add(this.standardButton);
             this.Controls.Add(this.YPanel);

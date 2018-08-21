@@ -126,10 +126,7 @@ namespace DataG
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            barpos1 = firstTrackBar.Value;
-            barpos2 = secondTrackBar.Value;
-            barpos3 = thirdTrackBar.Value;
-
+           
         }
 
         //read data from .csv file and return to datatable
@@ -1920,6 +1917,12 @@ namespace DataG
 
         private void segmentationButton_Click(object sender, EventArgs e)
         {
+            barpos1 = firstTrackBar.Value;
+            barpos2 = secondTrackBar.Value;
+            barpos3 = thirdTrackBar.Value;
+            tableLayoutPanel1.Visible = true;
+            firstDriverGroupBox.Visible = true;
+            secondDriverGroupBox.Visible = true;
             Bitmap bitm;
             bitm = new Bitmap(GPSPanel.Width, GPSPanel.Height);
             Graphics g2 = Graphics.FromImage(bitm);
