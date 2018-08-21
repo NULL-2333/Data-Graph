@@ -98,3 +98,4 @@ D:\RacingSoftware\9\Data-Graph\DataG\DataG\obj\Debug\DataG.RangeForm.resources
 D:\RacingSoftware\9\Data-Graph\DataG\DataG\obj\Debug\DataG.csproj.GenerateResource.Cache
 D:\RacingSoftware\9\Data-Graph\DataG\DataG\obj\Debug\DataG.exe
 D:\RacingSoftware\9\Data-Graph\DataG\DataG\obj\Debug\DataG.pdb
+D:\RacingSoftware\9\Data-Graph\DataG\DataG\obj\Debug\DataG.csprojResolveAssemblyReference.cache
