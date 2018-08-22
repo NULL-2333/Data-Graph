@@ -127,6 +127,10 @@ namespace DataG
         int line2Point2 = 0;
         int line2Point3 = 0;
 
+        bool isSeg = false;
+        Bitmap bitmap;
+        Bitmap bitmapWithCircle;
+
         public ComparedRun()
         {
             InitializeComponent();
@@ -1447,7 +1451,7 @@ namespace DataG
 
         private void radioButton_Normal_CheckedChanged(object sender, EventArgs e)
         {
-            isExist = false;
+            isSeg = false;
             Refresh();
             //Bitmap bitmap = new Bitmap(GPSPanel.Width, GPSPanel.Height);
             //Graphics g2 = Graphics.FromImage(bitmap);
@@ -1477,14 +1481,13 @@ namespace DataG
         private void GPSPanel_Paint(object sender, PaintEventArgs e)
         {
             if (fileOpen == false) return;
-            if (isExist == true)
+            if (isSeg == true)
             {
                 //isExist = false;
                 Graphics gg = GPSPanel.CreateGraphics();
                 gg.DrawImage(bitmap, new PointF(0.0f, 0.0f));
                 return;
             }
-            int kk = 0;
             if (isBitNormalCre == false)
             {
                 bitNormal = new Bitmap(GPSPanel.Width, GPSPanel.Height);
@@ -1945,9 +1948,10 @@ namespace DataG
                 }
             }
         }
-Bitmap bitm;
+//Bitmap bitm;
         private void segmentationButton_Click(object sender, EventArgs e)
         {
+            isSeg = true;
             barpos1 = firstTrackBar.Value;
             barpos2 = secondTrackBar.Value;
             barpos3 = thirdTrackBar.Value;
@@ -1955,8 +1959,10 @@ Bitmap bitm;
             firstDriverGroupBox.Visible = true;
             secondDriverGroupBox.Visible = true;
             
-            bitm = new Bitmap(GPSPanel.Width, GPSPanel.Height);
-            Graphics g2 = Graphics.FromImage(bitm);
+            //bitm = new Bitmap(GPSPanel.Width, GPSPanel.Height);
+
+            bitmap = new Bitmap(GPSPanel.Width, GPSPanel.Height);
+            Graphics g2 = Graphics.FromImage(bitmap);
             Pen pen1 = new Pen(Brushes.LightBlue, 2); //Blue for color1; Green for color2
             Pen pen2 = new Pen(Brushes.DarkBlue, 2);
             Pen pen3 = new Pen(Brushes.LightGreen, 2);
@@ -1968,6 +1974,18 @@ Bitmap bitm;
             barpos1 = 25;
             barpos2 = 50;
             barpos3 = 75;
+
+            sectionPoint1 = (double)barpos1 / 100;
+            sectionPoint2 = (double)barpos2 / 100;
+            sectionPoint3 = (double)barpos3 / 100;
+
+            line1Point1 = findLeftNear(sectionPoint1 * distance1, disA, dtrNum);
+            line1Point2 = findLeftNear(sectionPoint2 * distance1, disA, dtrNum);
+            line1Point3 = findLeftNear(sectionPoint3 * distance1, disA, dtrNum);
+
+            line2Point1 = findLeftNear(sectionPoint1 * distance2, disB, dtrNum2);
+            line2Point2 = findLeftNear(sectionPoint2 * distance2, disB, dtrNum2);
+            line2Point3 = findLeftNear(sectionPoint3 * distance2, disB, dtrNum2);
             //standerd
             for (int i = 0; i < driver1_x[0] - 1; i += 1)
             {
@@ -2018,7 +2036,7 @@ Bitmap bitm;
                 g2.DrawLine(pen4, p11, p22);
             }
             Graphics gg = GPSPanel.CreateGraphics();
-            gg.DrawImage(bitm, new PointF(0.0f, 0.0f));
+            gg.DrawImage(bitmap, new PointF(0.0f, 0.0f));
             /*
              * this is another version -- draw line to segment.
              */
@@ -2052,8 +2070,7 @@ Bitmap bitm;
             secondDriverGroupBox.Refresh();
         }
 
-        bool isExist = false;
-        Bitmap bitmap;
+        
         private void firstTrackBar_ValueChanged(object sender, EventArgs e)
         {
             barpos1 = firstTrackBar.Value;
@@ -2062,13 +2079,11 @@ Bitmap bitm;
                 sectionPoint1 = (double)barpos1 / 100;
                 sectionPoint2 = (double)barpos2 / 100;
                 sectionPoint3 = (double)barpos3 / 100;
-                
-                bitm = new Bitmap(GPSPanel.Width, GPSPanel.Height);
-                bitmap = new Bitmap(GPSPanel.Width, GPSPanel.Height);
-                isExist = true;
-                Graphics g2 = Graphics.FromImage(bitm);
+
+                bitmapWithCircle = new Bitmap(GPSPanel.Width, GPSPanel.Height);
+                //Graphics g2 = Graphics.FromImage(bitm);
                 Graphics g3 = Graphics.FromImage(bitmap);
-                isExist = true;
+                Graphics g4 = Graphics.FromImage(bitmapWithCircle);
                 Pen pen1 = new Pen(Brushes.LightBlue, 2); //Blue for color1; Green for color2
                 Pen pen2 = new Pen(Brushes.Blue, 2);
                 Pen pen3 = new Pen(Brushes.LightGreen, 2);
@@ -2111,83 +2126,75 @@ Bitmap bitm;
 
                 for (int i = 0; i < line1Point1 - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x[i], (float)y[i]);
                     p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
-                    g2.DrawLine(pen1, p11, p22);
                     g3.DrawLine(pen1, p11, p22);
+                    g4.DrawLine(pen1, p11, p22);
                 }
                 for (int i = 0; i < line2Point1 - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x2[i], (float)y2[i]);
                     p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
-                    g2.DrawLine(pen2, p11, p22);
                     g3.DrawLine(pen2, p11, p22);
+                    g4.DrawLine(pen2, p11, p22);
                 }
                 for (int i = line1Point1; i < line1Point2 - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x[i], (float)y[i]);
                     p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
-                    g2.DrawLine(pen3, p11, p22);
                     g3.DrawLine(pen3, p11, p22);
+                    g4.DrawLine(pen3, p11, p22);
                 }
                 for (int i = line2Point1; i < line2Point2 - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x2[i], (float)y2[i]);
                     p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
-                    g2.DrawLine(pen4, p11, p22);
-                    g3.DrawLine(pen3, p11, p22);
+                    g3.DrawLine(pen4, p11, p22);
+                    g4.DrawLine(pen4, p11, p22);
                 }
                 for (int i = line1Point2; i < dtrNum - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x[i], (float)y[i]);
                     p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
-                    g2.DrawLine(pen1, p11, p22);
-                    g3.DrawLine(pen3, p11, p22);
+                    g3.DrawLine(pen1, p11, p22);
+                    g4.DrawLine(pen1, p11, p22);
                 }
                 for (int i = line2Point2; i < dtrNum2 - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x2[i], (float)y2[i]);
                     p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
-                    g2.DrawLine(pen2, p11, p22);
-                    g3.DrawLine(pen3, p11, p22);
+                    g3.DrawLine(pen2, p11, p22);
+                    g4.DrawLine(pen2, p11, p22);
                 }
                 for (int i = line1Point3; i < dtrNum - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x[i], (float)y[i]);
                     p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
-                    g2.DrawLine(pen3, p11, p22);
                     g3.DrawLine(pen3, p11, p22);
+                    g4.DrawLine(pen3, p11, p22);
                 }
                 for (int i = line2Point3; i < dtrNum2 - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x2[i], (float)y2[i]);
                     p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
-                    g2.DrawLine(pen4, p11, p22);
-                    g3.DrawLine(pen3, p11, p22);
+                    g3.DrawLine(pen4, p11, p22);
+                    g4.DrawLine(pen4, p11, p22);
                 }
-
-                isExist = true;
                 GPSPanel.Refresh();
-                isExist = true;
                 //draw a point with the center of (x,y) and (x2,y2)
                 PointF pf = new PointF((float)((x[line1Point1] + x2[line2Point1]) / 2), (float)((y[line1Point1] + y2[line2Point1]) / 2));
-                //double r = Math.Sqrt((x[line1Point3] - x2[line2Point3]) * (x[line1Point3] - x2[line2Point3]) + (y[line1Point3] - y2[line2Point3]) * (y[line1Point3] - y2[line2Point3])) / 2;
-                g2.FillEllipse(Brushes.Chocolate, pf.X - 3, pf.Y - 3, 6, 6);
-                isExist = true;
-                g2.DrawEllipse(new Pen(Brushes.Chocolate), pf.X - 10, pf.Y - 10, 20, 20);
-                isExist = true;
+                g4.FillEllipse(Brushes.Gold, pf.X - 3, pf.Y - 3, 6, 6);
+                g4.DrawEllipse(new Pen(Brushes.Gold), pf.X - 10, pf.Y - 10, 20, 20);
+                pf = new PointF((float)((x[line1Point2] + x2[line2Point2]) / 2), (float)((y[line1Point2] + y2[line2Point2]) / 2));
+                g4.FillEllipse(Brushes.DimGray, pf.X - 3, pf.Y - 3, 6, 6);
+                g4.DrawEllipse(new Pen(Brushes.DimGray), pf.X - 10, pf.Y - 10, 20, 20);
+                pf = new PointF((float)((x[line1Point3] + x2[line2Point3]) / 2), (float)((y[line1Point3] + y2[line2Point3]) / 2));
+                g4.FillEllipse(Brushes.Chocolate, pf.X - 3, pf.Y - 3, 6, 6);
+                g4.DrawEllipse(new Pen(Brushes.Chocolate), pf.X - 10, pf.Y - 10, 20, 20);
 
-                isExist = true;
                 Graphics gg = GPSPanel.CreateGraphics();
-                gg.DrawImage(bitm, new PointF(0.0f, 0.0f));
+                gg.DrawImage(bitmapWithCircle, new PointF(0.0f, 0.0f));
+
 
                 label11.Text = dataTime[line1Point1].ToString("0.00");
                 label12.Text = (dataTime[line1Point2] - dataTime[line1Point1]).ToString("0.00");
@@ -2231,13 +2238,12 @@ Bitmap bitm;
                 sectionPoint1 = (double)barpos1 / 100;
                 sectionPoint2 = (double)barpos2 / 100;
                 sectionPoint3 = (double)barpos3 / 100;
-                Bitmap bitm;
-                bitm = new Bitmap(GPSPanel.Width, GPSPanel.Height);
+
                 bitmap = new Bitmap(GPSPanel.Width, GPSPanel.Height);
-                isExist = true;
-                Graphics g2 = Graphics.FromImage(bitm);
+                bitmapWithCircle = new Bitmap(GPSPanel.Width, GPSPanel.Height);
+                //Graphics g2 = Graphics.FromImage(bitm);
                 Graphics g3 = Graphics.FromImage(bitmap);
-                isExist = true;
+                Graphics g4 = Graphics.FromImage(bitmapWithCircle);
                 Pen pen1 = new Pen(Brushes.LightBlue, 2); //Blue for color1; Green for color2
                 Pen pen2 = new Pen(Brushes.Blue, 2);
                 Pen pen3 = new Pen(Brushes.LightGreen, 2);
@@ -2280,83 +2286,74 @@ Bitmap bitm;
 
                 for (int i = 0; i < line1Point1 - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x[i], (float)y[i]);
                     p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
-                    g2.DrawLine(pen1, p11, p22);
                     g3.DrawLine(pen1, p11, p22);
+                    g4.DrawLine(pen1, p11, p22);
                 }
                 for (int i = 0; i < line2Point1 - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x2[i], (float)y2[i]);
                     p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
-                    g2.DrawLine(pen2, p11, p22);
                     g3.DrawLine(pen2, p11, p22);
+                    g4.DrawLine(pen2, p11, p22);
                 }
                 for (int i = line1Point1; i < line1Point2 - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x[i], (float)y[i]);
                     p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
-                    g2.DrawLine(pen3, p11, p22);
                     g3.DrawLine(pen3, p11, p22);
+                    g4.DrawLine(pen3, p11, p22);
                 }
                 for (int i = line2Point1; i < line2Point2 - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x2[i], (float)y2[i]);
                     p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
-                    g2.DrawLine(pen4, p11, p22);
-                    g3.DrawLine(pen3, p11, p22);
+                    g3.DrawLine(pen4, p11, p22);
+                    g4.DrawLine(pen4, p11, p22);
                 }
                 for (int i = line1Point2; i < dtrNum - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x[i], (float)y[i]);
                     p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
-                    g2.DrawLine(pen1, p11, p22);
-                    g3.DrawLine(pen3, p11, p22);
+                    g3.DrawLine(pen1, p11, p22);
+                    g4.DrawLine(pen1, p11, p22);
                 }
                 for (int i = line2Point2; i < dtrNum2 - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x2[i], (float)y2[i]);
                     p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
-                    g2.DrawLine(pen2, p11, p22);
-                    g3.DrawLine(pen3, p11, p22);
+                    g3.DrawLine(pen2, p11, p22);
+                    g4.DrawLine(pen2, p11, p22);
                 }
                 for (int i = line1Point3; i < dtrNum - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x[i], (float)y[i]);
                     p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
-                    g2.DrawLine(pen3, p11, p22);
                     g3.DrawLine(pen3, p11, p22);
+                    g4.DrawLine(pen3, p11, p22);
                 }
                 for (int i = line2Point3; i < dtrNum2 - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x2[i], (float)y2[i]);
                     p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
-                    g2.DrawLine(pen4, p11, p22);
-                    g3.DrawLine(pen3, p11, p22);
+                    g3.DrawLine(pen4, p11, p22);
+                    g4.DrawLine(pen4, p11, p22);
                 }
-
-                isExist = true;
                 GPSPanel.Refresh();
-                isExist = true;
                 //draw a point with the center of (x,y) and (x2,y2)
-                PointF pf = new PointF((float)((x[line1Point2] + x2[line2Point2]) / 2), (float)((y[line1Point2] + y2[line2Point2]) / 2));
-                //double r = Math.Sqrt((x[line1Point3] - x2[line2Point3]) * (x[line1Point3] - x2[line2Point3]) + (y[line1Point3] - y2[line2Point3]) * (y[line1Point3] - y2[line2Point3])) / 2;
-                g2.FillEllipse(Brushes.Chocolate, pf.X - 3, pf.Y - 3, 6, 6);
-                isExist = true;
-                g2.DrawEllipse(new Pen(Brushes.Chocolate), pf.X - 10, pf.Y - 10, 20, 20);
-                isExist = true;
+                PointF pf = new PointF((float)((x[line1Point1] + x2[line2Point1]) / 2), (float)((y[line1Point1] + y2[line2Point1]) / 2));
+                g4.FillEllipse(Brushes.Gold, pf.X - 3, pf.Y - 3, 6, 6);
+                g4.DrawEllipse(new Pen(Brushes.Gold), pf.X - 10, pf.Y - 10, 20, 20);
+                pf = new PointF((float)((x[line1Point2] + x2[line2Point2]) / 2), (float)((y[line1Point2] + y2[line2Point2]) / 2));
+                g4.FillEllipse(Brushes.DimGray, pf.X - 3, pf.Y - 3, 6, 6);
+                g4.DrawEllipse(new Pen(Brushes.DimGray), pf.X - 10, pf.Y - 10, 20, 20);
+                pf = new PointF((float)((x[line1Point3] + x2[line2Point3]) / 2), (float)((y[line1Point3] + y2[line2Point3]) / 2));
+                g4.FillEllipse(Brushes.Chocolate, pf.X - 3, pf.Y - 3, 6, 6);
+                g4.DrawEllipse(new Pen(Brushes.Chocolate), pf.X - 10, pf.Y - 10, 20, 20);
 
-                isExist = true;
                 Graphics gg = GPSPanel.CreateGraphics();
-                gg.DrawImage(bitm, new PointF(0.0f, 0.0f));
+                gg.DrawImage(bitmapWithCircle, new PointF(0.0f, 0.0f));
 
                 label11.Text = dataTime[line1Point1].ToString("0.00");
                 label12.Text = (dataTime[line1Point2] - dataTime[line1Point1]).ToString("0.00");
@@ -2398,27 +2395,23 @@ Bitmap bitm;
             }
 
         }
-        
+
 
         private void thirdTrackBar_ValueChanged(object sender, EventArgs e)
         {
-            isExist = true;
+            isSeg = true;
             barpos3 = thirdTrackBar.Value;
-
-            
-            
             if (barpos2 < barpos3)
             {
                 sectionPoint1 = (double)barpos1 / 100;
                 sectionPoint2 = (double)barpos2 / 100;
                 sectionPoint3 = (double)barpos3 / 100;
-                Bitmap bitm;
-                bitm = new Bitmap(GPSPanel.Width, GPSPanel.Height);
+                
                 bitmap = new Bitmap(GPSPanel.Width, GPSPanel.Height);
-                isExist = true;
-                Graphics g2 = Graphics.FromImage(bitm);
+                bitmapWithCircle = new Bitmap(GPSPanel.Width, GPSPanel.Height);
+                //Graphics g2 = Graphics.FromImage(bitm);
                 Graphics g3 = Graphics.FromImage(bitmap);
-                isExist = true;
+                Graphics g4 = Graphics.FromImage(bitmapWithCircle);
                 Pen pen1 = new Pen(Brushes.LightBlue, 2); //Blue for color1; Green for color2
                 Pen pen2 = new Pen(Brushes.Blue, 2);
                 Pen pen3 = new Pen(Brushes.LightGreen, 2);
@@ -2461,83 +2454,74 @@ Bitmap bitm;
                 
                 for (int i = 0; i < line1Point1 - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x[i], (float)y[i]);
                     p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
-                    g2.DrawLine(pen1, p11, p22);
                     g3.DrawLine(pen1, p11, p22);
+                    g4.DrawLine(pen1, p11, p22);
                 }
                 for (int i = 0; i < line2Point1 - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x2[i], (float)y2[i]);
                     p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
-                    g2.DrawLine(pen2, p11, p22);
                     g3.DrawLine(pen2, p11, p22);
+                    g4.DrawLine(pen2, p11, p22);
                 }
                 for (int i = line1Point1; i < line1Point2 - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x[i], (float)y[i]);
                     p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
-                    g2.DrawLine(pen3, p11, p22);
                     g3.DrawLine(pen3, p11, p22);
+                    g4.DrawLine(pen3, p11, p22);
                 }
                 for (int i = line2Point1; i < line2Point2 - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x2[i], (float)y2[i]);
                     p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
-                    g2.DrawLine(pen4, p11, p22);
-                    g3.DrawLine(pen3, p11, p22);
+                    g3.DrawLine(pen4, p11, p22);
+                    g4.DrawLine(pen4, p11, p22);
                 }
                 for (int i = line1Point2; i < dtrNum - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x[i], (float)y[i]);
                     p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
-                    g2.DrawLine(pen1, p11, p22);
-                    g3.DrawLine(pen3, p11, p22);
+                    g3.DrawLine(pen1, p11, p22);
+                    g4.DrawLine(pen1, p11, p22);
                 }
                 for (int i = line2Point2; i < dtrNum2 - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x2[i], (float)y2[i]);
                     p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
-                    g2.DrawLine(pen2, p11, p22);
-                    g3.DrawLine(pen3, p11, p22);
+                    g3.DrawLine(pen2, p11, p22);
+                    g4.DrawLine(pen2, p11, p22);
                 }
                 for (int i = line1Point3; i < dtrNum - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x[i], (float)y[i]);
                     p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
-                    g2.DrawLine(pen3, p11, p22);
                     g3.DrawLine(pen3, p11, p22);
+                    g4.DrawLine(pen3, p11, p22);
                 }
                 for (int i = line2Point3; i < dtrNum2 - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x2[i], (float)y2[i]);
                     p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
-                    g2.DrawLine(pen4, p11, p22);
-                    g3.DrawLine(pen3, p11, p22);
+                    g3.DrawLine(pen4, p11, p22);
+                    g4.DrawLine(pen4, p11, p22);
                 }
-
-                isExist = true;
                 GPSPanel.Refresh();
-                isExist = true;
                 //draw a point with the center of (x,y) and (x2,y2)
-                PointF pf = new PointF((float)((x[line1Point3] + x2[line2Point3]) / 2), (float)((y[line1Point3] + y2[line2Point3]) / 2));
-                //double r = Math.Sqrt((x[line1Point3] - x2[line2Point3]) * (x[line1Point3] - x2[line2Point3]) + (y[line1Point3] - y2[line2Point3]) * (y[line1Point3] - y2[line2Point3])) / 2;
-                g2.FillEllipse(Brushes.Chocolate, pf.X - 3, pf.Y - 3, 6, 6);
-                isExist = true;
-                g2.DrawEllipse(new Pen(Brushes.Chocolate), pf.X - 10, pf.Y - 10, 20, 20);
-                isExist = true;
+                PointF pf = new PointF((float)((x[line1Point1] + x2[line2Point1]) / 2), (float)((y[line1Point1] + y2[line2Point1]) / 2));
+                g4.FillEllipse(Brushes.Gold, pf.X - 3, pf.Y - 3, 6, 6);
+                g4.DrawEllipse(new Pen(Brushes.Gold), pf.X - 10, pf.Y - 10, 20, 20);
+                pf = new PointF((float)((x[line1Point2] + x2[line2Point2]) / 2), (float)((y[line1Point2] + y2[line2Point2]) / 2));
+                g4.FillEllipse(Brushes.DimGray, pf.X - 3, pf.Y - 3, 6, 6);
+                g4.DrawEllipse(new Pen(Brushes.DimGray), pf.X - 10, pf.Y - 10, 20, 20);
+                pf = new PointF((float)((x[line1Point3] + x2[line2Point3]) / 2), (float)((y[line1Point3] + y2[line2Point3]) / 2));
+                g4.FillEllipse(Brushes.Chocolate, pf.X - 3, pf.Y - 3, 6, 6);
+                g4.DrawEllipse(new Pen(Brushes.Chocolate), pf.X - 10, pf.Y - 10, 20, 20);
 
-                isExist = true;
                 Graphics gg = GPSPanel.CreateGraphics();
-                gg.DrawImage(bitm, new PointF(0.0f, 0.0f));
+                gg.DrawImage(bitmapWithCircle, new PointF(0.0f, 0.0f));
 
                 label11.Text = dataTime[line1Point1].ToString("0.00");
                 label12.Text = (dataTime[line1Point2] - dataTime[line1Point1]).ToString("0.00");
@@ -2574,28 +2558,37 @@ Bitmap bitm;
         private void Section1PictureBox_Click(object sender, EventArgs e)
         {
             section1Timer.Enabled = true;
+            nowScrollValue = -xScale / 2;
+            newPlace = (int)minValue(dataTime, dataTime.Length) - xScale / 2;
         }
 
         private void Section2PictureBox_Click(object sender, EventArgs e)
         {
             section2Timer.Enabled = true;
+            nowScrollValue = -xScale / 2;
+            newPlace = (int)minValue(dataTime, dataTime.Length) - xScale / 2;
         }
 
         private void Section3PictureBox_Click(object sender, EventArgs e)
         {
             section3Timer.Enabled = true;
+            nowScrollValue = -xScale / 2;
+            newPlace = (int)minValue(dataTime, dataTime.Length) - xScale / 2;
         }
 
         private void Section4PictureBox_Click(object sender, EventArgs e)
         {
             section4Timer.Enabled = true;
+            nowScrollValue = -xScale / 2;
+            newPlace = (int)minValue(dataTime, dataTime.Length) - xScale / 2;
         }
 
         private void section1Timer_Tick(object sender, EventArgs e)
         {
+            
             DateTime beforDT = System.DateTime.Now;
             //sensorChart.PostPaint += new EventHandler<ChartPaintEventArgs>(sensorChart_PostPaint);
-            int xLeftSub3 = findLeftNear(nowSteeringPlace, dataTime, dataTime.Length);
+            //int xLeftSub3 = findLeftNear(nowSteeringPlace, dataTime, dataTime.Length);
 
             DateTime afterDT2 = System.DateTime.Now;
             TimeSpan ts2 = afterDT2.Subtract(beforDT);
@@ -2604,7 +2597,7 @@ Bitmap bitm;
             {
                 nowScrollValue += moveSpeed;
             }
-            else if ((nowScrollValue + xScale / 2) <= maxValue(dataTime, dataTime.Length))
+            else if ((nowScrollValue + xScale / 2) <= Math.Max(dataTime[line1Point1], dataTime2[line2Point1]))
             {
                 if (scaleFlag == true)
                 {
@@ -2613,23 +2606,28 @@ Bitmap bitm;
                 }
                 nowScrollValue += moveSpeed;
             }
+            else
+            {
+                section1Timer.Enabled = false;
+            }
 
             //sensorChart.Invalidate();
 
             if (flagPlace == true)
             {
                 //Bitmap bitmap = new Bitmap(GPSPanel.Width, GPSPanel.Height);
-                Graphics g2 = Graphics.FromImage(bitm);
+                Graphics g2 = Graphics.FromImage(bitmap);
                 
                 //find the Subscript with the xLeft
                 double xx2 = newPlace + xScale / 2 + moveSpeed;
-                int xLeftSub = 0;// findLeftNear(xx2, dataTime, dataTime.Length);
+                int xLeftSub = findLeftNear(xx2, dataTime, dataTime.Length);
                 int xRightSub = xLeftSub + 1;
                 double xLeft = dataTime[xLeftSub], xRight = dataTime[xRightSub];
                 //two points:A(xLeft,datY[xLeftSub]),B(xRight,datY[xRightSub])
 
                 double m, n, m2, n2;
 
+                GPSPanel.Refresh();
                 Graphics g3 = GPSPanel.CreateGraphics();
                 if (xx2 <= dataTime[line1Point1 - 1])
                 {
@@ -2643,7 +2641,7 @@ Bitmap bitm;
                         PointF pp2 = new PointF((float)x[xLeftSub + 10], (float)y[xLeftSub + 10]);
                         AdjustableArrowCap lineCap = new AdjustableArrowCap(6, 6, false);
                         np2.CustomEndCap = lineCap;
-                        g2.DrawLine(np2, pp, pp2);
+                        g3.DrawLine(np2, pp, pp2);
                     }
                 }
                 if (xx2 <= dataTime2[line2Point1 - 1])
@@ -2658,34 +2656,34 @@ Bitmap bitm;
                         PointF pp3 = new PointF((float)x2[xLeftSub + 10], (float)y2[xLeftSub + 10]);
                         AdjustableArrowCap lineCap = new AdjustableArrowCap(6, 6, false);
                         np2.CustomEndCap = lineCap;
-                        g2.DrawLine(np2, pp2, pp3);
+                        g3.DrawLine(np2, pp2, pp3);
                     }
                     else if (xLeftSub < line2Point1)
                     {
                         PointF pp3 = new PointF((float)x2[line2Point1 - 1], (float)y2[line2Point1 - 1]);
                         AdjustableArrowCap lineCap = new AdjustableArrowCap(6, 6, false);
                         np2.CustomEndCap = lineCap;
-                        g2.DrawLine(np2, pp2, pp3);
+                        g3.DrawLine(np2, pp2, pp3);
                     }
 
                 }
-                GPSPanel.Refresh();
-                //if (maxValue(dataTime, dataTime.Length) < maxValue(dataTime2, dataTime2.Length))
-                //{
-                //    if ((newPlace + moveSpeed) <= maxValue(dataTime, dataTime.Length))
-                //        newPlace += moveSpeed;
-                //    else
-                //        flagPlace = false;
-                //}
-                //else
-                //{
-                //    if ((newPlace + moveSpeed) <= maxValue(dataTime2, dataTime2.Length))
-                //        newPlace += moveSpeed;
-                //    else
-                //        flagPlace = false;
-                //}
-                Graphics gg = GPSPanel.CreateGraphics();
-                gg.DrawImage(bitm, new PointF(0.0f, 0.0f));
+                
+                if (line1Point1 < line2Point1)
+                {
+                    if ((newPlace + moveSpeed) <= maxValue(dataTime, dataTime.Length))
+                        newPlace += moveSpeed;
+                    else
+                        flagPlace = false;
+                }
+                else
+                {
+                    if ((newPlace + moveSpeed) <= maxValue(dataTime2, dataTime2.Length))
+                        newPlace += moveSpeed;
+                    else
+                        flagPlace = false;
+                }
+                //Graphics gg = GPSPanel.CreateGraphics();
+                //gg.DrawImage(bitmap, new PointF(0.0f, 0.0f));
             }
             if (nowSteeringPlace <= maxValue(dataTime, dataTime.Length))
                 nowSteeringPlace += moveSpeed;
@@ -2700,16 +2698,340 @@ Bitmap bitm;
 
         private void section2Timer_Tick(object sender, EventArgs e)
         {
+            DateTime beforDT = System.DateTime.Now;
+            //sensorChart.PostPaint += new EventHandler<ChartPaintEventArgs>(sensorChart_PostPaint);
+            //int xLeftSub3 = findLeftNear(nowSteeringPlace, dataTime, dataTime.Length);
+
+            DateTime afterDT2 = System.DateTime.Now;
+            TimeSpan ts2 = afterDT2.Subtract(beforDT);
+            sensorChart.ChartAreas[0].AxisX.ScaleView.Position = nowScrollValue;
+            if ((nowScrollValue + xScale / 2) < xScale / 2)
+            {
+                nowScrollValue += moveSpeed;
+            }
+            else if ((nowScrollValue + xScale / 2) <= Math.Max(dataTime[line1Point1], dataTime2[line2Point1]))
+            {
+                if (scaleFlag == true)
+                {
+                    scaleFlag = false;
+                    nowScrollValue += 0.1;
+                }
+                nowScrollValue += moveSpeed;
+            }
+            else
+            {
+                section1Timer.Enabled = false;
+            }
+
+            //sensorChart.Invalidate();
+
+            if (flagPlace == true)
+            {
+                //Bitmap bitmap = new Bitmap(GPSPanel.Width, GPSPanel.Height);
+                Graphics g2 = Graphics.FromImage(bitmap);
+
+                //find the Subscript with the xLeft
+                double xx2 = newPlace + xScale / 2 + moveSpeed;
+                int xLeftSub = findLeftNear(xx2, dataTime, dataTime.Length);
+                int xRightSub = xLeftSub + 1;
+                double xLeft = dataTime[xLeftSub], xRight = dataTime[xRightSub];
+                //two points:A(xLeft,datY[xLeftSub]),B(xRight,datY[xRightSub])
+
+                double m, n, m2, n2;
+
+                GPSPanel.Refresh();
+                Graphics g3 = GPSPanel.CreateGraphics();
+                if (xx2 <= dataTime[line1Point1 - 1])
+                {
+                    m = x[xLeftSub];
+                    n = y[xLeftSub];
+                    PointF pp = new PointF();
+                    pp = new PointF((float)m, (float)n);
+                    Pen np2 = new Pen(Brushes.Red, 2);
+                    if (xLeftSub + 10 < line1Point1)
+                    {
+                        PointF pp2 = new PointF((float)x[xLeftSub + 10], (float)y[xLeftSub + 10]);
+                        AdjustableArrowCap lineCap = new AdjustableArrowCap(6, 6, false);
+                        np2.CustomEndCap = lineCap;
+                        g3.DrawLine(np2, pp, pp2);
+                    }
+                }
+                if (xx2 <= dataTime2[line2Point2 - 1])
+                {
+                    m2 = x2[xLeftSub];
+                    n2 = y2[xLeftSub];
+                    PointF pp2 = new PointF();
+                    pp2 = new PointF((float)m2, (float)n2);
+                    Pen np2 = new Pen(Brushes.Green, 2);
+                    if (xLeftSub + 10 < line2Point2)
+                    {
+                        PointF pp3 = new PointF((float)x2[xLeftSub + 10], (float)y2[xLeftSub + 10]);
+                        AdjustableArrowCap lineCap = new AdjustableArrowCap(6, 6, false);
+                        np2.CustomEndCap = lineCap;
+                        g3.DrawLine(np2, pp2, pp3);
+                    }
+                    else if (xLeftSub < line2Point2)
+                    {
+                        PointF pp3 = new PointF((float)x2[line2Point2 - 1], (float)y2[line2Point2 - 1]);
+                        AdjustableArrowCap lineCap = new AdjustableArrowCap(6, 6, false);
+                        np2.CustomEndCap = lineCap;
+                        g3.DrawLine(np2, pp2, pp3);
+                    }
+
+                }
+
+                if (line1Point2 < line2Point2)
+                {
+                    if ((newPlace + moveSpeed) <= maxValue(dataTime, dataTime.Length))
+                        newPlace += moveSpeed;
+                    else
+                        flagPlace = false;
+                }
+                else
+                {
+                    if ((newPlace + moveSpeed) <= maxValue(dataTime2, dataTime2.Length))
+                        newPlace += moveSpeed;
+                    else
+                        flagPlace = false;
+                }
+                //Graphics gg = GPSPanel.CreateGraphics();
+                //gg.DrawImage(bitmap, new PointF(0.0f, 0.0f));
+            }
+            if (nowSteeringPlace <= maxValue(dataTime, dataTime.Length))
+                nowSteeringPlace += moveSpeed;
+
+            DateTime afterDT = System.DateTime.Now;
+            TimeSpan ts = afterDT.Subtract(beforDT);
+            if ((int)ts.TotalMilliseconds >= (int)(1000 * moveSpeed))
+                chartTimer.Interval = 1;
+            else
+                chartTimer.Interval = (int)(1000 * moveSpeed) - (int)ts.TotalMilliseconds;
 
         }
 
         private void section3Timer_Tick(object sender, EventArgs e)
         {
+            DateTime beforDT = System.DateTime.Now;
+            //sensorChart.PostPaint += new EventHandler<ChartPaintEventArgs>(sensorChart_PostPaint);
+            //int xLeftSub3 = findLeftNear(nowSteeringPlace, dataTime, dataTime.Length);
+
+            DateTime afterDT2 = System.DateTime.Now;
+            TimeSpan ts2 = afterDT2.Subtract(beforDT);
+            sensorChart.ChartAreas[0].AxisX.ScaleView.Position = nowScrollValue;
+            if ((nowScrollValue + xScale / 2) < xScale / 2)
+            {
+                nowScrollValue += moveSpeed;
+            }
+            else if ((nowScrollValue + xScale / 2) <= Math.Max(dataTime[line1Point1], dataTime2[line2Point1]))
+            {
+                if (scaleFlag == true)
+                {
+                    scaleFlag = false;
+                    nowScrollValue += 0.1;
+                }
+                nowScrollValue += moveSpeed;
+            }
+            else
+            {
+                section1Timer.Enabled = false;
+            }
+
+            //sensorChart.Invalidate();
+
+            if (flagPlace == true)
+            {
+                //Bitmap bitmap = new Bitmap(GPSPanel.Width, GPSPanel.Height);
+                Graphics g2 = Graphics.FromImage(bitmap);
+
+                //find the Subscript with the xLeft
+                double xx2 = newPlace + xScale / 2 + moveSpeed;
+                int xLeftSub = findLeftNear(xx2, dataTime, dataTime.Length);
+                int xRightSub = xLeftSub + 1;
+                double xLeft = dataTime[xLeftSub], xRight = dataTime[xRightSub];
+                //two points:A(xLeft,datY[xLeftSub]),B(xRight,datY[xRightSub])
+
+                double m, n, m2, n2;
+
+                GPSPanel.Refresh();
+                Graphics g3 = GPSPanel.CreateGraphics();
+                if (xx2 <= dataTime[line1Point1 - 1])
+                {
+                    m = x[xLeftSub];
+                    n = y[xLeftSub];
+                    PointF pp = new PointF();
+                    pp = new PointF((float)m, (float)n);
+                    Pen np2 = new Pen(Brushes.Red, 2);
+                    if (xLeftSub + 10 < line1Point1)
+                    {
+                        PointF pp2 = new PointF((float)x[xLeftSub + 10], (float)y[xLeftSub + 10]);
+                        AdjustableArrowCap lineCap = new AdjustableArrowCap(6, 6, false);
+                        np2.CustomEndCap = lineCap;
+                        g3.DrawLine(np2, pp, pp2);
+                    }
+                }
+                if (xx2 <= dataTime2[line2Point1 - 1])
+                {
+                    m2 = x2[xLeftSub];
+                    n2 = y2[xLeftSub];
+                    PointF pp2 = new PointF();
+                    pp2 = new PointF((float)m2, (float)n2);
+                    Pen np2 = new Pen(Brushes.Green, 2);
+                    if (xLeftSub + 10 < line2Point1)
+                    {
+                        PointF pp3 = new PointF((float)x2[xLeftSub + 10], (float)y2[xLeftSub + 10]);
+                        AdjustableArrowCap lineCap = new AdjustableArrowCap(6, 6, false);
+                        np2.CustomEndCap = lineCap;
+                        g3.DrawLine(np2, pp2, pp3);
+                    }
+                    else if (xLeftSub < line2Point1)
+                    {
+                        PointF pp3 = new PointF((float)x2[line2Point1 - 1], (float)y2[line2Point1 - 1]);
+                        AdjustableArrowCap lineCap = new AdjustableArrowCap(6, 6, false);
+                        np2.CustomEndCap = lineCap;
+                        g3.DrawLine(np2, pp2, pp3);
+                    }
+
+                }
+
+                if (line1Point1 < line2Point1)
+                {
+                    if ((newPlace + moveSpeed) <= maxValue(dataTime, dataTime.Length))
+                        newPlace += moveSpeed;
+                    else
+                        flagPlace = false;
+                }
+                else
+                {
+                    if ((newPlace + moveSpeed) <= maxValue(dataTime2, dataTime2.Length))
+                        newPlace += moveSpeed;
+                    else
+                        flagPlace = false;
+                }
+                //Graphics gg = GPSPanel.CreateGraphics();
+                //gg.DrawImage(bitmap, new PointF(0.0f, 0.0f));
+            }
+            if (nowSteeringPlace <= maxValue(dataTime, dataTime.Length))
+                nowSteeringPlace += moveSpeed;
+
+            DateTime afterDT = System.DateTime.Now;
+            TimeSpan ts = afterDT.Subtract(beforDT);
+            if ((int)ts.TotalMilliseconds >= (int)(1000 * moveSpeed))
+                chartTimer.Interval = 1;
+            else
+                chartTimer.Interval = (int)(1000 * moveSpeed) - (int)ts.TotalMilliseconds;
 
         }
 
         private void section4Timer_Tick(object sender, EventArgs e)
         {
+            DateTime beforDT = System.DateTime.Now;
+            //sensorChart.PostPaint += new EventHandler<ChartPaintEventArgs>(sensorChart_PostPaint);
+            //int xLeftSub3 = findLeftNear(nowSteeringPlace, dataTime, dataTime.Length);
+
+            DateTime afterDT2 = System.DateTime.Now;
+            TimeSpan ts2 = afterDT2.Subtract(beforDT);
+            sensorChart.ChartAreas[0].AxisX.ScaleView.Position = nowScrollValue;
+            if ((nowScrollValue + xScale / 2) < xScale / 2)
+            {
+                nowScrollValue += moveSpeed;
+            }
+            else if ((nowScrollValue + xScale / 2) <= Math.Max(dataTime[line1Point1], dataTime2[line2Point1]))
+            {
+                if (scaleFlag == true)
+                {
+                    scaleFlag = false;
+                    nowScrollValue += 0.1;
+                }
+                nowScrollValue += moveSpeed;
+            }
+            else
+            {
+                section1Timer.Enabled = false;
+            }
+
+            //sensorChart.Invalidate();
+
+            if (flagPlace == true)
+            {
+                //Bitmap bitmap = new Bitmap(GPSPanel.Width, GPSPanel.Height);
+                Graphics g2 = Graphics.FromImage(bitmap);
+
+                //find the Subscript with the xLeft
+                double xx2 = newPlace + xScale / 2 + moveSpeed;
+                int xLeftSub = findLeftNear(xx2, dataTime, dataTime.Length);
+                int xRightSub = xLeftSub + 1;
+                double xLeft = dataTime[xLeftSub], xRight = dataTime[xRightSub];
+                //two points:A(xLeft,datY[xLeftSub]),B(xRight,datY[xRightSub])
+
+                double m, n, m2, n2;
+
+                GPSPanel.Refresh();
+                Graphics g3 = GPSPanel.CreateGraphics();
+                if (xx2 <= dataTime[line1Point1 - 1])
+                {
+                    m = x[xLeftSub];
+                    n = y[xLeftSub];
+                    PointF pp = new PointF();
+                    pp = new PointF((float)m, (float)n);
+                    Pen np2 = new Pen(Brushes.Red, 2);
+                    if (xLeftSub + 10 < line1Point1)
+                    {
+                        PointF pp2 = new PointF((float)x[xLeftSub + 10], (float)y[xLeftSub + 10]);
+                        AdjustableArrowCap lineCap = new AdjustableArrowCap(6, 6, false);
+                        np2.CustomEndCap = lineCap;
+                        g3.DrawLine(np2, pp, pp2);
+                    }
+                }
+                if (xx2 <= dataTime2[line2Point1 - 1])
+                {
+                    m2 = x2[xLeftSub];
+                    n2 = y2[xLeftSub];
+                    PointF pp2 = new PointF();
+                    pp2 = new PointF((float)m2, (float)n2);
+                    Pen np2 = new Pen(Brushes.Green, 2);
+                    if (xLeftSub + 10 < line2Point1)
+                    {
+                        PointF pp3 = new PointF((float)x2[xLeftSub + 10], (float)y2[xLeftSub + 10]);
+                        AdjustableArrowCap lineCap = new AdjustableArrowCap(6, 6, false);
+                        np2.CustomEndCap = lineCap;
+                        g3.DrawLine(np2, pp2, pp3);
+                    }
+                    else if (xLeftSub < line2Point1)
+                    {
+                        PointF pp3 = new PointF((float)x2[line2Point1 - 1], (float)y2[line2Point1 - 1]);
+                        AdjustableArrowCap lineCap = new AdjustableArrowCap(6, 6, false);
+                        np2.CustomEndCap = lineCap;
+                        g3.DrawLine(np2, pp2, pp3);
+                    }
+
+                }
+
+                if (line1Point1 < line2Point1)
+                {
+                    if ((newPlace + moveSpeed) <= maxValue(dataTime, dataTime.Length))
+                        newPlace += moveSpeed;
+                    else
+                        flagPlace = false;
+                }
+                else
+                {
+                    if ((newPlace + moveSpeed) <= maxValue(dataTime2, dataTime2.Length))
+                        newPlace += moveSpeed;
+                    else
+                        flagPlace = false;
+                }
+                //Graphics gg = GPSPanel.CreateGraphics();
+                //gg.DrawImage(bitmap, new PointF(0.0f, 0.0f));
+            }
+            if (nowSteeringPlace <= maxValue(dataTime, dataTime.Length))
+                nowSteeringPlace += moveSpeed;
+
+            DateTime afterDT = System.DateTime.Now;
+            TimeSpan ts = afterDT.Subtract(beforDT);
+            if ((int)ts.TotalMilliseconds >= (int)(1000 * moveSpeed))
+                chartTimer.Interval = 1;
+            else
+                chartTimer.Interval = (int)(1000 * moveSpeed) - (int)ts.TotalMilliseconds;
 
         }
     }
