@@ -474,6 +474,8 @@ namespace DataG
             displayPanel.Controls.Add(sensorCheckedListBox2);
             YPanel.Controls.Clear();
             GPSPanel.Controls.Clear();
+            GPSPanel.Controls.Add(radioButtonLine1);
+            GPSPanel.Controls.Add(radioButtonLine2);
             GPSPanel.Refresh();
 
             ComparedRun_FileLoadingForm crFLF = new ComparedRun_FileLoadingForm();
@@ -1004,6 +1006,7 @@ namespace DataG
             int mouseY = e.Y;
 
             double xx = sensorChart.ChartAreas[0].AxisX.PixelPositionToValue(mouseX);
+            
             if (fileOpen == true)
             {
                     this.Refresh();
@@ -1016,6 +1019,7 @@ namespace DataG
                     g.DrawLine(np, p1, p2);
                     //find the Subscript with the xLeft
                     int xLeftSub = findLeftNear(xx, dataTime, dataTime.Length);
+                    keyPointSub = xLeftSub;
                     int xRightSub = xLeftSub + 1;
                     double xLeft = dataTime[xLeftSub], xRight = dataTime[xLeftSub];
                     //two points:A(xLeft,datY[xLeftSub]),B(xRight,datY[xRightSub])
@@ -1071,6 +1075,8 @@ namespace DataG
         {
             if (fileOpen == true)
             {
+                nowSteeringPlace = dataTime[keyPointSub];
+                nowScrollValue = dataTime[keyPointSub] - xScale / 2;
                 if (firstPlayFlag == true)
                 {
                     resetButton_Click(sender, e);
@@ -1151,7 +1157,9 @@ namespace DataG
 
                 nowScrollValue = (int)minValue(dataTime, dataTime.Length) - xScale / 2;
                 newPlace = (int)minValue(dataTime, dataTime.Length) - xScale / 2;
-                nowSteeringPlace = 0;
+                //nowSteeringPlace = 0;
+                nowSteeringPlace = dataTime[keyPointSub];
+                nowScrollValue = dataTime[keyPointSub] - xScale / 2;
                 sensorChart.ChartAreas[0].AxisX.ScaleView.Position = nowScrollValue + xScale / 2;
                 if (firstPlayFlag == false)
                 {
@@ -1178,21 +1186,21 @@ namespace DataG
             //sensorChart.PostPaint += new EventHandler<ChartPaintEventArgs>(sensorChart_PostPaint);
             int xLeftSub3 = findLeftNear(nowSteeringPlace, dataTime, dataTime.Length);
             //xxx += 10;
-            if ((nowScrollValue + xScale / 2) >= minValue(dataTime, dataTime.Length) && (nowScrollValue + xScale / 2) <= maxValue(dataTime, dataTime.Length))
-            {
-                for (int i = 0; i < dtcNum - 1; i++)
-                {
-                    if (sensorCheckedListBox.GetItemChecked(i))
-                    {
-                        double xx = 0;
-                        if ((nowScrollValue + xScale / 2) < xScale / 2)
-                            xx = nowScrollValue + xScale / 2 + moveSpeed;
-                        else
-                            xx = nowScrollValue + xScale / 2 + moveSpeed - 0.1;
-                        int xLeftSub2 = findLeftNear(xx, dataTime, dataTime.Length);
-                    }
-                }
-            }
+            //if ((nowScrollValue + xScale / 2) >= minValue(dataTime, dataTime.Length) && (nowScrollValue + xScale / 2) <= maxValue(dataTime, dataTime.Length))
+            //{
+            //    for (int i = 0; i < dtcNum - 1; i++)
+            //    {
+            //        if (sensorCheckedListBox.GetItemChecked(i))
+            //        {
+            //            double xx = 0;
+            //            if ((nowScrollValue + xScale / 2) < xScale / 2)
+            //                xx = nowScrollValue + xScale / 2 + moveSpeed;
+            //            else
+            //                xx = nowScrollValue + xScale / 2 + moveSpeed - 0.1;
+            //            //int xLeftSub2 = findLeftNear(xx, dataTime, dataTime.Length);
+            //        }
+            //    }
+            //}
             DateTime afterDT2 = System.DateTime.Now;
             TimeSpan ts2 = afterDT2.Subtract(beforDT);
             sensorChart.ChartAreas[0].AxisX.ScaleView.Position = nowScrollValue;
@@ -1255,16 +1263,23 @@ namespace DataG
                         np2.CustomEndCap = lineCap;
                         g2.DrawLine(np2, pp2, pp3);
                     }
+                    else if (xLeftSub < dtrNum2)
+                    {
+                        PointF pp3 = new PointF((float)x2[dtrNum2 - 1], (float)y2[dtrNum2 - 1]);
+                        AdjustableArrowCap lineCap = new AdjustableArrowCap(6, 6, false);
+                        np2.CustomEndCap = lineCap;
+                        g2.DrawLine(np2, pp2, pp3);
+                    }
 
                 }
                 GPSPanel.Refresh();
                 //this.Update();
-                if(maxValue(dataTime, dataTime.Length) > maxValue(dataTime2, dataTime2.Length))
+                if(maxValue(dataTime, dataTime.Length) < maxValue(dataTime2, dataTime2.Length))
                 {
-                if ((newPlace + moveSpeed) <= maxValue(dataTime, dataTime.Length))
-                    newPlace += moveSpeed;
-                else
-                    flagPlace = false;
+                    if ((newPlace + moveSpeed) <= maxValue(dataTime, dataTime.Length))
+                        newPlace += moveSpeed;
+                    else
+                        flagPlace = false;
                 }
                 else
                 {
@@ -1740,7 +1755,7 @@ namespace DataG
             moveSpeed = double.Parse(Regex.Split(speedString, " ", RegexOptions.IgnoreCase)[2]);
             sensorChart.Invalidate();
         }
-
+        int keyPointSub = 0;
         private void GPSPanel_MouseClick(object sender, MouseEventArgs e)
         {
             if (fileOpen == false)
@@ -1765,6 +1780,7 @@ namespace DataG
                     }
 
                 }
+                keyPointSub = key;
                 this.Refresh();
                 Graphics g3 = GPSPanel.CreateGraphics();
                 PointF pp = new PointF();
