@@ -159,7 +159,7 @@
             this.resetButton.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.resetButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.resetButton.Location = new System.Drawing.Point(19, 84);
-            this.resetButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.resetButton.Margin = new System.Windows.Forms.Padding(4);
             this.resetButton.Name = "resetButton";
             this.resetButton.Size = new System.Drawing.Size(157, 40);
             this.resetButton.TabIndex = 2;
@@ -212,7 +212,7 @@
             this.allSelectedCheckBox2.Checked = true;
             this.allSelectedCheckBox2.CheckState = System.Windows.Forms.CheckState.Checked;
             this.allSelectedCheckBox2.Location = new System.Drawing.Point(240, 35);
-            this.allSelectedCheckBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.allSelectedCheckBox2.Margin = new System.Windows.Forms.Padding(2);
             this.allSelectedCheckBox2.Name = "allSelectedCheckBox2";
             this.allSelectedCheckBox2.Size = new System.Drawing.Size(42, 16);
             this.allSelectedCheckBox2.TabIndex = 4;
@@ -225,7 +225,7 @@
             this.sensorCheckedListBox2.CheckOnClick = true;
             this.sensorCheckedListBox2.FormattingEnabled = true;
             this.sensorCheckedListBox2.Location = new System.Drawing.Point(238, 56);
-            this.sensorCheckedListBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.sensorCheckedListBox2.Margin = new System.Windows.Forms.Padding(2);
             this.sensorCheckedListBox2.Name = "sensorCheckedListBox2";
             this.sensorCheckedListBox2.Size = new System.Drawing.Size(207, 84);
             this.sensorCheckedListBox2.TabIndex = 3;
@@ -237,7 +237,7 @@
             this.allSelectedCheckBox.Checked = true;
             this.allSelectedCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.allSelectedCheckBox.Location = new System.Drawing.Point(12, 35);
-            this.allSelectedCheckBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.allSelectedCheckBox.Margin = new System.Windows.Forms.Padding(2);
             this.allSelectedCheckBox.Name = "allSelectedCheckBox";
             this.allSelectedCheckBox.Size = new System.Drawing.Size(42, 16);
             this.allSelectedCheckBox.TabIndex = 2;
@@ -250,7 +250,7 @@
             this.sensorCheckedListBox.CheckOnClick = true;
             this.sensorCheckedListBox.FormattingEnabled = true;
             this.sensorCheckedListBox.Location = new System.Drawing.Point(10, 56);
-            this.sensorCheckedListBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.sensorCheckedListBox.Margin = new System.Windows.Forms.Padding(2);
             this.sensorCheckedListBox.Name = "sensorCheckedListBox";
             this.sensorCheckedListBox.Size = new System.Drawing.Size(207, 84);
             this.sensorCheckedListBox.TabIndex = 1;
@@ -316,7 +316,7 @@
             this.GPSPanel.Controls.Add(this.radioButtonLine2);
             this.GPSPanel.Controls.Add(this.radioButtonLine1);
             this.GPSPanel.Location = new System.Drawing.Point(875, 12);
-            this.GPSPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.GPSPanel.Margin = new System.Windows.Forms.Padding(4);
             this.GPSPanel.Name = "GPSPanel";
             this.GPSPanel.Size = new System.Drawing.Size(255, 574);
             this.GPSPanel.TabIndex = 9;
@@ -359,7 +359,7 @@
             // 
             this.ConfigureButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.ConfigureButton.Location = new System.Drawing.Point(915, 652);
-            this.ConfigureButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ConfigureButton.Margin = new System.Windows.Forms.Padding(2);
             this.ConfigureButton.Name = "ConfigureButton";
             this.ConfigureButton.Size = new System.Drawing.Size(109, 50);
             this.ConfigureButton.TabIndex = 10;
@@ -373,9 +373,9 @@
             this.GPSGroupBox.Controls.Add(this.radioButton_Speed);
             this.GPSGroupBox.Controls.Add(this.radioButton_Normal);
             this.GPSGroupBox.Location = new System.Drawing.Point(1031, 595);
-            this.GPSGroupBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.GPSGroupBox.Margin = new System.Windows.Forms.Padding(4);
             this.GPSGroupBox.Name = "GPSGroupBox";
-            this.GPSGroupBox.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.GPSGroupBox.Padding = new System.Windows.Forms.Padding(4);
             this.GPSGroupBox.Size = new System.Drawing.Size(114, 160);
             this.GPSGroupBox.TabIndex = 12;
             this.GPSGroupBox.TabStop = false;
@@ -385,7 +385,7 @@
             // 
             this.radioButton_Accelerate.AutoSize = true;
             this.radioButton_Accelerate.Location = new System.Drawing.Point(8, 122);
-            this.radioButton_Accelerate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radioButton_Accelerate.Margin = new System.Windows.Forms.Padding(4);
             this.radioButton_Accelerate.Name = "radioButton_Accelerate";
             this.radioButton_Accelerate.Size = new System.Drawing.Size(95, 16);
             this.radioButton_Accelerate.TabIndex = 2;
@@ -398,7 +398,7 @@
             // 
             this.radioButton_Speed.AutoSize = true;
             this.radioButton_Speed.Location = new System.Drawing.Point(8, 76);
-            this.radioButton_Speed.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radioButton_Speed.Margin = new System.Windows.Forms.Padding(4);
             this.radioButton_Speed.Name = "radioButton_Speed";
             this.radioButton_Speed.Size = new System.Drawing.Size(53, 16);
             this.radioButton_Speed.TabIndex = 1;
@@ -412,7 +412,7 @@
             this.radioButton_Normal.AutoSize = true;
             this.radioButton_Normal.Checked = true;
             this.radioButton_Normal.Location = new System.Drawing.Point(8, 22);
-            this.radioButton_Normal.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radioButton_Normal.Margin = new System.Windows.Forms.Padding(4);
             this.radioButton_Normal.Name = "radioButton_Normal";
             this.radioButton_Normal.Size = new System.Drawing.Size(59, 16);
             this.radioButton_Normal.TabIndex = 0;
@@ -426,7 +426,7 @@
             this.YPanel.AutoScroll = true;
             this.YPanel.BackColor = System.Drawing.SystemColors.Info;
             this.YPanel.Location = new System.Drawing.Point(471, 595);
-            this.YPanel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.YPanel.Margin = new System.Windows.Forms.Padding(2);
             this.YPanel.Name = "YPanel";
             this.YPanel.Size = new System.Drawing.Size(324, 159);
             this.YPanel.TabIndex = 13;
@@ -435,7 +435,7 @@
             // 
             this.settingButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.5F);
             this.settingButton.Location = new System.Drawing.Point(801, 651);
-            this.settingButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.settingButton.Margin = new System.Windows.Forms.Padding(4);
             this.settingButton.Name = "settingButton";
             this.settingButton.Size = new System.Drawing.Size(108, 50);
             this.settingButton.TabIndex = 14;
@@ -447,7 +447,7 @@
             // 
             this.standardButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.standardButton.Location = new System.Drawing.Point(801, 706);
-            this.standardButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.standardButton.Margin = new System.Windows.Forms.Padding(2);
             this.standardButton.Name = "standardButton";
             this.standardButton.Size = new System.Drawing.Size(223, 48);
             this.standardButton.TabIndex = 15;
@@ -462,7 +462,7 @@
             this.firstDriverGroupBox.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.firstDriverGroupBox.Location = new System.Drawing.Point(1137, 270);
             this.firstDriverGroupBox.Name = "firstDriverGroupBox";
-            this.firstDriverGroupBox.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.firstDriverGroupBox.Padding = new System.Windows.Forms.Padding(2);
             this.firstDriverGroupBox.Size = new System.Drawing.Size(228, 155);
             this.firstDriverGroupBox.TabIndex = 1;
             this.firstDriverGroupBox.TabStop = false;
@@ -503,7 +503,7 @@
             this.firstDriverTableLayoutPanel.Controls.Add(this.driver1Section3PictureBox, 4, 3);
             this.firstDriverTableLayoutPanel.Controls.Add(this.driver1Section4PictureBox, 4, 4);
             this.firstDriverTableLayoutPanel.Location = new System.Drawing.Point(0, 26);
-            this.firstDriverTableLayoutPanel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.firstDriverTableLayoutPanel.Margin = new System.Windows.Forms.Padding(2);
             this.firstDriverTableLayoutPanel.Name = "firstDriverTableLayoutPanel";
             this.firstDriverTableLayoutPanel.RowCount = 5;
             this.firstDriverTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
@@ -804,7 +804,7 @@
             this.secondDriverGroupBox.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.secondDriverGroupBox.Location = new System.Drawing.Point(1137, 431);
             this.secondDriverGroupBox.Name = "secondDriverGroupBox";
-            this.secondDriverGroupBox.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.secondDriverGroupBox.Padding = new System.Windows.Forms.Padding(2);
             this.secondDriverGroupBox.Size = new System.Drawing.Size(228, 155);
             this.secondDriverGroupBox.TabIndex = 2;
             this.secondDriverGroupBox.TabStop = false;
@@ -845,7 +845,7 @@
             this.secondDriverTableLayoutPanel.Controls.Add(this.driver2Section3PictureBox, 4, 3);
             this.secondDriverTableLayoutPanel.Controls.Add(this.driver2Section4PictureBox, 4, 4);
             this.secondDriverTableLayoutPanel.Location = new System.Drawing.Point(0, 26);
-            this.secondDriverTableLayoutPanel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.secondDriverTableLayoutPanel.Margin = new System.Windows.Forms.Padding(2);
             this.secondDriverTableLayoutPanel.Name = "secondDriverTableLayoutPanel";
             this.secondDriverTableLayoutPanel.RowCount = 5;
             this.secondDriverTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
@@ -1169,7 +1169,7 @@
             // 
             this.thirdTrackBar.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.thirdTrackBar.Location = new System.Drawing.Point(28, 201);
-            this.thirdTrackBar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.thirdTrackBar.Margin = new System.Windows.Forms.Padding(2);
             this.thirdTrackBar.Maximum = 100;
             this.thirdTrackBar.Name = "thirdTrackBar";
             this.thirdTrackBar.Size = new System.Drawing.Size(164, 45);
@@ -1182,7 +1182,7 @@
             // 
             this.secondTrackBar.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.secondTrackBar.Location = new System.Drawing.Point(28, 116);
-            this.secondTrackBar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.secondTrackBar.Margin = new System.Windows.Forms.Padding(2);
             this.secondTrackBar.Maximum = 100;
             this.secondTrackBar.Name = "secondTrackBar";
             this.secondTrackBar.Size = new System.Drawing.Size(164, 45);
@@ -1234,7 +1234,7 @@
             // 
             this.firstTrackBar.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.firstTrackBar.Location = new System.Drawing.Point(28, 33);
-            this.firstTrackBar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.firstTrackBar.Margin = new System.Windows.Forms.Padding(2);
             this.firstTrackBar.Maximum = 100;
             this.firstTrackBar.Name = "firstTrackBar";
             this.firstTrackBar.Size = new System.Drawing.Size(164, 45);
@@ -1264,7 +1264,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(1370, 599);
+            this.ClientSize = new System.Drawing.Size(1370, 749);
             this.Controls.Add(this.firstDriverGroupBox);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.secondDriverGroupBox);
@@ -1279,7 +1279,7 @@
             this.Controls.Add(this.displayPanel);
             this.Controls.Add(this.activatePanel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "ComparedRun";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Compared Run";

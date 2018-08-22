@@ -1962,6 +1962,7 @@ namespace DataG
             //bitm = new Bitmap(GPSPanel.Width, GPSPanel.Height);
 
             bitmap = new Bitmap(GPSPanel.Width, GPSPanel.Height);
+            bitmapWithCircle = new Bitmap(GPSPanel.Width, GPSPanel.Height);
             Graphics g2 = Graphics.FromImage(bitmap);
             Pen pen1 = new Pen(Brushes.LightBlue, 2); //Blue for color1; Green for color2
             Pen pen2 = new Pen(Brushes.DarkBlue, 2);
@@ -2037,34 +2038,34 @@ namespace DataG
             }
             Graphics gg = GPSPanel.CreateGraphics();
             gg.DrawImage(bitmap, new PointF(0.0f, 0.0f));
-            /*
-             * this is another version -- draw line to segment.
-             */
-            //Pen pen = new Pen(Brushes.Blue, 2);
-            //Point p1 = new Point(Convert.ToInt32(x[driver1_x[0]]), Convert.ToInt32(y[driver1_y[0]]));
-            //Point p2 = new Point(Convert.ToInt32(x2[driver2_x[0]]), Convert.ToInt32(y2[driver2_y[0]]));
-            //ExtendLine(p1, p2, 20, g, pen);
-            ////AdjustableArrowCap lineCap = new AdjustableArrowCap(6, 6, false);
-            ////pen.CustomEndCap = lineCap;
-            ////g.DrawLine(pen, p1, p2);
-            //Point p3 = new Point(Convert.ToInt32(x[driver1_x[1]]), Convert.ToInt32(y[driver1_y[1]]));
-            //Point p4 = new Point(Convert.ToInt32(x2[driver2_x[1]]), Convert.ToInt32(y2[driver2_y[1]]));
-            //ExtendLine(p3, p4, 20, g, pen);
-            ////g.DrawLine(pen, p3, p4);
-            //Point p5 = new Point(Convert.ToInt32(x[driver1_x[2]]), Convert.ToInt32(y[driver1_y[2]]));
-            //Point p6 = new Point(Convert.ToInt32(x2[driver2_x[2]]), Convert.ToInt32(y2[driver2_y[2]]));
-            //ExtendLine(p5, p6, 20, g, pen);
-            ////g.DrawLine(pen, p5, p6);
-            //StandardSegmentation ss = new StandardSegmentation();
-            label11.Text = dataTime[driver1_x[0]].ToString();
-            label12.Text = (dataTime[driver1_x[1]] - dataTime[driver1_x[0]]).ToString();
-            label13.Text = (dataTime[driver1_x[2]] - dataTime[driver1_x[1]]).ToString();
-            label14.Text = (dataTime[dtrNum - 1] - dataTime[driver1_x[2]]).ToString();
+            
 
-            label21.Text = dataTime2[driver2_x[0]].ToString();
-            label22.Text = (dataTime2[driver2_x[1]] - dataTime2[driver2_x[0]]).ToString();
-            label23.Text = (dataTime2[driver2_x[2]] - dataTime2[driver2_x[1]]).ToString();
-            label24.Text = (dataTime2[dtrNum2 - 1] - dataTime[driver2_x[2]]).ToString();
+            label11.Text = dataTime[line1Point1].ToString("0.00");
+            label12.Text = (dataTime[line1Point2] - dataTime[line1Point1]).ToString("0.00");
+            label13.Text = (dataTime[line1Point3] - dataTime[line1Point2]).ToString("0.00");
+            label14.Text = (dataTime[dtrNum - 1] - dataTime[line1Point3]).ToString("0.00");
+            Distlabel1.Text = disA_real(line1Point1).ToString("0.00");
+            Distlabel2.Text = (disA_real(line1Point2) - disA_real(line1Point1)).ToString("0.00");
+            Distlabel3.Text = (disA_real(line1Point3) - disA_real(line1Point2)).ToString("0.00");
+            Distlabel4.Text = (disA_real(dtrNum - 1) - disA_real(line1Point3)).ToString("0.00");
+            Avglabel1.Text = (disA_real(line1Point1) / dataTime[line1Point1]).ToString();
+            Avglabel2.Text = ((disA_real(line1Point2) - disA_real(line1Point1)) / (dataTime[line1Point2] - dataTime[line1Point1])).ToString();
+            Avglabel3.Text = ((disA_real(line1Point3) - disA_real(line1Point2)) / (dataTime[line1Point3] - dataTime[line1Point2])).ToString();
+            Avglabel4.Text = ((disA_real(dtrNum - 1) - disA_real(line1Point3)) / (dataTime[dtrNum - 1] - dataTime[line1Point3])).ToString();
+
+            label21.Text = dataTime2[line2Point1].ToString("0.00");
+            label22.Text = (dataTime2[line2Point2] - dataTime2[line2Point1]).ToString("0.00");
+            label23.Text = (dataTime2[line2Point3] - dataTime2[line2Point2]).ToString("0.00");
+            label24.Text = (dataTime2[dtrNum2 - 1] - dataTime2[line2Point3]).ToString("0.00");
+            Distlabel5.Text = disB_real(line2Point1).ToString("0.00");
+            Distlabel6.Text = (disB_real(line2Point2) - disB_real(line2Point1)).ToString("0.00");
+            Distlabel7.Text = (disB_real(line2Point3) - disB_real(line2Point2)).ToString("0.00");
+            Distlabel8.Text = (disB_real(dtrNum2 - 1) - disB_real(line2Point3)).ToString("0.00");
+            Avglabel5.Text = (disB_real(line2Point1) / dataTime2[line2Point1]).ToString();
+            Avglabel6.Text = ((disB_real(line2Point2) - disB_real(line2Point1)) / (dataTime2[line2Point2] - dataTime2[line2Point1])).ToString();
+            Avglabel7.Text = ((disB_real(line2Point3) - disB_real(line2Point2)) / (dataTime2[line2Point3] - dataTime2[line2Point2])).ToString();
+            Avglabel8.Text = ((disB_real(dtrNum2 - 1) - disB_real(line2Point3)) / (dataTime2[dtrNum2 - 1] - dataTime2[line2Point3])).ToString();
+
             //ss.Show();
             firstDriverGroupBox.Refresh();
             secondDriverGroupBox.Refresh();
@@ -2080,7 +2081,7 @@ namespace DataG
                 sectionPoint2 = (double)barpos2 / 100;
                 sectionPoint3 = (double)barpos3 / 100;
 
-                bitmapWithCircle = new Bitmap(GPSPanel.Width, GPSPanel.Height);
+                
                 //Graphics g2 = Graphics.FromImage(bitm);
                 Graphics g3 = Graphics.FromImage(bitmap);
                 Graphics g4 = Graphics.FromImage(bitmapWithCircle);
@@ -2565,21 +2566,21 @@ namespace DataG
         private void Section2PictureBox_Click(object sender, EventArgs e)
         {
             section2Timer.Enabled = true;
-            nowScrollValue = -xScale / 2;
+            nowScrollValue = -xScale / 2 + Math.Max(dataTime[line1Point1], dataTime2[line2Point1]);
             newPlace = (int)minValue(dataTime, dataTime.Length) - xScale / 2;
         }
 
         private void Section3PictureBox_Click(object sender, EventArgs e)
         {
             section3Timer.Enabled = true;
-            nowScrollValue = -xScale / 2;
+            nowScrollValue = -xScale / 2 + Math.Max(dataTime[line1Point2], dataTime2[line2Point2]);
             newPlace = (int)minValue(dataTime, dataTime.Length) - xScale / 2;
         }
 
         private void Section4PictureBox_Click(object sender, EventArgs e)
         {
             section4Timer.Enabled = true;
-            nowScrollValue = -xScale / 2;
+            nowScrollValue = -xScale / 2 + Math.Max(dataTime[line1Point3], dataTime2[line2Point3]);
             newPlace = (int)minValue(dataTime, dataTime.Length) - xScale / 2;
         }
 
@@ -2616,7 +2617,7 @@ namespace DataG
             if (flagPlace == true)
             {
                 //Bitmap bitmap = new Bitmap(GPSPanel.Width, GPSPanel.Height);
-                Graphics g2 = Graphics.FromImage(bitmap);
+                Graphics g2 = Graphics.FromImage(bitmapWithCircle);
                 
                 //find the Subscript with the xLeft
                 double xx2 = newPlace + xScale / 2 + moveSpeed;
@@ -2709,7 +2710,7 @@ namespace DataG
             {
                 nowScrollValue += moveSpeed;
             }
-            else if ((nowScrollValue + xScale / 2) <= Math.Max(dataTime[line1Point1], dataTime2[line2Point1]))
+            else if ((nowScrollValue + xScale / 2) <= Math.Max(dataTime[line1Point2], dataTime2[line2Point2]))
             {
                 if (scaleFlag == true)
                 {
@@ -2720,7 +2721,7 @@ namespace DataG
             }
             else
             {
-                section1Timer.Enabled = false;
+                section2Timer.Enabled = false;
             }
 
             //sensorChart.Invalidate();
@@ -2728,27 +2729,31 @@ namespace DataG
             if (flagPlace == true)
             {
                 //Bitmap bitmap = new Bitmap(GPSPanel.Width, GPSPanel.Height);
-                Graphics g2 = Graphics.FromImage(bitmap);
+                Graphics g2 = Graphics.FromImage(bitmapWithCircle);
 
                 //find the Subscript with the xLeft
-                double xx2 = newPlace + xScale / 2 + moveSpeed;
-                int xLeftSub = findLeftNear(xx2, dataTime, dataTime.Length);
+                double xx = newPlace + xScale / 2 + moveSpeed + dataTime[line1Point1];
+                int xLeftSub = findLeftNear(xx, dataTime, dataTime.Length);
                 int xRightSub = xLeftSub + 1;
                 double xLeft = dataTime[xLeftSub], xRight = dataTime[xRightSub];
                 //two points:A(xLeft,datY[xLeftSub]),B(xRight,datY[xRightSub])
+                double xx2 = newPlace + xScale / 2 + moveSpeed + dataTime2[line2Point2];
+                int xLeftSub2 = findLeftNear(xx2, dataTime2, dataTime2.Length);
+                int xRightSub2 = xLeftSub2 + 1;
+                double xLeft2 = dataTime2[xLeftSub2], xRight2 = dataTime2[xRightSub2];
 
                 double m, n, m2, n2;
 
                 GPSPanel.Refresh();
                 Graphics g3 = GPSPanel.CreateGraphics();
-                if (xx2 <= dataTime[line1Point1 - 1])
+                if (xx <= dataTime[line1Point2 - 1])
                 {
                     m = x[xLeftSub];
                     n = y[xLeftSub];
                     PointF pp = new PointF();
                     pp = new PointF((float)m, (float)n);
                     Pen np2 = new Pen(Brushes.Red, 2);
-                    if (xLeftSub + 10 < line1Point1)
+                    if (xLeftSub + 10 < line1Point2)
                     {
                         PointF pp2 = new PointF((float)x[xLeftSub + 10], (float)y[xLeftSub + 10]);
                         AdjustableArrowCap lineCap = new AdjustableArrowCap(6, 6, false);
@@ -2758,19 +2763,19 @@ namespace DataG
                 }
                 if (xx2 <= dataTime2[line2Point2 - 1])
                 {
-                    m2 = x2[xLeftSub];
-                    n2 = y2[xLeftSub];
+                    m2 = x2[xLeftSub2];
+                    n2 = y2[xLeftSub2];
                     PointF pp2 = new PointF();
                     pp2 = new PointF((float)m2, (float)n2);
                     Pen np2 = new Pen(Brushes.Green, 2);
-                    if (xLeftSub + 10 < line2Point2)
+                    if (xLeftSub2 + 10 < line2Point2)
                     {
-                        PointF pp3 = new PointF((float)x2[xLeftSub + 10], (float)y2[xLeftSub + 10]);
+                        PointF pp3 = new PointF((float)x2[xLeftSub2 + 10], (float)y2[xLeftSub2 + 10]);
                         AdjustableArrowCap lineCap = new AdjustableArrowCap(6, 6, false);
                         np2.CustomEndCap = lineCap;
                         g3.DrawLine(np2, pp2, pp3);
                     }
-                    else if (xLeftSub < line2Point2)
+                    else if (xLeftSub2 < line2Point2)
                     {
                         PointF pp3 = new PointF((float)x2[line2Point2 - 1], (float)y2[line2Point2 - 1]);
                         AdjustableArrowCap lineCap = new AdjustableArrowCap(6, 6, false);
@@ -2822,7 +2827,7 @@ namespace DataG
             {
                 nowScrollValue += moveSpeed;
             }
-            else if ((nowScrollValue + xScale / 2) <= Math.Max(dataTime[line1Point1], dataTime2[line2Point1]))
+            else if ((nowScrollValue + xScale / 2) <= Math.Max(dataTime[line1Point3], dataTime2[line2Point3]))
             {
                 if (scaleFlag == true)
                 {
@@ -2833,7 +2838,7 @@ namespace DataG
             }
             else
             {
-                section1Timer.Enabled = false;
+                section3Timer.Enabled = false;
             }
 
             //sensorChart.Invalidate();
@@ -2841,27 +2846,31 @@ namespace DataG
             if (flagPlace == true)
             {
                 //Bitmap bitmap = new Bitmap(GPSPanel.Width, GPSPanel.Height);
-                Graphics g2 = Graphics.FromImage(bitmap);
+                Graphics g2 = Graphics.FromImage(bitmapWithCircle);
 
                 //find the Subscript with the xLeft
-                double xx2 = newPlace + xScale / 2 + moveSpeed;
-                int xLeftSub = findLeftNear(xx2, dataTime, dataTime.Length);
+                double xx = newPlace + xScale / 2 + moveSpeed + dataTime[line1Point2]; //start point
+                int xLeftSub = findLeftNear(xx, dataTime, dataTime.Length);
                 int xRightSub = xLeftSub + 1;
                 double xLeft = dataTime[xLeftSub], xRight = dataTime[xRightSub];
                 //two points:A(xLeft,datY[xLeftSub]),B(xRight,datY[xRightSub])
+                double xx2 = newPlace + xScale / 2 + moveSpeed + dataTime2[line2Point2];
+                int xLeftSub2 = findLeftNear(xx2, dataTime2, dataTime2.Length);
+                int xRightSub2 = xLeftSub2 + 1;
+                double xLeft2 = dataTime2[xLeftSub2], xRight2 = dataTime2[xRightSub2];
 
                 double m, n, m2, n2;
 
                 GPSPanel.Refresh();
                 Graphics g3 = GPSPanel.CreateGraphics();
-                if (xx2 <= dataTime[line1Point1 - 1])
+                if (xx <= dataTime[line1Point3 - 1])
                 {
                     m = x[xLeftSub];
                     n = y[xLeftSub];
                     PointF pp = new PointF();
                     pp = new PointF((float)m, (float)n);
                     Pen np2 = new Pen(Brushes.Red, 2);
-                    if (xLeftSub + 10 < line1Point1)
+                    if (xLeftSub + 10 < line1Point3)
                     {
                         PointF pp2 = new PointF((float)x[xLeftSub + 10], (float)y[xLeftSub + 10]);
                         AdjustableArrowCap lineCap = new AdjustableArrowCap(6, 6, false);
@@ -2869,23 +2878,23 @@ namespace DataG
                         g3.DrawLine(np2, pp, pp2);
                     }
                 }
-                if (xx2 <= dataTime2[line2Point1 - 1])
+                if (xx2 <= dataTime2[line2Point3 - 1])
                 {
-                    m2 = x2[xLeftSub];
-                    n2 = y2[xLeftSub];
+                    m2 = x2[xLeftSub2];
+                    n2 = y2[xLeftSub2];
                     PointF pp2 = new PointF();
                     pp2 = new PointF((float)m2, (float)n2);
                     Pen np2 = new Pen(Brushes.Green, 2);
-                    if (xLeftSub + 10 < line2Point1)
+                    if (xLeftSub2 + 10 < line2Point3)
                     {
-                        PointF pp3 = new PointF((float)x2[xLeftSub + 10], (float)y2[xLeftSub + 10]);
+                        PointF pp3 = new PointF((float)x2[xLeftSub2 + 10], (float)y2[xLeftSub2 + 10]);
                         AdjustableArrowCap lineCap = new AdjustableArrowCap(6, 6, false);
                         np2.CustomEndCap = lineCap;
                         g3.DrawLine(np2, pp2, pp3);
                     }
-                    else if (xLeftSub < line2Point1)
+                    else if (xLeftSub2 < line2Point3)
                     {
-                        PointF pp3 = new PointF((float)x2[line2Point1 - 1], (float)y2[line2Point1 - 1]);
+                        PointF pp3 = new PointF((float)x2[line2Point3 - 1], (float)y2[line2Point3 - 1]);
                         AdjustableArrowCap lineCap = new AdjustableArrowCap(6, 6, false);
                         np2.CustomEndCap = lineCap;
                         g3.DrawLine(np2, pp2, pp3);
@@ -2893,7 +2902,7 @@ namespace DataG
 
                 }
 
-                if (line1Point1 < line2Point1)
+                if (line1Point3 < line2Point3)
                 {
                     if ((newPlace + moveSpeed) <= maxValue(dataTime, dataTime.Length))
                         newPlace += moveSpeed;
@@ -2907,8 +2916,6 @@ namespace DataG
                     else
                         flagPlace = false;
                 }
-                //Graphics gg = GPSPanel.CreateGraphics();
-                //gg.DrawImage(bitmap, new PointF(0.0f, 0.0f));
             }
             if (nowSteeringPlace <= maxValue(dataTime, dataTime.Length))
                 nowSteeringPlace += moveSpeed;
@@ -2919,7 +2926,7 @@ namespace DataG
                 chartTimer.Interval = 1;
             else
                 chartTimer.Interval = (int)(1000 * moveSpeed) - (int)ts.TotalMilliseconds;
-
+            
         }
 
         private void section4Timer_Tick(object sender, EventArgs e)
@@ -2935,7 +2942,7 @@ namespace DataG
             {
                 nowScrollValue += moveSpeed;
             }
-            else if ((nowScrollValue + xScale / 2) <= Math.Max(dataTime[line1Point1], dataTime2[line2Point1]))
+            else if ((nowScrollValue + xScale / 2) <= Math.Max(dataTime[dtrNum - 1], dataTime2[dtrNum2 - 1]))
             {
                 if (scaleFlag == true)
                 {
@@ -2946,7 +2953,7 @@ namespace DataG
             }
             else
             {
-                section1Timer.Enabled = false;
+                section4Timer.Enabled = false;
             }
 
             //sensorChart.Invalidate();
@@ -2954,27 +2961,31 @@ namespace DataG
             if (flagPlace == true)
             {
                 //Bitmap bitmap = new Bitmap(GPSPanel.Width, GPSPanel.Height);
-                Graphics g2 = Graphics.FromImage(bitmap);
+                Graphics g2 = Graphics.FromImage(bitmapWithCircle);
 
                 //find the Subscript with the xLeft
-                double xx2 = newPlace + xScale / 2 + moveSpeed;
-                int xLeftSub = findLeftNear(xx2, dataTime, dataTime.Length);
+                double xx = newPlace + xScale / 2 + moveSpeed + dataTime[line1Point3]; //start point
+                int xLeftSub = findLeftNear(xx, dataTime, dataTime.Length);
                 int xRightSub = xLeftSub + 1;
                 double xLeft = dataTime[xLeftSub], xRight = dataTime[xRightSub];
                 //two points:A(xLeft,datY[xLeftSub]),B(xRight,datY[xRightSub])
+                double xx2 = newPlace + xScale / 2 + moveSpeed + dataTime2[line2Point3];
+                int xLeftSub2 = findLeftNear(xx2, dataTime2, dataTime2.Length);
+                int xRightSub2 = xLeftSub2 + 1;
+                double xLeft2 = dataTime2[xLeftSub2], xRight2 = dataTime2[xRightSub2];
 
                 double m, n, m2, n2;
 
                 GPSPanel.Refresh();
                 Graphics g3 = GPSPanel.CreateGraphics();
-                if (xx2 <= dataTime[line1Point1 - 1])
+                if (xx <= dataTime[dtrNum - 1])
                 {
                     m = x[xLeftSub];
                     n = y[xLeftSub];
                     PointF pp = new PointF();
                     pp = new PointF((float)m, (float)n);
                     Pen np2 = new Pen(Brushes.Red, 2);
-                    if (xLeftSub + 10 < line1Point1)
+                    if (xLeftSub + 10 < dtrNum)
                     {
                         PointF pp2 = new PointF((float)x[xLeftSub + 10], (float)y[xLeftSub + 10]);
                         AdjustableArrowCap lineCap = new AdjustableArrowCap(6, 6, false);
@@ -2982,23 +2993,23 @@ namespace DataG
                         g3.DrawLine(np2, pp, pp2);
                     }
                 }
-                if (xx2 <= dataTime2[line2Point1 - 1])
+                if (xx2 <= dataTime2[dtrNum2 - 1])
                 {
-                    m2 = x2[xLeftSub];
-                    n2 = y2[xLeftSub];
+                    m2 = x2[xLeftSub2];
+                    n2 = y2[xLeftSub2];
                     PointF pp2 = new PointF();
                     pp2 = new PointF((float)m2, (float)n2);
                     Pen np2 = new Pen(Brushes.Green, 2);
-                    if (xLeftSub + 10 < line2Point1)
+                    if (xLeftSub2 + 10 < dtrNum2)
                     {
-                        PointF pp3 = new PointF((float)x2[xLeftSub + 10], (float)y2[xLeftSub + 10]);
+                        PointF pp3 = new PointF((float)x2[xLeftSub2 + 10], (float)y2[xLeftSub2 + 10]);
                         AdjustableArrowCap lineCap = new AdjustableArrowCap(6, 6, false);
                         np2.CustomEndCap = lineCap;
                         g3.DrawLine(np2, pp2, pp3);
                     }
-                    else if (xLeftSub < line2Point1)
+                    else if (xLeftSub2 < dtrNum2 - 1)
                     {
-                        PointF pp3 = new PointF((float)x2[line2Point1 - 1], (float)y2[line2Point1 - 1]);
+                        PointF pp3 = new PointF((float)x2[dtrNum2 - 1], (float)y2[dtrNum2 - 1]);
                         AdjustableArrowCap lineCap = new AdjustableArrowCap(6, 6, false);
                         np2.CustomEndCap = lineCap;
                         g3.DrawLine(np2, pp2, pp3);
@@ -3006,7 +3017,7 @@ namespace DataG
 
                 }
 
-                if (line1Point1 < line2Point1)
+                if (dtrNum < dtrNum2)
                 {
                     if ((newPlace + moveSpeed) <= maxValue(dataTime, dataTime.Length))
                         newPlace += moveSpeed;
@@ -3020,8 +3031,6 @@ namespace DataG
                     else
                         flagPlace = false;
                 }
-                //Graphics gg = GPSPanel.CreateGraphics();
-                //gg.DrawImage(bitmap, new PointF(0.0f, 0.0f));
             }
             if (nowSteeringPlace <= maxValue(dataTime, dataTime.Length))
                 nowSteeringPlace += moveSpeed;
@@ -3032,7 +3041,6 @@ namespace DataG
                 chartTimer.Interval = 1;
             else
                 chartTimer.Interval = (int)(1000 * moveSpeed) - (int)ts.TotalMilliseconds;
-
         }
     }
 }
