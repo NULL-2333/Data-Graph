@@ -2555,11 +2555,48 @@ namespace DataG
                 thirdTrackBar.Value = secondTrackBar.Value;
             }
         }
+        bool haveReset1 = true;
         private void Section1PictureBox_Click(object sender, EventArgs e)
         {
             section1Timer.Enabled = true;
             nowScrollValue = -xScale / 2;
             newPlace = (int)minValue(dataTime, dataTime.Length) - xScale / 2;
+            if (haveReset1 == true)
+            {
+                ChartArea ca = new ChartArea();
+                ca = sensorChart.ChartAreas.Add("Vertical1");
+                ca.BackColor = Color.Transparent;
+                ca.BorderColor = Color.Transparent;
+                ca.Position.FromRectangleF(sensorChart.ChartAreas[0].Position.ToRectangleF());
+                ca.InnerPlotPosition.FromRectangleF(sensorChart.ChartAreas[0].InnerPlotPosition.ToRectangleF());
+                //ca.InnerPlotPosition.X = (sensorChart.ChartAreas[0].Position.X + sensorChart.ChartAreas[0].Position.Right) / 2;
+                ca.AxisY.MajorGrid.Enabled = false;
+                ca.AxisY.MajorTickMark.Enabled = false;
+                ca.AxisY.LabelStyle.Enabled = false;
+                ca.AxisY.Enabled = AxisEnabled.False;
+
+                ca.AxisX.MajorGrid.Enabled = false;
+                ca.AxisX.LineColor = Color.Black;
+                ca.AxisX.MajorGrid.Enabled = true;
+                ca.AxisX.Maximum = 2;
+                ca.AxisX.Minimum = 0;
+                ca.AxisX.Interval = 1;
+                ca.AxisX.MajorTickMark.Enabled = false;
+                ca.AxisX.LabelStyle.Enabled = false;
+                //ca.AxisY.IsStartedFromZero = sensorChart.ChartAreas[0].AxisY.IsStartedFromZero; 
+
+                Series sCopy2 = sensorChart.Series.Add("caS1");
+                sCopy2.ChartType = sensorChart.Series[0].ChartType;
+                foreach (DataPoint point in sensorChart.Series[0].Points)
+                {
+                    sCopy2.Points.AddXY(point.XValue, point.YValues[0]);
+                }
+                sCopy2.IsVisibleInLegend = false;
+                sCopy2.Color = Color.Transparent;
+                sCopy2.BorderColor = Color.Transparent;
+                sCopy2.ChartArea = ca.Name;
+                haveReset1 = false;
+            }
         }
 
         private void Section2PictureBox_Click(object sender, EventArgs e)
