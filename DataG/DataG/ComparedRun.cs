@@ -119,6 +119,14 @@ namespace DataG
         double sectionPoint2 = 0.5;
         double sectionPoint3 = 0.75;
 
+        int line1Point1 = 0;
+        int line1Point2 = 0;
+        int line1Point3 = 0;
+
+        int line2Point1 = 0;
+        int line2Point2 = 0;
+        int line2Point3 = 0;
+
         public ComparedRun()
         {
             InitializeComponent();
@@ -1185,22 +1193,7 @@ namespace DataG
             DateTime beforDT = System.DateTime.Now;
             //sensorChart.PostPaint += new EventHandler<ChartPaintEventArgs>(sensorChart_PostPaint);
             int xLeftSub3 = findLeftNear(nowSteeringPlace, dataTime, dataTime.Length);
-            //xxx += 10;
-            //if ((nowScrollValue + xScale / 2) >= minValue(dataTime, dataTime.Length) && (nowScrollValue + xScale / 2) <= maxValue(dataTime, dataTime.Length))
-            //{
-            //    for (int i = 0; i < dtcNum - 1; i++)
-            //    {
-            //        if (sensorCheckedListBox.GetItemChecked(i))
-            //        {
-            //            double xx = 0;
-            //            if ((nowScrollValue + xScale / 2) < xScale / 2)
-            //                xx = nowScrollValue + xScale / 2 + moveSpeed;
-            //            else
-            //                xx = nowScrollValue + xScale / 2 + moveSpeed - 0.1;
-            //            //int xLeftSub2 = findLeftNear(xx, dataTime, dataTime.Length);
-            //        }
-            //    }
-            //}
+
             DateTime afterDT2 = System.DateTime.Now;
             TimeSpan ts2 = afterDT2.Subtract(beforDT);
             sensorChart.ChartAreas[0].AxisX.ScaleView.Position = nowScrollValue;
@@ -1952,7 +1945,7 @@ namespace DataG
                 }
             }
         }
-
+Bitmap bitm;
         private void segmentationButton_Click(object sender, EventArgs e)
         {
             barpos1 = firstTrackBar.Value;
@@ -1961,7 +1954,7 @@ namespace DataG
             tableLayoutPanel1.Visible = true;
             firstDriverGroupBox.Visible = true;
             secondDriverGroupBox.Visible = true;
-            Bitmap bitm;
+            
             bitm = new Bitmap(GPSPanel.Width, GPSPanel.Height);
             Graphics g2 = Graphics.FromImage(bitm);
             Pen pen1 = new Pen(Brushes.LightBlue, 2); //Blue for color1; Green for color2
@@ -2069,7 +2062,7 @@ namespace DataG
                 sectionPoint1 = (double)barpos1 / 100;
                 sectionPoint2 = (double)barpos2 / 100;
                 sectionPoint3 = (double)barpos3 / 100;
-                Bitmap bitm;
+                
                 bitm = new Bitmap(GPSPanel.Width, GPSPanel.Height);
                 bitmap = new Bitmap(GPSPanel.Width, GPSPanel.Height);
                 isExist = true;
@@ -2084,13 +2077,13 @@ namespace DataG
                 PointF p22 = new PointF();
                 if (fileOpen == false) return;
 
-                int line1Point1 = findLeftNear(sectionPoint1 * distance1, disA, dtrNum);
-                int line1Point2 = findLeftNear(sectionPoint2 * distance1, disA, dtrNum);
-                int line1Point3 = findLeftNear(sectionPoint3 * distance1, disA, dtrNum);
+                line1Point1 = findLeftNear(sectionPoint1 * distance1, disA, dtrNum);
+                line1Point2 = findLeftNear(sectionPoint2 * distance1, disA, dtrNum);
+                line1Point3 = findLeftNear(sectionPoint3 * distance1, disA, dtrNum);
 
-                int line2Point1 = findLeftNear(sectionPoint1 * distance2, disB, dtrNum2);
-                int line2Point2 = findLeftNear(sectionPoint2 * distance2, disB, dtrNum2);
-                int line2Point3 = findLeftNear(sectionPoint3 * distance2, disB, dtrNum2);
+                line2Point1 = findLeftNear(sectionPoint1 * distance2, disB, dtrNum2);
+                line2Point2 = findLeftNear(sectionPoint2 * distance2, disB, dtrNum2);
+                line2Point3 = findLeftNear(sectionPoint3 * distance2, disB, dtrNum2);
                 if (line1Point1 == 0 && sectionPoint1 != 0)
                 {
                     line1Point1 = dtrNum - 1;
@@ -2253,13 +2246,13 @@ namespace DataG
                 PointF p22 = new PointF();
                 if (fileOpen == false) return;
 
-                int line1Point1 = findLeftNear(sectionPoint1 * distance1, disA, dtrNum);
-                int line1Point2 = findLeftNear(sectionPoint2 * distance1, disA, dtrNum);
-                int line1Point3 = findLeftNear(sectionPoint3 * distance1, disA, dtrNum);
+                line1Point1 = findLeftNear(sectionPoint1 * distance1, disA, dtrNum);
+                line1Point2 = findLeftNear(sectionPoint2 * distance1, disA, dtrNum);
+                line1Point3 = findLeftNear(sectionPoint3 * distance1, disA, dtrNum);
 
-                int line2Point1 = findLeftNear(sectionPoint1 * distance2, disB, dtrNum2);
-                int line2Point2 = findLeftNear(sectionPoint2 * distance2, disB, dtrNum2);
-                int line2Point3 = findLeftNear(sectionPoint3 * distance2, disB, dtrNum2);
+                line2Point1 = findLeftNear(sectionPoint1 * distance2, disB, dtrNum2);
+                line2Point2 = findLeftNear(sectionPoint2 * distance2, disB, dtrNum2);
+                line2Point3 = findLeftNear(sectionPoint3 * distance2, disB, dtrNum2);
                 if (line1Point1 == 0 && sectionPoint1 != 0)
                 {
                     line1Point1 = dtrNum - 1;
@@ -2434,13 +2427,13 @@ namespace DataG
                 PointF p22 = new PointF();
                 if (fileOpen == false) return;
 
-                int line1Point1 = findLeftNear(sectionPoint1 * distance1, disA, dtrNum);
-                int line1Point2 = findLeftNear(sectionPoint2 * distance1, disA, dtrNum);
-                int line1Point3 = findLeftNear(sectionPoint3 * distance1, disA, dtrNum);
+                line1Point1 = findLeftNear(sectionPoint1 * distance1, disA, dtrNum);
+                line1Point2 = findLeftNear(sectionPoint2 * distance1, disA, dtrNum);
+                line1Point3 = findLeftNear(sectionPoint3 * distance1, disA, dtrNum);
 
-                int line2Point1 = findLeftNear(sectionPoint1 * distance2, disB, dtrNum2);
-                int line2Point2 = findLeftNear(sectionPoint2 * distance2, disB, dtrNum2);
-                int line2Point3 = findLeftNear(sectionPoint3 * distance2, disB, dtrNum2);
+                line2Point1 = findLeftNear(sectionPoint1 * distance2, disB, dtrNum2);
+                line2Point2 = findLeftNear(sectionPoint2 * distance2, disB, dtrNum2);
+                line2Point3 = findLeftNear(sectionPoint3 * distance2, disB, dtrNum2);
                 if (line1Point1 == 0  && sectionPoint1 != 0)
                 {
                     line1Point1 = dtrNum - 1;
@@ -2580,27 +2573,129 @@ namespace DataG
         }
         private void Section1PictureBox_Click(object sender, EventArgs e)
         {
-
+            section1Timer.Enabled = true;
         }
 
         private void Section2PictureBox_Click(object sender, EventArgs e)
         {
-
+            section2Timer.Enabled = true;
         }
 
         private void Section3PictureBox_Click(object sender, EventArgs e)
         {
-
+            section3Timer.Enabled = true;
         }
 
         private void Section4PictureBox_Click(object sender, EventArgs e)
         {
-
+            section4Timer.Enabled = true;
         }
 
         private void section1Timer_Tick(object sender, EventArgs e)
         {
+            DateTime beforDT = System.DateTime.Now;
+            //sensorChart.PostPaint += new EventHandler<ChartPaintEventArgs>(sensorChart_PostPaint);
+            int xLeftSub3 = findLeftNear(nowSteeringPlace, dataTime, dataTime.Length);
 
+            DateTime afterDT2 = System.DateTime.Now;
+            TimeSpan ts2 = afterDT2.Subtract(beforDT);
+            sensorChart.ChartAreas[0].AxisX.ScaleView.Position = nowScrollValue;
+            if ((nowScrollValue + xScale / 2) < xScale / 2)
+            {
+                nowScrollValue += moveSpeed;
+            }
+            else if ((nowScrollValue + xScale / 2) <= maxValue(dataTime, dataTime.Length))
+            {
+                if (scaleFlag == true)
+                {
+                    scaleFlag = false;
+                    nowScrollValue += 0.1;
+                }
+                nowScrollValue += moveSpeed;
+            }
+
+            //sensorChart.Invalidate();
+
+            if (flagPlace == true)
+            {
+                //Bitmap bitmap = new Bitmap(GPSPanel.Width, GPSPanel.Height);
+                Graphics g2 = Graphics.FromImage(bitm);
+                
+                //find the Subscript with the xLeft
+                double xx2 = newPlace + xScale / 2 + moveSpeed;
+                int xLeftSub = 0;// findLeftNear(xx2, dataTime, dataTime.Length);
+                int xRightSub = xLeftSub + 1;
+                double xLeft = dataTime[xLeftSub], xRight = dataTime[xRightSub];
+                //two points:A(xLeft,datY[xLeftSub]),B(xRight,datY[xRightSub])
+
+                double m, n, m2, n2;
+
+                Graphics g3 = GPSPanel.CreateGraphics();
+                if (xx2 <= dataTime[line1Point1 - 1])
+                {
+                    m = x[xLeftSub];
+                    n = y[xLeftSub];
+                    PointF pp = new PointF();
+                    pp = new PointF((float)m, (float)n);
+                    Pen np2 = new Pen(Brushes.Red, 2);
+                    if (xLeftSub + 10 < line1Point1)
+                    {
+                        PointF pp2 = new PointF((float)x[xLeftSub + 10], (float)y[xLeftSub + 10]);
+                        AdjustableArrowCap lineCap = new AdjustableArrowCap(6, 6, false);
+                        np2.CustomEndCap = lineCap;
+                        g2.DrawLine(np2, pp, pp2);
+                    }
+                }
+                if (xx2 <= dataTime2[line2Point1 - 1])
+                {
+                    m2 = x2[xLeftSub];
+                    n2 = y2[xLeftSub];
+                    PointF pp2 = new PointF();
+                    pp2 = new PointF((float)m2, (float)n2);
+                    Pen np2 = new Pen(Brushes.Green, 2);
+                    if (xLeftSub + 10 < line2Point1)
+                    {
+                        PointF pp3 = new PointF((float)x2[xLeftSub + 10], (float)y2[xLeftSub + 10]);
+                        AdjustableArrowCap lineCap = new AdjustableArrowCap(6, 6, false);
+                        np2.CustomEndCap = lineCap;
+                        g2.DrawLine(np2, pp2, pp3);
+                    }
+                    else if (xLeftSub < line2Point1)
+                    {
+                        PointF pp3 = new PointF((float)x2[line2Point1 - 1], (float)y2[line2Point1 - 1]);
+                        AdjustableArrowCap lineCap = new AdjustableArrowCap(6, 6, false);
+                        np2.CustomEndCap = lineCap;
+                        g2.DrawLine(np2, pp2, pp3);
+                    }
+
+                }
+                GPSPanel.Refresh();
+                //if (maxValue(dataTime, dataTime.Length) < maxValue(dataTime2, dataTime2.Length))
+                //{
+                //    if ((newPlace + moveSpeed) <= maxValue(dataTime, dataTime.Length))
+                //        newPlace += moveSpeed;
+                //    else
+                //        flagPlace = false;
+                //}
+                //else
+                //{
+                //    if ((newPlace + moveSpeed) <= maxValue(dataTime2, dataTime2.Length))
+                //        newPlace += moveSpeed;
+                //    else
+                //        flagPlace = false;
+                //}
+                Graphics gg = GPSPanel.CreateGraphics();
+                gg.DrawImage(bitm, new PointF(0.0f, 0.0f));
+            }
+            if (nowSteeringPlace <= maxValue(dataTime, dataTime.Length))
+                nowSteeringPlace += moveSpeed;
+
+            DateTime afterDT = System.DateTime.Now;
+            TimeSpan ts = afterDT.Subtract(beforDT);
+            if ((int)ts.TotalMilliseconds >= (int)(1000 * moveSpeed))
+                chartTimer.Interval = 1;
+            else
+                chartTimer.Interval = (int)(1000 * moveSpeed) - (int)ts.TotalMilliseconds;
         }
 
         private void section2Timer_Tick(object sender, EventArgs e)
