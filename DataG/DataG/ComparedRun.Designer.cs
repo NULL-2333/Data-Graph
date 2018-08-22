@@ -107,6 +107,14 @@
             this.label16 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.firstTrackBar = new System.Windows.Forms.TrackBar();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.pictureBox5 = new System.Windows.Forms.PictureBox();
+            this.pictureBox6 = new System.Windows.Forms.PictureBox();
+            this.pictureBox7 = new System.Windows.Forms.PictureBox();
+            this.pictureBox8 = new System.Windows.Forms.PictureBox();
             this.activatePanel.SuspendLayout();
             this.displayPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sensorChart)).BeginInit();
@@ -120,6 +128,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.thirdTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.secondTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.firstTrackBar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
             this.SuspendLayout();
             // 
             // activatePanel
@@ -139,7 +155,7 @@
             this.resetButton.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.resetButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.resetButton.Location = new System.Drawing.Point(19, 84);
-            this.resetButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.resetButton.Margin = new System.Windows.Forms.Padding(4);
             this.resetButton.Name = "resetButton";
             this.resetButton.Size = new System.Drawing.Size(157, 40);
             this.resetButton.TabIndex = 2;
@@ -192,7 +208,7 @@
             this.allSelectedCheckBox2.Checked = true;
             this.allSelectedCheckBox2.CheckState = System.Windows.Forms.CheckState.Checked;
             this.allSelectedCheckBox2.Location = new System.Drawing.Point(240, 35);
-            this.allSelectedCheckBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.allSelectedCheckBox2.Margin = new System.Windows.Forms.Padding(2);
             this.allSelectedCheckBox2.Name = "allSelectedCheckBox2";
             this.allSelectedCheckBox2.Size = new System.Drawing.Size(42, 16);
             this.allSelectedCheckBox2.TabIndex = 4;
@@ -205,7 +221,7 @@
             this.sensorCheckedListBox2.CheckOnClick = true;
             this.sensorCheckedListBox2.FormattingEnabled = true;
             this.sensorCheckedListBox2.Location = new System.Drawing.Point(238, 56);
-            this.sensorCheckedListBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.sensorCheckedListBox2.Margin = new System.Windows.Forms.Padding(2);
             this.sensorCheckedListBox2.Name = "sensorCheckedListBox2";
             this.sensorCheckedListBox2.Size = new System.Drawing.Size(207, 84);
             this.sensorCheckedListBox2.TabIndex = 3;
@@ -217,7 +233,7 @@
             this.allSelectedCheckBox.Checked = true;
             this.allSelectedCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.allSelectedCheckBox.Location = new System.Drawing.Point(12, 35);
-            this.allSelectedCheckBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.allSelectedCheckBox.Margin = new System.Windows.Forms.Padding(2);
             this.allSelectedCheckBox.Name = "allSelectedCheckBox";
             this.allSelectedCheckBox.Size = new System.Drawing.Size(42, 16);
             this.allSelectedCheckBox.TabIndex = 2;
@@ -230,7 +246,7 @@
             this.sensorCheckedListBox.CheckOnClick = true;
             this.sensorCheckedListBox.FormattingEnabled = true;
             this.sensorCheckedListBox.Location = new System.Drawing.Point(10, 56);
-            this.sensorCheckedListBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.sensorCheckedListBox.Margin = new System.Windows.Forms.Padding(2);
             this.sensorCheckedListBox.Name = "sensorCheckedListBox";
             this.sensorCheckedListBox.Size = new System.Drawing.Size(207, 84);
             this.sensorCheckedListBox.TabIndex = 1;
@@ -296,7 +312,7 @@
             this.GPSPanel.Controls.Add(this.radioButtonLine2);
             this.GPSPanel.Controls.Add(this.radioButtonLine1);
             this.GPSPanel.Location = new System.Drawing.Point(875, 12);
-            this.GPSPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.GPSPanel.Margin = new System.Windows.Forms.Padding(4);
             this.GPSPanel.Name = "GPSPanel";
             this.GPSPanel.Size = new System.Drawing.Size(255, 574);
             this.GPSPanel.TabIndex = 9;
@@ -339,7 +355,7 @@
             // 
             this.ConfigureButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.ConfigureButton.Location = new System.Drawing.Point(915, 652);
-            this.ConfigureButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ConfigureButton.Margin = new System.Windows.Forms.Padding(2);
             this.ConfigureButton.Name = "ConfigureButton";
             this.ConfigureButton.Size = new System.Drawing.Size(109, 50);
             this.ConfigureButton.TabIndex = 10;
@@ -353,9 +369,9 @@
             this.GPSGroupBox.Controls.Add(this.radioButton_Speed);
             this.GPSGroupBox.Controls.Add(this.radioButton_Normal);
             this.GPSGroupBox.Location = new System.Drawing.Point(1031, 595);
-            this.GPSGroupBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.GPSGroupBox.Margin = new System.Windows.Forms.Padding(4);
             this.GPSGroupBox.Name = "GPSGroupBox";
-            this.GPSGroupBox.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.GPSGroupBox.Padding = new System.Windows.Forms.Padding(4);
             this.GPSGroupBox.Size = new System.Drawing.Size(114, 160);
             this.GPSGroupBox.TabIndex = 12;
             this.GPSGroupBox.TabStop = false;
@@ -365,7 +381,7 @@
             // 
             this.radioButton_Accelerate.AutoSize = true;
             this.radioButton_Accelerate.Location = new System.Drawing.Point(8, 122);
-            this.radioButton_Accelerate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radioButton_Accelerate.Margin = new System.Windows.Forms.Padding(4);
             this.radioButton_Accelerate.Name = "radioButton_Accelerate";
             this.radioButton_Accelerate.Size = new System.Drawing.Size(95, 16);
             this.radioButton_Accelerate.TabIndex = 2;
@@ -378,7 +394,7 @@
             // 
             this.radioButton_Speed.AutoSize = true;
             this.radioButton_Speed.Location = new System.Drawing.Point(8, 76);
-            this.radioButton_Speed.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radioButton_Speed.Margin = new System.Windows.Forms.Padding(4);
             this.radioButton_Speed.Name = "radioButton_Speed";
             this.radioButton_Speed.Size = new System.Drawing.Size(53, 16);
             this.radioButton_Speed.TabIndex = 1;
@@ -392,7 +408,7 @@
             this.radioButton_Normal.AutoSize = true;
             this.radioButton_Normal.Checked = true;
             this.radioButton_Normal.Location = new System.Drawing.Point(8, 22);
-            this.radioButton_Normal.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radioButton_Normal.Margin = new System.Windows.Forms.Padding(4);
             this.radioButton_Normal.Name = "radioButton_Normal";
             this.radioButton_Normal.Size = new System.Drawing.Size(59, 16);
             this.radioButton_Normal.TabIndex = 0;
@@ -406,7 +422,7 @@
             this.YPanel.AutoScroll = true;
             this.YPanel.BackColor = System.Drawing.SystemColors.Info;
             this.YPanel.Location = new System.Drawing.Point(471, 595);
-            this.YPanel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.YPanel.Margin = new System.Windows.Forms.Padding(2);
             this.YPanel.Name = "YPanel";
             this.YPanel.Size = new System.Drawing.Size(324, 159);
             this.YPanel.TabIndex = 13;
@@ -415,7 +431,7 @@
             // 
             this.settingButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.5F);
             this.settingButton.Location = new System.Drawing.Point(801, 651);
-            this.settingButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.settingButton.Margin = new System.Windows.Forms.Padding(4);
             this.settingButton.Name = "settingButton";
             this.settingButton.Size = new System.Drawing.Size(108, 50);
             this.settingButton.TabIndex = 14;
@@ -427,7 +443,7 @@
             // 
             this.standardButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.standardButton.Location = new System.Drawing.Point(801, 706);
-            this.standardButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.standardButton.Margin = new System.Windows.Forms.Padding(2);
             this.standardButton.Name = "standardButton";
             this.standardButton.Size = new System.Drawing.Size(223, 48);
             this.standardButton.TabIndex = 15;
@@ -440,10 +456,10 @@
             this.firstDriverGroupBox.BackColor = System.Drawing.Color.Transparent;
             this.firstDriverGroupBox.Controls.Add(this.firstDriverTableLayoutPanel);
             this.firstDriverGroupBox.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.firstDriverGroupBox.Location = new System.Drawing.Point(1137, 308);
+            this.firstDriverGroupBox.Location = new System.Drawing.Point(1137, 270);
             this.firstDriverGroupBox.Name = "firstDriverGroupBox";
-            this.firstDriverGroupBox.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.firstDriverGroupBox.Size = new System.Drawing.Size(228, 116);
+            this.firstDriverGroupBox.Padding = new System.Windows.Forms.Padding(2);
+            this.firstDriverGroupBox.Size = new System.Drawing.Size(228, 155);
             this.firstDriverGroupBox.TabIndex = 1;
             this.firstDriverGroupBox.TabStop = false;
             this.firstDriverGroupBox.Text = "1st Driver";
@@ -478,8 +494,12 @@
             this.firstDriverTableLayoutPanel.Controls.Add(this.Avglabel2, 3, 2);
             this.firstDriverTableLayoutPanel.Controls.Add(this.Avglabel3, 3, 3);
             this.firstDriverTableLayoutPanel.Controls.Add(this.Avglabel4, 3, 4);
+            this.firstDriverTableLayoutPanel.Controls.Add(this.pictureBox1, 4, 4);
+            this.firstDriverTableLayoutPanel.Controls.Add(this.pictureBox2, 4, 3);
+            this.firstDriverTableLayoutPanel.Controls.Add(this.pictureBox3, 4, 2);
+            this.firstDriverTableLayoutPanel.Controls.Add(this.pictureBox4, 4, 1);
             this.firstDriverTableLayoutPanel.Location = new System.Drawing.Point(0, 26);
-            this.firstDriverTableLayoutPanel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.firstDriverTableLayoutPanel.Margin = new System.Windows.Forms.Padding(2);
             this.firstDriverTableLayoutPanel.Name = "firstDriverTableLayoutPanel";
             this.firstDriverTableLayoutPanel.RowCount = 5;
             this.firstDriverTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
@@ -487,17 +507,17 @@
             this.firstDriverTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.firstDriverTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.firstDriverTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.firstDriverTableLayoutPanel.Size = new System.Drawing.Size(228, 82);
+            this.firstDriverTableLayoutPanel.Size = new System.Drawing.Size(228, 125);
             this.firstDriverTableLayoutPanel.TabIndex = 1;
             // 
             // label6
             // 
             this.label6.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(3, 33);
+            this.label6.Location = new System.Drawing.Point(3, 49);
             this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(18, 15);
+            this.label6.Size = new System.Drawing.Size(18, 23);
             this.label6.TabIndex = 4;
             this.label6.Text = "2nd Section";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -506,10 +526,10 @@
             // 
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(33, 1);
+            this.label1.Location = new System.Drawing.Point(33, 4);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(36, 15);
+            this.label1.Size = new System.Drawing.Size(36, 17);
             this.label1.TabIndex = 0;
             this.label1.Text = "Time";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -518,10 +538,10 @@
             // 
             this.label3.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(3, 17);
+            this.label3.Location = new System.Drawing.Point(3, 25);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(18, 15);
+            this.label3.Size = new System.Drawing.Size(18, 23);
             this.label3.TabIndex = 1;
             this.label3.Text = "1st Section";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -530,10 +550,10 @@
             // 
             this.label2.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 49);
+            this.label2.Location = new System.Drawing.Point(3, 73);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(18, 15);
+            this.label2.Size = new System.Drawing.Size(18, 23);
             this.label2.TabIndex = 2;
             this.label2.Text = "3rd Section";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -542,10 +562,10 @@
             // 
             this.label5.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(3, 65);
+            this.label5.Location = new System.Drawing.Point(3, 97);
             this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(18, 16);
+            this.label5.Size = new System.Drawing.Size(18, 27);
             this.label5.TabIndex = 3;
             this.label5.Text = "4th Section";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -554,10 +574,10 @@
             // 
             this.label11.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(32, 17);
+            this.label11.Location = new System.Drawing.Point(32, 28);
             this.label11.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(39, 15);
+            this.label11.Size = new System.Drawing.Size(39, 17);
             this.label11.TabIndex = 5;
             this.label11.Text = "NULL";
             this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -566,10 +586,10 @@
             // 
             this.label12.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(32, 33);
+            this.label12.Location = new System.Drawing.Point(32, 52);
             this.label12.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(39, 15);
+            this.label12.Size = new System.Drawing.Size(39, 17);
             this.label12.TabIndex = 6;
             this.label12.Text = "NULL";
             this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -578,10 +598,10 @@
             // 
             this.label13.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(32, 49);
+            this.label13.Location = new System.Drawing.Point(32, 76);
             this.label13.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(39, 15);
+            this.label13.Size = new System.Drawing.Size(39, 17);
             this.label13.TabIndex = 7;
             this.label13.Text = "NULL";
             this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -590,10 +610,10 @@
             // 
             this.label14.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(32, 65);
+            this.label14.Location = new System.Drawing.Point(32, 102);
             this.label14.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(39, 16);
+            this.label14.Size = new System.Drawing.Size(39, 17);
             this.label14.TabIndex = 8;
             this.label14.Text = "NULL";
             this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -602,10 +622,10 @@
             // 
             this.label34.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(92, 1);
+            this.label34.Location = new System.Drawing.Point(92, 4);
             this.label34.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(30, 15);
+            this.label34.Size = new System.Drawing.Size(30, 17);
             this.label34.TabIndex = 14;
             this.label34.Text = "Dist";
             this.label34.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -614,10 +634,10 @@
             // 
             this.label19.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(148, 1);
+            this.label19.Location = new System.Drawing.Point(148, 4);
             this.label19.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(30, 15);
+            this.label19.Size = new System.Drawing.Size(30, 17);
             this.label19.TabIndex = 15;
             this.label19.Text = "Avg";
             this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -626,10 +646,10 @@
             // 
             this.label20.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(200, 1);
+            this.label20.Location = new System.Drawing.Point(200, 4);
             this.label20.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(19, 15);
+            this.label20.Size = new System.Drawing.Size(19, 17);
             this.label20.TabIndex = 16;
             this.label20.Text = "pl";
             this.label20.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -638,10 +658,10 @@
             // 
             this.Distlabel1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.Distlabel1.AutoSize = true;
-            this.Distlabel1.Location = new System.Drawing.Point(88, 17);
+            this.Distlabel1.Location = new System.Drawing.Point(88, 28);
             this.Distlabel1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Distlabel1.Name = "Distlabel1";
-            this.Distlabel1.Size = new System.Drawing.Size(39, 15);
+            this.Distlabel1.Size = new System.Drawing.Size(39, 17);
             this.Distlabel1.TabIndex = 17;
             this.Distlabel1.Text = "NULL";
             this.Distlabel1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -650,10 +670,10 @@
             // 
             this.Distlabel2.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.Distlabel2.AutoSize = true;
-            this.Distlabel2.Location = new System.Drawing.Point(88, 33);
+            this.Distlabel2.Location = new System.Drawing.Point(88, 52);
             this.Distlabel2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Distlabel2.Name = "Distlabel2";
-            this.Distlabel2.Size = new System.Drawing.Size(39, 15);
+            this.Distlabel2.Size = new System.Drawing.Size(39, 17);
             this.Distlabel2.TabIndex = 17;
             this.Distlabel2.Text = "NULL";
             this.Distlabel2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -662,10 +682,10 @@
             // 
             this.Distlabel3.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.Distlabel3.AutoSize = true;
-            this.Distlabel3.Location = new System.Drawing.Point(88, 49);
+            this.Distlabel3.Location = new System.Drawing.Point(88, 76);
             this.Distlabel3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Distlabel3.Name = "Distlabel3";
-            this.Distlabel3.Size = new System.Drawing.Size(39, 15);
+            this.Distlabel3.Size = new System.Drawing.Size(39, 17);
             this.Distlabel3.TabIndex = 17;
             this.Distlabel3.Text = "NULL";
             this.Distlabel3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -674,10 +694,10 @@
             // 
             this.Distlabel4.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.Distlabel4.AutoSize = true;
-            this.Distlabel4.Location = new System.Drawing.Point(88, 65);
+            this.Distlabel4.Location = new System.Drawing.Point(88, 102);
             this.Distlabel4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Distlabel4.Name = "Distlabel4";
-            this.Distlabel4.Size = new System.Drawing.Size(39, 16);
+            this.Distlabel4.Size = new System.Drawing.Size(39, 17);
             this.Distlabel4.TabIndex = 17;
             this.Distlabel4.Text = "NULL";
             this.Distlabel4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -686,10 +706,10 @@
             // 
             this.Avglabel1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.Avglabel1.AutoSize = true;
-            this.Avglabel1.Location = new System.Drawing.Point(144, 17);
+            this.Avglabel1.Location = new System.Drawing.Point(144, 28);
             this.Avglabel1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Avglabel1.Name = "Avglabel1";
-            this.Avglabel1.Size = new System.Drawing.Size(39, 15);
+            this.Avglabel1.Size = new System.Drawing.Size(39, 17);
             this.Avglabel1.TabIndex = 17;
             this.Avglabel1.Text = "NULL";
             this.Avglabel1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -698,10 +718,10 @@
             // 
             this.Avglabel2.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.Avglabel2.AutoSize = true;
-            this.Avglabel2.Location = new System.Drawing.Point(144, 33);
+            this.Avglabel2.Location = new System.Drawing.Point(144, 52);
             this.Avglabel2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Avglabel2.Name = "Avglabel2";
-            this.Avglabel2.Size = new System.Drawing.Size(39, 15);
+            this.Avglabel2.Size = new System.Drawing.Size(39, 17);
             this.Avglabel2.TabIndex = 17;
             this.Avglabel2.Text = "NULL";
             this.Avglabel2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -710,10 +730,10 @@
             // 
             this.Avglabel3.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.Avglabel3.AutoSize = true;
-            this.Avglabel3.Location = new System.Drawing.Point(144, 49);
+            this.Avglabel3.Location = new System.Drawing.Point(144, 76);
             this.Avglabel3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Avglabel3.Name = "Avglabel3";
-            this.Avglabel3.Size = new System.Drawing.Size(39, 15);
+            this.Avglabel3.Size = new System.Drawing.Size(39, 17);
             this.Avglabel3.TabIndex = 17;
             this.Avglabel3.Text = "NULL";
             this.Avglabel3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -722,10 +742,10 @@
             // 
             this.Avglabel4.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.Avglabel4.AutoSize = true;
-            this.Avglabel4.Location = new System.Drawing.Point(144, 65);
+            this.Avglabel4.Location = new System.Drawing.Point(144, 102);
             this.Avglabel4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Avglabel4.Name = "Avglabel4";
-            this.Avglabel4.Size = new System.Drawing.Size(39, 16);
+            this.Avglabel4.Size = new System.Drawing.Size(39, 17);
             this.Avglabel4.TabIndex = 17;
             this.Avglabel4.Text = "NULL";
             this.Avglabel4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -734,10 +754,10 @@
             // 
             this.secondDriverGroupBox.Controls.Add(this.secondDriverTableLayoutPanel);
             this.secondDriverGroupBox.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.secondDriverGroupBox.Location = new System.Drawing.Point(1137, 449);
+            this.secondDriverGroupBox.Location = new System.Drawing.Point(1137, 431);
             this.secondDriverGroupBox.Name = "secondDriverGroupBox";
-            this.secondDriverGroupBox.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.secondDriverGroupBox.Size = new System.Drawing.Size(228, 108);
+            this.secondDriverGroupBox.Padding = new System.Windows.Forms.Padding(2);
+            this.secondDriverGroupBox.Size = new System.Drawing.Size(228, 155);
             this.secondDriverGroupBox.TabIndex = 2;
             this.secondDriverGroupBox.TabStop = false;
             this.secondDriverGroupBox.Text = "2nd Driver";
@@ -772,8 +792,12 @@
             this.secondDriverTableLayoutPanel.Controls.Add(this.Avglabel7, 3, 3);
             this.secondDriverTableLayoutPanel.Controls.Add(this.Distlabel8, 2, 4);
             this.secondDriverTableLayoutPanel.Controls.Add(this.Avglabel8, 3, 4);
+            this.secondDriverTableLayoutPanel.Controls.Add(this.pictureBox5, 4, 1);
+            this.secondDriverTableLayoutPanel.Controls.Add(this.pictureBox6, 4, 2);
+            this.secondDriverTableLayoutPanel.Controls.Add(this.pictureBox7, 4, 3);
+            this.secondDriverTableLayoutPanel.Controls.Add(this.pictureBox8, 4, 4);
             this.secondDriverTableLayoutPanel.Location = new System.Drawing.Point(0, 26);
-            this.secondDriverTableLayoutPanel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.secondDriverTableLayoutPanel.Margin = new System.Windows.Forms.Padding(2);
             this.secondDriverTableLayoutPanel.Name = "secondDriverTableLayoutPanel";
             this.secondDriverTableLayoutPanel.RowCount = 5;
             this.secondDriverTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
@@ -781,17 +805,17 @@
             this.secondDriverTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.secondDriverTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.secondDriverTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.secondDriverTableLayoutPanel.Size = new System.Drawing.Size(228, 82);
+            this.secondDriverTableLayoutPanel.Size = new System.Drawing.Size(228, 125);
             this.secondDriverTableLayoutPanel.TabIndex = 1;
             // 
             // label10
             // 
             this.label10.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(3, 65);
+            this.label10.Location = new System.Drawing.Point(3, 97);
             this.label10.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(18, 16);
+            this.label10.Size = new System.Drawing.Size(18, 27);
             this.label10.TabIndex = 7;
             this.label10.Text = "4th Section";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -800,10 +824,10 @@
             // 
             this.label7.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(33, 1);
+            this.label7.Location = new System.Drawing.Point(33, 4);
             this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(36, 15);
+            this.label7.Size = new System.Drawing.Size(36, 17);
             this.label7.TabIndex = 1;
             this.label7.Text = "Time";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -812,10 +836,10 @@
             // 
             this.label8.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(3, 17);
+            this.label8.Location = new System.Drawing.Point(3, 25);
             this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(18, 15);
+            this.label8.Size = new System.Drawing.Size(18, 23);
             this.label8.TabIndex = 2;
             this.label8.Text = "1st Section";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -824,10 +848,10 @@
             // 
             this.label9.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(3, 33);
+            this.label9.Location = new System.Drawing.Point(3, 49);
             this.label9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(18, 15);
+            this.label9.Size = new System.Drawing.Size(18, 23);
             this.label9.TabIndex = 5;
             this.label9.Text = "2nd Section";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -836,10 +860,10 @@
             // 
             this.label15.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(3, 49);
+            this.label15.Location = new System.Drawing.Point(3, 73);
             this.label15.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(18, 15);
+            this.label15.Size = new System.Drawing.Size(18, 23);
             this.label15.TabIndex = 6;
             this.label15.Text = "3rd Section";
             this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -848,10 +872,10 @@
             // 
             this.label21.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(32, 17);
+            this.label21.Location = new System.Drawing.Point(32, 28);
             this.label21.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(39, 15);
+            this.label21.Size = new System.Drawing.Size(39, 17);
             this.label21.TabIndex = 8;
             this.label21.Text = "NULL";
             this.label21.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -860,10 +884,10 @@
             // 
             this.label22.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(32, 33);
+            this.label22.Location = new System.Drawing.Point(32, 52);
             this.label22.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(39, 15);
+            this.label22.Size = new System.Drawing.Size(39, 17);
             this.label22.TabIndex = 9;
             this.label22.Text = "NULL";
             this.label22.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -872,10 +896,10 @@
             // 
             this.label23.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(32, 49);
+            this.label23.Location = new System.Drawing.Point(32, 76);
             this.label23.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(39, 15);
+            this.label23.Size = new System.Drawing.Size(39, 17);
             this.label23.TabIndex = 10;
             this.label23.Text = "NULL";
             this.label23.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -884,10 +908,10 @@
             // 
             this.label24.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(32, 65);
+            this.label24.Location = new System.Drawing.Point(32, 102);
             this.label24.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(39, 16);
+            this.label24.Size = new System.Drawing.Size(39, 17);
             this.label24.TabIndex = 11;
             this.label24.Text = "NULL";
             this.label24.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -896,10 +920,10 @@
             // 
             this.label25.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(92, 1);
+            this.label25.Location = new System.Drawing.Point(92, 4);
             this.label25.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(30, 15);
+            this.label25.Size = new System.Drawing.Size(30, 17);
             this.label25.TabIndex = 1;
             this.label25.Text = "Dist";
             this.label25.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -908,10 +932,10 @@
             // 
             this.label26.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(148, 1);
+            this.label26.Location = new System.Drawing.Point(148, 4);
             this.label26.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(30, 15);
+            this.label26.Size = new System.Drawing.Size(30, 17);
             this.label26.TabIndex = 1;
             this.label26.Text = "Avg";
             this.label26.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -920,10 +944,10 @@
             // 
             this.label27.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(200, 1);
+            this.label27.Location = new System.Drawing.Point(200, 4);
             this.label27.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(19, 15);
+            this.label27.Size = new System.Drawing.Size(19, 17);
             this.label27.TabIndex = 1;
             this.label27.Text = "pl";
             this.label27.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -932,10 +956,10 @@
             // 
             this.Distlabel5.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.Distlabel5.AutoSize = true;
-            this.Distlabel5.Location = new System.Drawing.Point(88, 17);
+            this.Distlabel5.Location = new System.Drawing.Point(88, 28);
             this.Distlabel5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Distlabel5.Name = "Distlabel5";
-            this.Distlabel5.Size = new System.Drawing.Size(39, 15);
+            this.Distlabel5.Size = new System.Drawing.Size(39, 17);
             this.Distlabel5.TabIndex = 8;
             this.Distlabel5.Text = "NULL";
             this.Distlabel5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -944,10 +968,10 @@
             // 
             this.Distlabel6.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.Distlabel6.AutoSize = true;
-            this.Distlabel6.Location = new System.Drawing.Point(88, 33);
+            this.Distlabel6.Location = new System.Drawing.Point(88, 52);
             this.Distlabel6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Distlabel6.Name = "Distlabel6";
-            this.Distlabel6.Size = new System.Drawing.Size(39, 15);
+            this.Distlabel6.Size = new System.Drawing.Size(39, 17);
             this.Distlabel6.TabIndex = 8;
             this.Distlabel6.Text = "NULL";
             this.Distlabel6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -956,10 +980,10 @@
             // 
             this.Distlabel7.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.Distlabel7.AutoSize = true;
-            this.Distlabel7.Location = new System.Drawing.Point(88, 49);
+            this.Distlabel7.Location = new System.Drawing.Point(88, 76);
             this.Distlabel7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Distlabel7.Name = "Distlabel7";
-            this.Distlabel7.Size = new System.Drawing.Size(39, 15);
+            this.Distlabel7.Size = new System.Drawing.Size(39, 17);
             this.Distlabel7.TabIndex = 8;
             this.Distlabel7.Text = "NULL";
             this.Distlabel7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -968,10 +992,10 @@
             // 
             this.Avglabel5.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.Avglabel5.AutoSize = true;
-            this.Avglabel5.Location = new System.Drawing.Point(144, 17);
+            this.Avglabel5.Location = new System.Drawing.Point(144, 28);
             this.Avglabel5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Avglabel5.Name = "Avglabel5";
-            this.Avglabel5.Size = new System.Drawing.Size(39, 15);
+            this.Avglabel5.Size = new System.Drawing.Size(39, 17);
             this.Avglabel5.TabIndex = 8;
             this.Avglabel5.Text = "NULL";
             this.Avglabel5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -980,10 +1004,10 @@
             // 
             this.Avglabel6.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.Avglabel6.AutoSize = true;
-            this.Avglabel6.Location = new System.Drawing.Point(144, 33);
+            this.Avglabel6.Location = new System.Drawing.Point(144, 52);
             this.Avglabel6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Avglabel6.Name = "Avglabel6";
-            this.Avglabel6.Size = new System.Drawing.Size(39, 15);
+            this.Avglabel6.Size = new System.Drawing.Size(39, 17);
             this.Avglabel6.TabIndex = 8;
             this.Avglabel6.Text = "NULL";
             this.Avglabel6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -992,10 +1016,10 @@
             // 
             this.Avglabel7.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.Avglabel7.AutoSize = true;
-            this.Avglabel7.Location = new System.Drawing.Point(144, 49);
+            this.Avglabel7.Location = new System.Drawing.Point(144, 76);
             this.Avglabel7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Avglabel7.Name = "Avglabel7";
-            this.Avglabel7.Size = new System.Drawing.Size(39, 15);
+            this.Avglabel7.Size = new System.Drawing.Size(39, 17);
             this.Avglabel7.TabIndex = 8;
             this.Avglabel7.Text = "NULL";
             this.Avglabel7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1004,10 +1028,10 @@
             // 
             this.Distlabel8.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.Distlabel8.AutoSize = true;
-            this.Distlabel8.Location = new System.Drawing.Point(88, 65);
+            this.Distlabel8.Location = new System.Drawing.Point(88, 102);
             this.Distlabel8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Distlabel8.Name = "Distlabel8";
-            this.Distlabel8.Size = new System.Drawing.Size(39, 16);
+            this.Distlabel8.Size = new System.Drawing.Size(39, 17);
             this.Distlabel8.TabIndex = 8;
             this.Distlabel8.Text = "NULL";
             this.Distlabel8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1016,10 +1040,10 @@
             // 
             this.Avglabel8.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.Avglabel8.AutoSize = true;
-            this.Avglabel8.Location = new System.Drawing.Point(144, 65);
+            this.Avglabel8.Location = new System.Drawing.Point(144, 102);
             this.Avglabel8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Avglabel8.Name = "Avglabel8";
-            this.Avglabel8.Size = new System.Drawing.Size(39, 16);
+            this.Avglabel8.Size = new System.Drawing.Size(39, 17);
             this.Avglabel8.TabIndex = 8;
             this.Avglabel8.Text = "NULL";
             this.Avglabel8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1052,7 +1076,7 @@
             // 
             this.thirdTrackBar.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.thirdTrackBar.Location = new System.Drawing.Point(28, 201);
-            this.thirdTrackBar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.thirdTrackBar.Margin = new System.Windows.Forms.Padding(2);
             this.thirdTrackBar.Maximum = 100;
             this.thirdTrackBar.Name = "thirdTrackBar";
             this.thirdTrackBar.Size = new System.Drawing.Size(164, 45);
@@ -1065,7 +1089,7 @@
             // 
             this.secondTrackBar.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.secondTrackBar.Location = new System.Drawing.Point(28, 116);
-            this.secondTrackBar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.secondTrackBar.Margin = new System.Windows.Forms.Padding(2);
             this.secondTrackBar.Maximum = 100;
             this.secondTrackBar.Name = "secondTrackBar";
             this.secondTrackBar.Size = new System.Drawing.Size(164, 45);
@@ -1117,7 +1141,7 @@
             // 
             this.firstTrackBar.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.firstTrackBar.Location = new System.Drawing.Point(28, 33);
-            this.firstTrackBar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.firstTrackBar.Margin = new System.Windows.Forms.Padding(2);
             this.firstTrackBar.Maximum = 100;
             this.firstTrackBar.Name = "firstTrackBar";
             this.firstTrackBar.Size = new System.Drawing.Size(164, 45);
@@ -1125,6 +1149,78 @@
             this.firstTrackBar.TickFrequency = 10;
             this.firstTrackBar.Value = 25;
             this.firstTrackBar.ValueChanged += new System.EventHandler(this.firstTrackBar_ValueChanged);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(195, 100);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(16, 16);
+            this.pictureBox1.TabIndex = 18;
+            this.pictureBox1.TabStop = false;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
+            this.pictureBox2.Location = new System.Drawing.Point(195, 76);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(16, 16);
+            this.pictureBox2.TabIndex = 18;
+            this.pictureBox2.TabStop = false;
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
+            this.pictureBox3.Location = new System.Drawing.Point(195, 52);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(16, 14);
+            this.pictureBox3.TabIndex = 18;
+            this.pictureBox3.TabStop = false;
+            // 
+            // pictureBox4
+            // 
+            this.pictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox4.Image")));
+            this.pictureBox4.Location = new System.Drawing.Point(195, 28);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(16, 14);
+            this.pictureBox4.TabIndex = 18;
+            this.pictureBox4.TabStop = false;
+            // 
+            // pictureBox5
+            // 
+            this.pictureBox5.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox5.Image")));
+            this.pictureBox5.Location = new System.Drawing.Point(195, 28);
+            this.pictureBox5.Name = "pictureBox5";
+            this.pictureBox5.Size = new System.Drawing.Size(16, 16);
+            this.pictureBox5.TabIndex = 18;
+            this.pictureBox5.TabStop = false;
+            // 
+            // pictureBox6
+            // 
+            this.pictureBox6.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox6.Image")));
+            this.pictureBox6.Location = new System.Drawing.Point(195, 52);
+            this.pictureBox6.Name = "pictureBox6";
+            this.pictureBox6.Size = new System.Drawing.Size(16, 14);
+            this.pictureBox6.TabIndex = 18;
+            this.pictureBox6.TabStop = false;
+            // 
+            // pictureBox7
+            // 
+            this.pictureBox7.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox7.Image")));
+            this.pictureBox7.Location = new System.Drawing.Point(195, 76);
+            this.pictureBox7.Name = "pictureBox7";
+            this.pictureBox7.Size = new System.Drawing.Size(16, 14);
+            this.pictureBox7.TabIndex = 18;
+            this.pictureBox7.TabStop = false;
+            // 
+            // pictureBox8
+            // 
+            this.pictureBox8.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox8.Image")));
+            this.pictureBox8.Location = new System.Drawing.Point(195, 100);
+            this.pictureBox8.Name = "pictureBox8";
+            this.pictureBox8.Size = new System.Drawing.Size(16, 14);
+            this.pictureBox8.TabIndex = 18;
+            this.pictureBox8.TabStop = false;
             // 
             // ComparedRun
             // 
@@ -1146,7 +1242,7 @@
             this.Controls.Add(this.displayPanel);
             this.Controls.Add(this.activatePanel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "ComparedRun";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Compared Run";
@@ -1170,6 +1266,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.thirdTrackBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.secondTrackBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.firstTrackBar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1251,6 +1355,14 @@
         public System.Windows.Forms.Label Avglabel7;
         public System.Windows.Forms.Label Distlabel8;
         public System.Windows.Forms.Label Avglabel8;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.PictureBox pictureBox4;
+        private System.Windows.Forms.PictureBox pictureBox5;
+        private System.Windows.Forms.PictureBox pictureBox6;
+        private System.Windows.Forms.PictureBox pictureBox7;
+        private System.Windows.Forms.PictureBox pictureBox8;
     }
 }
 
