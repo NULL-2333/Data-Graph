@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ComparedRun));
             this.activatePanel = new System.Windows.Forms.Panel();
             this.resetButton = new System.Windows.Forms.Button();
@@ -151,17 +151,17 @@
             this.activatePanel.Location = new System.Drawing.Point(1539, 744);
             this.activatePanel.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.activatePanel.Name = "activatePanel";
-            this.activatePanel.Size = new System.Drawing.Size(272, 199);
+            this.activatePanel.Size = new System.Drawing.Size(281, 199);
             this.activatePanel.TabIndex = 3;
             // 
             // resetButton
             // 
             this.resetButton.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.resetButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.resetButton.Location = new System.Drawing.Point(25, 105);
+            this.resetButton.Location = new System.Drawing.Point(38, 105);
             this.resetButton.Margin = new System.Windows.Forms.Padding(5);
             this.resetButton.Name = "resetButton";
-            this.resetButton.Size = new System.Drawing.Size(209, 50);
+            this.resetButton.Size = new System.Drawing.Size(210, 50);
             this.resetButton.TabIndex = 2;
             this.resetButton.Text = "Reset";
             this.resetButton.UseVisualStyleBackColor = true;
@@ -171,7 +171,7 @@
             // 
             this.buttonStop.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.buttonStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonStop.Location = new System.Drawing.Point(144, 48);
+            this.buttonStop.Location = new System.Drawing.Point(157, 48);
             this.buttonStop.Margin = new System.Windows.Forms.Padding(5, 2, 5, 2);
             this.buttonStop.Name = "buttonStop";
             this.buttonStop.Size = new System.Drawing.Size(91, 50);
@@ -183,7 +183,7 @@
             // buttonPlay
             // 
             this.buttonPlay.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonPlay.Location = new System.Drawing.Point(25, 48);
+            this.buttonPlay.Location = new System.Drawing.Point(38, 48);
             this.buttonPlay.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.buttonPlay.Name = "buttonPlay";
             this.buttonPlay.Size = new System.Drawing.Size(93, 50);
@@ -280,22 +280,22 @@
             // 
             // sensorChart
             // 
-            chartArea4.AxisX.LabelStyle.Format = "N3";
-            chartArea4.Name = "ChartArea1";
-            chartArea4.Position.Auto = false;
-            chartArea4.Position.Height = 94F;
-            chartArea4.Position.Width = 81.35392F;
-            chartArea4.Position.X = 3F;
-            chartArea4.Position.Y = 3F;
-            this.sensorChart.ChartAreas.Add(chartArea4);
+            chartArea2.AxisX.LabelStyle.Format = "N3";
+            chartArea2.Name = "ChartArea1";
+            chartArea2.Position.Auto = false;
+            chartArea2.Position.Height = 94F;
+            chartArea2.Position.Width = 81.35392F;
+            chartArea2.Position.X = 3F;
+            chartArea2.Position.Y = 3F;
+            this.sensorChart.ChartAreas.Add(chartArea2);
             this.sensorChart.Cursor = System.Windows.Forms.Cursors.Hand;
-            legend4.Name = "Legend1";
-            this.sensorChart.Legends.Add(legend4);
-            this.sensorChart.Location = new System.Drawing.Point(21, 14);
+            legend2.Name = "Legend1";
+            this.sensorChart.Legends.Add(legend2);
+            this.sensorChart.Location = new System.Drawing.Point(16, 14);
             this.sensorChart.Margin = new System.Windows.Forms.Padding(9, 2, 9, 2);
             this.sensorChart.Name = "sensorChart";
             this.sensorChart.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.sensorChart.Size = new System.Drawing.Size(1140, 718);
+            this.sensorChart.Size = new System.Drawing.Size(1145, 718);
             this.sensorChart.TabIndex = 8;
             this.sensorChart.TabStop = false;
             this.sensorChart.Text = "chart1";
@@ -1138,11 +1138,11 @@
             // thirdTrackBar
             // 
             this.thirdTrackBar.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.thirdTrackBar.Location = new System.Drawing.Point(38, 251);
+            this.thirdTrackBar.Location = new System.Drawing.Point(6, 251);
             this.thirdTrackBar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.thirdTrackBar.Maximum = 100;
             this.thirdTrackBar.Name = "thirdTrackBar";
-            this.thirdTrackBar.Size = new System.Drawing.Size(219, 56);
+            this.thirdTrackBar.Size = new System.Drawing.Size(282, 56);
             this.thirdTrackBar.TabIndex = 7;
             this.thirdTrackBar.TickFrequency = 10;
             this.thirdTrackBar.Value = 75;
@@ -1151,11 +1151,11 @@
             // secondTrackBar
             // 
             this.secondTrackBar.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.secondTrackBar.Location = new System.Drawing.Point(38, 146);
+            this.secondTrackBar.Location = new System.Drawing.Point(6, 146);
             this.secondTrackBar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.secondTrackBar.Maximum = 100;
             this.secondTrackBar.Name = "secondTrackBar";
-            this.secondTrackBar.Size = new System.Drawing.Size(219, 56);
+            this.secondTrackBar.Size = new System.Drawing.Size(282, 56);
             this.secondTrackBar.TabIndex = 6;
             this.secondTrackBar.TickFrequency = 10;
             this.secondTrackBar.Value = 50;
@@ -1200,11 +1200,11 @@
             // firstTrackBar
             // 
             this.firstTrackBar.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.firstTrackBar.Location = new System.Drawing.Point(38, 42);
+            this.firstTrackBar.Location = new System.Drawing.Point(6, 42);
             this.firstTrackBar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.firstTrackBar.Maximum = 100;
             this.firstTrackBar.Name = "firstTrackBar";
-            this.firstTrackBar.Size = new System.Drawing.Size(219, 56);
+            this.firstTrackBar.Size = new System.Drawing.Size(282, 56);
             this.firstTrackBar.TabIndex = 5;
             this.firstTrackBar.TickFrequency = 10;
             this.firstTrackBar.Value = 25;

@@ -119,6 +119,10 @@ namespace DataG
         double sectionPoint2 = 0.5;
         double sectionPoint3 = 0.75;
 
+        bool isSeg = false;
+        Bitmap bitmap;
+        Bitmap bitmapWithCircle;
+
         public ComparedRun()
         {
             InitializeComponent();
@@ -1454,7 +1458,7 @@ namespace DataG
 
         private void radioButton_Normal_CheckedChanged(object sender, EventArgs e)
         {
-            isExist = false;
+            isSeg = false;
             Refresh();
             //Bitmap bitmap = new Bitmap(GPSPanel.Width, GPSPanel.Height);
             //Graphics g2 = Graphics.FromImage(bitmap);
@@ -1484,14 +1488,13 @@ namespace DataG
         private void GPSPanel_Paint(object sender, PaintEventArgs e)
         {
             if (fileOpen == false) return;
-            if (isExist == true)
+            if (isSeg == true)
             {
                 //isExist = false;
                 Graphics gg = GPSPanel.CreateGraphics();
                 gg.DrawImage(bitmap, new PointF(0.0f, 0.0f));
                 return;
             }
-            int kk = 0;
             if (isBitNormalCre == false)
             {
                 bitNormal = new Bitmap(GPSPanel.Width, GPSPanel.Height);
@@ -2059,8 +2062,7 @@ namespace DataG
             secondDriverGroupBox.Refresh();
         }
 
-        bool isExist = false;
-        Bitmap bitmap;
+        
         private void firstTrackBar_ValueChanged(object sender, EventArgs e)
         {
             barpos1 = firstTrackBar.Value;
@@ -2069,13 +2071,12 @@ namespace DataG
                 sectionPoint1 = (double)barpos1 / 100;
                 sectionPoint2 = (double)barpos2 / 100;
                 sectionPoint3 = (double)barpos3 / 100;
-                Bitmap bitm;
-                bitm = new Bitmap(GPSPanel.Width, GPSPanel.Height);
+
                 bitmap = new Bitmap(GPSPanel.Width, GPSPanel.Height);
-                isExist = true;
-                Graphics g2 = Graphics.FromImage(bitm);
+                bitmapWithCircle = new Bitmap(GPSPanel.Width, GPSPanel.Height);
+                //Graphics g2 = Graphics.FromImage(bitm);
                 Graphics g3 = Graphics.FromImage(bitmap);
-                isExist = true;
+                Graphics g4 = Graphics.FromImage(bitmapWithCircle);
                 Pen pen1 = new Pen(Brushes.LightBlue, 2); //Blue for color1; Green for color2
                 Pen pen2 = new Pen(Brushes.Blue, 2);
                 Pen pen3 = new Pen(Brushes.LightGreen, 2);
@@ -2118,83 +2119,75 @@ namespace DataG
 
                 for (int i = 0; i < line1Point1 - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x[i], (float)y[i]);
                     p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
-                    g2.DrawLine(pen1, p11, p22);
                     g3.DrawLine(pen1, p11, p22);
+                    g4.DrawLine(pen1, p11, p22);
                 }
                 for (int i = 0; i < line2Point1 - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x2[i], (float)y2[i]);
                     p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
-                    g2.DrawLine(pen2, p11, p22);
                     g3.DrawLine(pen2, p11, p22);
+                    g4.DrawLine(pen2, p11, p22);
                 }
                 for (int i = line1Point1; i < line1Point2 - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x[i], (float)y[i]);
                     p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
-                    g2.DrawLine(pen3, p11, p22);
                     g3.DrawLine(pen3, p11, p22);
+                    g4.DrawLine(pen3, p11, p22);
                 }
                 for (int i = line2Point1; i < line2Point2 - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x2[i], (float)y2[i]);
                     p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
-                    g2.DrawLine(pen4, p11, p22);
-                    g3.DrawLine(pen3, p11, p22);
+                    g3.DrawLine(pen4, p11, p22);
+                    g4.DrawLine(pen4, p11, p22);
                 }
                 for (int i = line1Point2; i < dtrNum - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x[i], (float)y[i]);
                     p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
-                    g2.DrawLine(pen1, p11, p22);
-                    g3.DrawLine(pen3, p11, p22);
+                    g3.DrawLine(pen1, p11, p22);
+                    g4.DrawLine(pen1, p11, p22);
                 }
                 for (int i = line2Point2; i < dtrNum2 - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x2[i], (float)y2[i]);
                     p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
-                    g2.DrawLine(pen2, p11, p22);
-                    g3.DrawLine(pen3, p11, p22);
+                    g3.DrawLine(pen2, p11, p22);
+                    g4.DrawLine(pen2, p11, p22);
                 }
                 for (int i = line1Point3; i < dtrNum - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x[i], (float)y[i]);
                     p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
-                    g2.DrawLine(pen3, p11, p22);
                     g3.DrawLine(pen3, p11, p22);
+                    g4.DrawLine(pen3, p11, p22);
                 }
                 for (int i = line2Point3; i < dtrNum2 - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x2[i], (float)y2[i]);
                     p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
-                    g2.DrawLine(pen4, p11, p22);
-                    g3.DrawLine(pen3, p11, p22);
+                    g3.DrawLine(pen4, p11, p22);
+                    g4.DrawLine(pen4, p11, p22);
                 }
-
-                isExist = true;
                 GPSPanel.Refresh();
-                isExist = true;
                 //draw a point with the center of (x,y) and (x2,y2)
                 PointF pf = new PointF((float)((x[line1Point1] + x2[line2Point1]) / 2), (float)((y[line1Point1] + y2[line2Point1]) / 2));
-                //double r = Math.Sqrt((x[line1Point3] - x2[line2Point3]) * (x[line1Point3] - x2[line2Point3]) + (y[line1Point3] - y2[line2Point3]) * (y[line1Point3] - y2[line2Point3])) / 2;
-                g2.FillEllipse(Brushes.Chocolate, pf.X - 3, pf.Y - 3, 6, 6);
-                isExist = true;
-                g2.DrawEllipse(new Pen(Brushes.Chocolate), pf.X - 10, pf.Y - 10, 20, 20);
-                isExist = true;
+                g4.FillEllipse(Brushes.Gold, pf.X - 3, pf.Y - 3, 6, 6);
+                g4.DrawEllipse(new Pen(Brushes.Gold), pf.X - 10, pf.Y - 10, 20, 20);
+                pf = new PointF((float)((x[line1Point2] + x2[line2Point2]) / 2), (float)((y[line1Point2] + y2[line2Point2]) / 2));
+                g4.FillEllipse(Brushes.DimGray, pf.X - 3, pf.Y - 3, 6, 6);
+                g4.DrawEllipse(new Pen(Brushes.DimGray), pf.X - 10, pf.Y - 10, 20, 20);
+                pf = new PointF((float)((x[line1Point3] + x2[line2Point3]) / 2), (float)((y[line1Point3] + y2[line2Point3]) / 2));
+                g4.FillEllipse(Brushes.Chocolate, pf.X - 3, pf.Y - 3, 6, 6);
+                g4.DrawEllipse(new Pen(Brushes.Chocolate), pf.X - 10, pf.Y - 10, 20, 20);
 
-                isExist = true;
                 Graphics gg = GPSPanel.CreateGraphics();
-                gg.DrawImage(bitm, new PointF(0.0f, 0.0f));
+                gg.DrawImage(bitmapWithCircle, new PointF(0.0f, 0.0f));
+
 
                 label11.Text = dataTime[line1Point1].ToString("0.00");
                 label12.Text = (dataTime[line1Point2] - dataTime[line1Point1]).ToString("0.00");
@@ -2238,13 +2231,12 @@ namespace DataG
                 sectionPoint1 = (double)barpos1 / 100;
                 sectionPoint2 = (double)barpos2 / 100;
                 sectionPoint3 = (double)barpos3 / 100;
-                Bitmap bitm;
-                bitm = new Bitmap(GPSPanel.Width, GPSPanel.Height);
+
                 bitmap = new Bitmap(GPSPanel.Width, GPSPanel.Height);
-                isExist = true;
-                Graphics g2 = Graphics.FromImage(bitm);
+                bitmapWithCircle = new Bitmap(GPSPanel.Width, GPSPanel.Height);
+                //Graphics g2 = Graphics.FromImage(bitm);
                 Graphics g3 = Graphics.FromImage(bitmap);
-                isExist = true;
+                Graphics g4 = Graphics.FromImage(bitmapWithCircle);
                 Pen pen1 = new Pen(Brushes.LightBlue, 2); //Blue for color1; Green for color2
                 Pen pen2 = new Pen(Brushes.Blue, 2);
                 Pen pen3 = new Pen(Brushes.LightGreen, 2);
@@ -2287,83 +2279,74 @@ namespace DataG
 
                 for (int i = 0; i < line1Point1 - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x[i], (float)y[i]);
                     p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
-                    g2.DrawLine(pen1, p11, p22);
                     g3.DrawLine(pen1, p11, p22);
+                    g4.DrawLine(pen1, p11, p22);
                 }
                 for (int i = 0; i < line2Point1 - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x2[i], (float)y2[i]);
                     p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
-                    g2.DrawLine(pen2, p11, p22);
                     g3.DrawLine(pen2, p11, p22);
+                    g4.DrawLine(pen2, p11, p22);
                 }
                 for (int i = line1Point1; i < line1Point2 - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x[i], (float)y[i]);
                     p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
-                    g2.DrawLine(pen3, p11, p22);
                     g3.DrawLine(pen3, p11, p22);
+                    g4.DrawLine(pen3, p11, p22);
                 }
                 for (int i = line2Point1; i < line2Point2 - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x2[i], (float)y2[i]);
                     p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
-                    g2.DrawLine(pen4, p11, p22);
-                    g3.DrawLine(pen3, p11, p22);
+                    g3.DrawLine(pen4, p11, p22);
+                    g4.DrawLine(pen4, p11, p22);
                 }
                 for (int i = line1Point2; i < dtrNum - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x[i], (float)y[i]);
                     p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
-                    g2.DrawLine(pen1, p11, p22);
-                    g3.DrawLine(pen3, p11, p22);
+                    g3.DrawLine(pen1, p11, p22);
+                    g4.DrawLine(pen1, p11, p22);
                 }
                 for (int i = line2Point2; i < dtrNum2 - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x2[i], (float)y2[i]);
                     p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
-                    g2.DrawLine(pen2, p11, p22);
-                    g3.DrawLine(pen3, p11, p22);
+                    g3.DrawLine(pen2, p11, p22);
+                    g4.DrawLine(pen2, p11, p22);
                 }
                 for (int i = line1Point3; i < dtrNum - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x[i], (float)y[i]);
                     p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
-                    g2.DrawLine(pen3, p11, p22);
                     g3.DrawLine(pen3, p11, p22);
+                    g4.DrawLine(pen3, p11, p22);
                 }
                 for (int i = line2Point3; i < dtrNum2 - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x2[i], (float)y2[i]);
                     p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
-                    g2.DrawLine(pen4, p11, p22);
-                    g3.DrawLine(pen3, p11, p22);
+                    g3.DrawLine(pen4, p11, p22);
+                    g4.DrawLine(pen4, p11, p22);
                 }
-
-                isExist = true;
                 GPSPanel.Refresh();
-                isExist = true;
                 //draw a point with the center of (x,y) and (x2,y2)
-                PointF pf = new PointF((float)((x[line1Point2] + x2[line2Point2]) / 2), (float)((y[line1Point2] + y2[line2Point2]) / 2));
-                //double r = Math.Sqrt((x[line1Point3] - x2[line2Point3]) * (x[line1Point3] - x2[line2Point3]) + (y[line1Point3] - y2[line2Point3]) * (y[line1Point3] - y2[line2Point3])) / 2;
-                g2.FillEllipse(Brushes.Chocolate, pf.X - 3, pf.Y - 3, 6, 6);
-                isExist = true;
-                g2.DrawEllipse(new Pen(Brushes.Chocolate), pf.X - 10, pf.Y - 10, 20, 20);
-                isExist = true;
+                PointF pf = new PointF((float)((x[line1Point1] + x2[line2Point1]) / 2), (float)((y[line1Point1] + y2[line2Point1]) / 2));
+                g4.FillEllipse(Brushes.Gold, pf.X - 3, pf.Y - 3, 6, 6);
+                g4.DrawEllipse(new Pen(Brushes.Gold), pf.X - 10, pf.Y - 10, 20, 20);
+                pf = new PointF((float)((x[line1Point2] + x2[line2Point2]) / 2), (float)((y[line1Point2] + y2[line2Point2]) / 2));
+                g4.FillEllipse(Brushes.DimGray, pf.X - 3, pf.Y - 3, 6, 6);
+                g4.DrawEllipse(new Pen(Brushes.DimGray), pf.X - 10, pf.Y - 10, 20, 20);
+                pf = new PointF((float)((x[line1Point3] + x2[line2Point3]) / 2), (float)((y[line1Point3] + y2[line2Point3]) / 2));
+                g4.FillEllipse(Brushes.Chocolate, pf.X - 3, pf.Y - 3, 6, 6);
+                g4.DrawEllipse(new Pen(Brushes.Chocolate), pf.X - 10, pf.Y - 10, 20, 20);
 
-                isExist = true;
                 Graphics gg = GPSPanel.CreateGraphics();
-                gg.DrawImage(bitm, new PointF(0.0f, 0.0f));
+                gg.DrawImage(bitmapWithCircle, new PointF(0.0f, 0.0f));
 
                 label11.Text = dataTime[line1Point1].ToString("0.00");
                 label12.Text = (dataTime[line1Point2] - dataTime[line1Point1]).ToString("0.00");
@@ -2405,27 +2388,23 @@ namespace DataG
             }
 
         }
-        
+
 
         private void thirdTrackBar_ValueChanged(object sender, EventArgs e)
         {
-            isExist = true;
+            isSeg = true;
             barpos3 = thirdTrackBar.Value;
-
-            
-            
             if (barpos2 < barpos3)
             {
                 sectionPoint1 = (double)barpos1 / 100;
                 sectionPoint2 = (double)barpos2 / 100;
                 sectionPoint3 = (double)barpos3 / 100;
-                Bitmap bitm;
-                bitm = new Bitmap(GPSPanel.Width, GPSPanel.Height);
+                
                 bitmap = new Bitmap(GPSPanel.Width, GPSPanel.Height);
-                isExist = true;
-                Graphics g2 = Graphics.FromImage(bitm);
+                bitmapWithCircle = new Bitmap(GPSPanel.Width, GPSPanel.Height);
+                //Graphics g2 = Graphics.FromImage(bitm);
                 Graphics g3 = Graphics.FromImage(bitmap);
-                isExist = true;
+                Graphics g4 = Graphics.FromImage(bitmapWithCircle);
                 Pen pen1 = new Pen(Brushes.LightBlue, 2); //Blue for color1; Green for color2
                 Pen pen2 = new Pen(Brushes.Blue, 2);
                 Pen pen3 = new Pen(Brushes.LightGreen, 2);
@@ -2468,83 +2447,74 @@ namespace DataG
                 
                 for (int i = 0; i < line1Point1 - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x[i], (float)y[i]);
                     p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
-                    g2.DrawLine(pen1, p11, p22);
                     g3.DrawLine(pen1, p11, p22);
+                    g4.DrawLine(pen1, p11, p22);
                 }
                 for (int i = 0; i < line2Point1 - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x2[i], (float)y2[i]);
                     p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
-                    g2.DrawLine(pen2, p11, p22);
                     g3.DrawLine(pen2, p11, p22);
+                    g4.DrawLine(pen2, p11, p22);
                 }
                 for (int i = line1Point1; i < line1Point2 - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x[i], (float)y[i]);
                     p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
-                    g2.DrawLine(pen3, p11, p22);
                     g3.DrawLine(pen3, p11, p22);
+                    g4.DrawLine(pen3, p11, p22);
                 }
                 for (int i = line2Point1; i < line2Point2 - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x2[i], (float)y2[i]);
                     p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
-                    g2.DrawLine(pen4, p11, p22);
-                    g3.DrawLine(pen3, p11, p22);
+                    g3.DrawLine(pen4, p11, p22);
+                    g4.DrawLine(pen4, p11, p22);
                 }
                 for (int i = line1Point2; i < dtrNum - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x[i], (float)y[i]);
                     p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
-                    g2.DrawLine(pen1, p11, p22);
-                    g3.DrawLine(pen3, p11, p22);
+                    g3.DrawLine(pen1, p11, p22);
+                    g4.DrawLine(pen1, p11, p22);
                 }
                 for (int i = line2Point2; i < dtrNum2 - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x2[i], (float)y2[i]);
                     p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
-                    g2.DrawLine(pen2, p11, p22);
-                    g3.DrawLine(pen3, p11, p22);
+                    g3.DrawLine(pen2, p11, p22);
+                    g4.DrawLine(pen2, p11, p22);
                 }
                 for (int i = line1Point3; i < dtrNum - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x[i], (float)y[i]);
                     p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
-                    g2.DrawLine(pen3, p11, p22);
                     g3.DrawLine(pen3, p11, p22);
+                    g4.DrawLine(pen3, p11, p22);
                 }
                 for (int i = line2Point3; i < dtrNum2 - 1; i += 1)
                 {
-                    isExist = true;
                     p11 = new PointF((float)x2[i], (float)y2[i]);
                     p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
-                    g2.DrawLine(pen4, p11, p22);
-                    g3.DrawLine(pen3, p11, p22);
+                    g3.DrawLine(pen4, p11, p22);
+                    g4.DrawLine(pen4, p11, p22);
                 }
-
-                isExist = true;
                 GPSPanel.Refresh();
-                isExist = true;
                 //draw a point with the center of (x,y) and (x2,y2)
-                PointF pf = new PointF((float)((x[line1Point3] + x2[line2Point3]) / 2), (float)((y[line1Point3] + y2[line2Point3]) / 2));
-                //double r = Math.Sqrt((x[line1Point3] - x2[line2Point3]) * (x[line1Point3] - x2[line2Point3]) + (y[line1Point3] - y2[line2Point3]) * (y[line1Point3] - y2[line2Point3])) / 2;
-                g2.FillEllipse(Brushes.Chocolate, pf.X - 3, pf.Y - 3, 6, 6);
-                isExist = true;
-                g2.DrawEllipse(new Pen(Brushes.Chocolate), pf.X - 10, pf.Y - 10, 20, 20);
-                isExist = true;
+                PointF pf = new PointF((float)((x[line1Point1] + x2[line2Point1]) / 2), (float)((y[line1Point1] + y2[line2Point1]) / 2));
+                g4.FillEllipse(Brushes.Gold, pf.X - 3, pf.Y - 3, 6, 6);
+                g4.DrawEllipse(new Pen(Brushes.Gold), pf.X - 10, pf.Y - 10, 20, 20);
+                pf = new PointF((float)((x[line1Point2] + x2[line2Point2]) / 2), (float)((y[line1Point2] + y2[line2Point2]) / 2));
+                g4.FillEllipse(Brushes.DimGray, pf.X - 3, pf.Y - 3, 6, 6);
+                g4.DrawEllipse(new Pen(Brushes.DimGray), pf.X - 10, pf.Y - 10, 20, 20);
+                pf = new PointF((float)((x[line1Point3] + x2[line2Point3]) / 2), (float)((y[line1Point3] + y2[line2Point3]) / 2));
+                g4.FillEllipse(Brushes.Chocolate, pf.X - 3, pf.Y - 3, 6, 6);
+                g4.DrawEllipse(new Pen(Brushes.Chocolate), pf.X - 10, pf.Y - 10, 20, 20);
 
-                isExist = true;
                 Graphics gg = GPSPanel.CreateGraphics();
-                gg.DrawImage(bitm, new PointF(0.0f, 0.0f));
+                gg.DrawImage(bitmapWithCircle, new PointF(0.0f, 0.0f));
 
                 label11.Text = dataTime[line1Point1].ToString("0.00");
                 label12.Text = (dataTime[line1Point2] - dataTime[line1Point1]).ToString("0.00");
