@@ -2578,5 +2578,44 @@ namespace DataG
                 thirdTrackBar.Value = secondTrackBar.Value;
             }
         }
+        private void Section1PictureBox_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Section2PictureBox_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Section3PictureBox_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Section4PictureBox_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void section1Timer_Tick(object sender, EventArgs e)
+        {
+
+        }
+
+        private void section2Timer_Tick(object sender, EventArgs e)
+        {
+
+        }
+
+        private void section3Timer_Tick(object sender, EventArgs e)
+        {
+
+        }
+
+        private void section4Timer_Tick(object sender, EventArgs e)
+        {
+
+        }
     }
 }
