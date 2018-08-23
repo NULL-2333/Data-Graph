@@ -2055,6 +2055,25 @@ namespace DataG
                 p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
                 g2.DrawLine(pen4, p11, p22);
             }
+
+            //draw points
+            Graphics g4 = GPSPanel.CreateGraphics();
+            PointF pf = new PointF((float)((x[line1Point0] + x2[line2Point0]) / 2), (float)((y[line1Point0] + y2[line2Point0]) / 2));
+            g4.FillEllipse(Brushes.Gray, pf.X - 3, pf.Y - 3, 6, 6);
+            g4.DrawEllipse(new Pen(Brushes.Gray), pf.X - 10, pf.Y - 10, 20, 20);
+            pf = new PointF((float)((x[line1Point1] + x2[line2Point1]) / 2), (float)((y[line1Point1] + y2[line2Point1]) / 2));
+            g4.FillEllipse(Brushes.Gold, pf.X - 3, pf.Y - 3, 6, 6);
+            g4.DrawEllipse(new Pen(Brushes.Gold), pf.X - 10, pf.Y - 10, 20, 20);
+            pf = new PointF((float)((x[line1Point2] + x2[line2Point2]) / 2), (float)((y[line1Point2] + y2[line2Point2]) / 2));
+            g4.FillEllipse(Brushes.DimGray, pf.X - 3, pf.Y - 3, 6, 6);
+            g4.DrawEllipse(new Pen(Brushes.DimGray), pf.X - 10, pf.Y - 10, 20, 20);
+            pf = new PointF((float)((x[line1Point3] + x2[line2Point3]) / 2), (float)((y[line1Point3] + y2[line2Point3]) / 2));
+            g4.FillEllipse(Brushes.Chocolate, pf.X - 3, pf.Y - 3, 6, 6);
+            g4.DrawEllipse(new Pen(Brushes.Chocolate), pf.X - 10, pf.Y - 10, 20, 20);
+            pf = new PointF((float)((x[line1Point4] + x2[line2Point4]) / 2), (float)((y[line1Point4] + y2[line2Point4]) / 2));
+            g4.FillEllipse(Brushes.Gray, pf.X - 3, pf.Y - 3, 6, 6);
+            g4.DrawEllipse(new Pen(Brushes.Gray), pf.X - 10, pf.Y - 10, 20, 20);
+
             Graphics gg = GPSPanel.CreateGraphics();
             gg.DrawImage(bitmap, new PointF(0.0f, 0.0f));
 
@@ -2092,7 +2111,7 @@ namespace DataG
         private void firstTrackBar_ValueChanged(object sender, EventArgs e)
         {
             barpos1 = firstTrackBar.Value;
-            if(barpos1 < barpos2)
+            if (barpos1 < barpos2 && barpos1 > barpos0)
             {
                 sectionPoint0 = (double)barpos0 / 100;
                 sectionPoint1 = (double)barpos1 / 100;
@@ -2251,8 +2270,11 @@ namespace DataG
                 }
 
                 GPSPanel.Refresh();
-                //draw a point with the center of (x,y) and (x2,y2)
-                PointF pf = new PointF((float)((x[line1Point1] + x2[line2Point1]) / 2), (float)((y[line1Point1] + y2[line2Point1]) / 2));
+                //draw points
+                PointF pf = new PointF((float)((x[line1Point0] + x2[line2Point0]) / 2), (float)((y[line1Point0] + y2[line2Point0]) / 2));
+                g4.FillEllipse(Brushes.Gray, pf.X - 3, pf.Y - 3, 6, 6);
+                g4.DrawEllipse(new Pen(Brushes.Gray), pf.X - 10, pf.Y - 10, 20, 20);
+                pf = new PointF((float)((x[line1Point1] + x2[line2Point1]) / 2), (float)((y[line1Point1] + y2[line2Point1]) / 2));
                 g4.FillEllipse(Brushes.Gold, pf.X - 3, pf.Y - 3, 6, 6);
                 g4.DrawEllipse(new Pen(Brushes.Gold), pf.X - 10, pf.Y - 10, 20, 20);
                 pf = new PointF((float)((x[line1Point2] + x2[line2Point2]) / 2), (float)((y[line1Point2] + y2[line2Point2]) / 2));
@@ -2261,6 +2283,9 @@ namespace DataG
                 pf = new PointF((float)((x[line1Point3] + x2[line2Point3]) / 2), (float)((y[line1Point3] + y2[line2Point3]) / 2));
                 g4.FillEllipse(Brushes.Chocolate, pf.X - 3, pf.Y - 3, 6, 6);
                 g4.DrawEllipse(new Pen(Brushes.Chocolate), pf.X - 10, pf.Y - 10, 20, 20);
+                pf = new PointF((float)((x[line1Point4] + x2[line2Point4]) / 2), (float)((y[line1Point4] + y2[line2Point4]) / 2));
+                g4.FillEllipse(Brushes.Gray, pf.X - 3, pf.Y - 3, 6, 6);
+                g4.DrawEllipse(new Pen(Brushes.Gray), pf.X - 10, pf.Y - 10, 20, 20);
 
                 Graphics gg = GPSPanel.CreateGraphics();
                 gg.DrawImage(bitmapWithCircle, new PointF(0.0f, 0.0f));
@@ -2296,7 +2321,10 @@ namespace DataG
             }
             else
             {
-                firstTrackBar.Value = secondTrackBar.Value;
+                if (barpos1 > barpos2)
+                    firstTrackBar.Value = secondTrackBar.Value;
+                if (barpos1 < barpos0)
+                    firstTrackBar.Value = starttrackBar1.Value;
             }
         }
 
@@ -2461,8 +2489,11 @@ namespace DataG
                     g4.DrawLine(pen00, p11, p22);
                 }
                 GPSPanel.Refresh();
-                //draw a point with the center of (x,y) and (x2,y2)
-                PointF pf = new PointF((float)((x[line1Point1] + x2[line2Point1]) / 2), (float)((y[line1Point1] + y2[line2Point1]) / 2));
+                //draw points
+                PointF pf = new PointF((float)((x[line1Point0] + x2[line2Point0]) / 2), (float)((y[line1Point0] + y2[line2Point0]) / 2));
+                g4.FillEllipse(Brushes.Gray, pf.X - 3, pf.Y - 3, 6, 6);
+                g4.DrawEllipse(new Pen(Brushes.Gray), pf.X - 10, pf.Y - 10, 20, 20);
+                pf = new PointF((float)((x[line1Point1] + x2[line2Point1]) / 2), (float)((y[line1Point1] + y2[line2Point1]) / 2));
                 g4.FillEllipse(Brushes.Gold, pf.X - 3, pf.Y - 3, 6, 6);
                 g4.DrawEllipse(new Pen(Brushes.Gold), pf.X - 10, pf.Y - 10, 20, 20);
                 pf = new PointF((float)((x[line1Point2] + x2[line2Point2]) / 2), (float)((y[line1Point2] + y2[line2Point2]) / 2));
@@ -2471,6 +2502,9 @@ namespace DataG
                 pf = new PointF((float)((x[line1Point3] + x2[line2Point3]) / 2), (float)((y[line1Point3] + y2[line2Point3]) / 2));
                 g4.FillEllipse(Brushes.Chocolate, pf.X - 3, pf.Y - 3, 6, 6);
                 g4.DrawEllipse(new Pen(Brushes.Chocolate), pf.X - 10, pf.Y - 10, 20, 20);
+                pf = new PointF((float)((x[line1Point4] + x2[line2Point4]) / 2), (float)((y[line1Point4] + y2[line2Point4]) / 2));
+                g4.FillEllipse(Brushes.Gray, pf.X - 3, pf.Y - 3, 6, 6);
+                g4.DrawEllipse(new Pen(Brushes.Gray), pf.X - 10, pf.Y - 10, 20, 20);
 
                 Graphics gg = GPSPanel.CreateGraphics();
                 gg.DrawImage(bitmapWithCircle, new PointF(0.0f, 0.0f));
@@ -2677,8 +2711,11 @@ namespace DataG
                     g4.DrawLine(pen00, p11, p22);
                 }
                 GPSPanel.Refresh();
-                //draw a point with the center of (x,y) and (x2,y2)
-                PointF pf = new PointF((float)((x[line1Point1] + x2[line2Point1]) / 2), (float)((y[line1Point1] + y2[line2Point1]) / 2));
+                //draw points
+                PointF pf = new PointF((float)((x[line1Point0] + x2[line2Point0]) / 2), (float)((y[line1Point0] + y2[line2Point0]) / 2));
+                g4.FillEllipse(Brushes.Gray, pf.X - 3, pf.Y - 3, 6, 6);
+                g4.DrawEllipse(new Pen(Brushes.Gray), pf.X - 10, pf.Y - 10, 20, 20);
+                pf = new PointF((float)((x[line1Point1] + x2[line2Point1]) / 2), (float)((y[line1Point1] + y2[line2Point1]) / 2));
                 g4.FillEllipse(Brushes.Gold, pf.X - 3, pf.Y - 3, 6, 6);
                 g4.DrawEllipse(new Pen(Brushes.Gold), pf.X - 10, pf.Y - 10, 20, 20);
                 pf = new PointF((float)((x[line1Point2] + x2[line2Point2]) / 2), (float)((y[line1Point2] + y2[line2Point2]) / 2));
@@ -2687,6 +2724,9 @@ namespace DataG
                 pf = new PointF((float)((x[line1Point3] + x2[line2Point3]) / 2), (float)((y[line1Point3] + y2[line2Point3]) / 2));
                 g4.FillEllipse(Brushes.Chocolate, pf.X - 3, pf.Y - 3, 6, 6);
                 g4.DrawEllipse(new Pen(Brushes.Chocolate), pf.X - 10, pf.Y - 10, 20, 20);
+                pf = new PointF((float)((x[line1Point4] + x2[line2Point4]) / 2), (float)((y[line1Point4] + y2[line2Point4]) / 2));
+                g4.FillEllipse(Brushes.Gray, pf.X - 3, pf.Y - 3, 6, 6);
+                g4.DrawEllipse(new Pen(Brushes.Gray), pf.X - 10, pf.Y - 10, 20, 20);
 
                 Graphics gg = GPSPanel.CreateGraphics();
                 gg.DrawImage(bitmapWithCircle, new PointF(0.0f, 0.0f));
@@ -2727,7 +2767,7 @@ namespace DataG
         private void StartTrackBar_ValueChanged(object sender, EventArgs e)
         {
             barpos0 = starttrackBar1.Value;
-            if (barpos1 < barpos2)
+            if (barpos0 < barpos1)
             {
                 sectionPoint0 = (double)barpos0 / 100;
                 sectionPoint1 = (double)barpos1 / 100;
@@ -2886,8 +2926,11 @@ namespace DataG
                 }
 
                 GPSPanel.Refresh();
-                //draw a point with the center of (x,y) and (x2,y2)
-                PointF pf = new PointF((float)((x[line1Point1] + x2[line2Point1]) / 2), (float)((y[line1Point1] + y2[line2Point1]) / 2));
+                //draw points
+                PointF pf = new PointF((float)((x[line1Point0] + x2[line2Point0]) / 2), (float)((y[line1Point0] + y2[line2Point0]) / 2));
+                g4.FillEllipse(Brushes.Gray, pf.X - 3, pf.Y - 3, 6, 6);
+                g4.DrawEllipse(new Pen(Brushes.Gray), pf.X - 10, pf.Y - 10, 20, 20);
+                pf = new PointF((float)((x[line1Point1] + x2[line2Point1]) / 2), (float)((y[line1Point1] + y2[line2Point1]) / 2));
                 g4.FillEllipse(Brushes.Gold, pf.X - 3, pf.Y - 3, 6, 6);
                 g4.DrawEllipse(new Pen(Brushes.Gold), pf.X - 10, pf.Y - 10, 20, 20);
                 pf = new PointF((float)((x[line1Point2] + x2[line2Point2]) / 2), (float)((y[line1Point2] + y2[line2Point2]) / 2));
@@ -2896,6 +2939,9 @@ namespace DataG
                 pf = new PointF((float)((x[line1Point3] + x2[line2Point3]) / 2), (float)((y[line1Point3] + y2[line2Point3]) / 2));
                 g4.FillEllipse(Brushes.Chocolate, pf.X - 3, pf.Y - 3, 6, 6);
                 g4.DrawEllipse(new Pen(Brushes.Chocolate), pf.X - 10, pf.Y - 10, 20, 20);
+                pf = new PointF((float)((x[line1Point4] + x2[line2Point4]) / 2), (float)((y[line1Point4] + y2[line2Point4]) / 2));
+                g4.FillEllipse(Brushes.Gray, pf.X - 3, pf.Y - 3, 6, 6);
+                g4.DrawEllipse(new Pen(Brushes.Gray), pf.X - 10, pf.Y - 10, 20, 20);
 
                 Graphics gg = GPSPanel.CreateGraphics();
                 gg.DrawImage(bitmapWithCircle, new PointF(0.0f, 0.0f));
@@ -2931,14 +2977,15 @@ namespace DataG
             }
             else
             {
-                firstTrackBar.Value = secondTrackBar.Value;
+
+                starttrackBar1.Value = firstTrackBar.Value;
             }
         }
 
         private void EndTrackBar_ValueChanged(object sender, EventArgs e)
         {
             barpos4 = endtrackBar2.Value;
-            if (barpos1 < barpos2)
+            if (barpos4 > barpos3)
             {
                 sectionPoint0 = (double)barpos0 / 100;
                 sectionPoint1 = (double)barpos1 / 100;
@@ -3097,8 +3144,11 @@ namespace DataG
                 }
 
                 GPSPanel.Refresh();
-                //draw a point with the center of (x,y) and (x2,y2)
-                PointF pf = new PointF((float)((x[line1Point1] + x2[line2Point1]) / 2), (float)((y[line1Point1] + y2[line2Point1]) / 2));
+                //draw points
+                PointF pf = new PointF((float)((x[line1Point0] + x2[line2Point0]) / 2), (float)((y[line1Point0] + y2[line2Point0]) / 2));
+                g4.FillEllipse(Brushes.Gray, pf.X - 3, pf.Y - 3, 6, 6);
+                g4.DrawEllipse(new Pen(Brushes.Gray), pf.X - 10, pf.Y - 10, 20, 20);
+                pf = new PointF((float)((x[line1Point1] + x2[line2Point1]) / 2), (float)((y[line1Point1] + y2[line2Point1]) / 2));
                 g4.FillEllipse(Brushes.Gold, pf.X - 3, pf.Y - 3, 6, 6);
                 g4.DrawEllipse(new Pen(Brushes.Gold), pf.X - 10, pf.Y - 10, 20, 20);
                 pf = new PointF((float)((x[line1Point2] + x2[line2Point2]) / 2), (float)((y[line1Point2] + y2[line2Point2]) / 2));
@@ -3107,6 +3157,9 @@ namespace DataG
                 pf = new PointF((float)((x[line1Point3] + x2[line2Point3]) / 2), (float)((y[line1Point3] + y2[line2Point3]) / 2));
                 g4.FillEllipse(Brushes.Chocolate, pf.X - 3, pf.Y - 3, 6, 6);
                 g4.DrawEllipse(new Pen(Brushes.Chocolate), pf.X - 10, pf.Y - 10, 20, 20);
+                pf = new PointF((float)((x[line1Point4] + x2[line2Point4]) / 2), (float)((y[line1Point4] + y2[line2Point4]) / 2));
+                g4.FillEllipse(Brushes.Gray, pf.X - 3, pf.Y - 3, 6, 6);
+                g4.DrawEllipse(new Pen(Brushes.Gray), pf.X - 10, pf.Y - 10, 20, 20);
 
                 Graphics gg = GPSPanel.CreateGraphics();
                 gg.DrawImage(bitmapWithCircle, new PointF(0.0f, 0.0f));
@@ -3142,7 +3195,7 @@ namespace DataG
             }
             else
             {
-                firstTrackBar.Value = secondTrackBar.Value;
+                endtrackBar2.Value = thirdTrackBar.Value;
             }
         }
 
