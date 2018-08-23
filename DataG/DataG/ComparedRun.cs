@@ -1187,6 +1187,14 @@ namespace DataG
                     //sensorChart.ChartAreas["Vertical"].Dispose();
                     sensorChart.ChartAreas.Remove(sensorChart.ChartAreas["Vertical"]);
                     sensorChart.Series.Remove(sensorChart.Series["caS"]);
+                    sensorChart.ChartAreas.Remove(sensorChart.ChartAreas["Vertical1"]);
+                    sensorChart.Series.Remove(sensorChart.Series["caS1"]);
+                    sensorChart.ChartAreas.Remove(sensorChart.ChartAreas["Vertical2"]);
+                    sensorChart.Series.Remove(sensorChart.Series["caS2"]);
+                    sensorChart.ChartAreas.Remove(sensorChart.ChartAreas["Vertical3"]);
+                    sensorChart.Series.Remove(sensorChart.Series["caS3"]);
+                    sensorChart.ChartAreas.Remove(sensorChart.ChartAreas["Vertical4"]);
+                    sensorChart.Series.Remove(sensorChart.Series["caS4"]);
                 }
 
 
@@ -1197,6 +1205,11 @@ namespace DataG
                 flagPlace = true;
                 scaleFlag = true;
                 haveReset = true;
+                haveReset1 = true;
+                haveReset2 = true;
+                haveReset3 = true;
+                haveReset = true;
+                isSegPlay = false;
 
             }
         }
@@ -1461,6 +1474,8 @@ namespace DataG
         private void radioButton_Normal_CheckedChanged(object sender, EventArgs e)
         {
             isSeg = false;
+            isSegPlay = false;
+            GPSPanel.Refresh();
             Refresh();
             //Bitmap bitmap = new Bitmap(GPSPanel.Width, GPSPanel.Height);
             //Graphics g2 = Graphics.FromImage(bitmap);
@@ -1490,6 +1505,12 @@ namespace DataG
         private void GPSPanel_Paint(object sender, PaintEventArgs e)
         {
             if (fileOpen == false) return;
+            if (isSegPlay == true)
+            {
+                Graphics gg = GPSPanel.CreateGraphics();
+                gg.DrawImage(bitmapWithCircle, new PointF(0.0f, 0.0f));
+                return;
+            }
             if (isSeg == true)
             {
                 //isExist = false;
@@ -1497,6 +1518,7 @@ namespace DataG
                 gg.DrawImage(bitmap, new PointF(0.0f, 0.0f));
                 return;
             }
+            
             if (isBitNormalCre == false)
             {
                 bitNormal = new Bitmap(GPSPanel.Width, GPSPanel.Height);
@@ -1957,7 +1979,7 @@ namespace DataG
                 }
             }
         }
-
+        bool isSegPlay = false;
         private void segmentationButton_Click(object sender, EventArgs e)
         {
             isSeg = true;
@@ -1974,7 +1996,9 @@ namespace DataG
             //bitm = new Bitmap(GPSPanel.Width, GPSPanel.Height);
 
             bitmap = new Bitmap(GPSPanel.Width, GPSPanel.Height);
+            bitmapWithCircle = new Bitmap(GPSPanel.Width, GPSPanel.Height);
             Graphics g2 = Graphics.FromImage(bitmap);
+            Graphics g4 = Graphics.FromImage(bitmapWithCircle);
             Pen pen1 = new Pen(Brushes.LightBlue, 2); //Blue for color1; Green for color2
             Pen pen2 = new Pen(Brushes.DarkBlue, 2);
             Pen pen3 = new Pen(Brushes.LightGreen, 2);
@@ -2012,52 +2036,60 @@ namespace DataG
                 p11 = new PointF((float)x[i], (float)y[i]);
                 p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
                 g2.DrawLine(pen1, p11, p22);
+                g4.DrawLine(pen1, p11, p22);
             }
             for (int i = 0; i < driver2_x[0] - 1; i += 1)
             {
                 p11 = new PointF((float)x2[i], (float)y2[i]);
                 p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
                 g2.DrawLine(pen2, p11, p22);
+                g4.DrawLine(pen2, p11, p22);
             }
             for (int i = driver1_x[0]; i < driver1_x[1] - 1; i += 1)
             {
                 p11 = new PointF((float)x[i], (float)y[i]);
                 p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
                 g2.DrawLine(pen3, p11, p22);
+                g4.DrawLine(pen3, p11, p22);
             }
             for (int i = driver2_x[0]; i < driver2_x[1] - 1; i += 1)
             {
                 p11 = new PointF((float)x2[i], (float)y2[i]);
                 p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
                 g2.DrawLine(pen4, p11, p22);
+                g4.DrawLine(pen4, p11, p22);
             }
             for (int i = driver1_x[1]; i < driver1_x[2] - 1; i += 1)
             {
                 p11 = new PointF((float)x[i], (float)y[i]);
                 p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
                 g2.DrawLine(pen1, p11, p22);
+                g4.DrawLine(pen1, p11, p22);
             }
             for (int i = driver2_x[1]; i < driver2_x[2] - 1; i += 1)
             {
                 p11 = new PointF((float)x2[i], (float)y2[i]);
                 p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
                 g2.DrawLine(pen2, p11, p22);
+                g4.DrawLine(pen2, p11, p22);
             }
             for (int i = driver1_x[2]; i < dtrNum - 1; i += 1)
             {
                 p11 = new PointF((float)x[i], (float)y[i]);
                 p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
                 g2.DrawLine(pen3, p11, p22);
+                g4.DrawLine(pen3, p11, p22);
             }
             for (int i = driver2_x[2]; i < dtrNum2 - 1; i += 1)
             {
                 p11 = new PointF((float)x2[i], (float)y2[i]);
                 p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
                 g2.DrawLine(pen4, p11, p22);
+                g4.DrawLine(pen4, p11, p22);
             }
 
             //draw points
-            Graphics g4 = GPSPanel.CreateGraphics();
+            
             PointF pf = new PointF((float)((x[line1Point0] + x2[line2Point0]) / 2), (float)((y[line1Point0] + y2[line2Point0]) / 2));
             g4.FillEllipse(Brushes.Gray, pf.X - 3, pf.Y - 3, 6, 6);
             g4.DrawEllipse(new Pen(Brushes.Gray), pf.X - 10, pf.Y - 10, 20, 20);
@@ -2075,7 +2107,7 @@ namespace DataG
             g4.DrawEllipse(new Pen(Brushes.Gray), pf.X - 10, pf.Y - 10, 20, 20);
 
             Graphics gg = GPSPanel.CreateGraphics();
-            gg.DrawImage(bitmap, new PointF(0.0f, 0.0f));
+            gg.DrawImage(bitmapWithCircle, new PointF(0.0f, 0.0f));
 
             label11.Text = dataTime[line1Point1].ToString("0.00");
             label12.Text = (dataTime[line1Point2] - dataTime[line1Point1]).ToString("0.00");
@@ -3017,7 +3049,7 @@ namespace DataG
                 line2Point1 = findLeftNear(sectionPoint1 * distance2, disB, dtrNum2);
                 line2Point2 = findLeftNear(sectionPoint2 * distance2, disB, dtrNum2);
                 line2Point3 = findLeftNear(sectionPoint3 * distance2, disB, dtrNum2);
-                line2Point4 = findLeftNear(sectionPoint4 * distance1, disA, dtrNum);
+                line2Point4 = findLeftNear(sectionPoint4 * distance2, disB, dtrNum2);
                 if (line1Point0 == 0 && sectionPoint0 != 0)
                 {
                     line1Point0 = dtrNum - 1;
@@ -3200,10 +3232,14 @@ namespace DataG
         }
 
         bool haveReset1 = true;
+        bool haveReset2 = true;
+        bool haveReset3 = true;
+        bool haveReset4 = true;
         private void Section1PictureBox_Click(object sender, EventArgs e)
         {
+            isSegPlay = true;
             section1Timer.Enabled = true;
-            nowScrollValue = -xScale / 2;
+            nowScrollValue = -xScale / 2 + Math.Max(dataTime[line1Point0], dataTime2[line2Point0]);
             newPlace = (int)minValue(dataTime, dataTime.Length) - xScale / 2;
             if (haveReset1 == true)
             {
@@ -3245,28 +3281,139 @@ namespace DataG
 
         private void Section2PictureBox_Click(object sender, EventArgs e)
         {
+            isSegPlay = true;
             section2Timer.Enabled = true;
             nowScrollValue = -xScale / 2 + Math.Max(dataTime[line1Point1], dataTime2[line2Point1]);
             newPlace = (int)minValue(dataTime, dataTime.Length) - xScale / 2;
+            if (haveReset2 == true)
+            {
+                ChartArea ca = new ChartArea();
+                ca = sensorChart.ChartAreas.Add("Vertical2");
+                ca.BackColor = Color.Transparent;
+                ca.BorderColor = Color.Transparent;
+                ca.Position.FromRectangleF(sensorChart.ChartAreas[0].Position.ToRectangleF());
+                ca.InnerPlotPosition.FromRectangleF(sensorChart.ChartAreas[0].InnerPlotPosition.ToRectangleF());
+                //ca.InnerPlotPosition.X = (sensorChart.ChartAreas[0].Position.X + sensorChart.ChartAreas[0].Position.Right) / 2;
+                ca.AxisY.MajorGrid.Enabled = false;
+                ca.AxisY.MajorTickMark.Enabled = false;
+                ca.AxisY.LabelStyle.Enabled = false;
+                ca.AxisY.Enabled = AxisEnabled.False;
+
+                ca.AxisX.MajorGrid.Enabled = false;
+                ca.AxisX.LineColor = Color.Black;
+                ca.AxisX.MajorGrid.Enabled = true;
+                ca.AxisX.Maximum = 2;
+                ca.AxisX.Minimum = 0;
+                ca.AxisX.Interval = 1;
+                ca.AxisX.MajorTickMark.Enabled = false;
+                ca.AxisX.LabelStyle.Enabled = false;
+                //ca.AxisY.IsStartedFromZero = sensorChart.ChartAreas[0].AxisY.IsStartedFromZero; 
+
+                Series sCopy2 = sensorChart.Series.Add("caS2");
+                sCopy2.ChartType = sensorChart.Series[0].ChartType;
+                foreach (DataPoint point in sensorChart.Series[0].Points)
+                {
+                    sCopy2.Points.AddXY(point.XValue, point.YValues[0]);
+                }
+                sCopy2.IsVisibleInLegend = false;
+                sCopy2.Color = Color.Transparent;
+                sCopy2.BorderColor = Color.Transparent;
+                sCopy2.ChartArea = ca.Name;
+                haveReset2 = false;
+            }
         }
 
         private void Section3PictureBox_Click(object sender, EventArgs e)
         {
+            isSegPlay = true;
             section3Timer.Enabled = true;
             nowScrollValue = -xScale / 2 + Math.Max(dataTime[line1Point2], dataTime2[line2Point2]);
             newPlace = (int)minValue(dataTime, dataTime.Length) - xScale / 2;
+            if (haveReset3 == true)
+            {
+                ChartArea ca = new ChartArea();
+                ca = sensorChart.ChartAreas.Add("Vertical3");
+                ca.BackColor = Color.Transparent;
+                ca.BorderColor = Color.Transparent;
+                ca.Position.FromRectangleF(sensorChart.ChartAreas[0].Position.ToRectangleF());
+                ca.InnerPlotPosition.FromRectangleF(sensorChart.ChartAreas[0].InnerPlotPosition.ToRectangleF());
+                //ca.InnerPlotPosition.X = (sensorChart.ChartAreas[0].Position.X + sensorChart.ChartAreas[0].Position.Right) / 2;
+                ca.AxisY.MajorGrid.Enabled = false;
+                ca.AxisY.MajorTickMark.Enabled = false;
+                ca.AxisY.LabelStyle.Enabled = false;
+                ca.AxisY.Enabled = AxisEnabled.False;
+
+                ca.AxisX.MajorGrid.Enabled = false;
+                ca.AxisX.LineColor = Color.Black;
+                ca.AxisX.MajorGrid.Enabled = true;
+                ca.AxisX.Maximum = 2;
+                ca.AxisX.Minimum = 0;
+                ca.AxisX.Interval = 1;
+                ca.AxisX.MajorTickMark.Enabled = false;
+                ca.AxisX.LabelStyle.Enabled = false;
+                //ca.AxisY.IsStartedFromZero = sensorChart.ChartAreas[0].AxisY.IsStartedFromZero; 
+
+                Series sCopy2 = sensorChart.Series.Add("caS3");
+                sCopy2.ChartType = sensorChart.Series[0].ChartType;
+                foreach (DataPoint point in sensorChart.Series[0].Points)
+                {
+                    sCopy2.Points.AddXY(point.XValue, point.YValues[0]);
+                }
+                sCopy2.IsVisibleInLegend = false;
+                sCopy2.Color = Color.Transparent;
+                sCopy2.BorderColor = Color.Transparent;
+                sCopy2.ChartArea = ca.Name;
+                haveReset3 = false;
+            }
         }
 
         private void Section4PictureBox_Click(object sender, EventArgs e)
         {
+            isSegPlay = true;
             section4Timer.Enabled = true;
             nowScrollValue = -xScale / 2 + Math.Max(dataTime[line1Point3], dataTime2[line2Point3]);
             newPlace = (int)minValue(dataTime, dataTime.Length) - xScale / 2;
+            if (haveReset4 == true)
+            {
+                ChartArea ca = new ChartArea();
+                ca = sensorChart.ChartAreas.Add("Vertical4");
+                ca.BackColor = Color.Transparent;
+                ca.BorderColor = Color.Transparent;
+                ca.Position.FromRectangleF(sensorChart.ChartAreas[0].Position.ToRectangleF());
+                ca.InnerPlotPosition.FromRectangleF(sensorChart.ChartAreas[0].InnerPlotPosition.ToRectangleF());
+                //ca.InnerPlotPosition.X = (sensorChart.ChartAreas[0].Position.X + sensorChart.ChartAreas[0].Position.Right) / 2;
+                ca.AxisY.MajorGrid.Enabled = false;
+                ca.AxisY.MajorTickMark.Enabled = false;
+                ca.AxisY.LabelStyle.Enabled = false;
+                ca.AxisY.Enabled = AxisEnabled.False;
+
+                ca.AxisX.MajorGrid.Enabled = false;
+                ca.AxisX.LineColor = Color.Black;
+                ca.AxisX.MajorGrid.Enabled = true;
+                ca.AxisX.Maximum = 2;
+                ca.AxisX.Minimum = 0;
+                ca.AxisX.Interval = 1;
+                ca.AxisX.MajorTickMark.Enabled = false;
+                ca.AxisX.LabelStyle.Enabled = false;
+                //ca.AxisY.IsStartedFromZero = sensorChart.ChartAreas[0].AxisY.IsStartedFromZero; 
+
+                Series sCopy2 = sensorChart.Series.Add("caS4");
+                sCopy2.ChartType = sensorChart.Series[0].ChartType;
+                foreach (DataPoint point in sensorChart.Series[0].Points)
+                {
+                    sCopy2.Points.AddXY(point.XValue, point.YValues[0]);
+                }
+                sCopy2.IsVisibleInLegend = false;
+                sCopy2.Color = Color.Transparent;
+                sCopy2.BorderColor = Color.Transparent;
+                sCopy2.ChartArea = ca.Name;
+                haveReset4 = false;
+            }
         }
 
         private void section1Timer_Tick(object sender, EventArgs e)
         {
-            
+            isSegPlay = true;
             DateTime beforDT = System.DateTime.Now;
             //sensorChart.PostPaint += new EventHandler<ChartPaintEventArgs>(sensorChart_PostPaint);
             //int xLeftSub3 = findLeftNear(nowSteeringPlace, dataTime, dataTime.Length);
@@ -3300,7 +3447,7 @@ namespace DataG
                 Graphics g2 = Graphics.FromImage(bitmapWithCircle);
                 
                 //find the Subscript with the xLeft
-                double xx2 = newPlace + xScale / 2 + moveSpeed;
+                double xx2 = newPlace + xScale / 2 + moveSpeed + dataTime[line1Point0];
                 int xLeftSub = findLeftNear(xx2, dataTime, dataTime.Length);
                 int xRightSub = xLeftSub + 1;
                 double xLeft = dataTime[xLeftSub], xRight = dataTime[xRightSub];
@@ -3351,14 +3498,14 @@ namespace DataG
                 
                 if (line1Point1 < line2Point1)
                 {
-                    if ((newPlace + moveSpeed) <= maxValue(dataTime, dataTime.Length))
+                    if ((newPlace + moveSpeed) <= line1Point1)
                         newPlace += moveSpeed;
                     else
                         flagPlace = false;
                 }
                 else
                 {
-                    if ((newPlace + moveSpeed) <= maxValue(dataTime2, dataTime2.Length))
+                    if ((newPlace + moveSpeed) <= line2Point1)
                         newPlace += moveSpeed;
                     else
                         flagPlace = false;
@@ -3366,7 +3513,7 @@ namespace DataG
                 //Graphics gg = GPSPanel.CreateGraphics();
                 //gg.DrawImage(bitmap, new PointF(0.0f, 0.0f));
             }
-            if (nowSteeringPlace <= maxValue(dataTime, dataTime.Length))
+            if (nowSteeringPlace <= line1Point1)
                 nowSteeringPlace += moveSpeed;
 
             DateTime afterDT = System.DateTime.Now;
@@ -3620,7 +3767,7 @@ namespace DataG
             {
                 nowScrollValue += moveSpeed;
             }
-            else if ((nowScrollValue + xScale / 2) <= Math.Max(dataTime[dtrNum - 1], dataTime2[dtrNum2 - 1]))
+            else if ((nowScrollValue + xScale / 2) <= Math.Max(dataTime[line1Point4], dataTime2[line2Point4]))
             {
                 if (scaleFlag == true)
                 {
@@ -3656,14 +3803,14 @@ namespace DataG
 
                 GPSPanel.Refresh();
                 Graphics g3 = GPSPanel.CreateGraphics();
-                if (xx <= dataTime[dtrNum - 1])
+                if (xx <= dataTime[line1Point4 - 1])
                 {
                     m = x[xLeftSub];
                     n = y[xLeftSub];
                     PointF pp = new PointF();
                     pp = new PointF((float)m, (float)n);
                     Pen np2 = new Pen(Brushes.Red, 2);
-                    if (xLeftSub + 10 < dtrNum)
+                    if (xLeftSub + 10 < line1Point4)
                     {
                         PointF pp2 = new PointF((float)x[xLeftSub + 10], (float)y[xLeftSub + 10]);
                         AdjustableArrowCap lineCap = new AdjustableArrowCap(6, 6, false);
@@ -3671,23 +3818,23 @@ namespace DataG
                         g3.DrawLine(np2, pp, pp2);
                     }
                 }
-                if (xx2 <= dataTime2[dtrNum2 - 1])
+                if (xx2 <= dataTime2[line2Point4 - 1])
                 {
                     m2 = x2[xLeftSub2];
                     n2 = y2[xLeftSub2];
                     PointF pp2 = new PointF();
                     pp2 = new PointF((float)m2, (float)n2);
                     Pen np2 = new Pen(Brushes.Green, 2);
-                    if (xLeftSub2 + 10 < dtrNum2)
+                    if (xLeftSub2 + 10 < line2Point4)
                     {
                         PointF pp3 = new PointF((float)x2[xLeftSub2 + 10], (float)y2[xLeftSub2 + 10]);
                         AdjustableArrowCap lineCap = new AdjustableArrowCap(6, 6, false);
                         np2.CustomEndCap = lineCap;
                         g3.DrawLine(np2, pp2, pp3);
                     }
-                    else if (xLeftSub2 < dtrNum2 - 1)
+                    else if (xLeftSub2 < line2Point4 - 1)
                     {
-                        PointF pp3 = new PointF((float)x2[dtrNum2 - 1], (float)y2[dtrNum2 - 1]);
+                        PointF pp3 = new PointF((float)x2[line2Point4 - 1], (float)y2[line2Point4 - 1]);
                         AdjustableArrowCap lineCap = new AdjustableArrowCap(6, 6, false);
                         np2.CustomEndCap = lineCap;
                         g3.DrawLine(np2, pp2, pp3);
@@ -3695,22 +3842,22 @@ namespace DataG
 
                 }
 
-                if (dtrNum < dtrNum2)
+                if (line1Point4 > line2Point4)
                 {
-                    if ((newPlace + moveSpeed) <= maxValue(dataTime, dataTime.Length))
+                    if ((newPlace + moveSpeed) <= line1Point4)
                         newPlace += moveSpeed;
                     else
                         flagPlace = false;
                 }
                 else
                 {
-                    if ((newPlace + moveSpeed) <= maxValue(dataTime2, dataTime2.Length))
+                    if ((newPlace + moveSpeed) <= line2Point4)
                         newPlace += moveSpeed;
                     else
                         flagPlace = false;
                 }
             }
-            if (nowSteeringPlace <= maxValue(dataTime, dataTime.Length))
+            if (nowSteeringPlace <= line1Point4)
                 nowSteeringPlace += moveSpeed;
 
             DateTime afterDT = System.DateTime.Now;
@@ -3720,7 +3867,5 @@ namespace DataG
             else
                 chartTimer.Interval = (int)(1000 * moveSpeed) - (int)ts.TotalMilliseconds;
         }
-
-
     }
 }
