@@ -1227,7 +1227,7 @@ namespace DataG
             {
                 nowScrollValue += moveSpeed;
             }
-            else if ((nowScrollValue + xScale / 2) <= maxValue(dataTime, dataTime.Length))
+            else if ((nowScrollValue + xScale / 2) <= Math.Max(maxValue(dataTime, dataTime.Length),maxValue(dataTime2, dataTime2.Length)))
             {
                 if (scaleFlag == true)
                 {
@@ -1235,6 +1235,9 @@ namespace DataG
                     nowScrollValue += 0.1;
                 }
                 nowScrollValue += moveSpeed;
+            }else
+            {
+                chartTimer.Enabled = false;
             }
 
             //sensorChart.Invalidate();
@@ -2029,7 +2032,7 @@ namespace DataG
             line2Point1 = findLeftNear(sectionPoint1 * distance2, disB, dtrNum2);
             line2Point2 = findLeftNear(sectionPoint2 * distance2, disB, dtrNum2);
             line2Point3 = findLeftNear(sectionPoint3 * distance2, disB, dtrNum2);
-            line2Point4 = findLeftNear(sectionPoint4 * distance1, disA, dtrNum);
+            line2Point4 = findLeftNear(sectionPoint4 * distance2, disB, dtrNum2);
             //standerd
             for (int i = 0; i < driver1_x[0] - 1; i += 1)
             {
@@ -2175,7 +2178,7 @@ namespace DataG
                 line2Point1 = findLeftNear(sectionPoint1 * distance2, disB, dtrNum2);
                 line2Point2 = findLeftNear(sectionPoint2 * distance2, disB, dtrNum2);
                 line2Point3 = findLeftNear(sectionPoint3 * distance2, disB, dtrNum2);
-                line2Point4 = findLeftNear(sectionPoint4 * distance1, disA, dtrNum);
+                line2Point4 = findLeftNear(sectionPoint4 * distance2, disB, dtrNum2);
                 if (line1Point0 == 0 && sectionPoint0 != 0)
                 {
                     line1Point0 = dtrNum - 1;
@@ -2395,7 +2398,7 @@ namespace DataG
                 line2Point1 = findLeftNear(sectionPoint1 * distance2, disB, dtrNum2);
                 line2Point2 = findLeftNear(sectionPoint2 * distance2, disB, dtrNum2);
                 line2Point3 = findLeftNear(sectionPoint3 * distance2, disB, dtrNum2);
-                line2Point4 = findLeftNear(sectionPoint4 * distance1, disA, dtrNum);
+                line2Point4 = findLeftNear(sectionPoint4 * distance2, disB, dtrNum2);
                 if (line1Point0 == 0 && sectionPoint0 != 0)
                 {
                     line1Point0 = dtrNum - 1;
@@ -2617,7 +2620,7 @@ namespace DataG
                 line2Point1 = findLeftNear(sectionPoint1 * distance2, disB, dtrNum2);
                 line2Point2 = findLeftNear(sectionPoint2 * distance2, disB, dtrNum2);
                 line2Point3 = findLeftNear(sectionPoint3 * distance2, disB, dtrNum2);
-                line2Point4 = findLeftNear(sectionPoint4 * distance1, disA, dtrNum);
+                line2Point4 = findLeftNear(sectionPoint4 * distance2, disB, dtrNum2);
                 if (line1Point0 == 0 && sectionPoint0 != 0)
                 {
                     line1Point0 = dtrNum - 1;
