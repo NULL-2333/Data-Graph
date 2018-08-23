@@ -111,21 +111,30 @@ namespace DataG
         double[] disB = new double[dtrNum2];
 
         double[] gpsTime = new double[dtrNum];
+
+        double barpos0 = 0;
         double barpos1 = 0;
         double barpos2 = 0;
         double barpos3 = 0;
+        double barpos4 = 0;
 
+        double sectionPoint0 = 0;
         double sectionPoint1 = 0.25;//user can choose the start & end
         double sectionPoint2 = 0.5;
         double sectionPoint3 = 0.75;
+        double sectionPoint4 = 1.00;
 
+        int line1Point0 = 0; //start point
         int line1Point1 = 0;
         int line1Point2 = 0;
         int line1Point3 = 0;
+        int line1Point4 = 0; //end point
 
+        int line2Point0 = 0; //start point
         int line2Point1 = 0;
         int line2Point2 = 0;
         int line2Point3 = 0;
+        int line2Point4 = 0; //end point
 
         bool isSeg = false;
         Bitmap bitmap;
@@ -1948,13 +1957,16 @@ namespace DataG
                 }
             }
         }
-//Bitmap bitm;
+
         private void segmentationButton_Click(object sender, EventArgs e)
         {
             isSeg = true;
+            barpos0 = starttrackBar1.Value;
             barpos1 = firstTrackBar.Value;
             barpos2 = secondTrackBar.Value;
             barpos3 = thirdTrackBar.Value;
+            barpos4 = endtrackBar2.Value;
+
             tableLayoutPanel1.Visible = true;
             firstDriverGroupBox.Visible = true;
             secondDriverGroupBox.Visible = true;
@@ -1962,7 +1974,6 @@ namespace DataG
             //bitm = new Bitmap(GPSPanel.Width, GPSPanel.Height);
 
             bitmap = new Bitmap(GPSPanel.Width, GPSPanel.Height);
-            bitmapWithCircle = new Bitmap(GPSPanel.Width, GPSPanel.Height);
             Graphics g2 = Graphics.FromImage(bitmap);
             Pen pen1 = new Pen(Brushes.LightBlue, 2); //Blue for color1; Green for color2
             Pen pen2 = new Pen(Brushes.DarkBlue, 2);
@@ -1972,21 +1983,29 @@ namespace DataG
             PointF p22 = new PointF();
             if (fileOpen == false) return;
 
+            barpos0 = 0;
             barpos1 = 25;
             barpos2 = 50;
             barpos3 = 75;
+            barpos4 = 100;
 
+            sectionPoint0 = (double)barpos0 / 100;
             sectionPoint1 = (double)barpos1 / 100;
             sectionPoint2 = (double)barpos2 / 100;
             sectionPoint3 = (double)barpos3 / 100;
+            sectionPoint4 = (double)barpos4 / 100;
 
+            line1Point0 = findLeftNear(sectionPoint0 * distance1, disA, dtrNum);
             line1Point1 = findLeftNear(sectionPoint1 * distance1, disA, dtrNum);
             line1Point2 = findLeftNear(sectionPoint2 * distance1, disA, dtrNum);
             line1Point3 = findLeftNear(sectionPoint3 * distance1, disA, dtrNum);
+            line1Point4 = findLeftNear(sectionPoint4 * distance1, disA, dtrNum);
 
+            line2Point0 = findLeftNear(sectionPoint0 * distance2, disB, dtrNum2);
             line2Point1 = findLeftNear(sectionPoint1 * distance2, disB, dtrNum2);
             line2Point2 = findLeftNear(sectionPoint2 * distance2, disB, dtrNum2);
             line2Point3 = findLeftNear(sectionPoint3 * distance2, disB, dtrNum2);
+            line2Point4 = findLeftNear(sectionPoint4 * distance1, disA, dtrNum);
             //standerd
             for (int i = 0; i < driver1_x[0] - 1; i += 1)
             {
@@ -2047,10 +2066,10 @@ namespace DataG
             Distlabel2.Text = (disA_real(line1Point2) - disA_real(line1Point1)).ToString("0.00");
             Distlabel3.Text = (disA_real(line1Point3) - disA_real(line1Point2)).ToString("0.00");
             Distlabel4.Text = (disA_real(dtrNum - 1) - disA_real(line1Point3)).ToString("0.00");
-            Avglabel1.Text = (disA_real(line1Point1) / dataTime[line1Point1]).ToString();
-            Avglabel2.Text = ((disA_real(line1Point2) - disA_real(line1Point1)) / (dataTime[line1Point2] - dataTime[line1Point1])).ToString();
-            Avglabel3.Text = ((disA_real(line1Point3) - disA_real(line1Point2)) / (dataTime[line1Point3] - dataTime[line1Point2])).ToString();
-            Avglabel4.Text = ((disA_real(dtrNum - 1) - disA_real(line1Point3)) / (dataTime[dtrNum - 1] - dataTime[line1Point3])).ToString();
+            Avglabel1.Text = (0.681818182 * disA_real(line1Point1) / dataTime[line1Point1]).ToString();
+            Avglabel2.Text = (0.681818182 * (disA_real(line1Point2) - disA_real(line1Point1)) / (dataTime[line1Point2] - dataTime[line1Point1])).ToString();
+            Avglabel3.Text = (0.681818182 * (disA_real(line1Point3) - disA_real(line1Point2)) / (dataTime[line1Point3] - dataTime[line1Point2])).ToString();
+            Avglabel4.Text = (0.681818182 * (disA_real(dtrNum - 1) - disA_real(line1Point3)) / (dataTime[dtrNum - 1] - dataTime[line1Point3])).ToString();
 
             label21.Text = dataTime2[line2Point1].ToString("0.00");
             label22.Text = (dataTime2[line2Point2] - dataTime2[line2Point1]).ToString("0.00");
@@ -2060,27 +2079,28 @@ namespace DataG
             Distlabel6.Text = (disB_real(line2Point2) - disB_real(line2Point1)).ToString("0.00");
             Distlabel7.Text = (disB_real(line2Point3) - disB_real(line2Point2)).ToString("0.00");
             Distlabel8.Text = (disB_real(dtrNum2 - 1) - disB_real(line2Point3)).ToString("0.00");
-            Avglabel5.Text = (disB_real(line2Point1) / dataTime2[line2Point1]).ToString();
-            Avglabel6.Text = ((disB_real(line2Point2) - disB_real(line2Point1)) / (dataTime2[line2Point2] - dataTime2[line2Point1])).ToString();
-            Avglabel7.Text = ((disB_real(line2Point3) - disB_real(line2Point2)) / (dataTime2[line2Point3] - dataTime2[line2Point2])).ToString();
-            Avglabel8.Text = ((disB_real(dtrNum2 - 1) - disB_real(line2Point3)) / (dataTime2[dtrNum2 - 1] - dataTime2[line2Point3])).ToString();
+            Avglabel5.Text = (0.681818182 * disB_real(line2Point1) / dataTime2[line2Point1]).ToString();
+            Avglabel6.Text = (0.681818182 * (disB_real(line2Point2) - disB_real(line2Point1)) / (dataTime2[line2Point2] - dataTime2[line2Point1])).ToString();
+            Avglabel7.Text = (0.681818182 * (disB_real(line2Point3) - disB_real(line2Point2)) / (dataTime2[line2Point3] - dataTime2[line2Point2])).ToString();
+            Avglabel8.Text = (0.681818182 * (disB_real(dtrNum2 - 1) - disB_real(line2Point3)) / (dataTime2[dtrNum2 - 1] - dataTime2[line2Point3])).ToString();
 
             //ss.Show();
             firstDriverGroupBox.Refresh();
             secondDriverGroupBox.Refresh();
         }
-
-        
+    
         private void firstTrackBar_ValueChanged(object sender, EventArgs e)
         {
             barpos1 = firstTrackBar.Value;
             if(barpos1 < barpos2)
             {
+                sectionPoint0 = (double)barpos0 / 100;
                 sectionPoint1 = (double)barpos1 / 100;
                 sectionPoint2 = (double)barpos2 / 100;
                 sectionPoint3 = (double)barpos3 / 100;
+                sectionPoint4 = (double)barpos4 / 100;
 
-                
+                bitmapWithCircle = new Bitmap(GPSPanel.Width, GPSPanel.Height);
                 //Graphics g2 = Graphics.FromImage(bitm);
                 Graphics g3 = Graphics.FromImage(bitmap);
                 Graphics g4 = Graphics.FromImage(bitmapWithCircle);
@@ -2088,17 +2108,31 @@ namespace DataG
                 Pen pen2 = new Pen(Brushes.Blue, 2);
                 Pen pen3 = new Pen(Brushes.LightGreen, 2);
                 Pen pen4 = new Pen(Brushes.Green, 2);
+                Pen pen0 = new Pen(Brushes.LightGray, 2);
+                Pen pen00 = new Pen(Brushes.Gray, 2);
                 PointF p11 = new PointF();
                 PointF p22 = new PointF();
                 if (fileOpen == false) return;
 
+                line1Point0 = findLeftNear(sectionPoint0 * distance1, disA, dtrNum);
                 line1Point1 = findLeftNear(sectionPoint1 * distance1, disA, dtrNum);
                 line1Point2 = findLeftNear(sectionPoint2 * distance1, disA, dtrNum);
                 line1Point3 = findLeftNear(sectionPoint3 * distance1, disA, dtrNum);
+                line1Point4 = findLeftNear(sectionPoint4 * distance1, disA, dtrNum);
 
+                line2Point0 = findLeftNear(sectionPoint0 * distance2, disB, dtrNum2);
                 line2Point1 = findLeftNear(sectionPoint1 * distance2, disB, dtrNum2);
                 line2Point2 = findLeftNear(sectionPoint2 * distance2, disB, dtrNum2);
                 line2Point3 = findLeftNear(sectionPoint3 * distance2, disB, dtrNum2);
+                line2Point4 = findLeftNear(sectionPoint4 * distance1, disA, dtrNum);
+                if (line1Point0 == 0 && sectionPoint0 != 0)
+                {
+                    line1Point0 = dtrNum - 1;
+                }
+                if (line2Point0 == 0 && sectionPoint0 != 0)
+                {
+                    line2Point0 = dtrNum2 - 1;
+                }
                 if (line1Point1 == 0 && sectionPoint1 != 0)
                 {
                     line1Point1 = dtrNum - 1;
@@ -2123,15 +2157,36 @@ namespace DataG
                 {
                     line2Point3 = dtrNum2 - 1;
                 }
-
-                for (int i = 0; i < line1Point1 - 1; i += 1)
+                if (line1Point4 == 0 && sectionPoint4 != 0)
+                {
+                    line1Point4 = dtrNum - 1;
+                }
+                if (line2Point4 == 0 && sectionPoint4 != 0)
+                {
+                    line2Point4 = dtrNum2 - 1;
+                }
+                for (int i = 0; i < line1Point0 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x[i], (float)y[i]);
+                    p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                    g3.DrawLine(pen0, p11, p22);
+                    g4.DrawLine(pen0, p11, p22);
+                }
+                for (int i = line1Point0; i < line1Point1 - 1; i += 1)
                 {
                     p11 = new PointF((float)x[i], (float)y[i]);
                     p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
                     g3.DrawLine(pen1, p11, p22);
                     g4.DrawLine(pen1, p11, p22);
                 }
-                for (int i = 0; i < line2Point1 - 1; i += 1)
+                for (int i = 0; i < line2Point0 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x2[i], (float)y2[i]);
+                    p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
+                    g3.DrawLine(pen00, p11, p22);
+                    g4.DrawLine(pen00, p11, p22);
+                }
+                for (int i = line2Point0; i < line2Point1 - 1; i += 1)
                 {
                     p11 = new PointF((float)x2[i], (float)y2[i]);
                     p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
@@ -2152,34 +2207,49 @@ namespace DataG
                     g3.DrawLine(pen4, p11, p22);
                     g4.DrawLine(pen4, p11, p22);
                 }
-                for (int i = line1Point2; i < dtrNum - 1; i += 1)
+                for (int i = line1Point2; i < line1Point3 - 1; i += 1)
                 {
                     p11 = new PointF((float)x[i], (float)y[i]);
                     p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
                     g3.DrawLine(pen1, p11, p22);
                     g4.DrawLine(pen1, p11, p22);
                 }
-                for (int i = line2Point2; i < dtrNum2 - 1; i += 1)
+                for (int i = line2Point2; i < line2Point3 - 1; i += 1)
                 {
                     p11 = new PointF((float)x2[i], (float)y2[i]);
                     p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
                     g3.DrawLine(pen2, p11, p22);
                     g4.DrawLine(pen2, p11, p22);
                 }
-                for (int i = line1Point3; i < dtrNum - 1; i += 1)
+                for (int i = line1Point3; i < line1Point4 - 1; i += 1)
                 {
                     p11 = new PointF((float)x[i], (float)y[i]);
                     p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
                     g3.DrawLine(pen3, p11, p22);
                     g4.DrawLine(pen3, p11, p22);
                 }
-                for (int i = line2Point3; i < dtrNum2 - 1; i += 1)
+                for (int i = line2Point3; i < line2Point4 - 1; i += 1)
                 {
                     p11 = new PointF((float)x2[i], (float)y2[i]);
                     p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
                     g3.DrawLine(pen4, p11, p22);
                     g4.DrawLine(pen4, p11, p22);
                 }
+                for (int i = line1Point4; i < dtrNum - 1; i += 1)
+                {
+                    p11 = new PointF((float)x[i], (float)y[i]);
+                    p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                    g3.DrawLine(pen0, p11, p22);
+                    g4.DrawLine(pen0, p11, p22);
+                }
+                for (int i = line2Point4; i < dtrNum2 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x2[i], (float)y2[i]);
+                    p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
+                    g3.DrawLine(pen00, p11, p22);
+                    g4.DrawLine(pen00, p11, p22);
+                }
+
                 GPSPanel.Refresh();
                 //draw a point with the center of (x,y) and (x2,y2)
                 PointF pf = new PointF((float)((x[line1Point1] + x2[line2Point1]) / 2), (float)((y[line1Point1] + y2[line2Point1]) / 2));
@@ -2204,10 +2274,10 @@ namespace DataG
                 Distlabel2.Text = (disA_real(line1Point2) - disA_real(line1Point1)).ToString("0.00");
                 Distlabel3.Text = (disA_real(line1Point3) - disA_real(line1Point2)).ToString("0.00");
                 Distlabel4.Text = (disA_real(dtrNum - 1) - disA_real(line1Point3)).ToString("0.00");
-                Avglabel1.Text = (disA_real(line1Point1) / dataTime[line1Point1]).ToString();
-                Avglabel2.Text = ((disA_real(line1Point2) - disA_real(line1Point1)) / (dataTime[line1Point2] - dataTime[line1Point1])).ToString();
-                Avglabel3.Text = ((disA_real(line1Point3) - disA_real(line1Point2)) / (dataTime[line1Point3] - dataTime[line1Point2])).ToString();
-                Avglabel4.Text = ((disA_real(dtrNum - 1) - disA_real(line1Point3)) / (dataTime[dtrNum - 1] - dataTime[line1Point3])).ToString();
+                Avglabel1.Text = (0.681818182 * disA_real(line1Point1) / dataTime[line1Point1]).ToString();
+                Avglabel2.Text = (0.681818182 * (disA_real(line1Point2) - disA_real(line1Point1)) / (dataTime[line1Point2] - dataTime[line1Point1])).ToString();
+                Avglabel3.Text = (0.681818182 * (disA_real(line1Point3) - disA_real(line1Point2)) / (dataTime[line1Point3] - dataTime[line1Point2])).ToString();
+                Avglabel4.Text = (0.681818182 * (disA_real(dtrNum - 1) - disA_real(line1Point3)) / (dataTime[dtrNum - 1] - dataTime[line1Point3])).ToString();
 
                 label21.Text = dataTime2[line2Point1].ToString("0.00");
                 label22.Text = (dataTime2[line2Point2] - dataTime2[line2Point1]).ToString("0.00");
@@ -2217,10 +2287,10 @@ namespace DataG
                 Distlabel6.Text = (disB_real(line2Point2) - disB_real(line2Point1)).ToString("0.00");
                 Distlabel7.Text = (disB_real(line2Point3) - disB_real(line2Point2)).ToString("0.00");
                 Distlabel8.Text = (disB_real(dtrNum2 - 1) - disB_real(line2Point3)).ToString("0.00");
-                Avglabel5.Text = (disB_real(line2Point1) / dataTime2[line2Point1]).ToString();
-                Avglabel6.Text = ((disB_real(line2Point2) - disB_real(line2Point1)) / (dataTime2[line2Point2] - dataTime2[line2Point1])).ToString();
-                Avglabel7.Text = ((disB_real(line2Point3) - disB_real(line2Point2)) / (dataTime2[line2Point3] - dataTime2[line2Point2])).ToString();
-                Avglabel8.Text = ((disB_real(dtrNum2 - 1) - disB_real(line2Point3)) / (dataTime2[dtrNum2 - 1] - dataTime2[line2Point3])).ToString();
+                Avglabel5.Text = (0.681818182 * disB_real(line2Point1) / dataTime2[line2Point1]).ToString();
+                Avglabel6.Text = (0.681818182 * (disB_real(line2Point2) - disB_real(line2Point1)) / (dataTime2[line2Point2] - dataTime2[line2Point1])).ToString();
+                Avglabel7.Text = (0.681818182 * (disB_real(line2Point3) - disB_real(line2Point2)) / (dataTime2[line2Point3] - dataTime2[line2Point2])).ToString();
+                Avglabel8.Text = (0.681818182 * (disB_real(dtrNum2 - 1) - disB_real(line2Point3)) / (dataTime2[dtrNum2 - 1] - dataTime2[line2Point3])).ToString();
 
 
             }
@@ -2235,11 +2305,12 @@ namespace DataG
             barpos2 = secondTrackBar.Value;
             if (barpos1 < barpos2 && barpos2 < barpos3)
             {
+                sectionPoint0 = (double)barpos0 / 100;
                 sectionPoint1 = (double)barpos1 / 100;
                 sectionPoint2 = (double)barpos2 / 100;
                 sectionPoint3 = (double)barpos3 / 100;
+                sectionPoint4 = (double)barpos4 / 100;
 
-                bitmap = new Bitmap(GPSPanel.Width, GPSPanel.Height);
                 bitmapWithCircle = new Bitmap(GPSPanel.Width, GPSPanel.Height);
                 //Graphics g2 = Graphics.FromImage(bitm);
                 Graphics g3 = Graphics.FromImage(bitmap);
@@ -2248,17 +2319,31 @@ namespace DataG
                 Pen pen2 = new Pen(Brushes.Blue, 2);
                 Pen pen3 = new Pen(Brushes.LightGreen, 2);
                 Pen pen4 = new Pen(Brushes.Green, 2);
+                Pen pen0 = new Pen(Brushes.LightGray, 2);
+                Pen pen00 = new Pen(Brushes.Gray, 2);
                 PointF p11 = new PointF();
                 PointF p22 = new PointF();
                 if (fileOpen == false) return;
 
+                line1Point0 = findLeftNear(sectionPoint0 * distance1, disA, dtrNum);
                 line1Point1 = findLeftNear(sectionPoint1 * distance1, disA, dtrNum);
                 line1Point2 = findLeftNear(sectionPoint2 * distance1, disA, dtrNum);
                 line1Point3 = findLeftNear(sectionPoint3 * distance1, disA, dtrNum);
+                line1Point4 = findLeftNear(sectionPoint4 * distance1, disA, dtrNum);
 
+                line2Point0 = findLeftNear(sectionPoint0 * distance2, disB, dtrNum2);
                 line2Point1 = findLeftNear(sectionPoint1 * distance2, disB, dtrNum2);
                 line2Point2 = findLeftNear(sectionPoint2 * distance2, disB, dtrNum2);
                 line2Point3 = findLeftNear(sectionPoint3 * distance2, disB, dtrNum2);
+                line2Point4 = findLeftNear(sectionPoint4 * distance1, disA, dtrNum);
+                if (line1Point0 == 0 && sectionPoint0 != 0)
+                {
+                    line1Point0 = dtrNum - 1;
+                }
+                if (line2Point0 == 0 && sectionPoint0 != 0)
+                {
+                    line2Point0 = dtrNum2 - 1;
+                }
                 if (line1Point1 == 0 && sectionPoint1 != 0)
                 {
                     line1Point1 = dtrNum - 1;
@@ -2283,15 +2368,36 @@ namespace DataG
                 {
                     line2Point3 = dtrNum2 - 1;
                 }
-
-                for (int i = 0; i < line1Point1 - 1; i += 1)
+                if (line1Point4 == 0 && sectionPoint4 != 0)
+                {
+                    line1Point4 = dtrNum - 1;
+                }
+                if (line2Point4 == 0 && sectionPoint4 != 0)
+                {
+                    line2Point4 = dtrNum2 - 1;
+                }
+                for (int i = 0; i < line1Point0 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x[i], (float)y[i]);
+                    p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                    g3.DrawLine(pen0, p11, p22);
+                    g4.DrawLine(pen0, p11, p22);
+                }
+                for (int i = line1Point0; i < line1Point1 - 1; i += 1)
                 {
                     p11 = new PointF((float)x[i], (float)y[i]);
                     p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
                     g3.DrawLine(pen1, p11, p22);
                     g4.DrawLine(pen1, p11, p22);
                 }
-                for (int i = 0; i < line2Point1 - 1; i += 1)
+                for (int i = 0; i < line2Point0 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x2[i], (float)y2[i]);
+                    p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
+                    g3.DrawLine(pen00, p11, p22);
+                    g4.DrawLine(pen00, p11, p22);
+                }
+                for (int i = line2Point0; i < line2Point1 - 1; i += 1)
                 {
                     p11 = new PointF((float)x2[i], (float)y2[i]);
                     p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
@@ -2312,33 +2418,47 @@ namespace DataG
                     g3.DrawLine(pen4, p11, p22);
                     g4.DrawLine(pen4, p11, p22);
                 }
-                for (int i = line1Point2; i < dtrNum - 1; i += 1)
+                for (int i = line1Point2; i < line1Point3 - 1; i += 1)
                 {
                     p11 = new PointF((float)x[i], (float)y[i]);
                     p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
                     g3.DrawLine(pen1, p11, p22);
                     g4.DrawLine(pen1, p11, p22);
                 }
-                for (int i = line2Point2; i < dtrNum2 - 1; i += 1)
+                for (int i = line2Point2; i < line2Point3 - 1; i += 1)
                 {
                     p11 = new PointF((float)x2[i], (float)y2[i]);
                     p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
                     g3.DrawLine(pen2, p11, p22);
                     g4.DrawLine(pen2, p11, p22);
                 }
-                for (int i = line1Point3; i < dtrNum - 1; i += 1)
+                for (int i = line1Point3; i < line1Point4 - 1; i += 1)
                 {
                     p11 = new PointF((float)x[i], (float)y[i]);
                     p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
                     g3.DrawLine(pen3, p11, p22);
                     g4.DrawLine(pen3, p11, p22);
                 }
-                for (int i = line2Point3; i < dtrNum2 - 1; i += 1)
+                for (int i = line2Point3; i < line2Point4 - 1; i += 1)
                 {
                     p11 = new PointF((float)x2[i], (float)y2[i]);
                     p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
                     g3.DrawLine(pen4, p11, p22);
                     g4.DrawLine(pen4, p11, p22);
+                }
+                for (int i = line1Point4; i < dtrNum - 1; i += 1)
+                {
+                    p11 = new PointF((float)x[i], (float)y[i]);
+                    p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                    g3.DrawLine(pen0, p11, p22);
+                    g4.DrawLine(pen0, p11, p22);
+                }
+                for (int i = line2Point4; i < dtrNum2 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x2[i], (float)y2[i]);
+                    p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
+                    g3.DrawLine(pen00, p11, p22);
+                    g4.DrawLine(pen00, p11, p22);
                 }
                 GPSPanel.Refresh();
                 //draw a point with the center of (x,y) and (x2,y2)
@@ -2363,10 +2483,10 @@ namespace DataG
                 Distlabel2.Text = (disA_real(line1Point2) - disA_real(line1Point1)).ToString("0.00");
                 Distlabel3.Text = (disA_real(line1Point3) - disA_real(line1Point2)).ToString("0.00");
                 Distlabel4.Text = (disA_real(dtrNum - 1) - disA_real(line1Point3)).ToString("0.00");
-                Avglabel1.Text = (disA_real(line1Point1) / dataTime[line1Point1]).ToString();
-                Avglabel2.Text = ((disA_real(line1Point2) - disA_real(line1Point1)) / (dataTime[line1Point2] - dataTime[line1Point1])).ToString();
-                Avglabel3.Text = ((disA_real(line1Point3) - disA_real(line1Point2)) / (dataTime[line1Point3] - dataTime[line1Point2])).ToString();
-                Avglabel4.Text = ((disA_real(dtrNum - 1) - disA_real(line1Point3)) / (dataTime[dtrNum - 1] - dataTime[line1Point3])).ToString();
+                Avglabel1.Text = (0.681818182 * disA_real(line1Point1) / dataTime[line1Point1]).ToString();
+                Avglabel2.Text = (0.681818182 * (disA_real(line1Point2) - disA_real(line1Point1)) / (dataTime[line1Point2] - dataTime[line1Point1])).ToString();
+                Avglabel3.Text = (0.681818182 * (disA_real(line1Point3) - disA_real(line1Point2)) / (dataTime[line1Point3] - dataTime[line1Point2])).ToString();
+                Avglabel4.Text = (0.681818182 * (disA_real(dtrNum - 1) - disA_real(line1Point3)) / (dataTime[dtrNum - 1] - dataTime[line1Point3])).ToString();
 
                 label21.Text = dataTime2[line2Point1].ToString("0.00");
                 label22.Text = (dataTime2[line2Point2] - dataTime2[line2Point1]).ToString("0.00");
@@ -2376,10 +2496,10 @@ namespace DataG
                 Distlabel6.Text = (disB_real(line2Point2) - disB_real(line2Point1)).ToString("0.00");
                 Distlabel7.Text = (disB_real(line2Point3) - disB_real(line2Point2)).ToString("0.00");
                 Distlabel8.Text = (disB_real(dtrNum2 - 1) - disB_real(line2Point3)).ToString("0.00");
-                Avglabel5.Text = (disB_real(line2Point1) / dataTime2[line2Point1]).ToString();
-                Avglabel6.Text = ((disB_real(line2Point2) - disB_real(line2Point1)) / (dataTime2[line2Point2] - dataTime2[line2Point1])).ToString();
-                Avglabel7.Text = ((disB_real(line2Point3) - disB_real(line2Point2)) / (dataTime2[line2Point3] - dataTime2[line2Point2])).ToString();
-                Avglabel8.Text = ((disB_real(dtrNum2 - 1) - disB_real(line2Point3)) / (dataTime2[dtrNum2 - 1] - dataTime2[line2Point3])).ToString();
+                Avglabel5.Text = (0.681818182 * disB_real(line2Point1) / dataTime2[line2Point1]).ToString();
+                Avglabel6.Text = (0.681818182 * (disB_real(line2Point2) - disB_real(line2Point1)) / (dataTime2[line2Point2] - dataTime2[line2Point1])).ToString();
+                Avglabel7.Text = (0.681818182 * (disB_real(line2Point3) - disB_real(line2Point2)) / (dataTime2[line2Point3] - dataTime2[line2Point2])).ToString();
+                Avglabel8.Text = (0.681818182 * (disB_real(dtrNum2 - 1) - disB_real(line2Point3)) / (dataTime2[dtrNum2 - 1] - dataTime2[line2Point3])).ToString();
 
             }
             else
@@ -2401,11 +2521,12 @@ namespace DataG
             barpos3 = thirdTrackBar.Value;
             if (barpos2 < barpos3)
             {
+                sectionPoint0 = (double)barpos0 / 100;
                 sectionPoint1 = (double)barpos1 / 100;
                 sectionPoint2 = (double)barpos2 / 100;
                 sectionPoint3 = (double)barpos3 / 100;
-                
-                bitmap = new Bitmap(GPSPanel.Width, GPSPanel.Height);
+                sectionPoint4 = (double)barpos4 / 100;
+
                 bitmapWithCircle = new Bitmap(GPSPanel.Width, GPSPanel.Height);
                 //Graphics g2 = Graphics.FromImage(bitm);
                 Graphics g3 = Graphics.FromImage(bitmap);
@@ -2414,25 +2535,39 @@ namespace DataG
                 Pen pen2 = new Pen(Brushes.Blue, 2);
                 Pen pen3 = new Pen(Brushes.LightGreen, 2);
                 Pen pen4 = new Pen(Brushes.Green, 2);
+                Pen pen0 = new Pen(Brushes.LightGray, 2);
+                Pen pen00 = new Pen(Brushes.Gray, 2);
                 PointF p11 = new PointF();
                 PointF p22 = new PointF();
                 if (fileOpen == false) return;
 
+                line1Point0 = findLeftNear(sectionPoint0 * distance1, disA, dtrNum);
                 line1Point1 = findLeftNear(sectionPoint1 * distance1, disA, dtrNum);
                 line1Point2 = findLeftNear(sectionPoint2 * distance1, disA, dtrNum);
                 line1Point3 = findLeftNear(sectionPoint3 * distance1, disA, dtrNum);
+                line1Point4 = findLeftNear(sectionPoint4 * distance1, disA, dtrNum);
 
+                line2Point0 = findLeftNear(sectionPoint0 * distance2, disB, dtrNum2);
                 line2Point1 = findLeftNear(sectionPoint1 * distance2, disB, dtrNum2);
                 line2Point2 = findLeftNear(sectionPoint2 * distance2, disB, dtrNum2);
                 line2Point3 = findLeftNear(sectionPoint3 * distance2, disB, dtrNum2);
-                if (line1Point1 == 0  && sectionPoint1 != 0)
+                line2Point4 = findLeftNear(sectionPoint4 * distance1, disA, dtrNum);
+                if (line1Point0 == 0 && sectionPoint0 != 0)
+                {
+                    line1Point0 = dtrNum - 1;
+                }
+                if (line2Point0 == 0 && sectionPoint0 != 0)
+                {
+                    line2Point0 = dtrNum2 - 1;
+                }
+                if (line1Point1 == 0 && sectionPoint1 != 0)
                 {
                     line1Point1 = dtrNum - 1;
                 }
                 if (line1Point2 == 0 && sectionPoint2 != 0)
                 {
                     line1Point2 = dtrNum - 1;
-                } 
+                }
                 if (line1Point3 == 0 && sectionPoint3 != 0)
                 {
                     line1Point3 = dtrNum - 1;
@@ -2449,15 +2584,36 @@ namespace DataG
                 {
                     line2Point3 = dtrNum2 - 1;
                 }
-                
-                for (int i = 0; i < line1Point1 - 1; i += 1)
+                if (line1Point4 == 0 && sectionPoint4 != 0)
+                {
+                    line1Point4 = dtrNum - 1;
+                }
+                if (line2Point4 == 0 && sectionPoint4 != 0)
+                {
+                    line2Point4 = dtrNum2 - 1;
+                }
+                for (int i = 0; i < line1Point0 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x[i], (float)y[i]);
+                    p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                    g3.DrawLine(pen0, p11, p22);
+                    g4.DrawLine(pen0, p11, p22);
+                }
+                for (int i = line1Point0; i < line1Point1 - 1; i += 1)
                 {
                     p11 = new PointF((float)x[i], (float)y[i]);
                     p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
                     g3.DrawLine(pen1, p11, p22);
                     g4.DrawLine(pen1, p11, p22);
                 }
-                for (int i = 0; i < line2Point1 - 1; i += 1)
+                for (int i = 0; i < line2Point0 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x2[i], (float)y2[i]);
+                    p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
+                    g3.DrawLine(pen00, p11, p22);
+                    g4.DrawLine(pen00, p11, p22);
+                }
+                for (int i = line2Point0; i < line2Point1 - 1; i += 1)
                 {
                     p11 = new PointF((float)x2[i], (float)y2[i]);
                     p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
@@ -2478,33 +2634,47 @@ namespace DataG
                     g3.DrawLine(pen4, p11, p22);
                     g4.DrawLine(pen4, p11, p22);
                 }
-                for (int i = line1Point2; i < dtrNum - 1; i += 1)
+                for (int i = line1Point2; i < line1Point3 - 1; i += 1)
                 {
                     p11 = new PointF((float)x[i], (float)y[i]);
                     p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
                     g3.DrawLine(pen1, p11, p22);
                     g4.DrawLine(pen1, p11, p22);
                 }
-                for (int i = line2Point2; i < dtrNum2 - 1; i += 1)
+                for (int i = line2Point2; i < line2Point3 - 1; i += 1)
                 {
                     p11 = new PointF((float)x2[i], (float)y2[i]);
                     p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
                     g3.DrawLine(pen2, p11, p22);
                     g4.DrawLine(pen2, p11, p22);
                 }
-                for (int i = line1Point3; i < dtrNum - 1; i += 1)
+                for (int i = line1Point3; i < line1Point4 - 1; i += 1)
                 {
                     p11 = new PointF((float)x[i], (float)y[i]);
                     p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
                     g3.DrawLine(pen3, p11, p22);
                     g4.DrawLine(pen3, p11, p22);
                 }
-                for (int i = line2Point3; i < dtrNum2 - 1; i += 1)
+                for (int i = line2Point3; i < line2Point4 - 1; i += 1)
                 {
                     p11 = new PointF((float)x2[i], (float)y2[i]);
                     p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
                     g3.DrawLine(pen4, p11, p22);
                     g4.DrawLine(pen4, p11, p22);
+                }
+                for (int i = line1Point4; i < dtrNum - 1; i += 1)
+                {
+                    p11 = new PointF((float)x[i], (float)y[i]);
+                    p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                    g3.DrawLine(pen0, p11, p22);
+                    g4.DrawLine(pen0, p11, p22);
+                }
+                for (int i = line2Point4; i < dtrNum2 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x2[i], (float)y2[i]);
+                    p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
+                    g3.DrawLine(pen00, p11, p22);
+                    g4.DrawLine(pen00, p11, p22);
                 }
                 GPSPanel.Refresh();
                 //draw a point with the center of (x,y) and (x2,y2)
@@ -2529,10 +2699,10 @@ namespace DataG
                 Distlabel2.Text = (disA_real(line1Point2) - disA_real(line1Point1)).ToString("0.00");
                 Distlabel3.Text = (disA_real(line1Point3) - disA_real(line1Point2)).ToString("0.00");
                 Distlabel4.Text = (disA_real(dtrNum - 1) - disA_real(line1Point3)).ToString("0.00");
-                Avglabel1.Text = (disA_real(line1Point1) / dataTime[line1Point1]).ToString();
-                Avglabel2.Text = ((disA_real(line1Point2) - disA_real(line1Point1)) / (dataTime[line1Point2] - dataTime[line1Point1])).ToString();
-                Avglabel3.Text = ((disA_real(line1Point3) - disA_real(line1Point2)) / (dataTime[line1Point3] - dataTime[line1Point2])).ToString();
-                Avglabel4.Text = ((disA_real(dtrNum - 1) - disA_real(line1Point3)) / (dataTime[dtrNum - 1] - dataTime[line1Point3])).ToString();
+                Avglabel1.Text = (0.681818182 * disA_real(line1Point1) / dataTime[line1Point1]).ToString();
+                Avglabel2.Text = (0.681818182 * (disA_real(line1Point2) - disA_real(line1Point1)) / (dataTime[line1Point2] - dataTime[line1Point1])).ToString();
+                Avglabel3.Text = (0.681818182 * (disA_real(line1Point3) - disA_real(line1Point2)) / (dataTime[line1Point3] - dataTime[line1Point2])).ToString();
+                Avglabel4.Text = (0.681818182 * (disA_real(dtrNum - 1) - disA_real(line1Point3)) / (dataTime[dtrNum - 1] - dataTime[line1Point3])).ToString();
 
                 label21.Text = dataTime2[line2Point1].ToString("0.00");
                 label22.Text = (dataTime2[line2Point2] - dataTime2[line2Point1]).ToString("0.00");
@@ -2542,10 +2712,10 @@ namespace DataG
                 Distlabel6.Text = (disB_real(line2Point2) - disB_real(line2Point1)).ToString("0.00");
                 Distlabel7.Text = (disB_real(line2Point3) - disB_real(line2Point2)).ToString("0.00");
                 Distlabel8.Text = (disB_real(dtrNum2 - 1) - disB_real(line2Point3)).ToString("0.00");
-                Avglabel5.Text = (disB_real(line2Point1) / dataTime2[line2Point1]).ToString();
-                Avglabel6.Text = ((disB_real(line2Point2) - disB_real(line2Point1)) / (dataTime2[line2Point2] - dataTime2[line2Point1])).ToString();
-                Avglabel7.Text = ((disB_real(line2Point3) - disB_real(line2Point2)) / (dataTime2[line2Point3] - dataTime2[line2Point2])).ToString();
-                Avglabel8.Text = ((disB_real(dtrNum2 - 1) - disB_real(line2Point3)) / (dataTime2[dtrNum2 - 1] - dataTime2[line2Point3])).ToString();
+                Avglabel5.Text = (0.681818182 * disB_real(line2Point1) / dataTime2[line2Point1]).ToString();
+                Avglabel6.Text = (0.681818182 * (disB_real(line2Point2) - disB_real(line2Point1)) / (dataTime2[line2Point2] - dataTime2[line2Point1])).ToString();
+                Avglabel7.Text = (0.681818182 * (disB_real(line2Point3) - disB_real(line2Point2)) / (dataTime2[line2Point3] - dataTime2[line2Point2])).ToString();
+                Avglabel8.Text = (0.681818182 *(disB_real(dtrNum2 - 1) - disB_real(line2Point3)) / (dataTime2[dtrNum2 - 1] - dataTime2[line2Point3])).ToString();
 
             }
             else
@@ -2553,6 +2723,429 @@ namespace DataG
                 thirdTrackBar.Value = secondTrackBar.Value;
             }
         }
+
+        private void StartTrackBar_ValueChanged(object sender, EventArgs e)
+        {
+            barpos0 = starttrackBar1.Value;
+            if (barpos1 < barpos2)
+            {
+                sectionPoint0 = (double)barpos0 / 100;
+                sectionPoint1 = (double)barpos1 / 100;
+                sectionPoint2 = (double)barpos2 / 100;
+                sectionPoint3 = (double)barpos3 / 100;
+                sectionPoint4 = (double)barpos4 / 100;
+
+                bitmapWithCircle = new Bitmap(GPSPanel.Width, GPSPanel.Height);
+                //Graphics g2 = Graphics.FromImage(bitm);
+                Graphics g3 = Graphics.FromImage(bitmap);
+                Graphics g4 = Graphics.FromImage(bitmapWithCircle);
+                Pen pen1 = new Pen(Brushes.LightBlue, 2); //Blue for color1; Green for color2
+                Pen pen2 = new Pen(Brushes.Blue, 2);
+                Pen pen3 = new Pen(Brushes.LightGreen, 2);
+                Pen pen4 = new Pen(Brushes.Green, 2);
+                Pen pen0 = new Pen(Brushes.LightGray, 2);
+                Pen pen00 = new Pen(Brushes.Gray, 2);
+                PointF p11 = new PointF();
+                PointF p22 = new PointF();
+                if (fileOpen == false) return;
+
+                line1Point0 = findLeftNear(sectionPoint0 * distance1, disA, dtrNum);
+                line1Point1 = findLeftNear(sectionPoint1 * distance1, disA, dtrNum);
+                line1Point2 = findLeftNear(sectionPoint2 * distance1, disA, dtrNum);
+                line1Point3 = findLeftNear(sectionPoint3 * distance1, disA, dtrNum);
+                line1Point4 = findLeftNear(sectionPoint4 * distance1, disA, dtrNum);
+
+                line2Point0 = findLeftNear(sectionPoint0 * distance2, disB, dtrNum2);
+                line2Point1 = findLeftNear(sectionPoint1 * distance2, disB, dtrNum2);
+                line2Point2 = findLeftNear(sectionPoint2 * distance2, disB, dtrNum2);
+                line2Point3 = findLeftNear(sectionPoint3 * distance2, disB, dtrNum2);
+                line2Point4 = findLeftNear(sectionPoint4 * distance1, disA, dtrNum);
+                if (line1Point0 == 0 && sectionPoint0 != 0)
+                {
+                    line1Point0 = dtrNum - 1;
+                }
+                if (line2Point0 == 0 && sectionPoint0 != 0)
+                {
+                    line2Point0 = dtrNum2 - 1;
+                }
+                if (line1Point1 == 0 && sectionPoint1 != 0)
+                {
+                    line1Point1 = dtrNum - 1;
+                }
+                if (line1Point2 == 0 && sectionPoint2 != 0)
+                {
+                    line1Point2 = dtrNum - 1;
+                }
+                if (line1Point3 == 0 && sectionPoint3 != 0)
+                {
+                    line1Point3 = dtrNum - 1;
+                }
+                if (line2Point1 == 0 && sectionPoint1 != 0)
+                {
+                    line2Point1 = dtrNum2 - 1;
+                }
+                if (line2Point2 == 0 && sectionPoint2 != 0)
+                {
+                    line2Point2 = dtrNum2 - 1;
+                }
+                if (line2Point3 == 0 && sectionPoint3 != 0)
+                {
+                    line2Point3 = dtrNum2 - 1;
+                }
+                if (line1Point4 == 0 && sectionPoint4 != 0)
+                {
+                    line1Point4 = dtrNum - 1;
+                }
+                if (line2Point4 == 0 && sectionPoint4 != 0)
+                {
+                    line2Point4 = dtrNum2 - 1;
+                }
+                for (int i = 0; i < line1Point0 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x[i], (float)y[i]);
+                    p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                    g3.DrawLine(pen0, p11, p22);
+                    g4.DrawLine(pen0, p11, p22);
+                }
+                for (int i = line1Point0; i < line1Point1 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x[i], (float)y[i]);
+                    p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                    g3.DrawLine(pen1, p11, p22);
+                    g4.DrawLine(pen1, p11, p22);
+                }
+                for (int i = 0; i < line2Point0 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x2[i], (float)y2[i]);
+                    p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
+                    g3.DrawLine(pen00, p11, p22);
+                    g4.DrawLine(pen00, p11, p22);
+                }
+                for (int i = line2Point0; i < line2Point1 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x2[i], (float)y2[i]);
+                    p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
+                    g3.DrawLine(pen2, p11, p22);
+                    g4.DrawLine(pen2, p11, p22);
+                }
+                for (int i = line1Point1; i < line1Point2 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x[i], (float)y[i]);
+                    p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                    g3.DrawLine(pen3, p11, p22);
+                    g4.DrawLine(pen3, p11, p22);
+                }
+                for (int i = line2Point1; i < line2Point2 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x2[i], (float)y2[i]);
+                    p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
+                    g3.DrawLine(pen4, p11, p22);
+                    g4.DrawLine(pen4, p11, p22);
+                }
+                for (int i = line1Point2; i < line1Point3 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x[i], (float)y[i]);
+                    p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                    g3.DrawLine(pen1, p11, p22);
+                    g4.DrawLine(pen1, p11, p22);
+                }
+                for (int i = line2Point2; i < line2Point3 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x2[i], (float)y2[i]);
+                    p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
+                    g3.DrawLine(pen2, p11, p22);
+                    g4.DrawLine(pen2, p11, p22);
+                }
+                for (int i = line1Point3; i < line1Point4 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x[i], (float)y[i]);
+                    p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                    g3.DrawLine(pen3, p11, p22);
+                    g4.DrawLine(pen3, p11, p22);
+                }
+                for (int i = line2Point3; i < line2Point4 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x2[i], (float)y2[i]);
+                    p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
+                    g3.DrawLine(pen4, p11, p22);
+                    g4.DrawLine(pen4, p11, p22);
+                }
+                for (int i = line1Point4; i < dtrNum - 1; i += 1)
+                {
+                    p11 = new PointF((float)x[i], (float)y[i]);
+                    p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                    g3.DrawLine(pen0, p11, p22);
+                    g4.DrawLine(pen0, p11, p22);
+                }
+                for (int i = line2Point4; i < dtrNum2 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x2[i], (float)y2[i]);
+                    p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
+                    g3.DrawLine(pen00, p11, p22);
+                    g4.DrawLine(pen00, p11, p22);
+                }
+
+                GPSPanel.Refresh();
+                //draw a point with the center of (x,y) and (x2,y2)
+                PointF pf = new PointF((float)((x[line1Point1] + x2[line2Point1]) / 2), (float)((y[line1Point1] + y2[line2Point1]) / 2));
+                g4.FillEllipse(Brushes.Gold, pf.X - 3, pf.Y - 3, 6, 6);
+                g4.DrawEllipse(new Pen(Brushes.Gold), pf.X - 10, pf.Y - 10, 20, 20);
+                pf = new PointF((float)((x[line1Point2] + x2[line2Point2]) / 2), (float)((y[line1Point2] + y2[line2Point2]) / 2));
+                g4.FillEllipse(Brushes.DimGray, pf.X - 3, pf.Y - 3, 6, 6);
+                g4.DrawEllipse(new Pen(Brushes.DimGray), pf.X - 10, pf.Y - 10, 20, 20);
+                pf = new PointF((float)((x[line1Point3] + x2[line2Point3]) / 2), (float)((y[line1Point3] + y2[line2Point3]) / 2));
+                g4.FillEllipse(Brushes.Chocolate, pf.X - 3, pf.Y - 3, 6, 6);
+                g4.DrawEllipse(new Pen(Brushes.Chocolate), pf.X - 10, pf.Y - 10, 20, 20);
+
+                Graphics gg = GPSPanel.CreateGraphics();
+                gg.DrawImage(bitmapWithCircle, new PointF(0.0f, 0.0f));
+
+
+                label11.Text = dataTime[line1Point1].ToString("0.00");
+                label12.Text = (dataTime[line1Point2] - dataTime[line1Point1]).ToString("0.00");
+                label13.Text = (dataTime[line1Point3] - dataTime[line1Point2]).ToString("0.00");
+                label14.Text = (dataTime[dtrNum - 1] - dataTime[line1Point3]).ToString("0.00");
+                Distlabel1.Text = disA_real(line1Point1).ToString("0.00");
+                Distlabel2.Text = (disA_real(line1Point2) - disA_real(line1Point1)).ToString("0.00");
+                Distlabel3.Text = (disA_real(line1Point3) - disA_real(line1Point2)).ToString("0.00");
+                Distlabel4.Text = (disA_real(dtrNum - 1) - disA_real(line1Point3)).ToString("0.00");
+                Avglabel1.Text = (0.681818182 * disA_real(line1Point1) / dataTime[line1Point1]).ToString();
+                Avglabel2.Text = (0.681818182 * (disA_real(line1Point2) - disA_real(line1Point1)) / (dataTime[line1Point2] - dataTime[line1Point1])).ToString();
+                Avglabel3.Text = (0.681818182 * (disA_real(line1Point3) - disA_real(line1Point2)) / (dataTime[line1Point3] - dataTime[line1Point2])).ToString();
+                Avglabel4.Text = (0.681818182 * (disA_real(dtrNum - 1) - disA_real(line1Point3)) / (dataTime[dtrNum - 1] - dataTime[line1Point3])).ToString();
+
+                label21.Text = dataTime2[line2Point1].ToString("0.00");
+                label22.Text = (dataTime2[line2Point2] - dataTime2[line2Point1]).ToString("0.00");
+                label23.Text = (dataTime2[line2Point3] - dataTime2[line2Point2]).ToString("0.00");
+                label24.Text = (dataTime2[dtrNum2 - 1] - dataTime2[line2Point3]).ToString("0.00");
+                Distlabel5.Text = disB_real(line2Point1).ToString("0.00");
+                Distlabel6.Text = (disB_real(line2Point2) - disB_real(line2Point1)).ToString("0.00");
+                Distlabel7.Text = (disB_real(line2Point3) - disB_real(line2Point2)).ToString("0.00");
+                Distlabel8.Text = (disB_real(dtrNum2 - 1) - disB_real(line2Point3)).ToString("0.00");
+                Avglabel5.Text = (0.681818182 * disB_real(line2Point1) / dataTime2[line2Point1]).ToString();
+                Avglabel6.Text = (0.681818182 * (disB_real(line2Point2) - disB_real(line2Point1)) / (dataTime2[line2Point2] - dataTime2[line2Point1])).ToString();
+                Avglabel7.Text = (0.681818182 * (disB_real(line2Point3) - disB_real(line2Point2)) / (dataTime2[line2Point3] - dataTime2[line2Point2])).ToString();
+                Avglabel8.Text = (0.681818182 * (disB_real(dtrNum2 - 1) - disB_real(line2Point3)) / (dataTime2[dtrNum2 - 1] - dataTime2[line2Point3])).ToString();
+
+
+            }
+            else
+            {
+                firstTrackBar.Value = secondTrackBar.Value;
+            }
+        }
+
+        private void EndTrackBar_ValueChanged(object sender, EventArgs e)
+        {
+            barpos4 = endtrackBar2.Value;
+            if (barpos1 < barpos2)
+            {
+                sectionPoint0 = (double)barpos0 / 100;
+                sectionPoint1 = (double)barpos1 / 100;
+                sectionPoint2 = (double)barpos2 / 100;
+                sectionPoint3 = (double)barpos3 / 100;
+                sectionPoint4 = (double)barpos4 / 100;
+
+                bitmapWithCircle = new Bitmap(GPSPanel.Width, GPSPanel.Height);
+                //Graphics g2 = Graphics.FromImage(bitm);
+                Graphics g3 = Graphics.FromImage(bitmap);
+                Graphics g4 = Graphics.FromImage(bitmapWithCircle);
+                Pen pen1 = new Pen(Brushes.LightBlue, 2); //Blue for color1; Green for color2
+                Pen pen2 = new Pen(Brushes.Blue, 2);
+                Pen pen3 = new Pen(Brushes.LightGreen, 2);
+                Pen pen4 = new Pen(Brushes.Green, 2);
+                Pen pen0 = new Pen(Brushes.LightGray, 2);
+                Pen pen00 = new Pen(Brushes.Gray, 2);
+                PointF p11 = new PointF();
+                PointF p22 = new PointF();
+                if (fileOpen == false) return;
+
+                line1Point0 = findLeftNear(sectionPoint0 * distance1, disA, dtrNum);
+                line1Point1 = findLeftNear(sectionPoint1 * distance1, disA, dtrNum);
+                line1Point2 = findLeftNear(sectionPoint2 * distance1, disA, dtrNum);
+                line1Point3 = findLeftNear(sectionPoint3 * distance1, disA, dtrNum);
+                line1Point4 = findLeftNear(sectionPoint4 * distance1, disA, dtrNum);
+
+                line2Point0 = findLeftNear(sectionPoint0 * distance2, disB, dtrNum2);
+                line2Point1 = findLeftNear(sectionPoint1 * distance2, disB, dtrNum2);
+                line2Point2 = findLeftNear(sectionPoint2 * distance2, disB, dtrNum2);
+                line2Point3 = findLeftNear(sectionPoint3 * distance2, disB, dtrNum2);
+                line2Point4 = findLeftNear(sectionPoint4 * distance1, disA, dtrNum);
+                if (line1Point0 == 0 && sectionPoint0 != 0)
+                {
+                    line1Point0 = dtrNum - 1;
+                }
+                if (line2Point0 == 0 && sectionPoint0 != 0)
+                {
+                    line2Point0 = dtrNum2 - 1;
+                }
+                if (line1Point1 == 0 && sectionPoint1 != 0)
+                {
+                    line1Point1 = dtrNum - 1;
+                }
+                if (line1Point2 == 0 && sectionPoint2 != 0)
+                {
+                    line1Point2 = dtrNum - 1;
+                }
+                if (line1Point3 == 0 && sectionPoint3 != 0)
+                {
+                    line1Point3 = dtrNum - 1;
+                }
+                if (line2Point1 == 0 && sectionPoint1 != 0)
+                {
+                    line2Point1 = dtrNum2 - 1;
+                }
+                if (line2Point2 == 0 && sectionPoint2 != 0)
+                {
+                    line2Point2 = dtrNum2 - 1;
+                }
+                if (line2Point3 == 0 && sectionPoint3 != 0)
+                {
+                    line2Point3 = dtrNum2 - 1;
+                }
+                if (line1Point4 == 0 && sectionPoint4 != 0)
+                {
+                    line1Point4 = dtrNum - 1;
+                }
+                if (line2Point4 == 0 && sectionPoint4 != 0)
+                {
+                    line2Point4 = dtrNum2 - 1;
+                }
+                for (int i = 0; i < line1Point0 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x[i], (float)y[i]);
+                    p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                    g3.DrawLine(pen0, p11, p22);
+                    g4.DrawLine(pen0, p11, p22);
+                }
+                for (int i = line1Point0; i < line1Point1 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x[i], (float)y[i]);
+                    p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                    g3.DrawLine(pen1, p11, p22);
+                    g4.DrawLine(pen1, p11, p22);
+                }
+                for (int i = 0; i < line2Point0 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x2[i], (float)y2[i]);
+                    p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
+                    g3.DrawLine(pen00, p11, p22);
+                    g4.DrawLine(pen00, p11, p22);
+                }
+                for (int i = line2Point0; i < line2Point1 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x2[i], (float)y2[i]);
+                    p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
+                    g3.DrawLine(pen2, p11, p22);
+                    g4.DrawLine(pen2, p11, p22);
+                }
+                for (int i = line1Point1; i < line1Point2 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x[i], (float)y[i]);
+                    p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                    g3.DrawLine(pen3, p11, p22);
+                    g4.DrawLine(pen3, p11, p22);
+                }
+                for (int i = line2Point1; i < line2Point2 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x2[i], (float)y2[i]);
+                    p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
+                    g3.DrawLine(pen4, p11, p22);
+                    g4.DrawLine(pen4, p11, p22);
+                }
+                for (int i = line1Point2; i < line1Point3 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x[i], (float)y[i]);
+                    p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                    g3.DrawLine(pen1, p11, p22);
+                    g4.DrawLine(pen1, p11, p22);
+                }
+                for (int i = line2Point2; i < line2Point3 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x2[i], (float)y2[i]);
+                    p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
+                    g3.DrawLine(pen2, p11, p22);
+                    g4.DrawLine(pen2, p11, p22);
+                }
+                for (int i = line1Point3; i < line1Point4 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x[i], (float)y[i]);
+                    p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                    g3.DrawLine(pen3, p11, p22);
+                    g4.DrawLine(pen3, p11, p22);
+                }
+                for (int i = line2Point3; i < line2Point4 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x2[i], (float)y2[i]);
+                    p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
+                    g3.DrawLine(pen4, p11, p22);
+                    g4.DrawLine(pen4, p11, p22);
+                }
+                for (int i = line1Point4; i < dtrNum - 1; i += 1)
+                {
+                    p11 = new PointF((float)x[i], (float)y[i]);
+                    p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
+                    g3.DrawLine(pen0, p11, p22);
+                    g4.DrawLine(pen0, p11, p22);
+                }
+                for (int i = line2Point4; i < dtrNum2 - 1; i += 1)
+                {
+                    p11 = new PointF((float)x2[i], (float)y2[i]);
+                    p22 = new PointF((float)x2[i + 1], (float)y2[i + 1]);
+                    g3.DrawLine(pen00, p11, p22);
+                    g4.DrawLine(pen00, p11, p22);
+                }
+
+                GPSPanel.Refresh();
+                //draw a point with the center of (x,y) and (x2,y2)
+                PointF pf = new PointF((float)((x[line1Point1] + x2[line2Point1]) / 2), (float)((y[line1Point1] + y2[line2Point1]) / 2));
+                g4.FillEllipse(Brushes.Gold, pf.X - 3, pf.Y - 3, 6, 6);
+                g4.DrawEllipse(new Pen(Brushes.Gold), pf.X - 10, pf.Y - 10, 20, 20);
+                pf = new PointF((float)((x[line1Point2] + x2[line2Point2]) / 2), (float)((y[line1Point2] + y2[line2Point2]) / 2));
+                g4.FillEllipse(Brushes.DimGray, pf.X - 3, pf.Y - 3, 6, 6);
+                g4.DrawEllipse(new Pen(Brushes.DimGray), pf.X - 10, pf.Y - 10, 20, 20);
+                pf = new PointF((float)((x[line1Point3] + x2[line2Point3]) / 2), (float)((y[line1Point3] + y2[line2Point3]) / 2));
+                g4.FillEllipse(Brushes.Chocolate, pf.X - 3, pf.Y - 3, 6, 6);
+                g4.DrawEllipse(new Pen(Brushes.Chocolate), pf.X - 10, pf.Y - 10, 20, 20);
+
+                Graphics gg = GPSPanel.CreateGraphics();
+                gg.DrawImage(bitmapWithCircle, new PointF(0.0f, 0.0f));
+
+
+                label11.Text = dataTime[line1Point1].ToString("0.00");
+                label12.Text = (dataTime[line1Point2] - dataTime[line1Point1]).ToString("0.00");
+                label13.Text = (dataTime[line1Point3] - dataTime[line1Point2]).ToString("0.00");
+                label14.Text = (dataTime[dtrNum - 1] - dataTime[line1Point3]).ToString("0.00");
+                Distlabel1.Text = disA_real(line1Point1).ToString("0.00");
+                Distlabel2.Text = (disA_real(line1Point2) - disA_real(line1Point1)).ToString("0.00");
+                Distlabel3.Text = (disA_real(line1Point3) - disA_real(line1Point2)).ToString("0.00");
+                Distlabel4.Text = (disA_real(dtrNum - 1) - disA_real(line1Point3)).ToString("0.00");
+                Avglabel1.Text = (0.681818182 * disA_real(line1Point1) / dataTime[line1Point1]).ToString();
+                Avglabel2.Text = (0.681818182 * (disA_real(line1Point2) - disA_real(line1Point1)) / (dataTime[line1Point2] - dataTime[line1Point1])).ToString();
+                Avglabel3.Text = (0.681818182 * (disA_real(line1Point3) - disA_real(line1Point2)) / (dataTime[line1Point3] - dataTime[line1Point2])).ToString();
+                Avglabel4.Text = (0.681818182 * (disA_real(dtrNum - 1) - disA_real(line1Point3)) / (dataTime[dtrNum - 1] - dataTime[line1Point3])).ToString();
+
+                label21.Text = dataTime2[line2Point1].ToString("0.00");
+                label22.Text = (dataTime2[line2Point2] - dataTime2[line2Point1]).ToString("0.00");
+                label23.Text = (dataTime2[line2Point3] - dataTime2[line2Point2]).ToString("0.00");
+                label24.Text = (dataTime2[dtrNum2 - 1] - dataTime2[line2Point3]).ToString("0.00");
+                Distlabel5.Text = disB_real(line2Point1).ToString("0.00");
+                Distlabel6.Text = (disB_real(line2Point2) - disB_real(line2Point1)).ToString("0.00");
+                Distlabel7.Text = (disB_real(line2Point3) - disB_real(line2Point2)).ToString("0.00");
+                Distlabel8.Text = (disB_real(dtrNum2 - 1) - disB_real(line2Point3)).ToString("0.00");
+                Avglabel5.Text = (0.681818182 * disB_real(line2Point1) / dataTime2[line2Point1]).ToString();
+                Avglabel6.Text = (0.681818182 * (disB_real(line2Point2) - disB_real(line2Point1)) / (dataTime2[line2Point2] - dataTime2[line2Point1])).ToString();
+                Avglabel7.Text = (0.681818182 * (disB_real(line2Point3) - disB_real(line2Point2)) / (dataTime2[line2Point3] - dataTime2[line2Point2])).ToString();
+                Avglabel8.Text = (0.681818182 * (disB_real(dtrNum2 - 1) - disB_real(line2Point3)) / (dataTime2[dtrNum2 - 1] - dataTime2[line2Point3])).ToString();
+
+
+            }
+            else
+            {
+                firstTrackBar.Value = secondTrackBar.Value;
+            }
+        }
+
         bool haveReset1 = true;
         private void Section1PictureBox_Click(object sender, EventArgs e)
         {
@@ -2771,7 +3364,7 @@ namespace DataG
                 int xRightSub = xLeftSub + 1;
                 double xLeft = dataTime[xLeftSub], xRight = dataTime[xRightSub];
                 //two points:A(xLeft,datY[xLeftSub]),B(xRight,datY[xRightSub])
-                double xx2 = newPlace + xScale / 2 + moveSpeed + dataTime2[line2Point2];
+                double xx2 = newPlace + xScale / 2 + moveSpeed + dataTime2[line2Point1];
                 int xLeftSub2 = findLeftNear(xx2, dataTime2, dataTime2.Length);
                 int xRightSub2 = xLeftSub2 + 1;
                 double xLeft2 = dataTime2[xLeftSub2], xRight2 = dataTime2[xRightSub2];
@@ -3074,5 +3667,7 @@ namespace DataG
             else
                 chartTimer.Interval = (int)(1000 * moveSpeed) - (int)ts.TotalMilliseconds;
         }
+
+
     }
 }

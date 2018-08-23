@@ -119,6 +119,10 @@
             this.section2Timer = new System.Windows.Forms.Timer(this.components);
             this.section3Timer = new System.Windows.Forms.Timer(this.components);
             this.section4Timer = new System.Windows.Forms.Timer(this.components);
+            this.label28 = new System.Windows.Forms.Label();
+            this.label29 = new System.Windows.Forms.Label();
+            this.starttrackBar1 = new System.Windows.Forms.TrackBar();
+            this.endtrackBar2 = new System.Windows.Forms.TrackBar();
             this.activatePanel.SuspendLayout();
             this.displayPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sensorChart)).BeginInit();
@@ -140,6 +144,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.thirdTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.secondTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.firstTrackBar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.starttrackBar1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.endtrackBar2)).BeginInit();
             this.SuspendLayout();
             // 
             // activatePanel
@@ -1144,23 +1150,27 @@
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.thirdTrackBar, 0, 5);
-            this.tableLayoutPanel1.Controls.Add(this.secondTrackBar, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.label17, 0, 0);
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 22.72727F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 77.27273F));
             this.tableLayoutPanel1.Controls.Add(this.label16, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.label18, 0, 4);
-            this.tableLayoutPanel1.Controls.Add(this.firstTrackBar, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.firstTrackBar, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.secondTrackBar, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.thirdTrackBar, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.label18, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.label17, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.label28, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label29, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.starttrackBar1, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.endtrackBar2, 1, 4);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(1137, 11);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 6;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 11.11111F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 22.22222F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 11.11111F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 22.22222F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 11.11111F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 22.22222F));
+            this.tableLayoutPanel1.RowCount = 5;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(221, 253);
             this.tableLayoutPanel1.TabIndex = 17;
             this.tableLayoutPanel1.Visible = false;
@@ -1168,7 +1178,7 @@
             // thirdTrackBar
             // 
             this.thirdTrackBar.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.thirdTrackBar.Location = new System.Drawing.Point(28, 201);
+            this.thirdTrackBar.Location = new System.Drawing.Point(53, 153);
             this.thirdTrackBar.Margin = new System.Windows.Forms.Padding(2);
             this.thirdTrackBar.Maximum = 100;
             this.thirdTrackBar.Name = "thirdTrackBar";
@@ -1181,7 +1191,7 @@
             // secondTrackBar
             // 
             this.secondTrackBar.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.secondTrackBar.Location = new System.Drawing.Point(28, 116);
+            this.secondTrackBar.Location = new System.Drawing.Point(53, 103);
             this.secondTrackBar.Margin = new System.Windows.Forms.Padding(2);
             this.secondTrackBar.Maximum = 100;
             this.secondTrackBar.Name = "secondTrackBar";
@@ -1195,11 +1205,11 @@
             // 
             this.label17.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label17.AutoSize = true;
-            this.label17.Font = new System.Drawing.Font("Microsoft YaHei UI", 5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Millimeter, ((byte)(134)));
-            this.label17.Location = new System.Drawing.Point(64, 2);
+            this.label17.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F);
+            this.label17.Location = new System.Drawing.Point(7, 58);
             this.label17.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(93, 25);
+            this.label17.Size = new System.Drawing.Size(37, 34);
             this.label17.TabIndex = 2;
             this.label17.Text = "1st Point";
             this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1208,11 +1218,11 @@
             // 
             this.label16.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label16.AutoSize = true;
-            this.label16.Font = new System.Drawing.Font("Microsoft YaHei UI", 5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Millimeter, ((byte)(134)));
-            this.label16.Location = new System.Drawing.Point(60, 85);
+            this.label16.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F);
+            this.label16.Location = new System.Drawing.Point(7, 108);
             this.label16.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(101, 25);
+            this.label16.Size = new System.Drawing.Size(37, 34);
             this.label16.TabIndex = 3;
             this.label16.Text = "2nd Point";
             this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1221,11 +1231,11 @@
             // 
             this.label18.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label18.AutoSize = true;
-            this.label18.Font = new System.Drawing.Font("Microsoft YaHei UI", 5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Millimeter, ((byte)(134)));
-            this.label18.Location = new System.Drawing.Point(62, 168);
+            this.label18.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F);
+            this.label18.Location = new System.Drawing.Point(7, 158);
             this.label18.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(96, 25);
+            this.label18.Size = new System.Drawing.Size(37, 34);
             this.label18.TabIndex = 4;
             this.label18.Text = "3rd Point";
             this.label18.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1233,7 +1243,7 @@
             // firstTrackBar
             // 
             this.firstTrackBar.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.firstTrackBar.Location = new System.Drawing.Point(28, 33);
+            this.firstTrackBar.Location = new System.Drawing.Point(53, 53);
             this.firstTrackBar.Margin = new System.Windows.Forms.Padding(2);
             this.firstTrackBar.Maximum = 100;
             this.firstTrackBar.Name = "firstTrackBar";
@@ -1258,6 +1268,56 @@
             // section4Timer
             // 
             this.section4Timer.Tick += new System.EventHandler(this.section4Timer_Tick);
+            // 
+            // label28
+            // 
+            this.label28.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label28.AutoSize = true;
+            this.label28.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label28.Location = new System.Drawing.Point(8, 17);
+            this.label28.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(35, 17);
+            this.label28.TabIndex = 2;
+            this.label28.Text = "Start";
+            // 
+            // label29
+            // 
+            this.label29.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label29.AutoSize = true;
+            this.label29.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F);
+            this.label29.Location = new System.Drawing.Point(10, 218);
+            this.label29.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(30, 17);
+            this.label29.TabIndex = 4;
+            this.label29.Text = "End";
+            this.label29.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // starttrackBar1
+            // 
+            this.starttrackBar1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.starttrackBar1.Location = new System.Drawing.Point(53, 3);
+            this.starttrackBar1.Margin = new System.Windows.Forms.Padding(2);
+            this.starttrackBar1.Maximum = 100;
+            this.starttrackBar1.Name = "starttrackBar1";
+            this.starttrackBar1.Size = new System.Drawing.Size(164, 45);
+            this.starttrackBar1.TabIndex = 5;
+            this.starttrackBar1.TickFrequency = 10;
+            this.starttrackBar1.ValueChanged += new System.EventHandler(this.StartTrackBar_ValueChanged);
+            // 
+            // endtrackBar2
+            // 
+            this.endtrackBar2.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.endtrackBar2.Location = new System.Drawing.Point(53, 204);
+            this.endtrackBar2.Margin = new System.Windows.Forms.Padding(2);
+            this.endtrackBar2.Maximum = 100;
+            this.endtrackBar2.Name = "endtrackBar2";
+            this.endtrackBar2.Size = new System.Drawing.Size(164, 45);
+            this.endtrackBar2.TabIndex = 7;
+            this.endtrackBar2.TickFrequency = 10;
+            this.endtrackBar2.Value = 100;
+            this.endtrackBar2.ValueChanged += new System.EventHandler(this.EndTrackBar_ValueChanged);
             // 
             // ComparedRun
             // 
@@ -1311,6 +1371,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.thirdTrackBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.secondTrackBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.firstTrackBar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.starttrackBar1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.endtrackBar2)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1404,6 +1466,10 @@
         private System.Windows.Forms.Timer section2Timer;
         private System.Windows.Forms.Timer section3Timer;
         private System.Windows.Forms.Timer section4Timer;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.TrackBar starttrackBar1;
+        private System.Windows.Forms.TrackBar endtrackBar2;
     }
 }
 
