@@ -2111,32 +2111,31 @@ namespace DataG
 
             Graphics gg = GPSPanel.CreateGraphics();
             gg.DrawImage(bitmapWithCircle, new PointF(0.0f, 0.0f));
-
-            label11.Text = dataTime[line1Point1].ToString("0.00");
+            label11.Text = (dataTime[line1Point1] - dataTime[line1Point0]).ToString("0.00");
             label12.Text = (dataTime[line1Point2] - dataTime[line1Point1]).ToString("0.00");
             label13.Text = (dataTime[line1Point3] - dataTime[line1Point2]).ToString("0.00");
             label14.Text = (dataTime[dtrNum - 1] - dataTime[line1Point3]).ToString("0.00");
-            Distlabel1.Text = disA_real(line1Point1).ToString("0.00");
-            Distlabel2.Text = (disA_real(line1Point2) - disA_real(line1Point1)).ToString("0.00");
-            Distlabel3.Text = (disA_real(line1Point3) - disA_real(line1Point2)).ToString("0.00");
-            Distlabel4.Text = (disA_real(dtrNum - 1) - disA_real(line1Point3)).ToString("0.00");
-            Avglabel1.Text = (0.681818182 * disA_real(line1Point1) / dataTime[line1Point1]).ToString();
-            Avglabel2.Text = (0.681818182 * (disA_real(line1Point2) - disA_real(line1Point1)) / (dataTime[line1Point2] - dataTime[line1Point1])).ToString();
-            Avglabel3.Text = (0.681818182 * (disA_real(line1Point3) - disA_real(line1Point2)) / (dataTime[line1Point3] - dataTime[line1Point2])).ToString();
-            Avglabel4.Text = (0.681818182 * (disA_real(dtrNum - 1) - disA_real(line1Point3)) / (dataTime[dtrNum - 1] - dataTime[line1Point3])).ToString();
+            Distlabel1.Text = (3.28 * (disA_real(line1Point1) - disA_real(line1Point0))).ToString("0.00");
+            Distlabel2.Text = (3.28 * (disA_real(line1Point2) - disA_real(line1Point1))).ToString("0.00");
+            Distlabel3.Text = (3.28 * (disA_real(line1Point3) - disA_real(line1Point2))).ToString("0.00");
+            Distlabel4.Text = (3.28 * (disA_real(dtrNum - 1) - disA_real(line1Point3))).ToString("0.00");
+            Avglabel1.Text = (3.28 * 0.681818182 * (disA_real(line1Point1) - disA_real(line1Point0)) / (dataTime[line1Point1] - dataTime[line1Point0])).ToString();
+            Avglabel2.Text = (3.28 * 0.681818182 * (disA_real(line1Point2) - disA_real(line1Point1)) / (dataTime[line1Point2] - dataTime[line1Point1])).ToString();
+            Avglabel3.Text = (3.28 * 0.681818182 * (disA_real(line1Point3) - disA_real(line1Point2)) / (dataTime[line1Point3] - dataTime[line1Point2])).ToString();
+            Avglabel4.Text = (3.28 * 0.681818182 * (disA_real(dtrNum - 1) - disA_real(line1Point3)) / (dataTime[dtrNum - 1] - dataTime[line1Point3])).ToString();
 
-            label21.Text = dataTime2[line2Point1].ToString("0.00");
+            label21.Text = (dataTime[line2Point1] - dataTime[line2Point0]).ToString("0.00");
             label22.Text = (dataTime2[line2Point2] - dataTime2[line2Point1]).ToString("0.00");
             label23.Text = (dataTime2[line2Point3] - dataTime2[line2Point2]).ToString("0.00");
             label24.Text = (dataTime2[dtrNum2 - 1] - dataTime2[line2Point3]).ToString("0.00");
-            Distlabel5.Text = disB_real(line2Point1).ToString("0.00");
-            Distlabel6.Text = (disB_real(line2Point2) - disB_real(line2Point1)).ToString("0.00");
-            Distlabel7.Text = (disB_real(line2Point3) - disB_real(line2Point2)).ToString("0.00");
-            Distlabel8.Text = (disB_real(dtrNum2 - 1) - disB_real(line2Point3)).ToString("0.00");
-            Avglabel5.Text = (0.681818182 * disB_real(line2Point1) / dataTime2[line2Point1]).ToString();
-            Avglabel6.Text = (0.681818182 * (disB_real(line2Point2) - disB_real(line2Point1)) / (dataTime2[line2Point2] - dataTime2[line2Point1])).ToString();
-            Avglabel7.Text = (0.681818182 * (disB_real(line2Point3) - disB_real(line2Point2)) / (dataTime2[line2Point3] - dataTime2[line2Point2])).ToString();
-            Avglabel8.Text = (0.681818182 * (disB_real(dtrNum2 - 1) - disB_real(line2Point3)) / (dataTime2[dtrNum2 - 1] - dataTime2[line2Point3])).ToString();
+            Distlabel5.Text = (3.28 * disB_real(line2Point1)).ToString("0.00");
+            Distlabel6.Text = (3.28 * (disB_real(line2Point2) - disB_real(line2Point1))).ToString("0.00");
+            Distlabel7.Text = (3.28 * (disB_real(line2Point3) - disB_real(line2Point2))).ToString("0.00");
+            Distlabel8.Text = (3.28 * (disB_real(dtrNum2 - 1) - disB_real(line2Point3))).ToString("0.00");
+            Avglabel5.Text = (3.28 * 0.681818182 * (disA_real(line2Point1) - disA_real(line2Point0)) / (dataTime[line2Point1] - dataTime[line2Point0])).ToString();
+            Avglabel6.Text = (3.28 * 0.681818182 * (disB_real(line2Point2) - disB_real(line2Point1)) / (dataTime2[line2Point2] - dataTime2[line2Point1])).ToString();
+            Avglabel7.Text = (3.28 * 0.681818182 * (disB_real(line2Point3) - disB_real(line2Point2)) / (dataTime2[line2Point3] - dataTime2[line2Point2])).ToString();
+            Avglabel8.Text = (3.28 * 0.681818182 * (disB_real(dtrNum2 - 1) - disB_real(line2Point3)) / (dataTime2[dtrNum2 - 1] - dataTime2[line2Point3])).ToString();
 
             //ss.Show();
             firstDriverGroupBox.Refresh();
@@ -2325,32 +2324,31 @@ namespace DataG
                 Graphics gg = GPSPanel.CreateGraphics();
                 gg.DrawImage(bitmapWithCircle, new PointF(0.0f, 0.0f));
 
-
-                label11.Text = dataTime[line1Point1].ToString("0.00");
+                label11.Text = (dataTime[line1Point1] - dataTime[line1Point0]).ToString("0.00");
                 label12.Text = (dataTime[line1Point2] - dataTime[line1Point1]).ToString("0.00");
                 label13.Text = (dataTime[line1Point3] - dataTime[line1Point2]).ToString("0.00");
                 label14.Text = (dataTime[dtrNum - 1] - dataTime[line1Point3]).ToString("0.00");
-                Distlabel1.Text = disA_real(line1Point1).ToString("0.00");
-                Distlabel2.Text = (disA_real(line1Point2) - disA_real(line1Point1)).ToString("0.00");
-                Distlabel3.Text = (disA_real(line1Point3) - disA_real(line1Point2)).ToString("0.00");
-                Distlabel4.Text = (disA_real(dtrNum - 1) - disA_real(line1Point3)).ToString("0.00");
-                Avglabel1.Text = (0.681818182 * disA_real(line1Point1) / dataTime[line1Point1]).ToString();
-                Avglabel2.Text = (0.681818182 * (disA_real(line1Point2) - disA_real(line1Point1)) / (dataTime[line1Point2] - dataTime[line1Point1])).ToString();
-                Avglabel3.Text = (0.681818182 * (disA_real(line1Point3) - disA_real(line1Point2)) / (dataTime[line1Point3] - dataTime[line1Point2])).ToString();
-                Avglabel4.Text = (0.681818182 * (disA_real(dtrNum - 1) - disA_real(line1Point3)) / (dataTime[dtrNum - 1] - dataTime[line1Point3])).ToString();
+                Distlabel1.Text = (3.28 * (disA_real(line1Point1) - disA_real(line1Point0))).ToString("0.00");
+                Distlabel2.Text = (3.28 * (disA_real(line1Point2) - disA_real(line1Point1))).ToString("0.00");
+                Distlabel3.Text = (3.28 * (disA_real(line1Point3) - disA_real(line1Point2))).ToString("0.00");
+                Distlabel4.Text = (3.28 * (disA_real(dtrNum - 1) - disA_real(line1Point3))).ToString("0.00");
+                Avglabel1.Text = (3.28 * 0.681818182 * (disA_real(line1Point1) - disA_real(line1Point0)) / (dataTime[line1Point1] - dataTime[line1Point0])).ToString();
+                Avglabel2.Text = (3.28 * 0.681818182 * (disA_real(line1Point2) - disA_real(line1Point1)) / (dataTime[line1Point2] - dataTime[line1Point1])).ToString();
+                Avglabel3.Text = (3.28 * 0.681818182 * (disA_real(line1Point3) - disA_real(line1Point2)) / (dataTime[line1Point3] - dataTime[line1Point2])).ToString();
+                Avglabel4.Text = (3.28 * 0.681818182 * (disA_real(dtrNum - 1) - disA_real(line1Point3)) / (dataTime[dtrNum - 1] - dataTime[line1Point3])).ToString();
 
-                label21.Text = dataTime2[line2Point1].ToString("0.00");
+                label21.Text = (dataTime[line2Point1] - dataTime[line2Point0]).ToString("0.00");
                 label22.Text = (dataTime2[line2Point2] - dataTime2[line2Point1]).ToString("0.00");
                 label23.Text = (dataTime2[line2Point3] - dataTime2[line2Point2]).ToString("0.00");
                 label24.Text = (dataTime2[dtrNum2 - 1] - dataTime2[line2Point3]).ToString("0.00");
-                Distlabel5.Text = disB_real(line2Point1).ToString("0.00");
-                Distlabel6.Text = (disB_real(line2Point2) - disB_real(line2Point1)).ToString("0.00");
-                Distlabel7.Text = (disB_real(line2Point3) - disB_real(line2Point2)).ToString("0.00");
-                Distlabel8.Text = (disB_real(dtrNum2 - 1) - disB_real(line2Point3)).ToString("0.00");
-                Avglabel5.Text = (0.681818182 * disB_real(line2Point1) / dataTime2[line2Point1]).ToString();
-                Avglabel6.Text = (0.681818182 * (disB_real(line2Point2) - disB_real(line2Point1)) / (dataTime2[line2Point2] - dataTime2[line2Point1])).ToString();
-                Avglabel7.Text = (0.681818182 * (disB_real(line2Point3) - disB_real(line2Point2)) / (dataTime2[line2Point3] - dataTime2[line2Point2])).ToString();
-                Avglabel8.Text = (0.681818182 * (disB_real(dtrNum2 - 1) - disB_real(line2Point3)) / (dataTime2[dtrNum2 - 1] - dataTime2[line2Point3])).ToString();
+                Distlabel5.Text = (3.28 * disB_real(line2Point1)).ToString("0.00");
+                Distlabel6.Text = (3.28 * (disB_real(line2Point2) - disB_real(line2Point1))).ToString("0.00");
+                Distlabel7.Text = (3.28 * (disB_real(line2Point3) - disB_real(line2Point2))).ToString("0.00");
+                Distlabel8.Text = (3.28 * (disB_real(dtrNum2 - 1) - disB_real(line2Point3))).ToString("0.00");
+                Avglabel5.Text = (3.28 * 0.681818182 * (disA_real(line2Point1) - disA_real(line2Point0)) / (dataTime[line2Point1] - dataTime[line2Point0])).ToString();
+                Avglabel6.Text = (3.28 * 0.681818182 * (disB_real(line2Point2) - disB_real(line2Point1)) / (dataTime2[line2Point2] - dataTime2[line2Point1])).ToString();
+                Avglabel7.Text = (3.28 * 0.681818182 * (disB_real(line2Point3) - disB_real(line2Point2)) / (dataTime2[line2Point3] - dataTime2[line2Point2])).ToString();
+                Avglabel8.Text = (3.28 * 0.681818182 * (disB_real(dtrNum2 - 1) - disB_real(line2Point3)) / (dataTime2[dtrNum2 - 1] - dataTime2[line2Point3])).ToString();
 
 
             }
@@ -2544,31 +2542,31 @@ namespace DataG
                 Graphics gg = GPSPanel.CreateGraphics();
                 gg.DrawImage(bitmapWithCircle, new PointF(0.0f, 0.0f));
 
-                label11.Text = dataTime[line1Point1].ToString("0.00");
+                label11.Text = (dataTime[line1Point1] - dataTime[line1Point0]).ToString("0.00");
                 label12.Text = (dataTime[line1Point2] - dataTime[line1Point1]).ToString("0.00");
                 label13.Text = (dataTime[line1Point3] - dataTime[line1Point2]).ToString("0.00");
                 label14.Text = (dataTime[dtrNum - 1] - dataTime[line1Point3]).ToString("0.00");
-                Distlabel1.Text = disA_real(line1Point1).ToString("0.00");
-                Distlabel2.Text = (disA_real(line1Point2) - disA_real(line1Point1)).ToString("0.00");
-                Distlabel3.Text = (disA_real(line1Point3) - disA_real(line1Point2)).ToString("0.00");
-                Distlabel4.Text = (disA_real(dtrNum - 1) - disA_real(line1Point3)).ToString("0.00");
-                Avglabel1.Text = (0.681818182 * disA_real(line1Point1) / dataTime[line1Point1]).ToString();
-                Avglabel2.Text = (0.681818182 * (disA_real(line1Point2) - disA_real(line1Point1)) / (dataTime[line1Point2] - dataTime[line1Point1])).ToString();
-                Avglabel3.Text = (0.681818182 * (disA_real(line1Point3) - disA_real(line1Point2)) / (dataTime[line1Point3] - dataTime[line1Point2])).ToString();
-                Avglabel4.Text = (0.681818182 * (disA_real(dtrNum - 1) - disA_real(line1Point3)) / (dataTime[dtrNum - 1] - dataTime[line1Point3])).ToString();
+                Distlabel1.Text = (3.28 * (disA_real(line1Point1) - disA_real(line1Point0))).ToString("0.00");
+                Distlabel2.Text = (3.28 * (disA_real(line1Point2) - disA_real(line1Point1))).ToString("0.00");
+                Distlabel3.Text = (3.28 * (disA_real(line1Point3) - disA_real(line1Point2))).ToString("0.00");
+                Distlabel4.Text = (3.28 * (disA_real(dtrNum - 1) - disA_real(line1Point3))).ToString("0.00");
+                Avglabel1.Text = (3.28 * 0.681818182 * (disA_real(line1Point1) - disA_real(line1Point0)) / (dataTime[line1Point1] - dataTime[line1Point0])).ToString();
+                Avglabel2.Text = (3.28 * 0.681818182 * (disA_real(line1Point2) - disA_real(line1Point1)) / (dataTime[line1Point2] - dataTime[line1Point1])).ToString();
+                Avglabel3.Text = (3.28 * 0.681818182 * (disA_real(line1Point3) - disA_real(line1Point2)) / (dataTime[line1Point3] - dataTime[line1Point2])).ToString();
+                Avglabel4.Text = (3.28 * 0.681818182 * (disA_real(dtrNum - 1) - disA_real(line1Point3)) / (dataTime[dtrNum - 1] - dataTime[line1Point3])).ToString();
 
-                label21.Text = dataTime2[line2Point1].ToString("0.00");
+                label21.Text = (dataTime[line2Point1] - dataTime[line2Point0]).ToString("0.00");
                 label22.Text = (dataTime2[line2Point2] - dataTime2[line2Point1]).ToString("0.00");
                 label23.Text = (dataTime2[line2Point3] - dataTime2[line2Point2]).ToString("0.00");
                 label24.Text = (dataTime2[dtrNum2 - 1] - dataTime2[line2Point3]).ToString("0.00");
-                Distlabel5.Text = disB_real(line2Point1).ToString("0.00");
-                Distlabel6.Text = (disB_real(line2Point2) - disB_real(line2Point1)).ToString("0.00");
-                Distlabel7.Text = (disB_real(line2Point3) - disB_real(line2Point2)).ToString("0.00");
-                Distlabel8.Text = (disB_real(dtrNum2 - 1) - disB_real(line2Point3)).ToString("0.00");
-                Avglabel5.Text = (0.681818182 * disB_real(line2Point1) / dataTime2[line2Point1]).ToString();
-                Avglabel6.Text = (0.681818182 * (disB_real(line2Point2) - disB_real(line2Point1)) / (dataTime2[line2Point2] - dataTime2[line2Point1])).ToString();
-                Avglabel7.Text = (0.681818182 * (disB_real(line2Point3) - disB_real(line2Point2)) / (dataTime2[line2Point3] - dataTime2[line2Point2])).ToString();
-                Avglabel8.Text = (0.681818182 * (disB_real(dtrNum2 - 1) - disB_real(line2Point3)) / (dataTime2[dtrNum2 - 1] - dataTime2[line2Point3])).ToString();
+                Distlabel5.Text = (3.28 * disB_real(line2Point1)).ToString("0.00");
+                Distlabel6.Text = (3.28 * (disB_real(line2Point2) - disB_real(line2Point1))).ToString("0.00");
+                Distlabel7.Text = (3.28 * (disB_real(line2Point3) - disB_real(line2Point2))).ToString("0.00");
+                Distlabel8.Text = (3.28 * (disB_real(dtrNum2 - 1) - disB_real(line2Point3))).ToString("0.00");
+                Avglabel5.Text = (3.28 * 0.681818182 * (disA_real(line2Point1) - disA_real(line2Point0)) / (dataTime[line2Point1] - dataTime[line2Point0])).ToString();
+                Avglabel6.Text = (3.28 * 0.681818182 * (disB_real(line2Point2) - disB_real(line2Point1)) / (dataTime2[line2Point2] - dataTime2[line2Point1])).ToString();
+                Avglabel7.Text = (3.28 * 0.681818182 * (disB_real(line2Point3) - disB_real(line2Point2)) / (dataTime2[line2Point3] - dataTime2[line2Point2])).ToString();
+                Avglabel8.Text = (3.28 * 0.681818182 * (disB_real(dtrNum2 - 1) - disB_real(line2Point3)) / (dataTime2[dtrNum2 - 1] - dataTime2[line2Point3])).ToString();
 
             }
             else
@@ -2766,31 +2764,31 @@ namespace DataG
                 Graphics gg = GPSPanel.CreateGraphics();
                 gg.DrawImage(bitmapWithCircle, new PointF(0.0f, 0.0f));
 
-                label11.Text = dataTime[line1Point1].ToString("0.00");
+                label11.Text = (dataTime[line1Point1] - dataTime[line1Point0]).ToString("0.00");
                 label12.Text = (dataTime[line1Point2] - dataTime[line1Point1]).ToString("0.00");
                 label13.Text = (dataTime[line1Point3] - dataTime[line1Point2]).ToString("0.00");
                 label14.Text = (dataTime[dtrNum - 1] - dataTime[line1Point3]).ToString("0.00");
-                Distlabel1.Text = disA_real(line1Point1).ToString("0.00");
-                Distlabel2.Text = (disA_real(line1Point2) - disA_real(line1Point1)).ToString("0.00");
-                Distlabel3.Text = (disA_real(line1Point3) - disA_real(line1Point2)).ToString("0.00");
-                Distlabel4.Text = (disA_real(dtrNum - 1) - disA_real(line1Point3)).ToString("0.00");
-                Avglabel1.Text = (0.681818182 * disA_real(line1Point1) / dataTime[line1Point1]).ToString();
-                Avglabel2.Text = (0.681818182 * (disA_real(line1Point2) - disA_real(line1Point1)) / (dataTime[line1Point2] - dataTime[line1Point1])).ToString();
-                Avglabel3.Text = (0.681818182 * (disA_real(line1Point3) - disA_real(line1Point2)) / (dataTime[line1Point3] - dataTime[line1Point2])).ToString();
-                Avglabel4.Text = (0.681818182 * (disA_real(dtrNum - 1) - disA_real(line1Point3)) / (dataTime[dtrNum - 1] - dataTime[line1Point3])).ToString();
+                Distlabel1.Text = (3.28 * (disA_real(line1Point1) - disA_real(line1Point0))).ToString("0.00");
+                Distlabel2.Text = (3.28 * (disA_real(line1Point2) - disA_real(line1Point1))).ToString("0.00");
+                Distlabel3.Text = (3.28 * (disA_real(line1Point3) - disA_real(line1Point2))).ToString("0.00");
+                Distlabel4.Text = (3.28 * (disA_real(dtrNum - 1) - disA_real(line1Point3))).ToString("0.00");
+                Avglabel1.Text = (3.28 * 0.681818182 * (disA_real(line1Point1) - disA_real(line1Point0)) / (dataTime[line1Point1] - dataTime[line1Point0])).ToString();
+                Avglabel2.Text = (3.28 * 0.681818182 * (disA_real(line1Point2) - disA_real(line1Point1)) / (dataTime[line1Point2] - dataTime[line1Point1])).ToString();
+                Avglabel3.Text = (3.28 * 0.681818182 * (disA_real(line1Point3) - disA_real(line1Point2)) / (dataTime[line1Point3] - dataTime[line1Point2])).ToString();
+                Avglabel4.Text = (3.28 * 0.681818182 * (disA_real(dtrNum - 1) - disA_real(line1Point3)) / (dataTime[dtrNum - 1] - dataTime[line1Point3])).ToString();
 
-                label21.Text = dataTime2[line2Point1].ToString("0.00");
+                label21.Text = (dataTime[line2Point1] - dataTime[line2Point0]).ToString("0.00");
                 label22.Text = (dataTime2[line2Point2] - dataTime2[line2Point1]).ToString("0.00");
                 label23.Text = (dataTime2[line2Point3] - dataTime2[line2Point2]).ToString("0.00");
                 label24.Text = (dataTime2[dtrNum2 - 1] - dataTime2[line2Point3]).ToString("0.00");
-                Distlabel5.Text = disB_real(line2Point1).ToString("0.00");
-                Distlabel6.Text = (disB_real(line2Point2) - disB_real(line2Point1)).ToString("0.00");
-                Distlabel7.Text = (disB_real(line2Point3) - disB_real(line2Point2)).ToString("0.00");
-                Distlabel8.Text = (disB_real(dtrNum2 - 1) - disB_real(line2Point3)).ToString("0.00");
-                Avglabel5.Text = (0.681818182 * disB_real(line2Point1) / dataTime2[line2Point1]).ToString();
-                Avglabel6.Text = (0.681818182 * (disB_real(line2Point2) - disB_real(line2Point1)) / (dataTime2[line2Point2] - dataTime2[line2Point1])).ToString();
-                Avglabel7.Text = (0.681818182 * (disB_real(line2Point3) - disB_real(line2Point2)) / (dataTime2[line2Point3] - dataTime2[line2Point2])).ToString();
-                Avglabel8.Text = (0.681818182 *(disB_real(dtrNum2 - 1) - disB_real(line2Point3)) / (dataTime2[dtrNum2 - 1] - dataTime2[line2Point3])).ToString();
+                Distlabel5.Text = (3.28 * disB_real(line2Point1)).ToString("0.00");
+                Distlabel6.Text = (3.28 * (disB_real(line2Point2) - disB_real(line2Point1))).ToString("0.00");
+                Distlabel7.Text = (3.28 * (disB_real(line2Point3) - disB_real(line2Point2))).ToString("0.00");
+                Distlabel8.Text = (3.28 * (disB_real(dtrNum2 - 1) - disB_real(line2Point3))).ToString("0.00");
+                Avglabel5.Text = (3.28 * 0.681818182 * (disA_real(line2Point1) - disA_real(line2Point0)) / (dataTime[line2Point1] - dataTime[line2Point0])).ToString();
+                Avglabel6.Text = (3.28 * 0.681818182 * (disB_real(line2Point2) - disB_real(line2Point1)) / (dataTime2[line2Point2] - dataTime2[line2Point1])).ToString();
+                Avglabel7.Text = (3.28 * 0.681818182 * (disB_real(line2Point3) - disB_real(line2Point2)) / (dataTime2[line2Point3] - dataTime2[line2Point2])).ToString();
+                Avglabel8.Text = (3.28 * 0.681818182 * (disB_real(dtrNum2 - 1) - disB_real(line2Point3)) / (dataTime2[dtrNum2 - 1] - dataTime2[line2Point3])).ToString();
 
             }
             else
@@ -2982,31 +2980,31 @@ namespace DataG
                 gg.DrawImage(bitmapWithCircle, new PointF(0.0f, 0.0f));
 
 
-                label11.Text = dataTime[line1Point1].ToString("0.00");
+                label11.Text = (dataTime[line1Point1] - dataTime[line1Point0]).ToString("0.00");
                 label12.Text = (dataTime[line1Point2] - dataTime[line1Point1]).ToString("0.00");
                 label13.Text = (dataTime[line1Point3] - dataTime[line1Point2]).ToString("0.00");
                 label14.Text = (dataTime[dtrNum - 1] - dataTime[line1Point3]).ToString("0.00");
-                Distlabel1.Text = disA_real(line1Point1).ToString("0.00");
-                Distlabel2.Text = (disA_real(line1Point2) - disA_real(line1Point1)).ToString("0.00");
-                Distlabel3.Text = (disA_real(line1Point3) - disA_real(line1Point2)).ToString("0.00");
-                Distlabel4.Text = (disA_real(dtrNum - 1) - disA_real(line1Point3)).ToString("0.00");
-                Avglabel1.Text = (0.681818182 * disA_real(line1Point1) / dataTime[line1Point1]).ToString();
-                Avglabel2.Text = (0.681818182 * (disA_real(line1Point2) - disA_real(line1Point1)) / (dataTime[line1Point2] - dataTime[line1Point1])).ToString();
-                Avglabel3.Text = (0.681818182 * (disA_real(line1Point3) - disA_real(line1Point2)) / (dataTime[line1Point3] - dataTime[line1Point2])).ToString();
-                Avglabel4.Text = (0.681818182 * (disA_real(dtrNum - 1) - disA_real(line1Point3)) / (dataTime[dtrNum - 1] - dataTime[line1Point3])).ToString();
+                Distlabel1.Text = (3.28 * (disA_real(line1Point1) - disA_real(line1Point0))).ToString("0.00");
+                Distlabel2.Text = (3.28 * (disA_real(line1Point2) - disA_real(line1Point1))).ToString("0.00");
+                Distlabel3.Text = (3.28 * (disA_real(line1Point3) - disA_real(line1Point2))).ToString("0.00");
+                Distlabel4.Text = (3.28 * (disA_real(dtrNum - 1) - disA_real(line1Point3))).ToString("0.00");
+                Avglabel1.Text = (3.28 * 0.681818182 * (disA_real(line1Point1) - disA_real(line1Point0)) / (dataTime[line1Point1] - dataTime[line1Point0])).ToString();
+                Avglabel2.Text = (3.28 * 0.681818182 * (disA_real(line1Point2) - disA_real(line1Point1)) / (dataTime[line1Point2] - dataTime[line1Point1])).ToString();
+                Avglabel3.Text = (3.28 * 0.681818182 * (disA_real(line1Point3) - disA_real(line1Point2)) / (dataTime[line1Point3] - dataTime[line1Point2])).ToString();
+                Avglabel4.Text = (3.28 * 0.681818182 * (disA_real(dtrNum - 1) - disA_real(line1Point3)) / (dataTime[dtrNum - 1] - dataTime[line1Point3])).ToString();
 
-                label21.Text = dataTime2[line2Point1].ToString("0.00");
+                label21.Text = (dataTime[line2Point1] - dataTime[line2Point0]).ToString("0.00");
                 label22.Text = (dataTime2[line2Point2] - dataTime2[line2Point1]).ToString("0.00");
                 label23.Text = (dataTime2[line2Point3] - dataTime2[line2Point2]).ToString("0.00");
                 label24.Text = (dataTime2[dtrNum2 - 1] - dataTime2[line2Point3]).ToString("0.00");
-                Distlabel5.Text = disB_real(line2Point1).ToString("0.00");
-                Distlabel6.Text = (disB_real(line2Point2) - disB_real(line2Point1)).ToString("0.00");
-                Distlabel7.Text = (disB_real(line2Point3) - disB_real(line2Point2)).ToString("0.00");
-                Distlabel8.Text = (disB_real(dtrNum2 - 1) - disB_real(line2Point3)).ToString("0.00");
-                Avglabel5.Text = (0.681818182 * disB_real(line2Point1) / dataTime2[line2Point1]).ToString();
-                Avglabel6.Text = (0.681818182 * (disB_real(line2Point2) - disB_real(line2Point1)) / (dataTime2[line2Point2] - dataTime2[line2Point1])).ToString();
-                Avglabel7.Text = (0.681818182 * (disB_real(line2Point3) - disB_real(line2Point2)) / (dataTime2[line2Point3] - dataTime2[line2Point2])).ToString();
-                Avglabel8.Text = (0.681818182 * (disB_real(dtrNum2 - 1) - disB_real(line2Point3)) / (dataTime2[dtrNum2 - 1] - dataTime2[line2Point3])).ToString();
+                Distlabel5.Text = (3.28 * disB_real(line2Point1)).ToString("0.00");
+                Distlabel6.Text = (3.28 * (disB_real(line2Point2) - disB_real(line2Point1))).ToString("0.00");
+                Distlabel7.Text = (3.28 * (disB_real(line2Point3) - disB_real(line2Point2))).ToString("0.00");
+                Distlabel8.Text = (3.28 * (disB_real(dtrNum2 - 1) - disB_real(line2Point3))).ToString("0.00");
+                Avglabel5.Text = (3.28 * 0.681818182 * (disA_real(line2Point1) - disA_real(line2Point0)) / (dataTime[line2Point1] - dataTime[line2Point0])).ToString();
+                Avglabel6.Text = (3.28 * 0.681818182 * (disB_real(line2Point2) - disB_real(line2Point1)) / (dataTime2[line2Point2] - dataTime2[line2Point1])).ToString();
+                Avglabel7.Text = (3.28 * 0.681818182 * (disB_real(line2Point3) - disB_real(line2Point2)) / (dataTime2[line2Point3] - dataTime2[line2Point2])).ToString();
+                Avglabel8.Text = (3.28 * 0.681818182 * (disB_real(dtrNum2 - 1) - disB_real(line2Point3)) / (dataTime2[dtrNum2 - 1] - dataTime2[line2Point3])).ToString();
 
 
             }
@@ -3199,32 +3197,31 @@ namespace DataG
                 Graphics gg = GPSPanel.CreateGraphics();
                 gg.DrawImage(bitmapWithCircle, new PointF(0.0f, 0.0f));
 
-
-                label11.Text = dataTime[line1Point1].ToString("0.00");
+                label11.Text = (dataTime[line1Point1] - dataTime[line1Point0]).ToString("0.00");
                 label12.Text = (dataTime[line1Point2] - dataTime[line1Point1]).ToString("0.00");
                 label13.Text = (dataTime[line1Point3] - dataTime[line1Point2]).ToString("0.00");
-                label14.Text = (dataTime[dtrNum - 1] - dataTime[line1Point3]).ToString("0.00");
-                Distlabel1.Text = disA_real(line1Point1).ToString("0.00");
-                Distlabel2.Text = (disA_real(line1Point2) - disA_real(line1Point1)).ToString("0.00");
-                Distlabel3.Text = (disA_real(line1Point3) - disA_real(line1Point2)).ToString("0.00");
-                Distlabel4.Text = (disA_real(dtrNum - 1) - disA_real(line1Point3)).ToString("0.00");
-                Avglabel1.Text = (0.681818182 * disA_real(line1Point1) / dataTime[line1Point1]).ToString();
-                Avglabel2.Text = (0.681818182 * (disA_real(line1Point2) - disA_real(line1Point1)) / (dataTime[line1Point2] - dataTime[line1Point1])).ToString();
-                Avglabel3.Text = (0.681818182 * (disA_real(line1Point3) - disA_real(line1Point2)) / (dataTime[line1Point3] - dataTime[line1Point2])).ToString();
-                Avglabel4.Text = (0.681818182 * (disA_real(dtrNum - 1) - disA_real(line1Point3)) / (dataTime[dtrNum - 1] - dataTime[line1Point3])).ToString();
+                label14.Text = (dataTime[line1Point4] - dataTime[line1Point3]).ToString("0.00");
+                Distlabel1.Text = (3.28 * (disA_real(line1Point1) - disA_real(line1Point0))).ToString("0.00");
+                Distlabel2.Text = (3.28 * (disA_real(line1Point2) - disA_real(line1Point1))).ToString("0.00");
+                Distlabel3.Text = (3.28 * (disA_real(line1Point3) - disA_real(line1Point2))).ToString("0.00");
+                Distlabel4.Text = (3.28 * (disA_real(line1Point4) - disA_real(line1Point3))).ToString("0.00");
+                Avglabel1.Text = (3.28 * 0.681818182 * (disA_real(line1Point1) - disA_real(line1Point0)) / (dataTime[line1Point1] - dataTime[line1Point0])).ToString();
+                Avglabel2.Text = (3.28 * 0.681818182 * (disA_real(line1Point2) - disA_real(line1Point1)) / (dataTime[line1Point2] - dataTime[line1Point1])).ToString();
+                Avglabel3.Text = (3.28 * 0.681818182 * (disA_real(line1Point3) - disA_real(line1Point2)) / (dataTime[line1Point3] - dataTime[line1Point2])).ToString();
+                Avglabel4.Text = (3.28 * 0.681818182 * (disA_real(line1Point4) - disA_real(line1Point3)) / (dataTime[dtrNum - 1] - dataTime[line1Point3])).ToString();
 
-                label21.Text = dataTime2[line2Point1].ToString("0.00");
+                label21.Text = (dataTime[line2Point1] - dataTime[line2Point0]).ToString("0.00");
                 label22.Text = (dataTime2[line2Point2] - dataTime2[line2Point1]).ToString("0.00");
                 label23.Text = (dataTime2[line2Point3] - dataTime2[line2Point2]).ToString("0.00");
-                label24.Text = (dataTime2[dtrNum2 - 1] - dataTime2[line2Point3]).ToString("0.00");
-                Distlabel5.Text = disB_real(line2Point1).ToString("0.00");
-                Distlabel6.Text = (disB_real(line2Point2) - disB_real(line2Point1)).ToString("0.00");
-                Distlabel7.Text = (disB_real(line2Point3) - disB_real(line2Point2)).ToString("0.00");
-                Distlabel8.Text = (disB_real(dtrNum2 - 1) - disB_real(line2Point3)).ToString("0.00");
-                Avglabel5.Text = (0.681818182 * disB_real(line2Point1) / dataTime2[line2Point1]).ToString();
-                Avglabel6.Text = (0.681818182 * (disB_real(line2Point2) - disB_real(line2Point1)) / (dataTime2[line2Point2] - dataTime2[line2Point1])).ToString();
-                Avglabel7.Text = (0.681818182 * (disB_real(line2Point3) - disB_real(line2Point2)) / (dataTime2[line2Point3] - dataTime2[line2Point2])).ToString();
-                Avglabel8.Text = (0.681818182 * (disB_real(dtrNum2 - 1) - disB_real(line2Point3)) / (dataTime2[dtrNum2 - 1] - dataTime2[line2Point3])).ToString();
+                label24.Text = (dataTime2[line2Point4] - dataTime2[line2Point3]).ToString("0.00");
+                Distlabel5.Text = (3.28 * disB_real(line2Point1)).ToString("0.00");
+                Distlabel6.Text = (3.28 * (disB_real(line2Point2) - disB_real(line2Point1))).ToString("0.00");
+                Distlabel7.Text = (3.28 * (disB_real(line2Point3) - disB_real(line2Point2))).ToString("0.00");
+                Distlabel8.Text = (3.28 * (disB_real(line2Point4) - disB_real(line2Point3))).ToString("0.00");
+                Avglabel5.Text = (3.28 * 0.681818182 * (disA_real(line2Point1) - disA_real(line2Point0)) / (dataTime[line2Point1] - dataTime[line2Point0])).ToString();
+                Avglabel6.Text = (3.28 * 0.681818182 * (disB_real(line2Point2) - disB_real(line2Point1)) / (dataTime2[line2Point2] - dataTime2[line2Point1])).ToString();
+                Avglabel7.Text = (3.28 * 0.681818182 * (disB_real(line2Point3) - disB_real(line2Point2)) / (dataTime2[line2Point3] - dataTime2[line2Point2])).ToString();
+                Avglabel8.Text = (3.28 * 0.681818182 * (disB_real(line2Point4) - disB_real(line2Point3)) / (dataTime2[dtrNum2 - 1] - dataTime2[line2Point3])).ToString();
 
 
             }
