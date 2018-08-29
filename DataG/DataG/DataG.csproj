@@ -112,6 +112,11 @@
     <Compile Include="RangeForm.Designer.cs">
       <DependentUpon>RangeForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="SteerImage.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SteerImage.resx</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="ComparedRun.resx">
       <DependentUpon>ComparedRun.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -140,6 +145,10 @@
     </Compile>
     <EmbeddedResource Include="RangeForm.resx">
       <DependentUpon>RangeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SteerImage.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>SteerImage.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="DataG_TemporaryKey.pfx" />
     <None Include="Properties\Settings.settings">
@@ -171,6 +180,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Steer.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

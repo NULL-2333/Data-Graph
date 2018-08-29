@@ -117,3 +117,4 @@ C:\Users\user\Desktop\DataRead\DataG\DataG\bin\Debug\DataG.exe.manifest
 C:\Users\user\Desktop\DataRead\DataG\DataG\bin\Debug\DataG.application
 C:\Users\user\Desktop\DataRead\DataG\DataG\obj\Debug\DataG.exe.manifest
 C:\Users\user\Desktop\DataRead\DataG\DataG\obj\Debug\DataG.application
+C:\Users\user\Desktop\DataRead\DataG\DataG\obj\Debug\DataG.SteerImage.resources

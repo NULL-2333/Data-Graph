@@ -89,7 +89,7 @@ namespace DataG
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            this.pictureBox1.Image = Image.FromFile(@"..\..\..\steer.png", false);
+            this.pictureBox1.Image = SteerImage.Steer;
 
         }
 
@@ -857,7 +857,7 @@ namespace DataG
                 }
                 x_steer = findLeftNear(xx, dataTime, dataTime.Length);
                 steer = Convert.ToSingle(steering[x_steer]);
-                this.pictureBox1.Image = RotateImage(Image.FromFile(@"..\..\..\steer.png", false), steer - steer_before);
+                this.pictureBox1.Image = RotateImage(SteerImage.Steer, steer - steer_before);
                 steer_before = steer;
 
             }
@@ -1087,7 +1087,7 @@ namespace DataG
             }
             //int xLeftSub3 = findLeftNear(nowSteeringPlace, dataTime, dataTime.Length);
             steer = Convert.ToSingle(steering[xLeftSub3]);
-            this.pictureBox1.Image = RotateImage(Image.FromFile(@"..\..\..\steer.png", false), steer - steer_before);
+            this.pictureBox1.Image = RotateImage(SteerImage.Steer, steer - steer_before);
             steer_before = steer;
             if (nowSteeringPlace <= maxValue(dataTime, dataTime.Length))
                 nowSteeringPlace += moveSpeed;
@@ -1169,7 +1169,7 @@ namespace DataG
 
                         x_steer = findLeftNear(xx, dataTime, dataTime.Length);
                         steer = Convert.ToSingle(steering[x_steer]);
-                        this.pictureBox1.Image = RotateImage(Image.FromFile(@"..\..\..\steer.png", false), steer - steer_before);
+                        this.pictureBox1.Image = RotateImage(SteerImage.Steer, steer - steer_before);
                         steer_before = steer;
                     }
                 }
@@ -1541,7 +1541,7 @@ namespace DataG
 
             textBoxTime.Text = dataTime[key].ToString();
             steer = Convert.ToSingle(steering[key]);
-            this.pictureBox1.Image = RotateImage(Image.FromFile(@"..\..\..\steer.png", false), steer - steer_before);
+            this.pictureBox1.Image = RotateImage(SteerImage.Steer, steer - steer_before);
             steer_before = steer;
             TextBox txtBox = new TextBox();
             for (int i = 0; i < dtcNum - 1; i++)
@@ -1622,7 +1622,7 @@ namespace DataG
                     //g4.DrawLine(new Pen(Brushes.Blue), p1, p2);
                     textBoxTime.Text = dataTime[key].ToString();
                     steer = Convert.ToSingle(steering[key]);
-                    this.pictureBox1.Image = RotateImage(Image.FromFile(@"..\..\..\steer.png", false), steer - steer_before);
+                    this.pictureBox1.Image = RotateImage(SteerImage.Steer, steer - steer_before);
                     steer_before = steer;
                     TextBox txtBox = new TextBox();
                     for (int i = 0; i < dtcNum - 1; i++)
