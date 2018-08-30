@@ -459,10 +459,6 @@ namespace DataG
             {
                 fileName = openFileDialog.FileName;
             }
-            else
-            {
-                MessageBox.Show("Wrong File Formation!", "Warning");
-            }
             dt = new DataTable();
             if (fileName == "")
             {
@@ -473,12 +469,12 @@ namespace DataG
             dt = OpenCSV(fileName);
             if (wrongFormation)
             {
-                MessageBox.Show("Wrong File Formation!", "Warning");
+                MessageBox.Show("Wrong File Formate!", "Warning");
                 return;
             }
             if (dt.Columns[0].ColumnName.Equals("Wrong"))
             {
-                MessageBox.Show("No Right Formate!");
+                MessageBox.Show("No Right Formate!", "Warning");
                 return;
             }
             fileOpen = true;
