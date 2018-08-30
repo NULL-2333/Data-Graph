@@ -119,6 +119,14 @@ namespace DataG
                 if (IsFirst == true)
                 {
                     tableHead = strLine.Split(',');
+                    if (tableHead.Length == 1)
+                    { 
+                        //MessageBox.Show("No Right Formate!");
+                        dt = new DataTable();
+                        DataColumn dc = new DataColumn("Wrong");
+                        dt.Columns.Add(dc);
+                        return dt;
+                    }
                     IsFirst = false;
                     columnCount = tableHead.Length;
                     //create the column
@@ -468,7 +476,11 @@ namespace DataG
                 MessageBox.Show("Wrong File Formation!", "Warning");
                 return;
             }
-                
+            if (dt.Columns[0].ColumnName.Equals("Wrong"))
+            {
+                MessageBox.Show("No Right Formate!");
+                return;
+            }
             fileOpen = true;
             dtSave = dt;
             fName = fileName;
@@ -485,6 +497,7 @@ namespace DataG
 
             for (int i = 0; i < dtrNum; i++)
             {
+                
                 dataTime[i] = double.Parse(dt.Rows[i][0].ToString());
                 //dataTime[i] = Math.Round(dataTime[i], 2);
                 for (int j = 0; j < dtcNum - 1; j++)

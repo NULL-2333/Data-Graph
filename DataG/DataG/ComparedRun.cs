@@ -175,6 +175,14 @@ namespace DataG
                 if (IsFirst == true)
                 {
                     tableHead = strLine.Split(',');
+                    if (tableHead.Length == 1)
+                    {
+                        //MessageBox.Show("No Right Formate!");
+                        dt = new DataTable();
+                        DataColumn dc = new DataColumn("Wrong");
+                        dt.Columns.Add(dc);
+                        return dt;
+                    }
                     IsFirst = false;
                     columnCount = tableHead.Length;
                     //create the column
@@ -527,6 +535,11 @@ namespace DataG
             if (wrongFormation)
             {
                 MessageBox.Show("Wrong File Formation!", "Warning");
+                return;
+            }
+            if (dt.Columns[0].ColumnName.Equals("Wrong") || dt2.Columns[0].ColumnName.Equals("Wrong"))
+            {
+                MessageBox.Show("No Right Formate!");
                 return;
             }
             fileOpen = true;
