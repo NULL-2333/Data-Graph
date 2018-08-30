@@ -81,6 +81,7 @@ namespace DataG
         bool isAccel = false;
 
         double[] gpsTime = new double[dtrNum];
+        bool wrongFormation = false;
 
         public SingleRun()
         {
@@ -94,7 +95,7 @@ namespace DataG
         }
 
         //read data from .csv file and return to datatable
-        public static DataTable OpenCSV(string filePath)
+        public DataTable OpenCSV(string filePath)
         {
             System.Text.Encoding encoding = GetType(filePath);
             DataTable dt = new DataTable();
@@ -131,6 +132,20 @@ namespace DataG
                 {
                     aryLine = strLine.Split(',');
                     DataRow dr = dt.NewRow();
+                    for(int i = 0; i < aryLine.Length; i++)
+                    {
+                        if(aryLine[i] == "")
+                        {
+                            wrongFormation = true;
+                            return dt;
+                        }
+                    }
+                    if(aryLine.Length != columnCount || aryLine.Length < 2)
+                    {
+                        wrongFormation = true;
+                        return dt;
+                    }
+
                     for (int j = 0; j < columnCount; j++)
                     {
                         dr[j] = aryLine[j];
@@ -402,6 +417,7 @@ namespace DataG
 
         private void fileLoadingButton_Click(object sender, EventArgs e)
         {
+            wrongFormation = false;
             fileOpen = false;
             isBitCre = false;
             //delete existing chart
@@ -447,7 +463,12 @@ namespace DataG
             }
 
             dt = OpenCSV(fileName);
-            
+            if (wrongFormation)
+            {
+                MessageBox.Show("Wrong File Formation!", "Warning");
+                return;
+            }
+                
             fileOpen = true;
             dtSave = dt;
             fName = fileName;
@@ -461,7 +482,7 @@ namespace DataG
             seriesName = new string[dtcNum - 1];
 
             gpsTime = new double[dtrNum];
-           
+
             for (int i = 0; i < dtrNum; i++)
             {
                 dataTime[i] = double.Parse(dt.Rows[i][0].ToString());

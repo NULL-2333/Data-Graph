@@ -135,7 +135,7 @@ namespace DataG
         int line2Point2 = 0;
         int line2Point3 = 0;
         int line2Point4 = 0; //end point
-
+        bool wrongFormation = false;
         bool isSeg = false;
         Bitmap bitmap;
         Bitmap bitmapWithCircle;
@@ -151,7 +151,7 @@ namespace DataG
         }
 
         //read data from .csv file and return to datatable
-        public static DataTable OpenCSV(string filePath)
+        public DataTable OpenCSV(string filePath)
         {
             System.Text.Encoding encoding = GetType(filePath);
             DataTable dt = new DataTable();
@@ -188,6 +188,19 @@ namespace DataG
                 {
                     aryLine = strLine.Split(',');
                     DataRow dr = dt.NewRow();
+                    for (int i = 0; i < aryLine.Length; i++)
+                    {
+                        if (aryLine[i] == "")
+                        {
+                            wrongFormation = true;
+                            return dt;
+                        }
+                    }
+                    if (aryLine.Length != columnCount || aryLine.Length < 2)
+                    {
+                        wrongFormation = true;
+                        return dt;
+                    }
                     for (int j = 0; j < columnCount; j++)
                     {
                         dr[j] = aryLine[j];
@@ -474,6 +487,7 @@ namespace DataG
 
         private void fileLoadingButton_Click(object sender, EventArgs e)
         {
+            wrongFormation = false;
             fileOpen = false;
             isBitNormalCre = false;
             //delete existing chart
@@ -510,6 +524,11 @@ namespace DataG
             }
             dt = OpenCSV(fName1);
             dt2 = OpenCSV(fName2);
+            if (wrongFormation)
+            {
+                MessageBox.Show("Wrong File Formation!", "Warning");
+                return;
+            }
             fileOpen = true;
             dtSave = dt;
             dtSave2 = dt2;
