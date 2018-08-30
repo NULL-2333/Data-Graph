@@ -5,11 +5,7 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataG", "DataG\DataG.csproj", "{FB97EB10-3033-4160-B1E5-8FFF22DB3611}"
 EndProject
-<<<<<<< HEAD
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Data_Graph", "Data_Graph\Data_Graph.vdproj", "{28CAC4C8-722D-4A36-84FE-52F59C904351}"
-=======
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Data_Graph_Setup", "Data_Graph_Setup\Data_Graph_Setup.vdproj", "{656BCF62-36CA-4820-BA28-17A4358EFE1D}"
->>>>>>> 075e773e7a418308882af34ecda6f7c072f7dbd0
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,13 +17,8 @@ Global
 		{FB97EB10-3033-4160-B1E5-8FFF22DB3611}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB97EB10-3033-4160-B1E5-8FFF22DB3611}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB97EB10-3033-4160-B1E5-8FFF22DB3611}.Release|Any CPU.Build.0 = Release|Any CPU
-<<<<<<< HEAD
 		{28CAC4C8-722D-4A36-84FE-52F59C904351}.Debug|Any CPU.ActiveCfg = Debug
 		{28CAC4C8-722D-4A36-84FE-52F59C904351}.Release|Any CPU.ActiveCfg = Release
-=======
-		{656BCF62-36CA-4820-BA28-17A4358EFE1D}.Debug|Any CPU.ActiveCfg = Debug
-		{656BCF62-36CA-4820-BA28-17A4358EFE1D}.Release|Any CPU.ActiveCfg = Release
->>>>>>> 075e773e7a418308882af34ecda6f7c072f7dbd0
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
