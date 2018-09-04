@@ -534,12 +534,12 @@ namespace DataG
             dt2 = OpenCSV(fName2);
             if (wrongFormation)
             {
-                MessageBox.Show("Wrong File Formation!", "Warning");
+                MessageBox.Show("Wrong File Formate!", "Warning");
                 return;
             }
             if (dt.Columns[0].ColumnName.Equals("Wrong") || dt2.Columns[0].ColumnName.Equals("Wrong"))
             {
-                MessageBox.Show("No Right Formate!");
+                MessageBox.Show("No Right Formate!", "Warning");
                 return;
             }
             fileOpen = true;
