@@ -83,7 +83,8 @@ namespace DataG
         int accelerateRow = 0;
         double[] accelerate2 = new double[dtrNum2];             //the speed in the csv file
         int accelerateRow2 = 0;
-        
+        int coneL = 0, coneR = 0;
+
         //double maxacc = 0;
         //double minacc = 0;
         double maxspeed = 0;
@@ -99,6 +100,8 @@ namespace DataG
 
         bool isAccel = false;
         bool isAccel2 = false;
+        bool isConeL = false;
+        bool isConeR = false;
         double distance1 = 0;
         double distance2 = 0;
         double[] driver1 = new double[4];
@@ -111,6 +114,11 @@ namespace DataG
         double[] disB = new double[dtrNum2];
 
         double[] gpsTime = new double[dtrNum];
+
+        double[] coneLeft = new double[dtrNum];
+        double[] coneRight = new double[dtrNum];
+        double[] coneX = new double[dtrNum];
+        double[] coneY = new double[dtrNum];
 
         double barpos0 = 0;
         double barpos1 = 0;
@@ -568,6 +576,11 @@ namespace DataG
             disA = new double[dtrNum];
             disB = new double[dtrNum2];
 
+            coneLeft = new double[dtrNum];
+            coneRight = new double[dtrNum];
+            coneX = new double[dtrNum];
+            coneY = new double[dtrNum];
+
             for (int i = 0; i < dtrNum; i++)
             {
                 dataTime[i] = double.Parse(dt.Rows[i][0].ToString());
@@ -679,11 +692,41 @@ namespace DataG
                     isAccel2 = false;
             }
 
+            for (int i = 0; i < dtcNum - 1; i++)
+            {
+                if (seriesName[i].Contains("coneDistL[cm]"))
+                {
+                    coneL = i;
+                    isConeL = true;
+                    break;
+                }
+                else
+                    isConeL = false;
+
+            }
+
+            for (int i = 0; i < dtcNum - 1; i++)
+            {
+                if (seriesName[i].Contains("coneDistR[cm]"))
+                {
+                    coneR = i;
+                    isConeR = true;
+                    break;
+                }
+                else
+                    isConeR = false;
+
+            }
+
             for (int i = 0; i < dtrNum; i++)
             {
                 speed[i] = double.Parse(dt.Rows[i][speedRow + 1].ToString());
                 if (isAccel)
                     accelerate[i] = double.Parse(dt.Rows[i][accelerateRow + 1].ToString());
+                if (isConeL)
+                    coneLeft[i] = double.Parse(dt.Rows[i][coneL + 1].ToString());
+                if (isConeR)
+                    coneRight[i] = double.Parse(dt.Rows[i][coneR + 1].ToString());
             }
 
             for (int i = 0; i < dtrNum2; i++)
@@ -824,6 +867,97 @@ namespace DataG
             driver2_y[3] = driver2_x[3] = findLeftNear(driver2[3], disB, dtrNum2);
 
             GPSPanel.Refresh();
+            //calculate the coordinate of cones
+            for (int i = 0; i < dtrNum; i++)
+            {
+                coneX[i] = -1;
+                coneY[i] = -1;
+            }
+            for (int i = 0; i < dtrNum; i++)
+            {
+                if (coneLeft[i] != -1 || coneRight[i] != -1)
+                {
+                    if (i + 10 < dtrNum)
+                    {
+                        PointF px1 = new PointF((float)x[i], (float)y[i]);
+                        PointF px2 = new PointF((float)x[i + 10], (float)y[i + 10]);
+                        double Len1 = (px1.X - px2.X) * (px1.X - px2.X) + (px1.Y - px2.Y) * (px1.Y - px2.Y);
+                        if (coneLeft[i] == -1)
+                        {
+                            if (px2.Y > px1.Y)
+                                coneX[i] = Math.Abs(px2.Y - px1.Y) * coneRight[i] / Len1 + px1.X;
+                            else
+                                coneX[i] = -Math.Abs(px2.Y - px1.Y) * coneRight[i] / Len1 + px1.X;
+                        }
+                        else if (coneRight[i] == -1)
+                        {
+                            if (px2.Y > px1.Y)
+                                coneX[i] = -Math.Abs(px2.Y - px1.Y) * coneLeft[i] / Len1 + px1.X;
+                            else
+                                coneX[i] = Math.Abs(px2.Y - px1.Y) * coneLeft[i] / Len1 + px1.X;
+                        }
+                        if (px2.Y != px1.Y)
+                            coneY[i] = (px1.X * (px2.X - px1.X) + px1.Y * (px2.Y - px1.Y) - coneX[i] * (px2.X - px1.X)) / (px2.Y - px1.Y);
+                        else
+                        {
+                            if (px1.X < px2.X)
+                            {
+                                if (coneLeft[i] == -1)
+                                    coneY[i] = px1.Y - coneRight[i];
+                                else
+                                    coneY[i] = px1.Y + coneLeft[i];
+                            }
+                            else
+                            {
+                                if (coneLeft[i] == -1)
+                                    coneY[i] = px1.Y + coneRight[i];
+                                else
+                                    coneY[i] = px1.Y - coneLeft[i];
+                            }
+                        }
+                    }
+                    else
+                    {
+                        PointF px1 = new PointF((float)x[i], (float)y[i]);
+                        PointF px2 = new PointF((float)x[dtrNum - 1], (float)y[dtrNum - 1]);
+                        double Len1 = (px1.X - px2.X) * (px1.X - px2.X) + (px1.Y - px2.Y) * (px1.Y - px2.Y);
+                        if (coneLeft[i] == -1)
+                        {
+                            if (px2.Y > px1.Y)
+                                coneX[i] = Math.Abs(px2.Y - px1.Y) * coneRight[i] / Len1 + px1.X;
+                            else
+                                coneX[i] = -Math.Abs(px2.Y - px1.Y) * coneRight[i] / Len1 + px1.X;
+                        }
+                        else if (coneRight[i] == -1)
+                        {
+                            if (px2.Y > px1.Y)
+                                coneX[i] = -Math.Abs(px2.Y - px1.Y) * coneLeft[i] / Len1 + px1.X;
+                            else
+                                coneX[i] = Math.Abs(px2.Y - px1.Y) * coneLeft[i] / Len1 + px1.X;
+                        }
+                        if (px2.Y != px1.Y)
+                            coneY[i] = (px1.X * (px2.X - px1.X) + px1.Y * (px2.Y - px1.Y) - coneX[i] * (px2.X - px1.X)) / (px2.Y - px1.Y);
+                        else
+                        {
+                            if (px1.X < px2.X)
+                            {
+                                if (coneLeft[i] == -1)
+                                    coneY[i] = px1.Y - coneRight[i];
+                                else
+                                    coneY[i] = px1.Y + coneLeft[i];
+                            }
+                            else
+                            {
+                                if (coneLeft[i] == -1)
+                                    coneY[i] = px1.Y + coneRight[i];
+                                else
+                                    coneY[i] = px1.Y - coneLeft[i];
+                            }
+                        }
+                    }
+                }
+            }
+
             //add new labels and checkbox
             for (int i = 0; i < dtcNum - 1; i++)
             {
