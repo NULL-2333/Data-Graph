@@ -686,7 +686,7 @@ namespace DataG
                 p2 = new PointF((float)x[i + 10], (float)y[i + 10]);
                 g.DrawLine(nPen, p1, p2);
             }
-            GPSPanel.Refresh();
+            
             //calculate the coordinate of cones
             for (int i = 0; i < dtrNum; i++)
             {
@@ -777,7 +777,7 @@ namespace DataG
                     }
                 }
             }
-
+            GPSPanel.Refresh();
             //add new labels and checkbox
             int locY = timeLabel.Location.Y + timeLabel.Height + 5;
 
@@ -1459,6 +1459,24 @@ namespace DataG
                         p22 = new PointF((float)x[i + 5], (float)y[i + 5]);
                         g2.DrawLine(nPen, p11, p22);
                     }
+                    PointF pc = new PointF();
+                    for(int i = 0; i < dtrNum - 1; i++)
+                    {
+                        if (coneX[i] != -1 || coneY[i] != -1)
+                        {
+                            if (coneX[i] > GPSPanel.Width)
+                                coneX[i] = GPSPanel.Width;
+                            if (coneX[i] < 0)
+                                coneX[i] = 0;
+                            if (coneY[i] >= GPSPanel.Height)
+                                coneY[i] = GPSPanel.Height;
+                            if (coneY[i] < 0)
+                                coneY[i] = 0;
+                            pc.X = (float)coneX[i];
+                            pc.Y = (float)coneY[i];
+                            g2.FillEllipse(Brushes.Orange, pc.X, pc.Y, 5, 5);
+                        }
+                    }
                     Graphics gg = GPSPanel.CreateGraphics();
                     gg.DrawImage(bitm, new PointF(0.0f, 0.0f));
                 }
@@ -1478,6 +1496,24 @@ namespace DataG
                         p6 = new Pen(Color.FromArgb(colorRed(speed[i], maxspeed, minspeed), colorGreen(speed[i], maxspeed, minspeed), 0), 2);
                         g3.DrawLine(p6, p11, p22);
                     }
+                    PointF pc = new PointF();
+                    for (int i = 0; i < dtrNum - 1; i++)
+                    {
+                        if (coneX[i] != -1 || coneY[i] != -1)
+                        {
+                            if (coneX[i] > GPSPanel.Width)
+                                coneX[i] = GPSPanel.Width;
+                            if (coneX[i] < 0)
+                                coneX[i] = 0;
+                            if (coneY[i] >= GPSPanel.Height)
+                                coneY[i] = GPSPanel.Height;
+                            if (coneY[i] < 0)
+                                coneY[i] = 0;
+                            pc.X = (float)coneX[i];
+                            pc.Y = (float)coneY[i];
+                            g2.FillEllipse(Brushes.Orange, pc.X, pc.Y, 5, 5);
+                        }
+                    }
                     Graphics gg = GPSPanel.CreateGraphics();
                     gg.DrawImage(bitm, new PointF(0.0f, 0.0f));
                 }
@@ -1496,6 +1532,24 @@ namespace DataG
                         p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
                         p6 = new Pen(Color.FromArgb(colorRed(accelerate[i], maxacc, minacc), colorGreen(accelerate[i], maxacc, minacc), 0), 2);
                         g4.DrawLine(p6, p11, p22);
+                    }
+                    PointF pc = new PointF();
+                    for (int i = 0; i < dtrNum - 1; i++)
+                    {
+                        if (coneX[i] != -1 || coneY[i] != -1)
+                        {
+                            if (coneX[i] > GPSPanel.Width)
+                                coneX[i] = GPSPanel.Width;
+                            if (coneX[i] < 0)
+                                coneX[i] = 0;
+                            if (coneY[i] >= GPSPanel.Height)
+                                coneY[i] = GPSPanel.Height;
+                            if (coneY[i] < 0)
+                                coneY[i] = 0;
+                            pc.X = (float)coneX[i];
+                            pc.Y = (float)coneY[i];
+                            g2.FillEllipse(Brushes.Orange, pc.X, pc.Y, 5, 5);
+                        }
                     }
                     Graphics gg = GPSPanel.CreateGraphics();
                     gg.DrawImage(bitm, new PointF(0.0f, 0.0f));
@@ -1528,6 +1582,24 @@ namespace DataG
                         p6 = new Pen(Color.FromArgb(colorRed(speed[i], maxspeed, minspeed), colorGreen(speed[i], maxspeed, minspeed), 0), 2);
                         g3.DrawLine(p6, p11, p22);
                     }
+                    PointF pc = new PointF();
+                    for (int i = 0; i < dtrNum - 1; i++)
+                    {
+                        if (coneX[i] != -1 || coneY[i] != -1)
+                        {
+                            if (coneX[i] > GPSPanel.Width)
+                                coneX[i] = GPSPanel.Width;
+                            if (coneX[i] < 0)
+                                coneX[i] = 0;
+                            if (coneY[i] >= GPSPanel.Height)
+                                coneY[i] = GPSPanel.Height;
+                            if (coneY[i] < 0)
+                                coneY[i] = 0;
+                            pc.X = (float)coneX[i];
+                            pc.Y = (float)coneY[i];
+                            g3.FillEllipse(Brushes.Orange, pc.X, pc.Y, 5, 5);
+                        }
+                    }
                     //Graphics gg = GPSPanel.CreateGraphics();
                     //gg.DrawImage(bitm, new PointF(0.0f, 0.0f));
                 }
@@ -1546,6 +1618,24 @@ namespace DataG
                         p22 = new PointF((float)x[i + 1], (float)y[i + 1]);
                         p6 = new Pen(Color.FromArgb(colorRed(accelerate[i], maxacc, minacc), colorGreen(accelerate[i], maxacc, minacc), 0), 2);
                         g4.DrawLine(p6, p11, p22);
+                    }
+                    PointF pc = new PointF();
+                    for (int i = 0; i < dtrNum - 1; i++)
+                    {
+                        if (coneX[i] != -1 || coneY[i] != -1)
+                        {
+                            if (coneX[i] > GPSPanel.Width)
+                                coneX[i] = GPSPanel.Width;
+                            if (coneX[i] < 0)
+                                coneX[i] = 0;
+                            if (coneY[i] >= GPSPanel.Height)
+                                coneY[i] = GPSPanel.Height;
+                            if (coneY[i] < 0)
+                                coneY[i] = 0;
+                            pc.X = (float)coneX[i];
+                            pc.Y = (float)coneY[i];
+                            g4.FillEllipse(Brushes.Orange, pc.X, pc.Y, 5, 5);
+                        }
                     }
                     //Graphics gg = GPSPanel.CreateGraphics();
                     //gg.DrawImage(bitm, new PointF(0.0f, 0.0f));
