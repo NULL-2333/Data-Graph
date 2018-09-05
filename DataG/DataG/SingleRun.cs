@@ -1459,6 +1459,27 @@ namespace DataG
                         p22 = new PointF((float)x[i + 5], (float)y[i + 5]);
                         g2.DrawLine(nPen, p11, p22);
                     }
+
+                    p11 = new PointF((float)x[0], (float)y[0]);
+                    g2.FillEllipse(Brushes.Red, p11.X, p11.Y, 5, 5);
+
+                    Label la = new Label();
+                    la.Text = "Start";
+                    la.Location = new Point((int)p11.X, (int)p11.Y);
+                    la.BackColor = Color.Transparent;
+                    la.AutoSize = true;
+                    GPSPanel.Controls.Add(la);
+
+                    p11 = new PointF((float)x[dtrNum - 1], (float)y[dtrNum - 1]);
+                    g2.FillEllipse(Brushes.Red, p11.X, p11.Y, 5, 5);
+
+                    Label la2 = new Label();
+                    la2.Text = "End";
+                    la2.Location = new Point((int)p11.X, (int)p11.Y);
+                    la2.BackColor = Color.Transparent;
+                    la2.AutoSize = true;
+                    GPSPanel.Controls.Add(la2);
+
                     PointF pc = new PointF();
                     for(int i = 0; i < dtrNum - 1; i++)
                     {
